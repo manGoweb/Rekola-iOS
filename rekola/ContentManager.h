@@ -19,6 +19,8 @@
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password completion:(void (^)(NSError *error))completion;
 
+- (void)bikesWithLocation:(CLLocationCoordinate2D)location completion:(void (^)(NSArray *bikes, NSError *error))completion;
+
 @end
 
 @interface ContentManager (Keychain)

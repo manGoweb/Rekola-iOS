@@ -45,6 +45,11 @@
 		5EDE21E61907DC3F0017D36E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E51907DC3F0017D36E /* LoginViewController.m */; };
 		5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E81907DC4C0017D36E /* RecoverViewController.m */; };
 		5EDE21F21907E8840017D36E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21F11907E8840017D36E /* MapViewController.m */; };
+		5EDE21F41907F6520017D36E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDE21F31907F6520017D36E /* MapKit.framework */; };
+		5EDE21F71907F96E0017D36E /* JSONObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21F51907F96E0017D36E /* JSONObject.m */; };
+		5EDE21FA1907FCBA0017D36E /* Bike.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21F91907FCBA0017D36E /* Bike.m */; };
+		5EDE21FD1907FD380017D36E /* RKLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21FC1907FD380017D36E /* RKLocation.m */; };
+		5EDE21FF1907FDBE0017D36E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDE21FE1907FDBE0017D36E /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +132,14 @@
 		5EDE21E81907DC4C0017D36E /* RecoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecoverViewController.m; path = rekola/RecoverViewController.m; sourceTree = "<group>"; };
 		5EDE21F01907E8840017D36E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = rekola/MapViewController.h; sourceTree = "<group>"; };
 		5EDE21F11907E8840017D36E /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = rekola/MapViewController.m; sourceTree = "<group>"; };
+		5EDE21F31907F6520017D36E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		5EDE21F51907F96E0017D36E /* JSONObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONObject.m; path = rekola/JSONObject.m; sourceTree = "<group>"; };
+		5EDE21F61907F96E0017D36E /* JSONObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONObject.h; path = rekola/JSONObject.h; sourceTree = "<group>"; };
+		5EDE21F81907FCBA0017D36E /* Bike.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bike.h; path = rekola/Bike.h; sourceTree = "<group>"; };
+		5EDE21F91907FCBA0017D36E /* Bike.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bike.m; path = rekola/Bike.m; sourceTree = "<group>"; };
+		5EDE21FB1907FD380017D36E /* RKLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLocation.h; path = rekola/RKLocation.h; sourceTree = "<group>"; };
+		5EDE21FC1907FD380017D36E /* RKLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLocation.m; path = rekola/RKLocation.m; sourceTree = "<group>"; };
+		5EDE21FE1907FDBE0017D36E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +147,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EDE21FF1907FDBE0017D36E /* CoreLocation.framework in Frameworks */,
+				5EDE21F41907F6520017D36E /* MapKit.framework in Frameworks */,
 				5E1DF89E1907BB8100127F56 /* CoreGraphics.framework in Frameworks */,
 				5E1DF8A01907BB8100127F56 /* UIKit.framework in Frameworks */,
 				5E1DF89C1907BB8100127F56 /* Foundation.framework in Frameworks */,
@@ -184,6 +199,8 @@
 		5E1DF89A1907BB8100127F56 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5EDE21FE1907FDBE0017D36E /* CoreLocation.framework */,
+				5EDE21F31907F6520017D36E /* MapKit.framework */,
 				5E1DF89B1907BB8100127F56 /* Foundation.framework */,
 				5E1DF89D1907BB8100127F56 /* CoreGraphics.framework */,
 				5E1DF89F1907BB8100127F56 /* UIKit.framework */,
@@ -324,6 +341,12 @@
 		5E1DF8F51907BF2B00127F56 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5EDE21F61907F96E0017D36E /* JSONObject.h */,
+				5EDE21F51907F96E0017D36E /* JSONObject.m */,
+				5EDE21F81907FCBA0017D36E /* Bike.h */,
+				5EDE21F91907FCBA0017D36E /* Bike.m */,
+				5EDE21FB1907FD380017D36E /* RKLocation.h */,
+				5EDE21FC1907FD380017D36E /* RKLocation.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -483,8 +506,10 @@
 				5E1DF8FD1907BF9700127F56 /* BaseCell.m in Sources */,
 				5E1DF8EF1907BE4700127F56 /* AFURLResponseSerialization.m in Sources */,
 				5E4308081907C2ED00B36CE8 /* UIProgressView+AFNetworking.m in Sources */,
+				5EDE21FA1907FCBA0017D36E /* Bike.m in Sources */,
 				5E1DF8ED1907BE4700127F56 /* AFURLConnectionOperation.m in Sources */,
 				5E43080D1907C62C00B36CE8 /* UIAlertView+CompletionBlock.m in Sources */,
+				5EDE21FD1907FD380017D36E /* RKLocation.m in Sources */,
 				5E1DF8EC1907BE4700127F56 /* AFSecurityPolicy.m in Sources */,
 				5E1DF8EA1907BE4700127F56 /* AFHTTPSessionManager.m in Sources */,
 				5E4308061907C2ED00B36CE8 /* UIButton+AFNetworking.m in Sources */,
@@ -495,6 +520,7 @@
 				5E4308051907C2ED00B36CE8 /* UIAlertView+AFNetworking.m in Sources */,
 				5E43080A1907C2ED00B36CE8 /* UIWebView+AFNetworking.m in Sources */,
 				5E4308041907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				5EDE21F71907F96E0017D36E /* JSONObject.m in Sources */,
 				5E1DF8F01907BE4700127F56 /* AFURLSessionManager.m in Sources */,
 				5EDE21F21907E8840017D36E /* MapViewController.m in Sources */,
 				5E4308091907C2ED00B36CE8 /* UIRefreshControl+AFNetworking.m in Sources */,

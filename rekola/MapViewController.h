@@ -8,6 +8,8 @@
 
 #import "BaseViewController.h"
 
-@interface MapViewController : BaseViewController
+@interface MapViewController : BaseViewController <CLLocationManagerDelegate, MKMapViewDelegate>
+
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;
 
 @end

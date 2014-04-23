@@ -9,6 +9,7 @@
 #import "ContentManager.h"
 #import "APIManager.h"
 #import "LoginViewController.h"
+#import "Bike.h"
 
 NSString *const ContentManagerDidAuthenticateUserNotification = @"ContentManagerDidAuthenticateUserNotification";
 NSString *const ContentManagerWillAuthenticateUserNotification = @"ContentManagerWillAuthenticateUserNotification";
@@ -18,6 +19,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 
 @implementation ContentManager {
     NSOperation *_loginOperation;
+    NSOperation *_bikesOperation;
     
     struct {
         unsigned int authenticating:1;
@@ -67,7 +69,9 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     _loginOperation = [[APIManager manager] POST:@"/accounts/mine/login" parameters:@{@"username": username, @"password": password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [APIManager manager].accessToken = responseObject[@"apiKey"];
         [weakSelf setKeychainObject:username forKey:KeychainUserName];
-        completion(nil);
+        if (completion) {
+            completion(nil);
+        }
         
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         [[[[UIApplication sharedApplication] windows] firstObject] setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"MapViewController"]];
@@ -77,7 +81,9 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         });
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completion(error);
+        if (completion) {
+            completion(error);
+        }
     }];
 }
 
@@ -89,6 +95,27 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     dispatch_async(dispatch_get_main_queue(), ^{
     [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:self userInfo:nil];
     });
+}
+
+#pragma mark - Bikes methods
+
+- (void)bikesWithLocation:(CLLocationCoordinate2D)location completion:(void (^)(NSArray *bikes, NSError *error))completion {
+    //@"/bikes?lat=50.071667&lng=14.433804"
+    [_bikesOperation cancel];
+    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"/bikes?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSMutableArray *bikes = @[].mutableCopy;
+        NSArray *data = responseObject;
+        [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [bikes addObject:[[Bike alloc] initWithDictionary:obj]];
+        }];
+        if (completion) {
+            completion(bikes, nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completion) {
+            completion(nil, error);
+        }
+    }];
 }
 
 @end
