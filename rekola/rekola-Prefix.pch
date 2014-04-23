@@ -14,3 +14,29 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+// Block NSLog for release to make processing faster and avoiding any information abuse.
+#ifndef DEBUG
+#define NSLog(...)
+#endif
+
+// Hardware recognition macros.
+#define IS_RETINA ([[UIScreen mainScreen] scale] == 2.0)
+#define IS_WIDESCREEN ([UIScreen mainScreen].bounds.size.height == 568.0)
+#define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+#define IS_IPHONE ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
+#define IS_IOS_6_OR_LATER (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_5_1)
+#define IS_IOS_7_OR_LATER (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1)
+
+// Color macro.
+#define COLOR(...) _color_dispatcher(__VA_ARGS__, 4, 3, 2, 1)(__VA_ARGS__)
+#define _color_dispatcher(_1, _2, _3, _4, N, ...) _color ## N
+
+#define _color1(c) _color2(c, 1.0)
+#define _color2(c, a) [UIColor colorWithRed:((((c) >> 16) & 0xff) * 1.f / 255.f) \
+                                    green:((((c) >> 8) & 0xff) * 1.f / 255.f) \
+                                    blue:((((c) >> 0) & 0xff) * 1.f / 255.f) alpha:a]
+
+#define _color3(r, g, b) _color4(r, g, b, 1.0)
+#define _color4(r, g, b, a) [UIColor colorWithRed:((float)r / 255.) \ green:((float)g / 255.) \
+                                            blue:((float)b / 255.) alpha:a]
