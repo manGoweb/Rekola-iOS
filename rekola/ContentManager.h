@@ -15,8 +15,9 @@
 
 + (instancetype)manager;
 
-- (void)autologin;
 - (void)logout;
+
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password completion:(void (^)(NSError *error))completion;
 
 @end
 
@@ -30,4 +31,6 @@
 
 extern NSString *const ContentManagerDidAuthenticateUserNotification;
 extern NSString *const ContentManagerWillAuthenticateUserNotification;
-extern NSString *const ContentManagerDidLogoutUserNotification;
+
+extern NSString *const KeychainUserName;
+extern NSString *const KeychainUserPassword;

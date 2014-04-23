@@ -33,6 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSLog(@"controller loaded: %@",NSStringFromClass([self class]));
 }
 
 - (void)viewWillAppear:(BOOL)animated {

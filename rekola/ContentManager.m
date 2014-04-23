@@ -8,12 +8,17 @@
 
 #import "ContentManager.h"
 #import "APIManager.h"
+#import "LoginViewController.h"
 
 NSString *const ContentManagerDidAuthenticateUserNotification = @"ContentManagerDidAuthenticateUserNotification";
 NSString *const ContentManagerWillAuthenticateUserNotification = @"ContentManagerWillAuthenticateUserNotification";
-NSString *const ContentManagerDidLogoutUserNotification = @"ContentManagerDidLogoutUserNotification";
+
+NSString *const KeychainUserName = @"KeychainUserName";
+NSString *const KeychainUserPassword = @"KeychainUserPassword";
 
 @implementation ContentManager {
+    NSOperation *_loginOperation;
+    
     struct {
         unsigned int authenticating:1;
     } _flags;
@@ -50,23 +55,40 @@ NSString *const ContentManagerDidLogoutUserNotification = @"ContentManagerDidLog
 
 #pragma mark - Login / Logout methods
 
-- (void)autologin {
-    if (![APIManager manager].accessToken) {
-        return;
-    }
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password completion:(void (^)(NSError *error))completion {
+    NSParameterAssert(username);
+    NSParameterAssert(password);
     
-    //__weak typeof(self)weakSelf = self;
     _flags.authenticating = 1;
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerWillAuthenticateUserNotification object:self];
     
-    // TODO: login
-    //[[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:weakSelf userInfo:nil];
+    __weak typeof(self)weakSelf = self;
+    [_loginOperation cancel];
+    _loginOperation = [[APIManager manager] POST:@"/accounts/mine/login" parameters:@{@"username": username, @"password": password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [APIManager manager].accessToken = responseObject[@"apiKey"];
+        [weakSelf setKeychainObject:username forKey:KeychainUserName];
+        completion(nil);
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        [[[[UIApplication sharedApplication] windows] firstObject] setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"MapViewController"]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:weakSelf userInfo:nil];
+        });
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completion(error);
+    }];
 }
 
 - (void)logout {
-    [[APIManager manager] setAccessToken:nil];
+    [APIManager manager].accessToken = nil;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    [[[[UIApplication sharedApplication] windows] firstObject] setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"]];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
     [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:self userInfo:nil];
+    });
 }
 
 @end

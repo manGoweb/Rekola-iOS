@@ -14,7 +14,6 @@
 		5E1DF8A81907BB8100127F56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8A71907BB8100127F56 /* main.m */; };
 		5E1DF8AC1907BB8100127F56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8AB1907BB8100127F56 /* AppDelegate.m */; };
 		5E1DF8AF1907BB8100127F56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8AD1907BB8100127F56 /* Main.storyboard */; };
-		5E1DF8B21907BB8100127F56 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8B11907BB8100127F56 /* ViewController.m */; };
 		5E1DF8B41907BB8100127F56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8B31907BB8100127F56 /* Images.xcassets */; };
 		5E1DF8BB1907BB8100127F56 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF8BA1907BB8100127F56 /* XCTest.framework */; };
 		5E1DF8BC1907BB8100127F56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89B1907BB8100127F56 /* Foundation.framework */; };
@@ -43,6 +42,9 @@
 		5E43080A1907C2ED00B36CE8 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4308021907C2ED00B36CE8 /* UIWebView+AFNetworking.m */; };
 		5E43080D1907C62C00B36CE8 /* UIAlertView+CompletionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E43080C1907C62C00B36CE8 /* UIAlertView+CompletionBlock.m */; };
 		5E4308101907C6C600B36CE8 /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E43080F1907C6C600B36CE8 /* ContentManager.m */; };
+		5EDE21E61907DC3F0017D36E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E51907DC3F0017D36E /* LoginViewController.m */; };
+		5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E81907DC4C0017D36E /* RecoverViewController.m */; };
+		5EDE21F21907E8840017D36E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21F11907E8840017D36E /* MapViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,8 +69,6 @@
 		5E1DF8AA1907BB8100127F56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5E1DF8AB1907BB8100127F56 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5E1DF8AE1907BB8100127F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5E1DF8B01907BB8100127F56 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5E1DF8B11907BB8100127F56 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		5E1DF8B31907BB8100127F56 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5E1DF8B91907BB8100127F56 /* rekolaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rekolaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E1DF8BA1907BB8100127F56 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -121,6 +121,12 @@
 		5E43080C1907C62C00B36CE8 /* UIAlertView+CompletionBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertView+CompletionBlock.m"; path = "rekola/UIAlertView+CompletionBlock.m"; sourceTree = "<group>"; };
 		5E43080E1907C6C600B36CE8 /* ContentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContentManager.h; path = rekola/ContentManager.h; sourceTree = "<group>"; };
 		5E43080F1907C6C600B36CE8 /* ContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContentManager.m; path = rekola/ContentManager.m; sourceTree = "<group>"; };
+		5EDE21E41907DC3F0017D36E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = rekola/LoginViewController.h; sourceTree = "<group>"; };
+		5EDE21E51907DC3F0017D36E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = rekola/LoginViewController.m; sourceTree = "<group>"; };
+		5EDE21E71907DC4C0017D36E /* RecoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecoverViewController.h; path = rekola/RecoverViewController.h; sourceTree = "<group>"; };
+		5EDE21E81907DC4C0017D36E /* RecoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecoverViewController.m; path = rekola/RecoverViewController.m; sourceTree = "<group>"; };
+		5EDE21F01907E8840017D36E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = rekola/MapViewController.h; sourceTree = "<group>"; };
+		5EDE21F11907E8840017D36E /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = rekola/MapViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,8 +198,6 @@
 				5E1DF8AA1907BB8100127F56 /* AppDelegate.h */,
 				5E1DF8AB1907BB8100127F56 /* AppDelegate.m */,
 				5E1DF8AD1907BB8100127F56 /* Main.storyboard */,
-				5E1DF8B01907BB8100127F56 /* ViewController.h */,
-				5E1DF8B11907BB8100127F56 /* ViewController.m */,
 				5E1DF8B31907BB8100127F56 /* Images.xcassets */,
 				5E1DF8A21907BB8100127F56 /* Supporting Files */,
 			);
@@ -336,6 +340,12 @@
 		5E1DF8F71907BF3E00127F56 /* View Controllers (Custom) */ = {
 			isa = PBXGroup;
 			children = (
+				5EDE21F01907E8840017D36E /* MapViewController.h */,
+				5EDE21F11907E8840017D36E /* MapViewController.m */,
+				5EDE21E41907DC3F0017D36E /* LoginViewController.h */,
+				5EDE21E51907DC3F0017D36E /* LoginViewController.m */,
+				5EDE21E71907DC4C0017D36E /* RecoverViewController.h */,
+				5EDE21E81907DC4C0017D36E /* RecoverViewController.m */,
 			);
 			name = "View Controllers (Custom)";
 			sourceTree = "<group>";
@@ -466,7 +476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E1DF8E81907BE4700127F56 /* AFHTTPRequestOperation.m in Sources */,
-				5E1DF8B21907BB8100127F56 /* ViewController.m in Sources */,
+				5EDE21E61907DC3F0017D36E /* LoginViewController.m in Sources */,
 				5E1DF8E91907BE4700127F56 /* AFHTTPRequestOperationManager.m in Sources */,
 				5E1DF8EB1907BE4700127F56 /* AFNetworkReachabilityManager.m in Sources */,
 				5E4308031907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -481,10 +491,12 @@
 				5E4308071907C2ED00B36CE8 /* UIImageView+AFNetworking.m in Sources */,
 				5E1DF8EE1907BE4700127F56 /* AFURLRequestSerialization.m in Sources */,
 				5E1DF8FA1907BF7700127F56 /* BaseViewController.m in Sources */,
+				5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */,
 				5E4308051907C2ED00B36CE8 /* UIAlertView+AFNetworking.m in Sources */,
 				5E43080A1907C2ED00B36CE8 /* UIWebView+AFNetworking.m in Sources */,
 				5E4308041907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				5E1DF8F01907BE4700127F56 /* AFURLSessionManager.m in Sources */,
+				5EDE21F21907E8840017D36E /* MapViewController.m in Sources */,
 				5E4308091907C2ED00B36CE8 /* UIRefreshControl+AFNetworking.m in Sources */,
 				5E1DF8AC1907BB8100127F56 /* AppDelegate.m in Sources */,
 				5E4308101907C6C600B36CE8 /* ContentManager.m in Sources */,

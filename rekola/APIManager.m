@@ -9,8 +9,8 @@
 #import "APIManager.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
-NSString *const AppleID = @"missing";
-NSString *const RekolaAPIURLString = @"missing";
+NSString *const AppStoreID = @"missing";
+NSString *const RekolaAPIURLString = @"http://roboclevis.apiary-mock.com";
 
 @implementation APIManager {
     struct {
@@ -42,12 +42,19 @@ NSString *const RekolaAPIURLString = @"missing";
         self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
 
         [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [self.requestSerializer setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Contet-Type"];
+        [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Contet-Type"];
         
         // Prepare network activity indicator for the UIApplication.
         [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     }
     return self;
+}
+
+#pragma mark - Accessors
+
+- (void)setAccessToken:(NSString *)accessToken {
+    _accessToken = accessToken;
+    [self.requestSerializer setValue:_accessToken forHTTPHeaderField:@"X-Api-Key"];
 }
 
 #pragma mark - Private methods
@@ -103,7 +110,7 @@ NSString *const RekolaAPIURLString = @"missing";
                 
                 // TODO: missing app apple id
                 if (buttonIndex != alert.cancelButtonIndex) {
-                    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"itms://itunes.apple.com/cz/app/id%@?mt=8", ApplicationAppStoreAppleID]];
+                    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"itms://itunes.apple.com/cz/app/id%@?mt=8", AppStoreID]];
                     [[UIApplication sharedApplication] openURL:url];
                 }
             }];
