@@ -1,0 +1,484 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5E1DF89C1907BB8100127F56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89B1907BB8100127F56 /* Foundation.framework */; };
+		5E1DF89E1907BB8100127F56 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89D1907BB8100127F56 /* CoreGraphics.framework */; };
+		5E1DF8A01907BB8100127F56 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89F1907BB8100127F56 /* UIKit.framework */; };
+		5E1DF8A61907BB8100127F56 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8A41907BB8100127F56 /* InfoPlist.strings */; };
+		5E1DF8A81907BB8100127F56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8A71907BB8100127F56 /* main.m */; };
+		5E1DF8AC1907BB8100127F56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8AB1907BB8100127F56 /* AppDelegate.m */; };
+		5E1DF8AF1907BB8100127F56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8AD1907BB8100127F56 /* Main.storyboard */; };
+		5E1DF8B21907BB8100127F56 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8B11907BB8100127F56 /* ViewController.m */; };
+		5E1DF8B41907BB8100127F56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8B31907BB8100127F56 /* Images.xcassets */; };
+		5E1DF8BB1907BB8100127F56 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF8BA1907BB8100127F56 /* XCTest.framework */; };
+		5E1DF8BC1907BB8100127F56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89B1907BB8100127F56 /* Foundation.framework */; };
+		5E1DF8BD1907BB8100127F56 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89F1907BB8100127F56 /* UIKit.framework */; };
+		5E1DF8C51907BB8100127F56 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8C31907BB8100127F56 /* InfoPlist.strings */; };
+		5E1DF8C71907BB8100127F56 /* rekolaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8C61907BB8100127F56 /* rekolaTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5E1DF8BE1907BB8100127F56 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E1DF8901907BB8100127F56 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E1DF8971907BB8100127F56;
+			remoteInfo = rekola;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5E1DF8981907BB8100127F56 /* rekola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rekola.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E1DF89B1907BB8100127F56 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5E1DF89D1907BB8100127F56 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5E1DF89F1907BB8100127F56 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5E1DF8A31907BB8100127F56 /* rekola-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "rekola-Info.plist"; sourceTree = "<group>"; };
+		5E1DF8A51907BB8100127F56 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5E1DF8A71907BB8100127F56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5E1DF8A91907BB8100127F56 /* rekola-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "rekola-Prefix.pch"; sourceTree = "<group>"; };
+		5E1DF8AA1907BB8100127F56 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5E1DF8AB1907BB8100127F56 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5E1DF8AE1907BB8100127F56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5E1DF8B01907BB8100127F56 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5E1DF8B11907BB8100127F56 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5E1DF8B31907BB8100127F56 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5E1DF8B91907BB8100127F56 /* rekolaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rekolaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E1DF8BA1907BB8100127F56 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		5E1DF8C21907BB8100127F56 /* rekolaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "rekolaTests-Info.plist"; sourceTree = "<group>"; };
+		5E1DF8C41907BB8100127F56 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5E1DF8C61907BB8100127F56 /* rekolaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rekolaTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5E1DF8951907BB8100127F56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E1DF89E1907BB8100127F56 /* CoreGraphics.framework in Frameworks */,
+				5E1DF8A01907BB8100127F56 /* UIKit.framework in Frameworks */,
+				5E1DF89C1907BB8100127F56 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E1DF8B61907BB8100127F56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E1DF8BB1907BB8100127F56 /* XCTest.framework in Frameworks */,
+				5E1DF8BD1907BB8100127F56 /* UIKit.framework in Frameworks */,
+				5E1DF8BC1907BB8100127F56 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5E1DF88F1907BB8100127F56 = {
+			isa = PBXGroup;
+			children = (
+				5E1DF8A11907BB8100127F56 /* rekola */,
+				5E1DF8C01907BB8100127F56 /* rekolaTests */,
+				5E1DF89A1907BB8100127F56 /* Frameworks */,
+				5E1DF8991907BB8100127F56 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5E1DF8991907BB8100127F56 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5E1DF8981907BB8100127F56 /* rekola.app */,
+				5E1DF8B91907BB8100127F56 /* rekolaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5E1DF89A1907BB8100127F56 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5E1DF89B1907BB8100127F56 /* Foundation.framework */,
+				5E1DF89D1907BB8100127F56 /* CoreGraphics.framework */,
+				5E1DF89F1907BB8100127F56 /* UIKit.framework */,
+				5E1DF8BA1907BB8100127F56 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5E1DF8A11907BB8100127F56 /* rekola */ = {
+			isa = PBXGroup;
+			children = (
+				5E1DF8AA1907BB8100127F56 /* AppDelegate.h */,
+				5E1DF8AB1907BB8100127F56 /* AppDelegate.m */,
+				5E1DF8AD1907BB8100127F56 /* Main.storyboard */,
+				5E1DF8B01907BB8100127F56 /* ViewController.h */,
+				5E1DF8B11907BB8100127F56 /* ViewController.m */,
+				5E1DF8B31907BB8100127F56 /* Images.xcassets */,
+				5E1DF8A21907BB8100127F56 /* Supporting Files */,
+			);
+			path = rekola;
+			sourceTree = "<group>";
+		};
+		5E1DF8A21907BB8100127F56 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5E1DF8A31907BB8100127F56 /* rekola-Info.plist */,
+				5E1DF8A41907BB8100127F56 /* InfoPlist.strings */,
+				5E1DF8A71907BB8100127F56 /* main.m */,
+				5E1DF8A91907BB8100127F56 /* rekola-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5E1DF8C01907BB8100127F56 /* rekolaTests */ = {
+			isa = PBXGroup;
+			children = (
+				5E1DF8C61907BB8100127F56 /* rekolaTests.m */,
+				5E1DF8C11907BB8100127F56 /* Supporting Files */,
+			);
+			path = rekolaTests;
+			sourceTree = "<group>";
+		};
+		5E1DF8C11907BB8100127F56 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5E1DF8C21907BB8100127F56 /* rekolaTests-Info.plist */,
+				5E1DF8C31907BB8100127F56 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5E1DF8971907BB8100127F56 /* rekola */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E1DF8CA1907BB8100127F56 /* Build configuration list for PBXNativeTarget "rekola" */;
+			buildPhases = (
+				5E1DF8941907BB8100127F56 /* Sources */,
+				5E1DF8951907BB8100127F56 /* Frameworks */,
+				5E1DF8961907BB8100127F56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = rekola;
+			productName = rekola;
+			productReference = 5E1DF8981907BB8100127F56 /* rekola.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5E1DF8B81907BB8100127F56 /* rekolaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E1DF8CD1907BB8100127F56 /* Build configuration list for PBXNativeTarget "rekolaTests" */;
+			buildPhases = (
+				5E1DF8B51907BB8100127F56 /* Sources */,
+				5E1DF8B61907BB8100127F56 /* Frameworks */,
+				5E1DF8B71907BB8100127F56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5E1DF8BF1907BB8100127F56 /* PBXTargetDependency */,
+			);
+			name = rekolaTests;
+			productName = rekolaTests;
+			productReference = 5E1DF8B91907BB8100127F56 /* rekolaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5E1DF8901907BB8100127F56 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Martin Banas";
+				TargetAttributes = {
+					5E1DF8971907BB8100127F56 = {
+						DevelopmentTeam = 9L3K6GLV7S;
+					};
+					5E1DF8B81907BB8100127F56 = {
+						TestTargetID = 5E1DF8971907BB8100127F56;
+					};
+				};
+			};
+			buildConfigurationList = 5E1DF8931907BB8100127F56 /* Build configuration list for PBXProject "rekola" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5E1DF88F1907BB8100127F56;
+			productRefGroup = 5E1DF8991907BB8100127F56 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5E1DF8971907BB8100127F56 /* rekola */,
+				5E1DF8B81907BB8100127F56 /* rekolaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5E1DF8961907BB8100127F56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E1DF8B41907BB8100127F56 /* Images.xcassets in Resources */,
+				5E1DF8A61907BB8100127F56 /* InfoPlist.strings in Resources */,
+				5E1DF8AF1907BB8100127F56 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E1DF8B71907BB8100127F56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E1DF8C51907BB8100127F56 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5E1DF8941907BB8100127F56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E1DF8B21907BB8100127F56 /* ViewController.m in Sources */,
+				5E1DF8AC1907BB8100127F56 /* AppDelegate.m in Sources */,
+				5E1DF8A81907BB8100127F56 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5E1DF8B51907BB8100127F56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E1DF8C71907BB8100127F56 /* rekolaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5E1DF8BF1907BB8100127F56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E1DF8971907BB8100127F56 /* rekola */;
+			targetProxy = 5E1DF8BE1907BB8100127F56 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5E1DF8A41907BB8100127F56 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E1DF8A51907BB8100127F56 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5E1DF8AD1907BB8100127F56 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E1DF8AE1907BB8100127F56 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5E1DF8C31907BB8100127F56 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E1DF8C41907BB8100127F56 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5E1DF8C81907BB8100127F56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		5E1DF8C91907BB8100127F56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5E1DF8CB1907BB8100127F56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "rekola/rekola-Prefix.pch";
+				INFOPLIST_FILE = "rekola/rekola-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5E1DF8CC1907BB8100127F56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "rekola/rekola-Prefix.pch";
+				INFOPLIST_FILE = "rekola/rekola-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		5E1DF8CE1907BB8100127F56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/rekola.app/rekola";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "rekola/rekola-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "rekolaTests/rekolaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		5E1DF8CF1907BB8100127F56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/rekola.app/rekola";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "rekola/rekola-Prefix.pch";
+				INFOPLIST_FILE = "rekolaTests/rekolaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5E1DF8931907BB8100127F56 /* Build configuration list for PBXProject "rekola" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E1DF8C81907BB8100127F56 /* Debug */,
+				5E1DF8C91907BB8100127F56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5E1DF8CA1907BB8100127F56 /* Build configuration list for PBXNativeTarget "rekola" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E1DF8CB1907BB8100127F56 /* Debug */,
+				5E1DF8CC1907BB8100127F56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5E1DF8CD1907BB8100127F56 /* Build configuration list for PBXNativeTarget "rekolaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E1DF8CE1907BB8100127F56 /* Debug */,
+				5E1DF8CF1907BB8100127F56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5E1DF8901907BB8100127F56 /* Project object */;
+}
