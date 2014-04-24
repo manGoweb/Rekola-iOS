@@ -13,7 +13,7 @@ NSString *const AppStoreID = @"missing";
 #if defined(REKOLA_DEV)
 NSString *const RekolaAPIURLString = @"http://roboclevis.apiary-mock.com";
 #else
-NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-dev/www/api/";
+NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api";
 #endif
 
 @implementation APIManager {
@@ -43,6 +43,8 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-dev/www/api/
         
         // Custom networking serialized for request and response.
         self.responseSerializer = [AFJSONResponseSerializer serializer];
+        self.requestSerializer = [AFJSONRequestSerializer serializer];
+        
         self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", nil];
 
         [self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];

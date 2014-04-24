@@ -19,6 +19,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 
 @implementation ContentManager {
     NSOperation *_loginOperation;
+    NSOperation *_changePassOperation;
     NSOperation *_bikesOperation;
     
     struct {
@@ -62,13 +63,13 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     NSParameterAssert(password);
     
     _flags.authenticating = 1;
+    [self setKeychainObject:username forKey:KeychainUserName];
     [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerWillAuthenticateUserNotification object:self];
     
     __weak typeof(self)weakSelf = self;
     [_loginOperation cancel];
-    _loginOperation = [[APIManager manager] POST:@"/accounts/mine/login" parameters:@{@"username": username, @"password": password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    _loginOperation = [[APIManager manager] POST:@"accounts/mine/login" parameters:@{@"username": username, @"password": password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [APIManager manager].accessToken = responseObject[@"apiKey"];
-        [weakSelf setKeychainObject:username forKey:KeychainUserName];
         if (completion) {
             completion(nil);
         }
@@ -80,6 +81,21 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
             [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:weakSelf userInfo:nil];
         });
         
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completion) {
+            completion(error);
+        }
+    }];
+}
+
+- (void)changePassword:(NSString *)password completion:(void (^)(NSError *error))completion {
+    NSParameterAssert(password);
+    
+    [_changePassOperation cancel];
+    _changePassOperation = [[APIManager manager] PUT:@"accounts/mine/password" parameters:@{@"newPassword" : password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (completion) {
+            completion(nil);
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
             completion(error);
@@ -102,7 +118,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 - (void)bikesWithLocation:(CLLocationCoordinate2D)location completion:(void (^)(NSArray *bikes, NSError *error))completion {
     //@"/bikes?lat=50.071667&lng=14.433804"
     [_bikesOperation cancel];
-    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"/bikes?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSMutableArray *bikes = @[].mutableCopy;
         NSArray *data = responseObject;
         [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

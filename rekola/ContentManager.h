@@ -15,9 +15,9 @@
 
 + (instancetype)manager;
 
-- (void)logout;
-
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password completion:(void (^)(NSError *error))completion;
+- (void)changePassword:(NSString *)password completion:(void (^)(NSError *error))completion;
+- (void)logout;
 
 - (void)bikesWithLocation:(CLLocationCoordinate2D)location completion:(void (^)(NSArray *bikes, NSError *error))completion;
 
