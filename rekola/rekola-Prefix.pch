@@ -26,6 +26,7 @@
 
     // Shared managers
     #import "ContentManager.h"
+    #import "RKLocationManager.h"
     #import "APIManager.h"
 #endif
 

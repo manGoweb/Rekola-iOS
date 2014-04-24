@@ -25,6 +25,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _segmentedControl.selectedSegmentIndex = 1;
+    
     [self reloadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(usingBikeDidChange) name:ContentManagerDidChangeUsingBikeNotification object:nil];
