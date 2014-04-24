@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, HttpStatusCode) {
     HttpStatusCodeNotFound =                404,
     /// the request could not be actioned as it would result in a conflict with another resource
     HttpStatusCodeConflict =                409,
-    /// There was an uncaught exception in the api, please email support@letslynk.com
+    /// There was an uncaught exception in the api
     HttpStatusCodeInternalServerError =     500,
     /// Force update application
     HttpStatusCodeForceUpdate =             999

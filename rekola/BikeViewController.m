@@ -8,27 +8,22 @@
 
 #import "BikeViewController.h"
 
-@interface BikeViewController ()
-
-@end
-
 @implementation BikeViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)changeTab:(id)sender {
-    if ([_delegate respondsToSelector:@selector(controller:containerWillChangeType:withObject:)]) {
-        [_delegate controller:self containerWillChangeType:ContainerTypeMap withObject:nil];
-    }
+- (IBAction)borrowBike:(id)sender {
+    
+    Bike *bike = [Bike new];
+    bike.bikeCode = @"77";
+    
+    [[ContentManager manager] borrowBike:bike location:CLLocationCoordinate2DMake(0, 0) completion:^(NSString *code, NSError *error) {
+        if (!error) {
+            NSLog(@"%@",code);
+        }
+    }];
 }
 @end

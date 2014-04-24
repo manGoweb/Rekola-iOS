@@ -12,7 +12,8 @@
 @interface BikeViewController : BaseViewController
 
 @property (nonatomic, weak)id<ContainerDelegate>delegate;
+@property (nonatomic, weak) IBOutlet UIButton *borrowButton;
 
-- (IBAction)changeTab:(id)sender;
+- (IBAction)borrowBike:(id)sender;
 
 @end

@@ -44,6 +44,7 @@
 		5E4308101907C6C600B36CE8 /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E43080F1907C6C600B36CE8 /* ContentManager.m */; };
 		5E86CEF119090034001C1382 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEEF19090034001C1382 /* SettingsCell.m */; };
 		5E86CEF719090584001C1382 /* ChangePassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEF519090584001C1382 /* ChangePassViewController.m */; };
+		5E86CF00190936FB001C1382 /* ReturnBikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEFF190936FB001C1382 /* ReturnBikeViewController.m */; };
 		5EDE21E61907DC3F0017D36E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E51907DC3F0017D36E /* LoginViewController.m */; };
 		5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E81907DC4C0017D36E /* RecoverViewController.m */; };
 		5EDE21F21907E8840017D36E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21F11907E8840017D36E /* MapViewController.m */; };
@@ -136,6 +137,8 @@
 		5E86CEF019090034001C1382 /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsCell.h; path = rekola/SettingsCell.h; sourceTree = "<group>"; };
 		5E86CEF519090584001C1382 /* ChangePassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangePassViewController.m; path = rekola/ChangePassViewController.m; sourceTree = "<group>"; };
 		5E86CEF619090584001C1382 /* ChangePassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangePassViewController.h; path = rekola/ChangePassViewController.h; sourceTree = "<group>"; };
+		5E86CEFE190936FB001C1382 /* ReturnBikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReturnBikeViewController.h; path = rekola/ReturnBikeViewController.h; sourceTree = "<group>"; };
+		5E86CEFF190936FB001C1382 /* ReturnBikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReturnBikeViewController.m; path = rekola/ReturnBikeViewController.m; sourceTree = "<group>"; };
 		5EDE21E41907DC3F0017D36E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = rekola/LoginViewController.h; sourceTree = "<group>"; };
 		5EDE21E51907DC3F0017D36E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = rekola/LoginViewController.m; sourceTree = "<group>"; };
 		5EDE21E71907DC4C0017D36E /* RecoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecoverViewController.h; path = rekola/RecoverViewController.h; sourceTree = "<group>"; };
@@ -386,6 +389,8 @@
 			children = (
 				5EDE2214190819D70017D36E /* BikeViewController.h */,
 				5EDE2215190819D70017D36E /* BikeViewController.m */,
+				5E86CEFE190936FB001C1382 /* ReturnBikeViewController.h */,
+				5E86CEFF190936FB001C1382 /* ReturnBikeViewController.m */,
 				5EDE21F01907E8840017D36E /* MapViewController.h */,
 				5EDE21F11907E8840017D36E /* MapViewController.m */,
 				5EDE2211190819C60017D36E /* ProfileViewController.h */,
@@ -544,6 +549,7 @@
 				5E4308071907C2ED00B36CE8 /* UIImageView+AFNetworking.m in Sources */,
 				5E1DF8EE1907BE4700127F56 /* AFURLRequestSerialization.m in Sources */,
 				5E1DF8FA1907BF7700127F56 /* BaseViewController.m in Sources */,
+				5E86CF00190936FB001C1382 /* ReturnBikeViewController.m in Sources */,
 				5EDE22101908151D0017D36E /* ContainerViewController.m in Sources */,
 				5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */,
 				5E4308051907C2ED00B36CE8 /* UIAlertView+AFNetworking.m in Sources */,

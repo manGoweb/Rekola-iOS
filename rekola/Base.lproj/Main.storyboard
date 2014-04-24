@@ -176,6 +176,14 @@
                                     <segue destination="Tyg-uO-REe" kind="embed" identifier="BikeEmbedSegue" id="2ci-bO-hSG"/>
                                 </connections>
                             </containerView>
+                            <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jhV-K1-aHD">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="czh-3u-7sd" kind="embed" identifier="ReturnBikeEmbedSegue" id="8fe-IS-vsU"/>
+                                </connections>
+                            </containerView>
                             <containerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EvM-LK-BaV">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -195,10 +203,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="jhV-K1-aHD" secondAttribute="trailing" id="1zH-KO-Ag0"/>
                             <constraint firstAttribute="trailing" secondItem="2O9-aQ-obb" secondAttribute="trailing" id="4mg-Jv-8Si"/>
+                            <constraint firstItem="jhV-K1-aHD" firstAttribute="leading" secondItem="pht-Rk-0Ik" secondAttribute="leading" id="Mnb-wW-cA3"/>
                             <constraint firstItem="Sqb-w4-Z1X" firstAttribute="leading" secondItem="pht-Rk-0Ik" secondAttribute="leading" id="PDq-Rw-SDi"/>
                             <constraint firstItem="2O9-aQ-obb" firstAttribute="leading" secondItem="pht-Rk-0Ik" secondAttribute="leading" id="RKf-vH-RPc"/>
                             <constraint firstItem="Sqb-w4-Z1X" firstAttribute="top" secondItem="fle-pG-gSJ" secondAttribute="bottom" id="SSq-zz-JNB"/>
+                            <constraint firstItem="nZZ-5Y-hk4" firstAttribute="top" secondItem="jhV-K1-aHD" secondAttribute="bottom" id="UCr-MT-LiS"/>
                             <constraint firstAttribute="bottom" secondItem="Sqb-w4-Z1X" secondAttribute="bottom" id="dDE-ib-uFR"/>
                             <constraint firstAttribute="bottom" secondItem="2O9-aQ-obb" secondAttribute="bottom" id="mJi-ne-HOY"/>
                             <constraint firstItem="EvM-LK-BaV" firstAttribute="leading" secondItem="pht-Rk-0Ik" secondAttribute="leading" id="oqV-1p-wKc"/>
@@ -206,6 +217,7 @@
                             <constraint firstAttribute="trailing" secondItem="Sqb-w4-Z1X" secondAttribute="trailing" id="ssi-Mu-Y1z"/>
                             <constraint firstItem="EvM-LK-BaV" firstAttribute="top" secondItem="fle-pG-gSJ" secondAttribute="bottom" id="tc5-OO-tya"/>
                             <constraint firstAttribute="trailing" secondItem="EvM-LK-BaV" secondAttribute="trailing" id="uVc-jI-epf"/>
+                            <constraint firstItem="jhV-K1-aHD" firstAttribute="top" secondItem="fle-pG-gSJ" secondAttribute="bottom" id="veB-sx-0WU"/>
                             <constraint firstItem="nZZ-5Y-hk4" firstAttribute="top" secondItem="EvM-LK-BaV" secondAttribute="bottom" id="w5v-Q0-ZLd"/>
                         </constraints>
                     </view>
@@ -245,19 +257,22 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIQ-hr-lNX">
-                                <rect key="frame" x="137" y="237" width="46" height="30"/>
+                                <rect key="frame" x="119" y="237" width="84" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" title="Borrow Bike">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="changeTab:" destination="gVf-yf-Skl" eventType="touchUpInside" id="Rmt-uX-EiF"/>
+                                    <action selector="borrowBike:" destination="gVf-yf-Skl" eventType="touchUpInside" id="7ZA-vd-6U6"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="rhX-kB-ArC"/>
+                    <connections>
+                        <outlet property="borrowButton" destination="uIQ-hr-lNX" id="wn8-pJ-yPJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hBY-Mo-w5H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -477,6 +492,40 @@
             </objects>
             <point key="canvasLocation" x="2066" y="809"/>
         </scene>
+        <!--Return Bike View Controller-->
+        <scene sceneID="vpZ-tu-B7k">
+            <objects>
+                <viewController storyboardIdentifier="ReturnBikeViewController" id="6sv-ck-FHF" customClass="ReturnBikeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="XXh-GN-tHj"/>
+                        <viewControllerLayoutGuide type="bottom" id="JvU-zx-gmV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="by8-dg-jGX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9x-BS-L4o">
+                                <rect key="frame" x="99" y="237" width="122" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Return Bike">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="returnBike:" destination="6sv-ck-FHF" eventType="touchUpInside" id="BvE-rs-id2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="A6b-jb-qfe"/>
+                    <connections>
+                        <outlet property="returnButton" destination="k9x-BS-L4o" id="CBF-Lw-5Od"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="URl-ua-62s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2592" y="-708"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="xi9-jB-HFr">
             <objects>
@@ -495,6 +544,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UDa-0C-wBz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2066" y="62"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="UYb-tD-u4P">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="czh-3u-7sd" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QVk-Tm-KRm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="6sv-ck-FHF" kind="relationship" relationship="rootViewController" id="Eth-9i-NWv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yn7-Wn-MoX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2066" y="-708"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -19,6 +19,8 @@
 @property (nonatomic, assign) BOOL operational;
 @property (nonatomic, strong) RKLocation *location;
 @property (nonatomic, strong) NSString *lastSeen;
+@property (nonatomic, strong) NSString *bikeCode;
+@property (nonatomic, strong) NSString *lockCode;
 
 // Title and subtitle for use by selection UI.
 @property (nonatomic, readonly, copy) NSString *title;

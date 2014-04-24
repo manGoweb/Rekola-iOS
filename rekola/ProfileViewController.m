@@ -76,6 +76,7 @@
     if (buttonIndex == 0) {
         [[ContentManager manager] logout];
     }
+    [_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:YES];
 }
 
 @end

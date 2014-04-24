@@ -10,27 +10,33 @@
 #import "BikeViewController.h"
 #import "ProfileViewController.h"
 #import "MapViewController.h"
+#import "ReturnBikeViewController.h"
 
 @implementation ContainerViewController {
     MapViewController *_mapViewController;
     ProfileViewController *_profileViewController;
     BikeViewController *_bikeViewController;
+    ReturnBikeViewController *_returnBikeController;
 }
 
-- (void)viewDidLoad
-{
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ContentManagerDidChangeUsingBikeNotification object:nil];
+}
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self reloadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(usingBikeDidChange) name:ContentManagerDidChangeUsingBikeNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self reloadUI];
 }
 
 - (void)reloadData {
-    [_segmentedControl setTitle:NSLocalizedString(@"Borrow", @"Title in segmented control") forSegmentAtIndex:0];
+    [_segmentedControl setTitle:[ContentManager manager].usingBike? NSLocalizedString(@"Return", @"Title in segmented control") : NSLocalizedString(@"Borrow", @"Title in segmented control") forSegmentAtIndex:0];
     [_segmentedControl setTitle:NSLocalizedString(@"Find", @"Title in segmented control") forSegmentAtIndex:1];
     [_segmentedControl setTitle:NSLocalizedString(@"Profile", @"Title in segmented control") forSegmentAtIndex:2];
 }
@@ -52,6 +58,11 @@
         UINavigationController *nav = segue.destinationViewController;
         _profileViewController = (ProfileViewController *)nav.topViewController;
         _profileViewController.delegate = self;
+    
+    } else if ([segue.identifier isEqualToString:@"ReturnBikeEmbedSegue"]) {
+        UINavigationController *nav = segue.destinationViewController;
+        _returnBikeController = (ReturnBikeViewController *)nav.topViewController;
+        _returnBikeController.delegate = self;
     }
 }
 
@@ -63,20 +74,34 @@
 
 #pragma mark - Private methods
 
+- (void)usingBikeDidChange {
+    [self reloadData];
+}
+
 - (void)reloadUI {
     [self.view endEditing:YES];
     
     if (_segmentedControl.selectedSegmentIndex == 0) {
-        _bikeViewController.navigationController.view.superview.hidden = NO;
+        if ([ContentManager manager].usingBike != nil) {
+            _returnBikeController.navigationController.view.superview.hidden = NO;
+            _bikeViewController.navigationController.view.superview.hidden = YES;
+            
+        } else {
+            _returnBikeController.navigationController.view.superview.hidden = YES;
+            _bikeViewController.navigationController.view.superview.hidden = NO;
+        }
+        
         _mapViewController.navigationController.view.superview.hidden = YES;
         _profileViewController.navigationController.view.superview.hidden = YES;
         
     } else if (_segmentedControl.selectedSegmentIndex == 1){
+        _returnBikeController.navigationController.view.superview.hidden = NO;
         _bikeViewController.navigationController.view.superview.hidden = YES;
         _mapViewController.navigationController.view.superview.hidden = NO;
         _profileViewController.navigationController.view.superview.hidden = YES;
         
     } else {
+        _returnBikeController.navigationController.view.superview.hidden = NO;
         _bikeViewController.navigationController.view.superview.hidden = YES;
         _mapViewController.navigationController.view.superview.hidden = YES;
         _profileViewController.navigationController.view.superview.hidden = NO;

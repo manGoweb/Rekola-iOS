@@ -22,6 +22,9 @@
         JSON_PARSE_BOOL(_operational, @"operational");
         JSON_PARSE_OBJECT(_location, @"location", [RKLocation class])
         
+        JSON_PARSE_STRING(_bikeCode, @"bikeCode");
+        JSON_PARSE_STRING(_lockCode, @"lockCode");
+        
         _title = _name;
         _subtitle = _bikeDescription;
         _coordinate = _location.coordinate;
