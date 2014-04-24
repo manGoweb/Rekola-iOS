@@ -14,15 +14,6 @@
 
 @implementation BikeViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -35,4 +26,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)changeTab:(id)sender {
+    if ([_delegate respondsToSelector:@selector(controller:containerWillChangeType:withObject:)]) {
+        [_delegate controller:self containerWillChangeType:ContainerTypeMap withObject:nil];
+    }
+}
 @end

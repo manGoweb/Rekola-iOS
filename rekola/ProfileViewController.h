@@ -1,5 +1,5 @@
 //
-//  MapViewController.h
+//  ProfileViewController.h
 //  rekola
 //
 //  Created by Martin Banas on 23/04/14.
@@ -9,9 +9,9 @@
 #import "BaseViewController.h"
 #import "ContainerDelegate.h"
 
-@interface MapViewController : BaseViewController <CLLocationManagerDelegate, MKMapViewDelegate>
+@interface ProfileViewController : BaseViewController <UIActionSheetDelegate>
 
 @property (nonatomic, weak)id<ContainerDelegate>delegate;
-@property (nonatomic, weak) IBOutlet MKMapView *mapView;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @end

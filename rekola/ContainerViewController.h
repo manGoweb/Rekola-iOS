@@ -7,8 +7,9 @@
 //
 
 #import "BaseViewController.h"
+#import "ContainerDelegate.h"
 
-@interface ContainerViewController : BaseViewController
+@interface ContainerViewController : BaseViewController <ContainerDelegate>
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl *segmentedControl;
 

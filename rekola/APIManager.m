@@ -10,7 +10,11 @@
 #import "AFNetworkActivityIndicatorManager.h"
 
 NSString *const AppStoreID = @"missing";
+#if defined(REKOLA_DEV)
 NSString *const RekolaAPIURLString = @"http://roboclevis.apiary-mock.com";
+#else
+NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-dev/www/api/";
+#endif
 
 @implementation APIManager {
     struct {
@@ -97,8 +101,12 @@ NSString *const RekolaAPIURLString = @"http://roboclevis.apiary-mock.com";
             NSLog(@"Something went wrong on server!");
             
         } else if (operation.response.statusCode == HttpStatusCodeUnauthorize) {
-            // the auth token is no longer valid, clear it
-            NSLog(@"The auth token is no longer valid");
+            // the auth token is not valid, clear it
+            NSLog(@"The auth token is not valid");
+            if (_accessToken != nil) {
+                _accessToken = nil;
+                [[ContentManager manager] logout];
+            }
             
         } else if (!_flags.handlingUpdate && operation.response.statusCode == HttpStatusCodeForceUpdate) {
             
