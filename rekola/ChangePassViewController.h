@@ -9,15 +9,15 @@
 #import "BaseViewController.h"
 
 @interface ChangePassViewController : BaseViewController <UITextFieldDelegate>
-/*
+
 @property (nonatomic, weak) IBOutlet UIView *contentView;
 @property (nonatomic, weak) IBOutlet UITextField *oldPassField;
-@property (nonatomic, weak) IBOutlet UITextField *newPassField;
-@property (nonatomic, weak) IBOutlet UITextField *newRePassField;
+@property (nonatomic, weak) IBOutlet UITextField *passField;
+@property (nonatomic, weak) IBOutlet UITextField *rePassField;
 @property (nonatomic, weak) IBOutlet UIButton *changePassButton;
 
 - (IBAction)changePass:(id)sender;
 - (IBAction)textFieldDidChange:(UITextField *)textField;
 - (IBAction)popBack:(id)sender;
-*/
+
 @end

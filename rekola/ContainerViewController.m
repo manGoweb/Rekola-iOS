@@ -64,6 +64,8 @@
 #pragma mark - Private methods
 
 - (void)reloadUI {
+    [self.view endEditing:YES];
+    
     if (_segmentedControl.selectedSegmentIndex == 0) {
         _bikeViewController.navigationController.view.superview.hidden = NO;
         _mapViewController.navigationController.view.superview.hidden = YES;

@@ -9,15 +9,15 @@
 #import "ChangePassViewController.h"
 
 @implementation ChangePassViewController
-/*
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     _changePassButton.enabled = NO;
     _oldPassField.placeholder = NSLocalizedString(@"old password", nil);
-    _newPassField.placeholder = NSLocalizedString(@"new password", nil);
-    _newRePassField.placeholder = NSLocalizedString(@"new password again", nil);
+    _passField.placeholder = NSLocalizedString(@"new password", nil);
+    _rePassField.placeholder = NSLocalizedString(@"new password again", nil);
     
     [_changePassButton setTitle:NSLocalizedString(@"Change", nil) forState:UIControlStateNormal];
 }
@@ -30,27 +30,34 @@
 #pragma mark - Actions
 
 - (void)changePass:(id)sender {
-    if ([_newPassField.text isEqualToString:_newRePassField.text]) {
-        
+    
+    if ([_passField.text isEqualToString:_rePassField.text]) {
+    
+        [self.view endEditing:YES];
         _contentView.userInteractionEnabled = NO;
+        
         __weak __typeof(self)weakSelf = self;
-        [[ContentManager manager] changePassword:_newPassField.text completion:^(NSError *error) {
+        [[ContentManager manager] changePassword:_passField.text completion:^(NSError *error) {
             if (weakSelf) {
                 __strong __typeof(weakSelf)strongSelf = weakSelf;
                 if (error) {
                     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
                     weakSelf.oldPassField.text = nil;
-                    weakSelf.newPassField.text = nil;
-                    weakSelf.newRePassField.text = nil;
+                    weakSelf.passField.text = nil;
+                    weakSelf.rePassField.text = nil;
+                    
+                } else {
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
                 }
                 strongSelf->_contentView.userInteractionEnabled = YES;
             }
         }];
     } else {
+        // TODO:
 //        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Incorrect Name or Password", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
         
-        _newRePassField.text = nil;
-        _newRePassField.text = nil;
+        _passField.text = nil;
+        _rePassField.text = nil;
     }
 }
 
@@ -63,9 +70,9 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     if (textField == _oldPassField) {
-        [_newPassField becomeFirstResponder];
-    } else if (textField == _newPassField) {
-        [_newRePassField becomeFirstResponder];
+        [_passField becomeFirstResponder];
+    } else if (textField == _passField) {
+        [_rePassField becomeFirstResponder];
     } else {
         [textField resignFirstResponder];
     }
@@ -73,8 +80,7 @@
 }
 
 - (IBAction)textFieldDidChange:(UITextField *)textField {
-    _changePassButton.enabled = (_oldPassField.text.length > 0 && _newPassField.text.length > 0 && _newRePassField.text.length > 0);
+    _changePassButton.enabled = (_oldPassField.text.length > 0 && _passField.text.length > 0 && _rePassField.text.length > 0);
 }
- */
 
 @end
