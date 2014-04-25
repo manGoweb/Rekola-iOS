@@ -108,8 +108,7 @@
     
     if (_needsClusturing || MKMapRectIsNull(_lastMapRect) || [self mapDidZoom] || [self mapDidMove]) {
 
-        NSMutableArray *annotations = [[_allAnnotations allObjects] mutableCopy];
-        //[self annotationsForVisibleRect:[_allAnnotations allObjects]].mutableCopy;
+        NSMutableArray *annotations = [self annotationsForVisibleRect:[_allAnnotations allObjects]].mutableCopy;
         NSArray *clusteredAnnotations = nil;
         
         if (_clusteringEnabled && (self.region.span.longitudeDelta > _minClusterDelta)) {
@@ -158,8 +157,8 @@
     
     NSMutableArray *annotations = @[].mutableCopy;
     
-    CLLocationDistance a = self.region.span.latitudeDelta / 2.0;
-    CLLocationDistance b = self.region.span.longitudeDelta / 2.0;
+    CLLocationDistance a = self.region.span.latitudeDelta / 4;
+    CLLocationDistance b = self.region.span.longitudeDelta / 4;
     CLLocationDistance radius = sqrt(pow(a, 2.0) + pow(b, 2.0));
     
     for (id<MKAnnotation> annotation in originAnnotations) {
