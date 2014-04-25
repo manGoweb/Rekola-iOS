@@ -8,10 +8,11 @@
 
 #import "BaseViewController.h"
 #import "ContainerDelegate.h"
+#import "RKMapView.h"
 
 @interface MapViewController : BaseViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
 @property (nonatomic, weak)id<ContainerDelegate>delegate;
-@property (nonatomic, weak) IBOutlet MKMapView *mapView;
+@property (nonatomic, weak) IBOutlet RKMapView *mapView;
 
 @end

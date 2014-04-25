@@ -88,26 +88,30 @@
         if ([ContentManager manager].usingBike != nil) {
             _returnBikeController.navigationController.view.superview.hidden = NO;
             _bikeViewController.navigationController.view.superview.hidden = YES;
+            [_returnBikeController reloadData];
             
         } else {
             _returnBikeController.navigationController.view.superview.hidden = YES;
             _bikeViewController.navigationController.view.superview.hidden = NO;
+            [_bikeViewController reloadData];
         }
         
         _mapViewController.navigationController.view.superview.hidden = YES;
         _profileViewController.navigationController.view.superview.hidden = YES;
         
     } else if (_segmentedControl.selectedSegmentIndex == 1){
-        _returnBikeController.navigationController.view.superview.hidden = NO;
+        _returnBikeController.navigationController.view.superview.hidden = YES;
         _bikeViewController.navigationController.view.superview.hidden = YES;
         _mapViewController.navigationController.view.superview.hidden = NO;
         _profileViewController.navigationController.view.superview.hidden = YES;
+        [_mapViewController reloadData];
         
     } else {
-        _returnBikeController.navigationController.view.superview.hidden = NO;
+        _returnBikeController.navigationController.view.superview.hidden = YES;
         _bikeViewController.navigationController.view.superview.hidden = YES;
         _mapViewController.navigationController.view.superview.hidden = YES;
         _profileViewController.navigationController.view.superview.hidden = NO;
+        [_profileViewController reloadData];
     }
 }
 
@@ -116,6 +120,10 @@
 - (void)controller:(UIViewController *)controller containerWillChangeType:(ContainerType)type withObject:(id)object {
     
     _segmentedControl.selectedSegmentIndex = type;
+    if (type == ContainerTypeBike) {
+        _bikeViewController.bikeDetail = object;
+    }
+    
     [self reloadUI];
 }
 

@@ -46,6 +46,8 @@
 		5E86CEF719090584001C1382 /* ChangePassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEF519090584001C1382 /* ChangePassViewController.m */; };
 		5E86CF00190936FB001C1382 /* ReturnBikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEFF190936FB001C1382 /* ReturnBikeViewController.m */; };
 		5E86CF0E19094F44001C1382 /* RKLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CF0D19094F44001C1382 /* RKLocationManager.m */; };
+		5E86CF20190A5BF2001C1382 /* RKAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CF1F190A5BF2001C1382 /* RKAnnotation.m */; };
+		5E86CF23190A5C06001C1382 /* RKMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CF22190A5C06001C1382 /* RKMapView.m */; };
 		5EDE21E61907DC3F0017D36E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E51907DC3F0017D36E /* LoginViewController.m */; };
 		5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E81907DC4C0017D36E /* RecoverViewController.m */; };
 		5EDE21F21907E8840017D36E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21F11907E8840017D36E /* MapViewController.m */; };
@@ -142,6 +144,10 @@
 		5E86CEFF190936FB001C1382 /* ReturnBikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReturnBikeViewController.m; path = rekola/ReturnBikeViewController.m; sourceTree = "<group>"; };
 		5E86CF0C19094F44001C1382 /* RKLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLocationManager.h; path = rekola/RKLocationManager.h; sourceTree = "<group>"; };
 		5E86CF0D19094F44001C1382 /* RKLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKLocationManager.m; path = rekola/RKLocationManager.m; sourceTree = "<group>"; };
+		5E86CF1E190A5BF2001C1382 /* RKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKAnnotation.h; path = rekola/RKAnnotation.h; sourceTree = "<group>"; };
+		5E86CF1F190A5BF2001C1382 /* RKAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKAnnotation.m; path = rekola/RKAnnotation.m; sourceTree = "<group>"; };
+		5E86CF21190A5C06001C1382 /* RKMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKMapView.h; path = rekola/RKMapView.h; sourceTree = "<group>"; };
+		5E86CF22190A5C06001C1382 /* RKMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RKMapView.m; path = rekola/RKMapView.m; sourceTree = "<group>"; };
 		5EDE21E41907DC3F0017D36E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = rekola/LoginViewController.h; sourceTree = "<group>"; };
 		5EDE21E51907DC3F0017D36E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = rekola/LoginViewController.m; sourceTree = "<group>"; };
 		5EDE21E71907DC4C0017D36E /* RecoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecoverViewController.h; path = rekola/RecoverViewController.h; sourceTree = "<group>"; };
@@ -347,6 +353,7 @@
 		5E1DF8F31907BF1400127F56 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				5E86CF1D190A5BD7001C1382 /* RKMap */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -433,6 +440,17 @@
 			);
 			name = "UIKit+AFNetworking";
 			path = "libraries/AFNetworking/UIKit+AFNetworking";
+			sourceTree = "<group>";
+		};
+		5E86CF1D190A5BD7001C1382 /* RKMap */ = {
+			isa = PBXGroup;
+			children = (
+				5E86CF1E190A5BF2001C1382 /* RKAnnotation.h */,
+				5E86CF1F190A5BF2001C1382 /* RKAnnotation.m */,
+				5E86CF21190A5C06001C1382 /* RKMapView.h */,
+				5E86CF22190A5C06001C1382 /* RKMapView.m */,
+			);
+			name = RKMap;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -552,12 +570,14 @@
 				5E1DF8EC1907BE4700127F56 /* AFSecurityPolicy.m in Sources */,
 				5E1DF8EA1907BE4700127F56 /* AFHTTPSessionManager.m in Sources */,
 				5E4308061907C2ED00B36CE8 /* UIButton+AFNetworking.m in Sources */,
+				5E86CF20190A5BF2001C1382 /* RKAnnotation.m in Sources */,
 				5E4308071907C2ED00B36CE8 /* UIImageView+AFNetworking.m in Sources */,
 				5E1DF8EE1907BE4700127F56 /* AFURLRequestSerialization.m in Sources */,
 				5E1DF8FA1907BF7700127F56 /* BaseViewController.m in Sources */,
 				5E86CF00190936FB001C1382 /* ReturnBikeViewController.m in Sources */,
 				5EDE22101908151D0017D36E /* ContainerViewController.m in Sources */,
 				5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */,
+				5E86CF23190A5C06001C1382 /* RKMapView.m in Sources */,
 				5E4308051907C2ED00B36CE8 /* UIAlertView+AFNetworking.m in Sources */,
 				5E43080A1907C2ED00B36CE8 /* UIWebView+AFNetworking.m in Sources */,
 				5E4308041907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m in Sources */,

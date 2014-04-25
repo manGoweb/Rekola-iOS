@@ -8,6 +8,7 @@
 
 #import "JSONObject.h"
 #import "RKLocation.h"
+#import "RKAnnotation.h"
 
 @interface Bike : JSONObject <MKAnnotation>
 
