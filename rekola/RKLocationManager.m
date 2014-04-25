@@ -9,6 +9,7 @@
 #import "RKLocationManager.h"
 
 NSString *const RKLocationManagerDidChangeUserLocationNotification = @"RKLocationManagerDidChangeUserLocationNotification";
+NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification = @"RKLocationManagerDidChangeAuthorizationStatusNotification";
 
 @interface RKLocationManager () <CLLocationManagerDelegate>
 @end
@@ -37,7 +38,7 @@ NSString *const RKLocationManagerDidChangeUserLocationNotification = @"RKLocatio
     if (self) {
         _locationManager = [[CLLocationManager alloc] init];
 		_locationManager.delegate = self;
-        _locationManager.distanceFilter = kCLDistanceFilterNone;
+        _locationManager.distanceFilter = 5;
         _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         _locationManager.headingOrientation = CLDeviceOrientationPortrait;
     }
@@ -109,12 +110,10 @@ NSString *const RKLocationManagerDidChangeUserLocationNotification = @"RKLocatio
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 	CLLocation *latestLocation = [locations lastObject];
-	
-    if (latestLocation.horizontalAccuracy >= 100) {
+    
+    if (latestLocation.horizontalAccuracy >= 50) {
         _currentLocation = latestLocation;
         _lastKnownLocation = latestLocation;
-        
-        NSLog(@"Location: lat:%f lng:%f",_currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:RKLocationManagerDidChangeUserLocationNotification object:nil];
     }
@@ -124,14 +123,10 @@ NSString *const RKLocationManagerDidChangeUserLocationNotification = @"RKLocatio
 	NSLog(@"LocationManager: manager did fail with error: %@", error);
 	
 	_currentLocation = nil;
-    // TODO: report
-	//[self reportChangeToDelegates:YES];
 }
 
-- (void) locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
+- (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
 	_currentHeading = newHeading;
-    
-    // TODO: report
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
@@ -139,7 +134,8 @@ NSString *const RKLocationManagerDidChangeUserLocationNotification = @"RKLocatio
 	if (_shouldStart) {
 		[self startTracking];
 	}
-    // TODO: report
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:RKLocationManagerDidChangeAuthorizationStatusNotification object:nil];
 }
 
 

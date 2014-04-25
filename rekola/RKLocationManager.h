@@ -23,3 +23,4 @@
 @end
 
 extern NSString *const RKLocationManagerDidChangeUserLocationNotification;
+extern NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification;
