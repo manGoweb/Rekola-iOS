@@ -34,7 +34,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hbd-xC-Z54" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="949" y="126"/>
+            <point key="canvasLocation" x="1557" y="-2"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -121,6 +121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1017" y="-2"/>
         </scene>
         <!--Map View Controller-->
         <scene sceneID="ild-a9-Ex4">
@@ -141,10 +142,23 @@
                                     <outlet property="delegate" destination="yff-8R-Vj8" id="86y-n6-6Dj"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQx-f9-lNk">
+                                <rect key="frame" x="230" y="450" width="70" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Location">
+                                    <color key="titleColor" red="0.13018230550000001" green="0.33567699159999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="zoomToUserLocation:" destination="yff-8R-Vj8" eventType="touchUpInside" id="XOE-FJ-D5t"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="chG-UP-Lcb" firstAttribute="top" secondItem="rQx-f9-lNk" secondAttribute="bottom" constant="20" id="412-DU-Lq7"/>
                             <constraint firstItem="RYn-Ta-zOX" firstAttribute="top" secondItem="0BW-LF-Nvj" secondAttribute="bottom" id="UZT-I1-cy4"/>
+                            <constraint firstAttribute="trailing" secondItem="rQx-f9-lNk" secondAttribute="trailing" constant="20" id="aHe-YE-VPa"/>
                             <constraint firstItem="RYn-Ta-zOX" firstAttribute="leading" secondItem="Gx8-OE-QpG" secondAttribute="leading" id="dfb-Eb-Av6"/>
                             <constraint firstAttribute="trailing" secondItem="RYn-Ta-zOX" secondAttribute="trailing" id="fU3-sU-ETO"/>
                             <constraint firstItem="chG-UP-Lcb" firstAttribute="top" secondItem="RYn-Ta-zOX" secondAttribute="bottom" id="r70-Ol-jCZ"/>
@@ -153,11 +167,59 @@
                     <navigationItem key="navigationItem" id="6S4-9h-Ko6"/>
                     <connections>
                         <outlet property="mapView" destination="RYn-Ta-zOX" id="CRI-9p-HdC"/>
+                        <outlet property="zoomButton" destination="rQx-f9-lNk" id="dnM-fC-BxS"/>
+                        <segue destination="kjL-TW-p8o" kind="push" identifier="BikeDetailSegue" id="VKJ-1s-Sbg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kCv-by-WfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2592" y="809"/>
+            <point key="canvasLocation" x="2848" y="809"/>
+        </scene>
+        <!--Bike Detail View Controller-->
+        <scene sceneID="WC2-vw-DL7">
+            <objects>
+                <viewController id="kjL-TW-p8o" customClass="BikeDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2Hg-gl-yWe"/>
+                        <viewControllerLayoutGuide type="bottom" id="38p-Yf-EFM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KHn-0y-vBM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f5T-8I-gpg">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
+                                <connections>
+                                    <outlet property="delegate" destination="kjL-TW-p8o" id="3aM-3j-X5o"/>
+                                </connections>
+                            </webView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="t1b-vV-2QY">
+                                <rect key="frame" x="150" y="242" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="f5T-8I-gpg" secondAttribute="trailing" id="K0m-hJ-ZBh"/>
+                            <constraint firstItem="f5T-8I-gpg" firstAttribute="leading" secondItem="KHn-0y-vBM" secondAttribute="leading" id="Vq7-Y6-Qq0"/>
+                            <constraint firstItem="38p-Yf-EFM" firstAttribute="top" secondItem="f5T-8I-gpg" secondAttribute="bottom" id="Xkh-it-NKF"/>
+                            <constraint firstAttribute="centerY" secondItem="t1b-vV-2QY" secondAttribute="centerY" id="duK-n9-wAG"/>
+                            <constraint firstAttribute="centerX" secondItem="t1b-vV-2QY" secondAttribute="centerX" id="zWg-zg-GoA"/>
+                            <constraint firstItem="f5T-8I-gpg" firstAttribute="top" secondItem="2Hg-gl-yWe" secondAttribute="bottom" id="zvQ-QX-gfr"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="tJp-zw-sdp"/>
+                    <connections>
+                        <outlet property="indicatorView" destination="t1b-vV-2QY" id="A9e-Ey-J3E"/>
+                        <outlet property="webView" destination="f5T-8I-gpg" id="EA5-ZZ-CwK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="H1T-4D-CPw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3364" y="809"/>
         </scene>
         <!--Container View Controller-->
         <scene sceneID="hvR-ot-bpm">
@@ -269,17 +331,34 @@
                                     <action selector="borrowBike:" destination="gVf-yf-Skl" eventType="touchUpInside" id="7ZA-vd-6U6"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="code [6]" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3ru-nG-xg4">
+                                <rect key="frame" x="30" y="84" width="262" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z3u-Ds-2KK">
+                                <rect key="frame" x="124" y="290" width="74" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Bike Detail">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kjL-TW-p8o" kind="push" identifier="BorrowBikeDetailSegue" id="MaP-yC-eb8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="rhX-kB-ArC"/>
                     <connections>
+                        <outlet property="bikeCodeField" destination="3ru-nG-xg4" id="Ma3-b0-Fdw"/>
                         <outlet property="borrowButton" destination="uIQ-hr-lNX" id="wn8-pJ-yPJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hBY-Mo-w5H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2592" y="62"/>
+            <point key="canvasLocation" x="2848" y="62"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="sb7-1v-qck">
@@ -341,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KT3-tb-WOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2592" y="1581"/>
+            <point key="canvasLocation" x="2848" y="1581"/>
         </scene>
         <!--Change Pass View Controller-->
         <scene sceneID="NNC-MJ-eqY">
@@ -437,7 +516,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZdV-ov-Lfy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3143" y="1581"/>
+            <point key="canvasLocation" x="3399" y="1581"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a0q-zv-ZkB">
@@ -474,7 +553,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="icr-sQ-Oqi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2066" y="1581"/>
+            <point key="canvasLocation" x="2322" y="1581"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="r25-Y5-eZb">
@@ -493,7 +572,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tOr-t8-oFE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2066" y="809"/>
+            <point key="canvasLocation" x="2322" y="809"/>
         </scene>
         <!--Return Bike View Controller-->
         <scene sceneID="vpZ-tu-B7k">
@@ -517,6 +596,26 @@
                                     <action selector="returnBike:" destination="6sv-ck-FHF" eventType="touchUpInside" id="BvE-rs-id2"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPG-Lm-PjH">
+                                <rect key="frame" x="99" y="187" width="122" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="New Location">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Wlz-2B-w27" kind="push" identifier="LocationSegue" id="fid-b5-3UP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AVG-Aw-vco">
+                                <rect key="frame" x="99" y="137" width="122" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Report Issues">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="kjL-TW-p8o" kind="push" identifier="ReturnBikeDetailSegue" id="Xuz-ra-MLv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -527,7 +626,36 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="URl-ua-62s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2592" y="-708"/>
+            <point key="canvasLocation" x="2848" y="-708"/>
+        </scene>
+        <!--Location View Controller-->
+        <scene sceneID="EiM-Xg-Ifn">
+            <objects>
+                <viewController storyboardIdentifier="LocationViewController" id="Wlz-2B-w27" customClass="LocationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cpK-3S-vcw"/>
+                        <viewControllerLayoutGuide type="bottom" id="2b7-WH-DST"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZYu-L6-Smj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5K-sf-eZp">
+                                <rect key="frame" x="20" y="8" width="73" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VCc-KO-d5U"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Umn-33-fyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3456" y="-708"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xi9-jB-HFr">
@@ -546,7 +674,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UDa-0C-wBz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2066" y="62"/>
+            <point key="canvasLocation" x="2322" y="62"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UYb-tD-u4P">
@@ -565,7 +693,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yn7-Wn-MoX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2066" y="-708"/>
+            <point key="canvasLocation" x="2322" y="-708"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -573,4 +701,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="Xuz-ra-MLv"/>
+    </inferredMetricsTieBreakers>
 </document>

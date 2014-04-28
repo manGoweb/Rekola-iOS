@@ -14,6 +14,8 @@
 @property (nonatomic, assign, readonly, getter = isLogged) BOOL logged;
 @property (nonatomic, assign, readonly, getter = isAuthenticating) BOOL authenticating;
 @property (nonatomic, strong) Bike *usingBike;
+
+@property (nonatomic, strong, readonly) NSArray *bikes;
 @property (nonatomic, strong) NSDate *bikesUpdateDate;
 
 + (instancetype)manager;
@@ -33,7 +35,7 @@
 - (void)bikesWithLocation:(CLLocationCoordinate2D)location
                completion:(void (^)(NSArray *bikes, NSError *error))completion;
 
-- (void)borrowBike:(Bike *)bike
+- (void)borrowBikeWithCode:(NSString *)code
           location:(CLLocationCoordinate2D)location
         completion:(void (^)(NSString *code, NSError *error))completion;
 

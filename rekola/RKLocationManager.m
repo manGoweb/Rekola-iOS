@@ -111,16 +111,20 @@ NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification = @"RK
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
 	CLLocation *latestLocation = [locations lastObject];
     
-    if (latestLocation.horizontalAccuracy >= 50) {
+    if ([latestLocation.timestamp timeIntervalSinceNow] < 5 && latestLocation.horizontalAccuracy > 0 && (_currentLocation == nil || _currentLocation.horizontalAccuracy > latestLocation.horizontalAccuracy)) {
         _currentLocation = latestLocation;
         _lastKnownLocation = latestLocation;
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:RKLocationManagerDidChangeUserLocationNotification object:nil];
+        if (_currentLocation.horizontalAccuracy <= _locationManager.desiredAccuracy) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RKLocationManagerDidChangeUserLocationNotification object:nil];
+          // TODO:
+            [self stopTracking];
+        }
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-	NSLog(@"LocationManager: manager did fail with error: %@", error);
+	// NSLog(@"LocationManager: manager did fail with error: %@", error);
 	
 	_currentLocation = nil;
 }

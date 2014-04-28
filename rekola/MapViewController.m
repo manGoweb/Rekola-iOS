@@ -11,13 +11,12 @@
 
 static CGFloat DefaultLatitude = 50.079167;
 static CGFloat DefaultLongtitude = 14.428414;
-static CGFloat DefaultUserZoom = 1500;
+static CGFloat DefaultUserZoom = 2500;
 static CGFloat DefaultDistance = 3500;
 
 @implementation MapViewController {
-    NSArray *_bikes;
-    
     struct {
+        unsigned int firtstUpdate:1;
         unsigned int firstLaunch:1;
         unsigned int loadingData:1;
     } _flags;
@@ -30,6 +29,7 @@ static CGFloat DefaultDistance = 3500;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _flags.firtstUpdate = 1;
     _flags.firstLaunch = 1;
     _mapView.clusteringEnabled = NO;
     
@@ -55,7 +55,7 @@ static CGFloat DefaultDistance = 3500;
 }
 
 - (void)reloadData {
-   
+    
     if (_flags.loadingData != 1 && [[ContentManager manager] updateTime]) {
         _flags.loadingData = 1;
         
@@ -64,7 +64,6 @@ static CGFloat DefaultDistance = 3500;
             if (weakSelf) {
                 if (!error) {
                     __strong __typeof(weakSelf)strongSelf = weakSelf;
-                    strongSelf->_bikes = bikes;
                     NSMutableArray *annotations = @[].mutableCopy;
                     [bikes enumerateObjectsUsingBlock:^(Bike *obj, NSUInteger idx, BOOL *stop) {
                         [annotations addObject:[[RKAnnotation alloc] initWithAnnotation:obj]];
@@ -73,9 +72,20 @@ static CGFloat DefaultDistance = 3500;
                     [strongSelf->_mapView clearAnnotations];
                     [strongSelf->_mapView addAnnotations:annotations];
                     strongSelf->_flags.loadingData = 0;
+                } else {
+                   // [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
                 }
             }
         }];
+    }
+}
+
+#pragma mark - Actions
+
+- (IBAction)zoomToUserLocation:(id)sender {
+    if ([RKLocationManager manager].currentLocation) {
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([RKLocationManager manager].currentLocation.coordinate, DefaultUserZoom, DefaultUserZoom);
+        [_mapView setRegion:region animated:YES];
     }
 }
 
@@ -105,13 +115,11 @@ static CGFloat DefaultDistance = 3500;
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     
     if ([view.annotation isKindOfClass:[Bike class]]) {
-        if ([ContentManager manager].usingBike != nil) {
-            [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Uz mate jedno kolo pujcene", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-        } else {
-            if ([_delegate respondsToSelector:@selector(controller:containerWillChangeType:withObject:)]) {
-                [_delegate controller:self containerWillChangeType:ContainerTypeBike withObject:view.annotation];
-            }
-        }
+//        if ([ContentManager manager].usingBike != nil) {
+//            [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Uz mate jedno kolo pujcene", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+//        } else {
+            [self performSegueWithIdentifier:@"BikeDetailSegue" sender:nil];
+//        }
     }
 }
 
@@ -163,10 +171,12 @@ static CGFloat DefaultDistance = 3500;
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    
+    if (_flags.firtstUpdate == 1) {
+        _flags.firtstUpdate = 0;
+        
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, DefaultUserZoom, DefaultUserZoom);
         [_mapView setRegion:region animated:YES];
-        [self reloadData];
+    }
 }
 
 @end

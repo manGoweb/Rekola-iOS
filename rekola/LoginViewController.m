@@ -99,7 +99,7 @@
         if (weakSelf) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if (error) {
-                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Incorrect Name or Password", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
+                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Incorrect Name or Password", nil) message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
                 weakSelf.passField.text = nil;
             }
             strongSelf->_contentView.userInteractionEnabled = YES;

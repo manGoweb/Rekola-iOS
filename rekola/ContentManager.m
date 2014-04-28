@@ -82,14 +82,12 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     [_loginOperation cancel];
     _loginOperation = [[APIManager manager] POST:@"accounts/mine/login" parameters:@{@"username": username, @"password": password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            
             [APIManager manager].accessToken = responseObject[@"apiKey"];
             [weakSelf setKeychainObject:[[password dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0] forKey:KeychainUserPassword];
             
             [weakSelf bikeStateWithCompletion:^(Bike *bike, NSError *error) {
-                if (!error) {
-                    strongSelf->_usingBike = bike;
+                if (error && error.statusCode != 404) {
+                    [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
                 }
                 
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -107,7 +105,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
-            completion(error);
+            completion([error message:operation.responseString]);
         }
     }];
 }
@@ -122,7 +120,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
-            completion(error);
+            completion([error message:operation.responseString]);
         }
     }];
 }
@@ -151,7 +149,8 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     [_bikesOperation cancel];
     
     __weak __typeof(self)weakSelf = self;
-    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/all?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    // TODO: remove /bikes?
+    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             NSMutableArray *bikes = @[].mutableCopy;
@@ -163,13 +162,15 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
             if (bikes.count > 0) {
                 strongSelf->_bikesUpdateDate = [[NSDate date] dateByAddingTimeInterval:5 * 60];
             }
+            strongSelf->_bikes = bikes;
+            
             if (completion) {
-                completion(bikes, nil);
+                completion(strongSelf->_bikes, nil);
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
-            completion(nil, error);
+            completion(nil, [error message:operation.responseString]);
         }
     }];
 }
@@ -177,28 +178,33 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 - (void)bikeStateWithCompletion:(void (^)(Bike *bike, NSError *error))completion {
     
     [_bikeStateOperation cancel];
+    
+    __weak __typeof(self)weakSelf = self;
     _bikeStateOperation = [[APIManager manager] GET:@"bikes/mine" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (completion) {
-            completion([[Bike alloc] initWithDictionary:responseObject], nil);
+        if (weakSelf) {
+            weakSelf.usingBike = [[Bike alloc] initWithDictionary:responseObject];
+            if (completion) {
+                completion([[Bike alloc] initWithDictionary:responseObject], nil);
+            }
         }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
-            completion(nil, error);
+            completion(nil, [error message:operation.responseString]);
         }
     }];
 }
 
-- (void)borrowBike:(Bike *)bike location:(CLLocationCoordinate2D)location completion:(void (^)(NSString *code, NSError *error))completion {
-    NSParameterAssert(bike);
+- (void)borrowBikeWithCode:(NSString *)code location:(CLLocationCoordinate2D)location completion:(void (^)(NSString *code, NSError *error))completion {
+    NSParameterAssert(code);
     
     [_borrowOperation cancel];
-    
+// TODO:
     __weak __typeof(self)weakSelf = self;
-    _borrowOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/lock-code?bikeCode=%@&lat=%f&lng=%f",bike.bikeCode, location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    _borrowOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/lock-code?bikeCode=%@&lat=%f&lng=%f",code, 50.079167, 14.428414] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
-            strongSelf->_usingBike = bike;
-            
+            strongSelf.usingBike = [[Bike alloc] initWithDictionary:responseObject[@"bike"]];
             strongSelf->_bikesUpdateDate = nil;
             
             if (completion) {
@@ -207,12 +213,13 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
-            completion(nil, error);
+            completion(nil, [error message:operation.responseString]);
         }
     }];
 }
 
 - (void)returnBike:(Bike *)bike location:(CLLocationCoordinate2D)location note:(NSString *)note completion:(void (^)(NSError *error))completion {
+    NSParameterAssert(bike);
     
     NSDictionary *loc = @{
                             @"lat": @(location.latitude),
@@ -230,8 +237,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     _returnOperation = [[APIManager manager] PUT:[NSString stringWithFormat:@"bikes/%@/return",[bike.identifier stringValue]] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
-            strongSelf->_usingBike = nil;
-            
+            strongSelf.usingBike = nil;
             strongSelf->_bikesUpdateDate = nil;
             
             if (completion) {
@@ -241,17 +247,15 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
-            completion(error);
+            completion([error message:operation.responseString]);
         }
     }];
 }
 
 - (BOOL)updateTime {
     BOOL result = YES;
-    
     if (_bikesUpdateDate != nil) {
         result = [_bikesUpdateDate compare:[NSDate date]] != NSOrderedDescending;
-        NSLog(@"%@",result? @"YES" : @"NO");
     } else {
         _bikesUpdateDate = [NSDate date];
     }

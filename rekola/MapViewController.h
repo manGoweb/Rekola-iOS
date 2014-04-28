@@ -12,7 +12,10 @@
 
 @interface MapViewController : BaseViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
-@property (nonatomic, weak)id<ContainerDelegate>delegate;
+@property (nonatomic, weak) id<ContainerDelegate>delegate;
 @property (nonatomic, weak) IBOutlet RKMapView *mapView;
+@property (nonatomic, weak) IBOutlet UIButton *zoomButton;
+
+- (IBAction)zoomToUserLocation:(id)sender;
 
 @end

@@ -41,7 +41,7 @@
             if (weakSelf) {
                 __strong __typeof(weakSelf)strongSelf = weakSelf;
                 if (error) {
-                    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
+                    [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
                     weakSelf.oldPassField.text = nil;
                     weakSelf.passField.text = nil;
                     weakSelf.rePassField.text = nil;
