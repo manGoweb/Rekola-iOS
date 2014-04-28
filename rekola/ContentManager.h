@@ -14,6 +14,7 @@
 @property (nonatomic, assign, readonly, getter = isLogged) BOOL logged;
 @property (nonatomic, assign, readonly, getter = isAuthenticating) BOOL authenticating;
 @property (nonatomic, strong) Bike *usingBike;
+@property (nonatomic, strong) NSDate *bikesUpdateDate;
 
 + (instancetype)manager;
 
@@ -21,6 +22,7 @@
                  password:(NSString *)password
                completion:(void (^)(NSError *error))completion;
 
+- (BOOL)updateTime;
 - (void)changePassword:(NSString *)password
             completion:(void (^)(NSError *error))completion;
 

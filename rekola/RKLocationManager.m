@@ -131,6 +131,9 @@ NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification = @"RK
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     
+    _currentHeading = nil;
+	_currentLocation = nil;
+    
 	if (_shouldStart) {
 		[self startTracking];
 	}

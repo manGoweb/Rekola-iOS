@@ -26,7 +26,7 @@
         JSON_PARSE_STRING(_lockCode, @"lockCode");
         
         _title = _name;
-        _subtitle = _bikeDescription;
+        _subtitle = _location.address;
         _coordinate = _location.coordinate;
     }
     return self;

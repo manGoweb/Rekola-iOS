@@ -126,7 +126,7 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
             }];
         }
         else if (operation.response.statusCode != HttpStatusCodeOk && operation.response.statusCode != HttpStatusCodeNoContent && operation.response.statusCode != HttpStatusCodeCreated) {
-            NSLog(@"Code: %i, Error: %@",operation.response.statusCode, operation.responseString);
+            NSLog(@"Code: %li, Error: %@",(long)operation.response.statusCode, operation.responseString);
         }
     } else {
         NSLog(@"Server is unreachable - Could not resolve host %@",operation.request.URL);

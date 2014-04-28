@@ -85,6 +85,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             
             [APIManager manager].accessToken = responseObject[@"apiKey"];
+            [weakSelf setKeychainObject:[[password dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0] forKey:KeychainUserPassword];
             
             [weakSelf bikeStateWithCompletion:^(Bike *bike, NSError *error) {
                 if (!error) {
@@ -128,6 +129,10 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 
 - (void)logout {
     [APIManager manager].accessToken = nil;
+    _bikesUpdateDate = nil;
+    
+    [self removeKeychainObjectForKey:KeychainUserPassword];
+    
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     [[[[UIApplication sharedApplication] windows] firstObject] setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"]];
     
@@ -144,17 +149,24 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 - (void)bikesWithLocation:(CLLocationCoordinate2D)location completion:(void (^)(NSArray *bikes, NSError *error))completion {
 
     [_bikesOperation cancel];
-    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSMutableArray *bikes = @[].mutableCopy;
-        NSArray *data = responseObject;
-        [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [bikes addObject:[[Bike alloc] initWithDictionary:obj]];
-        }];
-        if (completion) {
-            completion(bikes, nil);
+    
+    __weak __typeof(self)weakSelf = self;
+    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/all?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (weakSelf) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            NSMutableArray *bikes = @[].mutableCopy;
+            NSArray *data = responseObject;
+            [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                [bikes addObject:[[Bike alloc] initWithDictionary:obj]];
+            }];
+            
+            if (bikes.count > 0) {
+                strongSelf->_bikesUpdateDate = [[NSDate date] dateByAddingTimeInterval:5 * 60];
+            }
+            if (completion) {
+                completion(bikes, nil);
+            }
         }
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
             completion(nil, error);
@@ -186,11 +198,13 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         if (weakSelf) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             strongSelf->_usingBike = bike;
+            
+            strongSelf->_bikesUpdateDate = nil;
+            
+            if (completion) {
+                completion(responseObject[@"lockCode"],nil);
+            }
         }
-        if (completion) {
-            completion(responseObject[@"lockCode"],nil);
-        }
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
             completion(nil, error);
@@ -217,10 +231,12 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         if (weakSelf) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             strongSelf->_usingBike = nil;
-        }
-        
-        if (completion) {
-            completion(nil);
+            
+            strongSelf->_bikesUpdateDate = nil;
+            
+            if (completion) {
+                completion(nil);
+            }
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -228,6 +244,18 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
             completion(error);
         }
     }];
+}
+
+- (BOOL)updateTime {
+    BOOL result = YES;
+    
+    if (_bikesUpdateDate != nil) {
+        result = [_bikesUpdateDate compare:[NSDate date]] != NSOrderedDescending;
+        NSLog(@"%@",result? @"YES" : @"NO");
+    } else {
+        _bikesUpdateDate = [NSDate date];
+    }
+    return result;
 }
 
 @end

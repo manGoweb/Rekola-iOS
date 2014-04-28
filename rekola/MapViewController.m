@@ -18,7 +18,6 @@ static CGFloat DefaultDistance = 3500;
     NSArray *_bikes;
     
     struct {
-        unsigned int firtstUpdate:1;
         unsigned int firstLaunch:1;
         unsigned int loadingData:1;
     } _flags;
@@ -32,7 +31,7 @@ static CGFloat DefaultDistance = 3500;
     [super viewDidLoad];
     
     _flags.firstLaunch = 1;
-    _flags.firtstUpdate = 1;
+    _mapView.clusteringEnabled = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeAuthorizationStatus) name:RKLocationManagerDidChangeAuthorizationStatusNotification object:nil];
 }
@@ -56,22 +55,25 @@ static CGFloat DefaultDistance = 3500;
 }
 
 - (void)reloadData {
-    if (_flags.loadingData != 1 && _flags.firtstUpdate == 0) {
+   
+    if (_flags.loadingData != 1 && [[ContentManager manager] updateTime]) {
         _flags.loadingData = 1;
         
         __weak __typeof(self)weakSelf = self;
         [[ContentManager manager] bikesWithLocation:([RKLocationManager manager].currentLocation != nil)? [RKLocationManager manager].currentLocation.coordinate : CLLocationCoordinate2DMake(DefaultLatitude, DefaultLongtitude) completion:^(NSArray *bikes, NSError *error) {
             if (weakSelf) {
-                __strong __typeof(weakSelf)strongSelf = weakSelf;
-                strongSelf->_bikes = bikes;
-                NSMutableArray *annotations = @[].mutableCopy;
-                [bikes enumerateObjectsUsingBlock:^(Bike *obj, NSUInteger idx, BOOL *stop) {
-                    [annotations addObject:[[RKAnnotation alloc] initWithAnnotation:obj]];
-                }];
-                
-                [strongSelf->_mapView clearAnnotations];
-                [strongSelf->_mapView addAnnotations:annotations];
-                strongSelf->_flags.loadingData = 0;
+                if (!error) {
+                    __strong __typeof(weakSelf)strongSelf = weakSelf;
+                    strongSelf->_bikes = bikes;
+                    NSMutableArray *annotations = @[].mutableCopy;
+                    [bikes enumerateObjectsUsingBlock:^(Bike *obj, NSUInteger idx, BOOL *stop) {
+                        [annotations addObject:[[RKAnnotation alloc] initWithAnnotation:obj]];
+                    }];
+                    
+                    [strongSelf->_mapView clearAnnotations];
+                    [strongSelf->_mapView addAnnotations:annotations];
+                    strongSelf->_flags.loadingData = 0;
+                }
             }
         }];
     }
@@ -161,13 +163,10 @@ static CGFloat DefaultDistance = 3500;
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    if (_flags.firtstUpdate == 1) {
-        _flags.firtstUpdate = 0;
-        
+    
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, DefaultUserZoom, DefaultUserZoom);
         [_mapView setRegion:region animated:YES];
         [self reloadData];
-    }
 }
 
 @end

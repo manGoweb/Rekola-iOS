@@ -39,9 +39,9 @@
 
 - (void)commonInit {
     _allAnnotations = [NSMutableSet new];
-    _clusterSize = 0.15;
+    _clusterSize = 0.2;
     _minClusterDelta = 0.;
-    _minAnnotationsForCluster = 4.;
+    _minAnnotationsForCluster = 4;
     
     _clusteringEnabled = YES;
     _needsClusturing = YES;
@@ -108,7 +108,8 @@
     
     if (_needsClusturing || MKMapRectIsNull(_lastMapRect) || [self mapDidZoom] || [self mapDidMove]) {
 
-        NSMutableArray *annotations = [self annotationsForVisibleRect:[_allAnnotations allObjects]].mutableCopy;
+        NSMutableArray *annotations = [_allAnnotations allObjects].mutableCopy;
+        //[self annotationsForVisibleRect:[_allAnnotations allObjects]].mutableCopy;
         NSArray *clusteredAnnotations = nil;
         
         if (_clusteringEnabled && (self.region.span.longitudeDelta > _minClusterDelta)) {
