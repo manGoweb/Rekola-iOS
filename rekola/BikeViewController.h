@@ -7,11 +7,9 @@
 //
 
 #import "BaseViewController.h"
-#import "ContainerDelegate.h"
 
 @interface BikeViewController : BaseViewController
 
-@property (nonatomic, weak) id<ContainerDelegate> delegate;
 @property (nonatomic, weak) Bike *bikeDetail;
 @property (nonatomic, weak) IBOutlet UIButton *borrowButton;
 @property (nonatomic, weak) IBOutlet UITextField *bikeCodeField;

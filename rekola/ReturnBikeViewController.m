@@ -12,6 +12,15 @@
     CLGeocoder *_geocoder;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.title = NSLocalizedString(@"Return", @"Title in nav & tab controller");
+        self.navigationController.tabBarItem.title = self.title;
+    }
+    return self;
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
 
@@ -33,7 +42,7 @@
 
 - (IBAction)returnBike:(id)sender {
     // TODO: customLocation
-    id customLocation = nil;
+   // id customLocation = nil;
     if ([[RKLocationManager manager] isAuthorized]) {
         if ([RKLocationManager manager].currentLocation) {
             
@@ -43,9 +52,6 @@
                     __strong __typeof(weakSelf)strongSelf = weakSelf;
                     // check for more error codes
                     if (!error) {
-                        if ([strongSelf.delegate respondsToSelector:@selector(controller:containerWillChangeType:withObject:)]) {
-                            [strongSelf.delegate controller:weakSelf containerWillChangeType:ContainerTypeBike withObject:nil];
-                        }
                         NSLog(@"Bike successfully returned");
                         
                     } else {

@@ -8,6 +8,14 @@
 
 #import "BaseViewController.h"
 
+@implementation UIViewController (TabBarControllerExtension)
+
+- (TabBarController *)tabBarViewController {
+    return (TabBarController *)self.tabBarController;
+}
+
+@end
+
 @implementation BaseViewController {
     struct {
         unsigned int isViewVisible:1;
@@ -45,6 +53,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
     
     _flags.isViewVisible = 0;
 }

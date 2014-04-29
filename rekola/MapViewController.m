@@ -24,6 +24,16 @@ static CGFloat DefaultDistance = 3500;
     } _flags;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.title = NSLocalizedString(@"Map", @"Title in nav & tab controller");
+        self.navigationController.tabBarItem.title = self.title;
+    }
+    return self;
+}
+
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:RKLocationManagerDidChangeAuthorizationStatusNotification object:nil];
 }
@@ -32,13 +42,19 @@ static CGFloat DefaultDistance = 3500;
     [super viewDidLoad];
     
     _trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapView];
-    [_toolBar setItems:@[_trackingButton]];
+    self.navigationItem.rightBarButtonItem = _trackingButton;
     
     _flags.firtstUpdate = 1;
     _flags.firstLaunch = 1;
     _mapView.clusteringEnabled = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeAuthorizationStatus) name:RKLocationManagerDidChangeAuthorizationStatusNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -118,14 +134,11 @@ static CGFloat DefaultDistance = 3500;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+//    if ([view.annotation isKindOfClass:[Bike class]] && control.tag == 1) {
+//        [self performSegueWithIdentifier:@"BikeDetailSegue" sender:nil];
+//    }
     
-    if ([view.annotation isKindOfClass:[Bike class]]) {
-//        if ([ContentManager manager].usingBike != nil) {
-//            [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Uz mate jedno kolo pujcene", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-//        } else {
-            [self performSegueWithIdentifier:@"BikeDetailSegue" sender:nil];
-//        }
-    }
+    
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -158,8 +171,9 @@ static CGFloat DefaultDistance = 3500;
                 pinView.pinColor = MKPinAnnotationColorPurple;
                 
                 // Add a detail disclosure button to the callout.
-                UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-                pinView.rightCalloutAccessoryView = detailButton;
+//                UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+//                pinView.rightCalloutAccessoryView = detailButton;
+//                detailButton.tag = 1;
                 
                 // TODO: Missing left image for annotation
                 // UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];

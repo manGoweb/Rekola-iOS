@@ -13,6 +13,15 @@
     NSMutableArray *_cells;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.title = NSLocalizedString(@"Profile", @"Title in nav & tab controller");
+        self.navigationController.tabBarItem.title = self.title;
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -20,7 +29,6 @@
 }
 
 - (void)reloadData {
-    
     [_tableView reloadData];
 }
 

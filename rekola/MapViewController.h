@@ -7,16 +7,10 @@
 //
 
 #import "BaseViewController.h"
-#import "ContainerDelegate.h"
 #import "RKMapView.h"
 
-@interface MapViewController : BaseViewController <CLLocationManagerDelegate, MKMapViewDelegate>
+@interface MapViewController : BaseViewController <MKMapViewDelegate>
 
-@property (nonatomic, weak) id<ContainerDelegate>delegate;
 @property (nonatomic, weak) IBOutlet RKMapView *mapView;
-@property (nonatomic, weak) IBOutlet UIButton *zoomButton;
-@property (nonatomic, weak) IBOutlet UIToolbar *toolBar;
-
-- (IBAction)zoomToUserLocation:(id)sender;
 
 @end

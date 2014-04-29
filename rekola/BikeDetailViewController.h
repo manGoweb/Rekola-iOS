@@ -10,6 +10,7 @@
 
 @interface BikeDetailViewController : BaseViewController
 
+@property (nonatomic, strong) NSString *urlPath;
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicatorView;
 

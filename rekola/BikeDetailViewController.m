@@ -13,8 +13,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+    // TODO:
+    _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+    [_webView loadRequest:request];
+}
+
+- (void)reloadData {
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
     [_webView loadRequest:request];
 }
 

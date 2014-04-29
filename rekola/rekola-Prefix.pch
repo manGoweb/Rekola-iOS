@@ -22,6 +22,7 @@
     // Project's categories.
     #import "UIAlertView+CompletionBlock.h"
     #import "NSError+LocalizedMessage.h"
+    #import "UIColor+RKColor.h"
 
     // Project's core classes and libraries.
 

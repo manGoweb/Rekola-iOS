@@ -7,12 +7,10 @@
 //
 
 #import "BaseViewController.h"
-#import "ContainerDelegate.h"
 #import "LocateViewController.h"
 
 @interface ReturnBikeViewController : BaseViewController <LocateViewControllerDelegate>
 
-@property (nonatomic, weak) id<ContainerDelegate>delegate;
 @property (nonatomic, weak) IBOutlet UIButton *returnButton;
 @property (nonatomic, weak) IBOutlet UILabel *addressLabel;
 

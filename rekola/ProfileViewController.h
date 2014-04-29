@@ -7,11 +7,9 @@
 //
 
 #import "BaseViewController.h"
-#import "ContainerDelegate.h"
 
 @interface ProfileViewController : BaseViewController <UIActionSheetDelegate>
 
-@property (nonatomic, weak)id<ContainerDelegate>delegate;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @end
