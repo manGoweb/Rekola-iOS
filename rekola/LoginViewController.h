@@ -16,7 +16,9 @@
 @property (nonatomic, weak) IBOutlet UITextField *passField;
 @property (nonatomic, weak) IBOutlet UIButton *signButton;
 @property (nonatomic, weak) IBOutlet UIButton *recoverButton;
+@property (nonatomic, weak) IBOutlet UIButton *signUp;
 
+- (IBAction)signUp:(id)sender;
 - (IBAction)signin:(id)sender;
 - (IBAction)textFieldDidChange:(UITextField *)textField;
 

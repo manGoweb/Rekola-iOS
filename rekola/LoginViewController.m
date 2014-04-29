@@ -72,6 +72,10 @@
     [self signInWithName:_nameField.text password:_passField.text];
 }
 
+- (IBAction)signUp:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.rekola.cz/register/credentials"]];
+}
+
 #pragma mark - TextField Delegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

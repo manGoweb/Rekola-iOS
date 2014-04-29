@@ -8,15 +8,17 @@
 
 #import "ReturnBikeViewController.h"
 
-@implementation ReturnBikeViewController
+@implementation ReturnBikeViewController {
+    CLGeocoder *_geocoder;
+}
 
 - (void)viewDidLoad{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    
 }
 
 - (void)reloadData {
-    
 }
 
 #pragma mark - Actions
@@ -50,6 +52,17 @@
     } else {
         [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Polohové služby nejsou zapnuté, aplikace nebude schopna poskytovat plnou fukncionalitu. Povolit je můžete v nastavení svého zařízení v záložce soukromí.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
     }
+}
+
+- (void)geocodeLocation {
+    if (_geocoder == nil) {
+        _geocoder = [CLGeocoder new];
+    }
+    
+    // TODO:
+    [_geocoder reverseGeocodeLocation:[RKLocationManager manager].currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+      //  NSDictionary *dictionary = [[placemarks objectAtIndex:0] addressDictionary];
+    }];
 }
 
 @end

@@ -149,8 +149,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     [_bikesOperation cancel];
     
     __weak __typeof(self)weakSelf = self;
-    // TODO: remove /bikes?
-    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    _bikesOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/all?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             NSMutableArray *bikes = @[].mutableCopy;

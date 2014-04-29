@@ -13,6 +13,7 @@
 
 @property (nonatomic, weak) id<ContainerDelegate>delegate;
 @property (nonatomic, weak) IBOutlet UIButton *returnButton;
+@property (nonatomic, weak) IBOutlet UILabel *addressLabel;
 
 - (IBAction)returnBike:(id)sender;
 
