@@ -16,14 +16,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKm-0l-nOl">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKm-0l-nOl">
                                 <rect key="frame" x="67" y="269" width="187" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Dismiss">
-                                    <color key="titleColor" red="0.13018230550000001" green="0.33567699159999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" title="Dismiss"/>
                                 <connections>
                                     <action selector="dismiss:" destination="Lc1-vH-8tc" eventType="touchUpInside" id="MkX-vN-ivb"/>
                                 </connections>
@@ -52,14 +48,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eN4-2F-Ft5">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eN4-2F-Ft5">
                                         <rect key="frame" x="97" y="244" width="139" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title="Recover Password">
-                                            <color key="titleColor" red="0.13018230548220167" green="0.33567699157420094" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="normal" title="Recover Password"/>
                                         <connections>
                                             <segue destination="Lc1-vH-8tc" kind="modal" identifier="RecoverSegue" id="GfL-gt-SN4"/>
                                         </connections>
@@ -74,17 +66,10 @@
                                             <outlet property="delegate" destination="vXZ-lx-hvc" id="CXC-Fg-qFv"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l0l-7p-nFd">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l0l-7p-nFd">
                                         <rect key="frame" x="105" y="187" width="111" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title="Sign In">
-                                            <color key="titleColor" red="0.13018230548220167" green="0.33567699157420094" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="disabled">
-                                            <color key="titleColor" red="0.7843137255" green="0.7843137255" blue="0.7843137255" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
+                                        <state key="normal" title="Sign In"/>
                                         <connections>
                                             <action selector="signin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="zas-Nx-JPj"/>
                                         </connections>
@@ -99,18 +84,14 @@
                                             <outlet property="delegate" destination="vXZ-lx-hvc" id="eYQ-Km-IHb"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mV-sD-7gs">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mV-sD-7gs">
                                         <rect key="frame" x="20" y="525" width="139" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="40F-yI-E0V"/>
                                             <constraint firstAttribute="width" constant="139" id="873-R6-MW7"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <state key="normal" title="Not a member?">
-                                            <color key="titleColor" red="0.13018230550000001" green="0.33567699159999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="normal" title="Not a member?"/>
                                         <connections>
                                             <action selector="signUp:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Kcd-2d-eYQ"/>
                                         </connections>
@@ -156,38 +137,37 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYn-Ta-zOX" customClass="RKMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="yff-8R-Vj8" id="86y-n6-6Dj"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQx-f9-lNk">
-                                <rect key="frame" x="230" y="450" width="70" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Location">
-                                    <color key="titleColor" red="0.13018230550000001" green="0.33567699159999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="zoomToUserLocation:" destination="yff-8R-Vj8" eventType="touchUpInside" id="XOE-FJ-D5t"/>
-                                </connections>
-                            </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s0d-AH-k1M">
+                                <rect key="frame" x="0.0" y="460" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem systemItem="search" id="4Sv-mp-qOs"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="RDk-FC-cPs"/>
+                                    <barButtonItem title="Item" id="gV7-Pl-sod"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="chG-UP-Lcb" firstAttribute="top" secondItem="rQx-f9-lNk" secondAttribute="bottom" constant="20" id="412-DU-Lq7"/>
+                            <constraint firstItem="chG-UP-Lcb" firstAttribute="top" secondItem="s0d-AH-k1M" secondAttribute="bottom" id="H6K-zo-olJ"/>
                             <constraint firstItem="RYn-Ta-zOX" firstAttribute="top" secondItem="0BW-LF-Nvj" secondAttribute="bottom" id="UZT-I1-cy4"/>
-                            <constraint firstAttribute="trailing" secondItem="rQx-f9-lNk" secondAttribute="trailing" constant="20" id="aHe-YE-VPa"/>
                             <constraint firstItem="RYn-Ta-zOX" firstAttribute="leading" secondItem="Gx8-OE-QpG" secondAttribute="leading" id="dfb-Eb-Av6"/>
                             <constraint firstAttribute="trailing" secondItem="RYn-Ta-zOX" secondAttribute="trailing" id="fU3-sU-ETO"/>
-                            <constraint firstItem="chG-UP-Lcb" firstAttribute="top" secondItem="RYn-Ta-zOX" secondAttribute="bottom" id="r70-Ol-jCZ"/>
+                            <constraint firstItem="s0d-AH-k1M" firstAttribute="leading" secondItem="Gx8-OE-QpG" secondAttribute="leading" id="kjX-R8-Jjg"/>
+                            <constraint firstItem="chG-UP-Lcb" firstAttribute="top" secondItem="RYn-Ta-zOX" secondAttribute="bottom" constant="44" id="r70-Ol-jCZ"/>
+                            <constraint firstAttribute="trailing" secondItem="s0d-AH-k1M" secondAttribute="trailing" id="v4n-dO-cwS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6S4-9h-Ko6"/>
                     <connections>
                         <outlet property="mapView" destination="RYn-Ta-zOX" id="CRI-9p-HdC"/>
-                        <outlet property="zoomButton" destination="rQx-f9-lNk" id="dnM-fC-BxS"/>
+                        <outlet property="toolBar" destination="s0d-AH-k1M" id="Nzg-eU-F55"/>
                         <segue destination="kjL-TW-p8o" kind="push" identifier="BikeDetailSegue" id="VKJ-1s-Sbg"/>
                     </connections>
                 </viewController>
@@ -634,7 +614,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Wlz-2B-w27" kind="push" identifier="LocationSegue" id="fid-b5-3UP"/>
+                                    <segue destination="Wlz-2B-w27" kind="modal" identifier="LocationSegue" id="fid-b5-3UP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AVG-Aw-vco">
@@ -700,10 +680,10 @@
             </objects>
             <point key="canvasLocation" x="2848" y="-708"/>
         </scene>
-        <!--Location View Controller-->
+        <!--Locate View Controller-->
         <scene sceneID="EiM-Xg-Ifn">
             <objects>
-                <viewController storyboardIdentifier="LocationViewController" id="Wlz-2B-w27" customClass="LocationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocateViewController" id="Wlz-2B-w27" customClass="LocateViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cpK-3S-vcw"/>
                         <viewControllerLayoutGuide type="bottom" id="2b7-WH-DST"/>
@@ -712,18 +692,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z5K-sf-eZp">
-                                <rect key="frame" x="20" y="8" width="73" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Back">
-                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IFv-tL-wWh" customClass="RKMapView">
+                                <rect key="frame" x="0.0" y="45" width="320" height="460"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Wlz-2B-w27" id="DAn-Hd-kCT"/>
+                                </connections>
+                            </mapView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tU9-f1-FIn">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Update Location" id="JES-aO-CZ4">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="XX3-af-5df">
+                                            <connections>
+                                                <action selector="close:" destination="Wlz-2B-w27" id="W3o-Ww-5iA"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Done" id="kpI-co-TSc">
+                                            <connections>
+                                                <action selector="done:" destination="Wlz-2B-w27" id="9Lp-SK-mh2"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="tU9-f1-FIn" secondAttribute="trailing" id="H8e-rZ-iEx"/>
+                            <constraint firstItem="tU9-f1-FIn" firstAttribute="leading" secondItem="ZYu-L6-Smj" secondAttribute="leading" id="TgE-dt-07v"/>
+                            <constraint firstAttribute="trailing" secondItem="IFv-tL-wWh" secondAttribute="trailing" id="ZP8-2G-beb"/>
+                            <constraint firstAttribute="bottom" secondItem="IFv-tL-wWh" secondAttribute="bottom" constant="-1" id="f8m-SK-2Q1"/>
+                            <constraint firstItem="tU9-f1-FIn" firstAttribute="top" secondItem="cpK-3S-vcw" secondAttribute="bottom" id="kiC-NU-3RH"/>
+                            <constraint firstItem="IFv-tL-wWh" firstAttribute="leading" secondItem="ZYu-L6-Smj" secondAttribute="leading" id="ssB-hR-LZ3"/>
+                            <constraint firstItem="IFv-tL-wWh" firstAttribute="top" secondItem="tU9-f1-FIn" secondAttribute="bottom" constant="1" id="xLT-8x-JUs"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VCc-KO-d5U"/>
+                    <connections>
+                        <outlet property="closeButton" destination="XX3-af-5df" id="hij-Ut-QdP"/>
+                        <outlet property="doneButton" destination="kpI-co-TSc" id="Cuo-6A-FJY"/>
+                        <outlet property="mapView" destination="IFv-tL-wWh" id="9se-9v-to0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Umn-33-fyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -768,12 +779,13 @@
             <point key="canvasLocation" x="2322" y="-708"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.96862751245498657" green="0.20000001788139343" blue="0.60000002384185791" alpha="1" colorSpace="deviceRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="E8e-kX-euE"/>
+        <segue reference="Xuz-ra-MLv"/>
     </inferredMetricsTieBreakers>
 </document>

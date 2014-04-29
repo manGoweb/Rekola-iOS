@@ -32,11 +32,13 @@ NSString *const AFNetworkingOperationMessageURLResponseErrorKey = @"AFNetworking
     
     if ([json isKindOfClass:[NSDictionary class]]) {
         message = json[@"message"];
-        NSMutableDictionary *dica = [[NSMutableDictionary alloc] initWithDictionary:[self userInfo]];
-        [dica setObject:message forKey:AFNetworkingOperationMessageURLResponseErrorKey];
+        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithDictionary:[self userInfo]];
+        [userInfo setObject:message forKey:AFNetworkingOperationMessageURLResponseErrorKey];
+       return [[NSError alloc] initWithDomain:self.domain code:self.code userInfo:userInfo];
+        
+    } else {
+        return self;
     }
-    
-    return self;
 }
 
 - (NSString *)message {

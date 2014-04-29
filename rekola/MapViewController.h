@@ -15,6 +15,7 @@
 @property (nonatomic, weak) id<ContainerDelegate>delegate;
 @property (nonatomic, weak) IBOutlet RKMapView *mapView;
 @property (nonatomic, weak) IBOutlet UIButton *zoomButton;
+@property (nonatomic, weak) IBOutlet UIToolbar *toolBar;
 
 - (IBAction)zoomToUserLocation:(id)sender;
 

@@ -21,6 +21,14 @@
 - (void)reloadData {
 }
 
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"LocationSegue"]) {
+        [(LocateViewController *)segue.destinationViewController setDelegate:self];
+    }
+}
+
 #pragma mark - Actions
 
 - (IBAction)returnBike:(id)sender {
@@ -63,6 +71,12 @@
     [_geocoder reverseGeocodeLocation:[RKLocationManager manager].currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
       //  NSDictionary *dictionary = [[placemarks objectAtIndex:0] addressDictionary];
     }];
+}
+
+#pragma mark - LocateViewControllerDelegate methods
+
+- (void)controller:(LocateViewController *)controller didFinishWithLocation:(CLLocation *)location {
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

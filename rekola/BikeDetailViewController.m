@@ -28,18 +28,27 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     webView.userInteractionEnabled = YES;
     _indicatorView.hidden = YES;
-    
-    NSString *query = webView.request.URL.absoluteString;
-    if ([query rangeOfString:@"navigate_back=true"].location != NSNotFound) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     _indicatorView.hidden = YES;
     
     // TODO:
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    BOOL result = NO;
+    NSString *query = request.URL.absoluteString;
+    if ([query rangeOfString:@"navigate_back=true"].location == NSNotFound) {
+        result = YES;
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    return result;
 }
 
 

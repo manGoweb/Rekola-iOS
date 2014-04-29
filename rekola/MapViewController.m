@@ -15,6 +15,8 @@ static CGFloat DefaultUserZoom = 2500;
 static CGFloat DefaultDistance = 3500;
 
 @implementation MapViewController {
+    MKUserTrackingBarButtonItem *_trackingButton;
+    
     struct {
         unsigned int firtstUpdate:1;
         unsigned int firstLaunch:1;
@@ -28,6 +30,9 @@ static CGFloat DefaultDistance = 3500;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapView];
+    [_toolBar setItems:@[_trackingButton]];
     
     _flags.firtstUpdate = 1;
     _flags.firstLaunch = 1;

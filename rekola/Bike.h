@@ -24,8 +24,8 @@
 @property (nonatomic, strong) NSString *lockCode;
 
 // Title and subtitle for use by selection UI.
-@property (nonatomic, readonly, copy) NSString *title;
-@property (nonatomic, readonly, copy) NSString *subtitle;
-@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
+@property (nonatomic, assign) CLLocationCoordinate2D coordinate;
 
 @end
