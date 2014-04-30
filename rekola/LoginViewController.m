@@ -100,14 +100,12 @@
     _contentView.userInteractionEnabled = NO;
     __weak __typeof(self)weakSelf = self;
     [[ContentManager manager] loginWithUsername:name password:password completion:^(NSError *error) {
-        if (weakSelf) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            if (error) {
-                [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Incorrect Name or Password", nil) message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
-                weakSelf.passField.text = nil;
-            }
-            strongSelf->_contentView.userInteractionEnabled = YES;
+        if (error) {
+            [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
         }
+        weakSelf.passField.text = nil;
+        weakSelf.contentView.userInteractionEnabled = YES;
+        weakSelf.signUp.enabled = NO;
     }];
 }
 

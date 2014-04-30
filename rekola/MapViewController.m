@@ -16,6 +16,7 @@ static CGFloat DefaultDistance = 3500;
 
 @implementation MapViewController {
     MKUserTrackingBarButtonItem *_trackingButton;
+    MKPolyline *_routePolyline;
     
     struct {
         unsigned int firtstUpdate:1;
@@ -134,11 +135,44 @@ static CGFloat DefaultDistance = 3500;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-//    if ([view.annotation isKindOfClass:[Bike class]] && control.tag == 1) {
-//        [self performSegueWithIdentifier:@"BikeDetailSegue" sender:nil];
-//    }
+    if ([view.annotation isKindOfClass:[Bike class]]) {
+        [self performSegueWithIdentifier:@"BikeDetailSegue" sender:nil];
+    }
     
+//    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
+//    
+//    request.source = [MKMapItem mapItemForCurrentLocation];
+//
+//    MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:view.annotation.coordinate addressDictionary:nil]];
+//    request.destination = destination;
+//    request.transportType = MKDirectionsTransportTypeWalking;
+//    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+//    // distance / expectedTraveltime - seconds
+//    [directions calculateDirectionsWithCompletionHandler:
+//     ^(MKDirectionsResponse *response, NSError *error) {
+//         if (error) {
+//             // TODO:
+//             // Handle Error
+//         } else {
+//             [self showRoute:[response.routes firstObject]];
+//         }
+//     }];
+}
+
+-(void)showRoute:(MKRoute *)route {
+    if (_routePolyline) {
+        [_mapView removeOverlay:_routePolyline];
+    }
     
+    _routePolyline = route.polyline;
+    [_mapView addOverlay:_routePolyline];
+}
+
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay {
+    MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+    renderer.strokeColor = [UIColor blueColor];
+    renderer.lineWidth = 4.;
+    return renderer;
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -171,9 +205,8 @@ static CGFloat DefaultDistance = 3500;
                 pinView.pinColor = MKPinAnnotationColorPurple;
                 
                 // Add a detail disclosure button to the callout.
-//                UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-//                pinView.rightCalloutAccessoryView = detailButton;
-//                detailButton.tag = 1;
+                UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+                pinView.leftCalloutAccessoryView = detailButton;
                 
                 // TODO: Missing left image for annotation
                 // UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];

@@ -26,19 +26,21 @@ NSString *const AFNetworkingOperationMessageURLResponseErrorKey = @"AFNetworking
 }
 
 - (NSError *)message:(NSString *)response {
+    id result = self;
     NSData *data = [response dataUsingEncoding:NSUTF8StringEncoding];
-    id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    NSString *message = nil;
-    
-    if ([json isKindOfClass:[NSDictionary class]]) {
-        message = json[@"message"];
-        NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithDictionary:[self userInfo]];
-        [userInfo setObject:message forKey:AFNetworkingOperationMessageURLResponseErrorKey];
-       return [[NSError alloc] initWithDomain:self.domain code:self.code userInfo:userInfo];
+    if (data) {
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSString *message = nil;
         
-    } else {
-        return self;
+        if ([json isKindOfClass:[NSDictionary class]]) {
+            message = json[@"message"];
+            NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithDictionary:[self userInfo]];
+            [userInfo setObject:message forKey:AFNetworkingOperationMessageURLResponseErrorKey];
+            result = [[NSError alloc] initWithDomain:self.domain code:self.code userInfo:userInfo];
+            
+        }
     }
+    return result;
 }
 
 - (NSString *)message {
