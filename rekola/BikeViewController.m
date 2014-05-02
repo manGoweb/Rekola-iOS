@@ -41,17 +41,9 @@
 #pragma mark - Actions
 
 - (IBAction)borrowBike:(id)sender {
-    
-    
+
     NSString *bikeCode = _bikeCodeField.text;
-    
-    if (![[RKLocationManager manager] isAuthorized]) {
-        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Polohové služby nejsou zapnuté, aplikace nebude schopna poskytovat plnou fukncionalitu. Povolit je můžete v nastavení svého zařízení v záložce soukromí.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-    // TODO:
-    /*} else if ([RKLocationManager manager].currentLocation == nil) {
-        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Nepodarilo se ziskat vasi GPS pozici.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-        */
-    } else if (bikeCode.length > 0) {
+    if (bikeCode.length > 0) {
         __weak __typeof(self)weakSelf = self;
         [[ContentManager manager] bikeStateWithCompletion:^(Bike *bike, NSError *error) {
             if (weakSelf) {

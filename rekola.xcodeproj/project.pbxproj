@@ -45,7 +45,6 @@
 		5E43080D1907C62C00B36CE8 /* UIAlertView+CompletionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E43080C1907C62C00B36CE8 /* UIAlertView+CompletionBlock.m */; };
 		5E4308101907C6C600B36CE8 /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E43080F1907C6C600B36CE8 /* ContentManager.m */; };
 		5E86CEF119090034001C1382 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEEF19090034001C1382 /* SettingsCell.m */; };
-		5E86CEF719090584001C1382 /* ChangePassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEF519090584001C1382 /* ChangePassViewController.m */; };
 		5E86CF00190936FB001C1382 /* ReturnBikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEFF190936FB001C1382 /* ReturnBikeViewController.m */; };
 		5E86CF0E19094F44001C1382 /* RKLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CF0D19094F44001C1382 /* RKLocationManager.m */; };
 		5E86CF20190A5BF2001C1382 /* RKAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CF1F190A5BF2001C1382 /* RKAnnotation.m */; };
@@ -145,8 +144,6 @@
 		5E43080F1907C6C600B36CE8 /* ContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContentManager.m; path = rekola/ContentManager.m; sourceTree = "<group>"; };
 		5E86CEEF19090034001C1382 /* SettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsCell.m; path = rekola/SettingsCell.m; sourceTree = "<group>"; };
 		5E86CEF019090034001C1382 /* SettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsCell.h; path = rekola/SettingsCell.h; sourceTree = "<group>"; };
-		5E86CEF519090584001C1382 /* ChangePassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChangePassViewController.m; path = rekola/ChangePassViewController.m; sourceTree = "<group>"; };
-		5E86CEF619090584001C1382 /* ChangePassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChangePassViewController.h; path = rekola/ChangePassViewController.h; sourceTree = "<group>"; };
 		5E86CEFE190936FB001C1382 /* ReturnBikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReturnBikeViewController.h; path = rekola/ReturnBikeViewController.h; sourceTree = "<group>"; };
 		5E86CEFF190936FB001C1382 /* ReturnBikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReturnBikeViewController.m; path = rekola/ReturnBikeViewController.m; sourceTree = "<group>"; };
 		5E86CF0C19094F44001C1382 /* RKLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RKLocationManager.h; path = rekola/RKLocationManager.h; sourceTree = "<group>"; };
@@ -425,8 +422,6 @@
 				5EDE21F11907E8840017D36E /* MapViewController.m */,
 				5EDE2211190819C60017D36E /* ProfileViewController.h */,
 				5EDE2212190819C60017D36E /* ProfileViewController.m */,
-				5E86CEF619090584001C1382 /* ChangePassViewController.h */,
-				5E86CEF519090584001C1382 /* ChangePassViewController.m */,
 				5EDE21E41907DC3F0017D36E /* LoginViewController.h */,
 				5EDE21E51907DC3F0017D36E /* LoginViewController.m */,
 				5EDE21E71907DC4C0017D36E /* RecoverViewController.h */,
@@ -613,7 +608,6 @@
 				5E074172190FCFD600688477 /* TabBarController.m in Sources */,
 				5E1DF8A81907BB8100127F56 /* main.m in Sources */,
 				5E4307F01907C2A500B36CE8 /* APIManager.m in Sources */,
-				5E86CEF719090584001C1382 /* ChangePassViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,9 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.selectedIndex = 1;
     self.tabBar.tintColor = [UIColor RKPinkColor];
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:ContentManagerDidChangeUsingBikeNotification object:nil];
 }
 

@@ -18,6 +18,8 @@ static CGFloat DefaultDistance = 3500;
     MKUserTrackingBarButtonItem *_trackingButton;
     MKPolyline *_routePolyline;
     
+    UIActivityIndicatorView *_indicatorView;
+    
     struct {
         unsigned int firtstUpdate:1;
         unsigned int firstLaunch:1;
@@ -34,27 +36,23 @@ static CGFloat DefaultDistance = 3500;
     return self;
 }
 
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:RKLocationManagerDidChangeAuthorizationStatusNotification object:nil];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapView];
     self.navigationItem.rightBarButtonItem = _trackingButton;
     
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     _flags.firtstUpdate = 1;
     _flags.firstLaunch = 1;
     _mapView.clusteringEnabled = NO;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeAuthorizationStatus) name:RKLocationManagerDidChangeAuthorizationStatusNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self reloadData];
 }
 
@@ -81,6 +79,7 @@ static CGFloat DefaultDistance = 3500;
     if (_flags.loadingData != 1 && [[ContentManager manager] updateTime]) {
         _flags.loadingData = 1;
         
+        [self startRefreshing];
         __weak __typeof(self)weakSelf = self;
         [[ContentManager manager] bikesWithLocation:([RKLocationManager manager].currentLocation != nil)? [RKLocationManager manager].currentLocation.coordinate : CLLocationCoordinate2DMake(DefaultLatitude, DefaultLongtitude) completion:^(NSArray *bikes, NSError *error) {
             if (weakSelf) {
@@ -95,8 +94,9 @@ static CGFloat DefaultDistance = 3500;
                     [strongSelf->_mapView addAnnotations:annotations];
                     strongSelf->_flags.loadingData = 0;
                 } else {
-                   // [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+                   [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
                 }
+                [weakSelf stopRefreshing];
             }
         }];
     }
@@ -104,28 +104,27 @@ static CGFloat DefaultDistance = 3500;
 
 #pragma mark - Actions
 
-- (IBAction)zoomToUserLocation:(id)sender {
-    if ([RKLocationManager manager].currentLocation) {
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance([RKLocationManager manager].currentLocation.coordinate, DefaultUserZoom, DefaultUserZoom);
-        [_mapView setRegion:region animated:YES];
-    }
+- (IBAction)refreshPOI:(id)sender {
+    [ContentManager manager].bikesUpdateDate = nil;
+    [self reloadData];
 }
 
 #pragma mark - Private methods
 
--(void)zoomToDefaultLocation {
-    
+- (void)startRefreshing {
+    [_indicatorView startAnimating];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_indicatorView];
+}
+
+- (void)stopRefreshing {
+    self.navigationItem.leftBarButtonItem = _refreshButton;
+    [_indicatorView stopAnimating];
+}
+
+- (void)zoomToDefaultLocation {
     CLLocationCoordinate2D zoomLocation = [[[CLLocation alloc] initWithLatitude:DefaultLatitude longitude:DefaultLongtitude] coordinate];
     MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, DefaultDistance, DefaultDistance);
     [_mapView setRegion:viewRegion animated:YES];
-}
-
-#pragma mark - RKLocationManager Notifications
-
-- (void)didChangeAuthorizationStatus {
-    if ([RKLocationManager manager].isAuthorized) {
-        [[RKLocationManager manager] startTracking];
-    }
 }
 
 #pragma mark - MapKitDelegate methods

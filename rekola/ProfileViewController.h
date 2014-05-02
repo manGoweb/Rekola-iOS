@@ -10,6 +10,7 @@
 
 @interface ProfileViewController : BaseViewController <UIActionSheetDelegate>
 
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UIWebView *webView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicatorView;
 
 @end

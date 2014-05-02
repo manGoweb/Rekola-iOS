@@ -13,10 +13,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // TODO:
+    // TODO: missing url
     _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
-    [_webView loadRequest:request];
+    [self reloadData];
 }
 
 - (void)reloadData {
@@ -39,23 +38,29 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     _indicatorView.hidden = YES;
     
-    // TODO:
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
+    if (error.code != -999) {
+        // TODO:
+        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+    }
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    BOOL result = NO;
-    NSString *query = request.URL.absoluteString;
-    if ([query rangeOfString:@"navigate_back=true"].location == NSNotFound) {
-        result = YES;
-    } else {
-        [self.navigationController popViewControllerAnimated:YES];
+    BOOL result = YES;
+    BOOL headerIsPresent = ([[request allHTTPHeaderFields] objectForKey:@"X-Api-Key"] != nil);
+    if (!headerIsPresent) {
+        NSURL *url = [request URL];
+        
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+        
+        [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
+        [_webView loadRequest:request];
+        result = NO;
+        
     }
     return result;
 }
-
 
 @end

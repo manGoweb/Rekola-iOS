@@ -198,9 +198,8 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     NSParameterAssert(code);
     
     [_borrowOperation cancel];
-// TODO:
     __weak __typeof(self)weakSelf = self;
-    _borrowOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/lock-code?bikeCode=%@&lat=%f&lng=%f",code, 50.079167, 14.428414] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    _borrowOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/lock-code?bikeCode=%@",code] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             strongSelf.usingBike = [[Bike alloc] initWithDictionary:responseObject[@"bike"]];

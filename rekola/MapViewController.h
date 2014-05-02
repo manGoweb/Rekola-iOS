@@ -12,5 +12,8 @@
 @interface MapViewController : BaseViewController <MKMapViewDelegate>
 
 @property (nonatomic, weak) IBOutlet RKMapView *mapView;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *refreshButton;
+
+- (IBAction)refreshPOI:(id)sender;
 
 @end
