@@ -14,10 +14,14 @@ NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification = @"RK
 @interface RKLocationManager () <CLLocationManagerDelegate>
 @end
 
+typedef void (^LocationFoundCompletion)(CLLocation *location);
+
 @implementation RKLocationManager {
     CLLocationManager *_locationManager;
 	CLLocation *_lastKnownLocation;
 	CLHeading *_currentHeading;
+    
+    LocationFoundCompletion _locationFoundCompletion;
     
     BOOL _shouldStart;
 }
@@ -63,6 +67,11 @@ NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification = @"RK
 
 #pragma mark - Public methods
 
+- (void)findLocationWithCompletion:(void (^)(CLLocation *location))completion {
+    _locationFoundCompletion = completion;
+    [self startTracking];
+}
+
 - (void)startTracking {
 	[_locationManager startUpdatingLocation];
     _shouldStart = ![self isAvailable];
@@ -77,7 +86,11 @@ NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification = @"RK
     if ([self isAvailable]) {
         [_locationManager stopUpdatingLocation];
     }
-
+    
+    if (_locationFoundCompletion) {
+        _locationFoundCompletion(_currentLocation);
+    }
+    
     _shouldStart = NO;
 	_currentHeading = nil;
 	_currentLocation = nil;
@@ -117,7 +130,7 @@ NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification = @"RK
         
         if (_currentLocation.horizontalAccuracy <= _locationManager.desiredAccuracy) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RKLocationManagerDidChangeUserLocationNotification object:nil];
-          // TODO:
+            
             [self stopTracking];
         }
     }
@@ -125,7 +138,6 @@ NSString *const RKLocationManagerDidChangeAuthorizationStatusNotification = @"RK
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
 	// NSLog(@"LocationManager: manager did fail with error: %@", error);
-	
 	_currentLocation = nil;
 }
 

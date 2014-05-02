@@ -15,8 +15,6 @@
 		5E1DF8A61907BB8100127F56 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8A41907BB8100127F56 /* InfoPlist.strings */; };
 		5E1DF8A81907BB8100127F56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8A71907BB8100127F56 /* main.m */; };
 		5E1DF8AC1907BB8100127F56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8AB1907BB8100127F56 /* AppDelegate.m */; };
-		5E1DF8AF1907BB8100127F56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8AD1907BB8100127F56 /* Main.storyboard */; };
-		5E1DF8B41907BB8100127F56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8B31907BB8100127F56 /* Images.xcassets */; };
 		5E1DF8BB1907BB8100127F56 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF8BA1907BB8100127F56 /* XCTest.framework */; };
 		5E1DF8BC1907BB8100127F56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89B1907BB8100127F56 /* Foundation.framework */; };
 		5E1DF8BD1907BB8100127F56 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89F1907BB8100127F56 /* UIKit.framework */; };
@@ -44,6 +42,8 @@
 		5E43080A1907C2ED00B36CE8 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4308021907C2ED00B36CE8 /* UIWebView+AFNetworking.m */; };
 		5E43080D1907C62C00B36CE8 /* UIAlertView+CompletionBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E43080C1907C62C00B36CE8 /* UIAlertView+CompletionBlock.m */; };
 		5E4308101907C6C600B36CE8 /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E43080F1907C6C600B36CE8 /* ContentManager.m */; };
+		5E6EA54219139210001FC7AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8B31907BB8100127F56 /* Images.xcassets */; };
+		5E6EA5431913921A001FC7AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E1DF8AD1907BB8100127F56 /* Main.storyboard */; };
 		5E86CEF119090034001C1382 /* SettingsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEEF19090034001C1382 /* SettingsCell.m */; };
 		5E86CF00190936FB001C1382 /* ReturnBikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CEFF190936FB001C1382 /* ReturnBikeViewController.m */; };
 		5E86CF0E19094F44001C1382 /* RKLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E86CF0D19094F44001C1382 /* RKLocationManager.m */; };
@@ -545,9 +545,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E1DF8B41907BB8100127F56 /* Images.xcassets in Resources */,
+				5E6EA5431913921A001FC7AD /* Main.storyboard in Resources */,
+				5E6EA54219139210001FC7AD /* Images.xcassets in Resources */,
 				5E1DF8A61907BB8100127F56 /* InfoPlist.strings in Resources */,
-				5E1DF8AF1907BB8100127F56 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

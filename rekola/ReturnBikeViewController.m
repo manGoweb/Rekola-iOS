@@ -49,7 +49,7 @@
             __weak __typeof(self)weakSelf = self;
             [[ContentManager manager] returnBike:[ContentManager manager].usingBike location:[RKLocationManager manager].currentLocation.coordinate note:nil completion:^(NSError *error) {
                 if (weakSelf) {
-                    __strong __typeof(weakSelf)strongSelf = weakSelf;
+                   // __strong __typeof(weakSelf)strongSelf = weakSelf;
                     // check for more error codes
                     if (!error) {
                         NSLog(@"Bike successfully returned");

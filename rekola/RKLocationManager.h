@@ -14,6 +14,7 @@
 
 + (instancetype)manager;
 
+- (void)findLocationWithCompletion:(void (^)(CLLocation *location))completion;
 - (void)startTracking;
 - (void)startUpdateHeading;
 - (void)stopTracking;
