@@ -24,7 +24,7 @@
     #import "NSError+LocalizedMessage.h"
     #import "UIColor+RKColor.h"
     #import "NSNumber+RKUtils.h"
-
+    #import "UIButton+RKUtils.h"
     // Project's core classes and libraries.
 
     // Shared managers

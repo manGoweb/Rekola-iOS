@@ -65,6 +65,8 @@
 		5E2CAE821913D0A800244206 /* ic_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E2CAE621913D0A800244206 /* ic_close.png */; };
 		5E2CAE831913D0A800244206 /* ic_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E2CAE631913D0A800244206 /* ic_arrow@2x.png */; };
 		5E2CAE841913D0A800244206 /* ic_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E2CAE641913D0A800244206 /* ic_arrow.png */; };
+		5E2CAEC91913E51100244206 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2CAEC81913E51100244206 /* QuartzCore.framework */; };
+		5E2CAECC1913FB0E00244206 /* UIButton+RKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CAECB1913FB0E00244206 /* UIButton+RKUtils.m */; };
 		5E4307F01907C2A500B36CE8 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307EF1907C2A500B36CE8 /* APIManager.m */; };
 		5E4308031907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307F31907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m */; };
 		5E4308041907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307F51907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m */; };
@@ -87,7 +89,6 @@
 		5ED55351190E8FFD00A03DA6 /* NSError+LocalizedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED55350190E8FFD00A03DA6 /* NSError+LocalizedMessage.m */; };
 		5ED55354190ECB8B00A03DA6 /* LocateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED55353190ECB8B00A03DA6 /* LocateViewController.m */; };
 		5EDE21E61907DC3F0017D36E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E51907DC3F0017D36E /* LoginViewController.m */; };
-		5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21E81907DC4C0017D36E /* RecoverViewController.m */; };
 		5EDE21F21907E8840017D36E /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21F11907E8840017D36E /* MapViewController.m */; };
 		5EDE21F41907F6520017D36E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDE21F31907F6520017D36E /* MapKit.framework */; };
 		5EDE21F71907F96E0017D36E /* JSONObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE21F51907F96E0017D36E /* JSONObject.m */; };
@@ -189,6 +190,9 @@
 		5E2CAE621913D0A800244206 /* ic_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_close.png; sourceTree = "<group>"; };
 		5E2CAE631913D0A800244206 /* ic_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_arrow@2x.png"; sourceTree = "<group>"; };
 		5E2CAE641913D0A800244206 /* ic_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_arrow.png; sourceTree = "<group>"; };
+		5E2CAEC81913E51100244206 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		5E2CAECA1913FB0E00244206 /* UIButton+RKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+RKUtils.h"; path = "rekola/UIButton+RKUtils.h"; sourceTree = "<group>"; };
+		5E2CAECB1913FB0E00244206 /* UIButton+RKUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+RKUtils.m"; path = "rekola/UIButton+RKUtils.m"; sourceTree = "<group>"; };
 		5E4307EE1907C2A500B36CE8 /* APIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APIManager.h; path = rekola/APIManager.h; sourceTree = "<group>"; };
 		5E4307EF1907C2A500B36CE8 /* APIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIManager.m; path = rekola/APIManager.m; sourceTree = "<group>"; };
 		5E4307F21907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
@@ -230,8 +234,6 @@
 		5ED55353190ECB8B00A03DA6 /* LocateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocateViewController.m; path = rekola/LocateViewController.m; sourceTree = "<group>"; };
 		5EDE21E41907DC3F0017D36E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = rekola/LoginViewController.h; sourceTree = "<group>"; };
 		5EDE21E51907DC3F0017D36E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = rekola/LoginViewController.m; sourceTree = "<group>"; };
-		5EDE21E71907DC4C0017D36E /* RecoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecoverViewController.h; path = rekola/RecoverViewController.h; sourceTree = "<group>"; };
-		5EDE21E81907DC4C0017D36E /* RecoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecoverViewController.m; path = rekola/RecoverViewController.m; sourceTree = "<group>"; };
 		5EDE21F01907E8840017D36E /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewController.h; path = rekola/MapViewController.h; sourceTree = "<group>"; };
 		5EDE21F11907E8840017D36E /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewController.m; path = rekola/MapViewController.m; sourceTree = "<group>"; };
 		5EDE21F31907F6520017D36E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -253,6 +255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E2CAEC91913E51100244206 /* QuartzCore.framework in Frameworks */,
 				5EDE21FF1907FDBE0017D36E /* CoreLocation.framework in Frameworks */,
 				5EDE21F41907F6520017D36E /* MapKit.framework in Frameworks */,
 				5E1DF89E1907BB8100127F56 /* CoreGraphics.framework in Frameworks */,
@@ -305,6 +308,7 @@
 		5E1DF89A1907BB8100127F56 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5E2CAEC81913E51100244206 /* QuartzCore.framework */,
 				5EDE21FE1907FDBE0017D36E /* CoreLocation.framework */,
 				5EDE21F31907F6520017D36E /* MapKit.framework */,
 				5E1DF89B1907BB8100127F56 /* Foundation.framework */,
@@ -451,6 +455,8 @@
 				5E074174190FD1E900688477 /* UIColor+RKColor.m */,
 				5E2CAE421913C07800244206 /* NSNumber+RKUtils.h */,
 				5E2CAE431913C07800244206 /* NSNumber+RKUtils.m */,
+				5E2CAECA1913FB0E00244206 /* UIButton+RKUtils.h */,
+				5E2CAECB1913FB0E00244206 /* UIButton+RKUtils.m */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -530,8 +536,6 @@
 				5EDE2212190819C60017D36E /* ProfileViewController.m */,
 				5EDE21E41907DC3F0017D36E /* LoginViewController.h */,
 				5EDE21E51907DC3F0017D36E /* LoginViewController.m */,
-				5EDE21E71907DC4C0017D36E /* RecoverViewController.h */,
-				5EDE21E81907DC4C0017D36E /* RecoverViewController.m */,
 			);
 			name = "View Controllers (Custom)";
 			sourceTree = "<group>";
@@ -704,6 +708,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E2CAECC1913FB0E00244206 /* UIButton+RKUtils.m in Sources */,
 				5E1DF8E81907BE4700127F56 /* AFHTTPRequestOperation.m in Sources */,
 				5EDE21E61907DC3F0017D36E /* LoginViewController.m in Sources */,
 				5E1DF8E91907BE4700127F56 /* AFHTTPRequestOperationManager.m in Sources */,
@@ -731,7 +736,6 @@
 				5E1DF8EE1907BE4700127F56 /* AFURLRequestSerialization.m in Sources */,
 				5E1DF8FA1907BF7700127F56 /* BaseViewController.m in Sources */,
 				5E86CF00190936FB001C1382 /* ReturnBikeViewController.m in Sources */,
-				5EDE21E91907DC4C0017D36E /* RecoverViewController.m in Sources */,
 				5E86CF23190A5C06001C1382 /* RKMapView.m in Sources */,
 				5E4308051907C2ED00B36CE8 /* UIAlertView+AFNetworking.m in Sources */,
 				5E43080A1907C2ED00B36CE8 /* UIWebView+AFNetworking.m in Sources */,

@@ -11,5 +11,6 @@
 @interface UIColor (RKColor)
 
 + (UIColor *)RKPinkColor;
++ (UIColor *)RKBrownColor;
 
 @end

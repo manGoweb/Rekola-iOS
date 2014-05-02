@@ -11,7 +11,11 @@
 @implementation UIColor (RKColor)
 
 + (UIColor *)RKPinkColor {
-    return COLOR(0xF20E87);
+    return COLOR(0xFB0883);
+}
+
++ (UIColor *)RKBrownColor {
+    return COLOR(0x597E1F);
 }
 
 @end
