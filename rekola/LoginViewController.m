@@ -30,11 +30,11 @@
     _recoverDescriptionLabel.text = NSLocalizedString(@"Enter your email to get instructions on how to reset your password.", nil);
     
     _nameField.placeholder = NSLocalizedString(@"email", nil);
-    _nameField.layer.borderColor = [UIColor RKPinkColor].CGColor;
+    _nameField.layer.borderColor = COLOR(0xAAAAAA).CGColor;
     _nameField.layer.borderWidth = 1;
     
     _passField.placeholder = NSLocalizedString(@"password", nil);
-    _passField.layer.borderColor = [UIColor RKPinkColor].CGColor;
+    _passField.layer.borderColor = COLOR(0xAAAAAA).CGColor;
     _passField.layer.borderWidth = 1;
     
     [_signButton setTitleForAllState:NSLocalizedString(@"Log In", nil)];
@@ -156,6 +156,14 @@
     } else {
         _signButton.enabled = (_nameField.text.length > 0 && _passField.text.length > 0);
     }
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.layer.borderColor = [UIColor RKPinkColor].CGColor;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    textField.layer.borderColor = COLOR(0xAAAAAA).CGColor;
 }
 
 #pragma mark - Private methods
