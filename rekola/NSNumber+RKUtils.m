@@ -79,22 +79,35 @@ static inline CGFloat DistanceToMiles(CLLocationDistance distance) {
 }
 
 - (NSString *)formattedDuration {
-    static NSNumberFormatter *numberFormatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        numberFormatter = [NSNumberFormatter new];
-        numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
-        numberFormatter.maximumFractionDigits = 0;
-        numberFormatter.locale = [NSLocale currentLocale];
-    });
+    NSDate *date = [NSDate date];
+    NSDate *newDate = [NSDate dateWithTimeIntervalSinceNow:[self doubleValue]];
     
-//    CGFloat seconds = [self doubleValue];
-//    CGFloat minutes = seconds / 60;
-//    CGFloat days = 0;
-//    CGFloat years = 0;
+    NSUInteger flags = NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute;
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:flags fromDate:date toDate:newDate options:0];
     
+    NSInteger days = components.day;
+    NSInteger hours = components.hour;
+    NSInteger minutes = components.minute;
     
-    return @"";
+    NSMutableString *duration = [NSMutableString new];
+    if (days >= 1) {
+        NSInteger newHours = (minutes >= 30)? hours++ : hours;
+        [duration appendString:[NSString stringWithFormat:@"%i%@%@",days, NSLocalizedString(@"d", @"Time Unit"), (newHours >= 1)? @" " : @""]];
+        
+        if (hours >= 1) {
+            [duration appendString:[NSString stringWithFormat:@"%i%@",newHours, NSLocalizedString(@"hr", @"Time Unit")]];
+        }
+        
+    } else {
+        if (hours >= 1) {
+            [duration appendString:[NSString stringWithFormat:@"%i%@%@",hours, NSLocalizedString(@"hr", @"Time Unit"), (minutes >= 1)? @" " : @""]];
+        }
+        if (minutes >= 1) {
+            [duration appendString:[NSString stringWithFormat:@"%i%@",minutes, NSLocalizedString(@"min", @"Time Unit")]];
+        }
+    }
+    
+    return duration;
 }
 
 @end

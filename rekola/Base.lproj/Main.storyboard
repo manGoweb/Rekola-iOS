@@ -19,7 +19,10 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKm-0l-nOl">
                                 <rect key="frame" x="67" y="269" width="187" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Dismiss"/>
+                                <color key="backgroundColor" red="0.96862751250000001" green="0.20000001789999999" blue="0.60000002379999995" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="Dismiss">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="dismiss:" destination="Lc1-vH-8tc" eventType="touchUpInside" id="MkX-vN-ivb"/>
                                 </connections>
@@ -153,16 +156,17 @@
                                         <rect key="frame" x="20" y="20" width="46" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Close">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="dismissView:" destination="Rut-JN-UWC" eventType="touchUpInside" id="bg6-s2-1Cp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Sq-Ps-nyX">
-                                        <rect key="frame" x="254" y="100" width="46" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Sq-Ps-nyX">
+                                        <rect key="frame" x="220" y="58" width="40" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Detail">
+                                        <state key="normal" image="ic_arrow.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -182,7 +186,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NDg-hV-0f6">
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="NDg-hV-0f6">
                                         <rect key="frame" x="37" y="140" width="20" height="20"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </activityIndicatorView>
@@ -190,6 +194,7 @@
                                         <rect key="frame" x="27" y="135" width="41" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Route">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -197,7 +202,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.96862751250000001" green="0.20000001789999999" blue="0.60000002379999995" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="230" id="AGh-do-5lS"/>
                                 </constraints>
@@ -403,12 +408,12 @@
             </objects>
             <point key="canvasLocation" x="3382" y="765"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller-->
         <scene sceneID="qqJ-gd-3aA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yCf-hu-zpC" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="Item" id="Eeu-oJ-Jo0"/>
+                    <tabBarItem key="tabBarItem" title="" image="tabbar_ic_profile_active.png" id="Eeu-oJ-Jo0"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="0wr-c3-p8e">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -423,12 +428,12 @@
             </objects>
             <point key="canvasLocation" x="2856" y="765"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller-->
         <scene sceneID="r25-Y5-eZb">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qnP-7L-R6N" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="Item" id="33g-Di-c7e"/>
+                    <tabBarItem key="tabBarItem" title="" image="tabbar_ic_map_active.png" id="33g-Di-c7e"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="ieK-HP-d7o">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -600,12 +605,12 @@
             </objects>
             <point key="canvasLocation" x="3933" y="-1528"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller-->
         <scene sceneID="xi9-jB-HFr">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tyg-uO-REe" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="Item" id="n9d-KH-Ota"/>
+                    <tabBarItem key="tabBarItem" title="" image="tabbar_ic_borrow_active.png" id="n9d-KH-Ota"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="iXd-L8-km4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -661,6 +666,12 @@
             <point key="canvasLocation" x="2120" y="-7"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_arrow.png" width="13" height="21"/>
+        <image name="tabbar_ic_borrow_active.png" width="32" height="25"/>
+        <image name="tabbar_ic_map_active.png" width="32" height="25"/>
+        <image name="tabbar_ic_profile_active.png" width="32" height="25"/>
+    </resources>
     <color key="tintColor" red="0.96862751245498657" green="0.20000001788139343" blue="0.60000002384185791" alpha="1" colorSpace="deviceRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

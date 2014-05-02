@@ -172,7 +172,12 @@ static CGFloat DefaultDistance = 3500;
     if ([view.annotation isKindOfClass:[Bike class]] && _flags.refreshingSelectedAnnotation == 0) {
 
          Bike *bike = (Bike *)view.annotation;
-        _selectedBikeIdentifier = [bike.identifier integerValue];
+        
+        if ([bike.identifier integerValue] == _selectedBikeIdentifier && _routePolyline) {
+            [_mapView removeOverlay:_routePolyline];
+        } else {
+            _selectedBikeIdentifier = [bike.identifier integerValue];
+        }
         
         if (mapView.userLocation.location != nil) {
             NSNumber *distance = @([mapView.userLocation.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:bike.coordinate.latitude longitude:bike.coordinate.longitude]]);
@@ -187,10 +192,6 @@ static CGFloat DefaultDistance = 3500;
         _POIView.indicatorView.hidden = YES;
         [_POIView.indicatorView stopAnimating];
         _POIView.directionButton.hidden = NO;
-        
-        if (_routePolyline) {
-            [_mapView removeOverlay:_routePolyline];
-        }
         
         //_POIView.titleLabel.text = bike.name;
         _POIView.descriptionLabel.text = bike.bikeDescription;
@@ -326,8 +327,10 @@ static CGFloat DefaultDistance = 3500;
             [self showRoute:route];
             detailView.titleLabel.text = @(route.expectedTravelTime).formattedDuration;
             
-            
-        } else {
+        } else if (error.code != -999){
+            NSString *message = [[error userInfo] objectForKey:@"NSLocalizedFailureReason"];
+            message = message ?: error.localizedDescription;
+            [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
             detailView.directionButton.hidden = NO;
         }
         
@@ -338,9 +341,11 @@ static CGFloat DefaultDistance = 3500;
 
 - (void)POIDetailWillDismiss:(POIDetailView *)detailView {
     
+    [self.view layoutIfNeeded];
     [UIView animateWithDuration:0.25 animations:^{
         _POIBottomConstraint.constant = -230;
-
+        [self.view layoutIfNeeded];
+        
     } completion:^(BOOL finished) {
         _POIBottomConstraint.constant = -230;
         _selectedBikeIdentifier = -1;
