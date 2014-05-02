@@ -19,11 +19,15 @@ static CGFloat DefaultDistance = 3500;
     MKPolyline *_routePolyline;
     
     UIActivityIndicatorView *_indicatorView;
+    NSInteger _selectedBikeIdentifier;
+    MKDirections *_directionsRequest;
+    NSArray *_bikes;
     
     struct {
         unsigned int firtstUpdate:1;
         unsigned int firstLaunch:1;
         unsigned int loadingData:1;
+        unsigned int refreshingSelectedAnnotation:1;
     } _flags;
 }
 
@@ -46,9 +50,13 @@ static CGFloat DefaultDistance = 3500;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:UIApplicationDidBecomeActiveNotification object:nil];
     
+    _flags.refreshingSelectedAnnotation = 0;
     _flags.firtstUpdate = 1;
     _flags.firstLaunch = 1;
     _mapView.clusteringEnabled = NO;
+    
+    _POIBottomConstraint.constant = -230;
+    [self.view layoutIfNeeded];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -86,13 +94,29 @@ static CGFloat DefaultDistance = 3500;
                 if (!error) {
                     __strong __typeof(weakSelf)strongSelf = weakSelf;
                     NSMutableArray *annotations = @[].mutableCopy;
+                    
+                    __block Bike *selectedBike = nil;
                     [bikes enumerateObjectsUsingBlock:^(Bike *obj, NSUInteger idx, BOOL *stop) {
+                        if ([obj.identifier integerValue] == strongSelf->_selectedBikeIdentifier) {
+                            selectedBike = obj;
+                        }
                         [annotations addObject:[[RKAnnotation alloc] initWithAnnotation:obj]];
                     }];
                     
-                    [strongSelf->_mapView clearAnnotations];
-                    [strongSelf->_mapView addAnnotations:annotations];
+                    strongSelf->_bikes = bikes;
+                    
+                    [weakSelf.mapView clearAnnotations];
+                    [weakSelf.mapView addAnnotations:annotations];
+                    
+                    if (selectedBike) {
+                        strongSelf->_flags.refreshingSelectedAnnotation = 1;
+                        [weakSelf.mapView selectAnnotation:selectedBike animated:NO];
+                        strongSelf->_flags.refreshingSelectedAnnotation = 0;
+                    } else {
+                        [weakSelf POIDetailWillDismiss:weakSelf.POIView];
+                    }
                     strongSelf->_flags.loadingData = 0;
+
                 } else {
                    [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
                 }
@@ -127,38 +151,74 @@ static CGFloat DefaultDistance = 3500;
     [_mapView setRegion:viewRegion animated:YES];
 }
 
+- (Bike *)bikeWithId:(NSInteger)identifier {
+    __block Bike *bike = nil;
+    [_bikes enumerateObjectsUsingBlock:^(Bike *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj.identifier integerValue] == identifier) {
+            bike = obj;
+            *stop = YES;
+        }
+    }];
+    return bike;
+}
+
 #pragma mark - MapKitDelegate methods
 
 - (void)mapView:(MKMapView *)aMapView regionDidChangeAnimated:(BOOL)animated {
     [_mapView clusterAnnotations];
 }
 
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    if ([view.annotation isKindOfClass:[Bike class]]) {
-        [self performSegueWithIdentifier:@"BikeDetailSegue" sender:nil];
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    if ([view.annotation isKindOfClass:[Bike class]] && _flags.refreshingSelectedAnnotation == 0) {
+
+         Bike *bike = (Bike *)view.annotation;
+        _selectedBikeIdentifier = [bike.identifier integerValue];
+        
+        if (mapView.userLocation.location != nil) {
+            NSNumber *distance = @([mapView.userLocation.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:bike.coordinate.latitude longitude:bike.coordinate.longitude]]);
+            _POIView.titleLabel.text = distance.formattedDistance;
+        
+        } else {
+            _POIView.titleLabel.text = nil;
+        }
+        
+        [_directionsRequest cancel];
+        
+        _POIView.indicatorView.hidden = YES;
+        [_POIView.indicatorView stopAnimating];
+        _POIView.directionButton.hidden = NO;
+        
+        if (_routePolyline) {
+            [_mapView removeOverlay:_routePolyline];
+        }
+        
+        //_POIView.titleLabel.text = bike.name;
+        _POIView.descriptionLabel.text = bike.bikeDescription;
+        
+        MKPinAnnotationView *pinView = (MKPinAnnotationView *)view;
+        pinView.pinColor = MKPinAnnotationColorRed;
+        
+        [self.view layoutIfNeeded];
+        [UIView animateWithDuration:0.25 animations:^{
+            _POIBottomConstraint.constant = 0;
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            _POIBottomConstraint.constant = 0;
+        }];
+        
+        [_mapView setCenterCoordinate:view.annotation.coordinate animated:YES];
     }
-    
-//    MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-//    
-//    request.source = [MKMapItem mapItemForCurrentLocation];
-//
-//    MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:view.annotation.coordinate addressDictionary:nil]];
-//    request.destination = destination;
-//    request.transportType = MKDirectionsTransportTypeWalking;
-//    MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
-//    // distance / expectedTraveltime - seconds
-//    [directions calculateDirectionsWithCompletionHandler:
-//     ^(MKDirectionsResponse *response, NSError *error) {
-//         if (error) {
-//             // TODO:
-//             // Handle Error
-//         } else {
-//             [self showRoute:[response.routes firstObject]];
-//         }
-//     }];
 }
 
--(void)showRoute:(MKRoute *)route {
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    if ([view.annotation isKindOfClass:[Bike class]]) {
+        
+        MKPinAnnotationView *pinView = (MKPinAnnotationView *)view;
+        pinView.pinColor = MKPinAnnotationColorPurple;
+    }
+}
+
+- (void)showRoute:(MKRoute *)route {
     if (_routePolyline) {
         [_mapView removeOverlay:_routePolyline];
     }
@@ -200,7 +260,7 @@ static CGFloat DefaultDistance = 3500;
             if (!pinView) {
                 pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:BikeAnnotationViewIdentifier];
                 
-                pinView.canShowCallout = YES;
+                pinView.canShowCallout = NO;
                 pinView.pinColor = MKPinAnnotationColorPurple;
                 
                 // Add a detail disclosure button to the callout.
@@ -213,6 +273,13 @@ static CGFloat DefaultDistance = 3500;
                 
             } else {
                 pinView.annotation = annotation;
+            }
+            
+            Bike *bike = (Bike *)annotation;
+            if ([bike.identifier integerValue] == _selectedBikeIdentifier) {
+                pinView.pinColor = MKPinAnnotationColorRed;
+            } else {
+                pinView.pinColor = MKPinAnnotationColorPurple;
             }
             
             retPinView = pinView;
@@ -228,6 +295,58 @@ static CGFloat DefaultDistance = 3500;
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, DefaultUserZoom, DefaultUserZoom);
         [_mapView setRegion:region animated:YES];
     }
+}
+
+#pragma mark - POIDetailViewDelegate methods
+
+- (void)POIDetailWillOpenDetail:(POIDetailView *)detailView {
+    [self performSegueWithIdentifier:@"BikeDetailSegue" sender:nil];
+}
+
+- (void)POIDetailWillFindDirections:(POIDetailView *)detailView {
+    
+    [_directionsRequest cancel];
+    
+    MKDirectionsRequest *request = [MKDirectionsRequest new];
+    request.source = [MKMapItem mapItemForCurrentLocation];
+        
+    MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:[self bikeWithId:_selectedBikeIdentifier].coordinate addressDictionary:nil]];
+    
+    request.destination = destination;
+    request.transportType = MKDirectionsTransportTypeWalking;
+    
+    detailView.indicatorView.hidden = NO;
+    [detailView.indicatorView startAnimating];
+    detailView.directionButton.hidden = YES;
+    
+    _directionsRequest = [[MKDirections alloc] initWithRequest:request];
+    [_directionsRequest calculateDirectionsWithCompletionHandler: ^(MKDirectionsResponse *response, NSError *error) {
+        if (!error) {
+            MKRoute *route = [response.routes firstObject];
+            [self showRoute:route];
+            detailView.titleLabel.text = @(route.expectedTravelTime).formattedDuration;
+            
+            
+        } else {
+            detailView.directionButton.hidden = NO;
+        }
+        
+        detailView.indicatorView.hidden = YES;
+        [detailView.indicatorView stopAnimating];
+    }];
+}
+
+- (void)POIDetailWillDismiss:(POIDetailView *)detailView {
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        _POIBottomConstraint.constant = -230;
+
+    } completion:^(BOOL finished) {
+        _POIBottomConstraint.constant = -230;
+        _selectedBikeIdentifier = -1;
+        
+        [_mapView deselectAnnotation:[_mapView.selectedAnnotations firstObject] animated:YES];
+    }];
 }
 
 @end

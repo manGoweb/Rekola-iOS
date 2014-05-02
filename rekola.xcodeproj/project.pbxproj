@@ -31,6 +31,8 @@
 		5E1DF8F01907BE4700127F56 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8E71907BE4700127F56 /* AFURLSessionManager.m */; };
 		5E1DF8FA1907BF7700127F56 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8F91907BF7700127F56 /* BaseViewController.m */; };
 		5E1DF8FD1907BF9700127F56 /* BaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8FC1907BF9700127F56 /* BaseCell.m */; };
+		5E2CAE41191396FF00244206 /* POIDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CAE40191396FF00244206 /* POIDetailView.m */; };
+		5E2CAE441913C07800244206 /* NSNumber+RKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CAE431913C07800244206 /* NSNumber+RKUtils.m */; };
 		5E4307F01907C2A500B36CE8 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307EF1907C2A500B36CE8 /* APIManager.m */; };
 		5E4308031907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307F31907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m */; };
 		5E4308041907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307F51907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m */; };
@@ -119,6 +121,10 @@
 		5E1DF8F91907BF7700127F56 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseViewController.m; path = rekola/BaseViewController.m; sourceTree = "<group>"; };
 		5E1DF8FB1907BF9700127F56 /* BaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseCell.h; path = rekola/BaseCell.h; sourceTree = "<group>"; };
 		5E1DF8FC1907BF9700127F56 /* BaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseCell.m; path = rekola/BaseCell.m; sourceTree = "<group>"; };
+		5E2CAE3F191396FF00244206 /* POIDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POIDetailView.h; path = rekola/POIDetailView.h; sourceTree = "<group>"; };
+		5E2CAE40191396FF00244206 /* POIDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POIDetailView.m; path = rekola/POIDetailView.m; sourceTree = "<group>"; };
+		5E2CAE421913C07800244206 /* NSNumber+RKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+RKUtils.h"; path = "rekola/NSNumber+RKUtils.h"; sourceTree = "<group>"; };
+		5E2CAE431913C07800244206 /* NSNumber+RKUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSNumber+RKUtils.m"; path = "rekola/NSNumber+RKUtils.m"; sourceTree = "<group>"; };
 		5E4307EE1907C2A500B36CE8 /* APIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APIManager.h; path = rekola/APIManager.h; sourceTree = "<group>"; };
 		5E4307EF1907C2A500B36CE8 /* APIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIManager.m; path = rekola/APIManager.m; sourceTree = "<group>"; };
 		5E4307F21907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
@@ -347,6 +353,8 @@
 				5ED55350190E8FFD00A03DA6 /* NSError+LocalizedMessage.m */,
 				5E074173190FD1E900688477 /* UIColor+RKColor.h */,
 				5E074174190FD1E900688477 /* UIColor+RKColor.m */,
+				5E2CAE421913C07800244206 /* NSNumber+RKUtils.h */,
+				5E2CAE431913C07800244206 /* NSNumber+RKUtils.m */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -366,6 +374,8 @@
 			isa = PBXGroup;
 			children = (
 				5E86CF1D190A5BD7001C1382 /* RKMap */,
+				5E2CAE3F191396FF00244206 /* POIDetailView.h */,
+				5E2CAE40191396FF00244206 /* POIDetailView.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -569,6 +579,7 @@
 				5E1DF8E81907BE4700127F56 /* AFHTTPRequestOperation.m in Sources */,
 				5EDE21E61907DC3F0017D36E /* LoginViewController.m in Sources */,
 				5E1DF8E91907BE4700127F56 /* AFHTTPRequestOperationManager.m in Sources */,
+				5E2CAE41191396FF00244206 /* POIDetailView.m in Sources */,
 				5EDE2213190819C60017D36E /* ProfileViewController.m in Sources */,
 				5E1DF8EB1907BE4700127F56 /* AFNetworkReachabilityManager.m in Sources */,
 				5E4308031907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -601,6 +612,7 @@
 				5EDE2216190819D70017D36E /* BikeViewController.m in Sources */,
 				5E86CEF119090034001C1382 /* SettingsCell.m in Sources */,
 				5E1DF8F01907BE4700127F56 /* AFURLSessionManager.m in Sources */,
+				5E2CAE441913C07800244206 /* NSNumber+RKUtils.m in Sources */,
 				5EDE21F21907E8840017D36E /* MapViewController.m in Sources */,
 				5E4308091907C2ED00B36CE8 /* UIRefreshControl+AFNetworking.m in Sources */,
 				5E1DF8AC1907BB8100127F56 /* AppDelegate.m in Sources */,

@@ -23,6 +23,7 @@
     #import "UIAlertView+CompletionBlock.h"
     #import "NSError+LocalizedMessage.h"
     #import "UIColor+RKColor.h"
+    #import "NSNumber+RKUtils.h"
 
     // Project's core classes and libraries.
 

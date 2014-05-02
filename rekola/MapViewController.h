@@ -8,11 +8,14 @@
 
 #import "BaseViewController.h"
 #import "RKMapView.h"
+#import "POIDetailView.h"
 
-@interface MapViewController : BaseViewController <MKMapViewDelegate>
+@interface MapViewController : BaseViewController <MKMapViewDelegate, POIDetailViewDelegate>
 
 @property (nonatomic, weak) IBOutlet RKMapView *mapView;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *refreshButton;
+@property (nonatomic, weak) IBOutlet POIDetailView *POIView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *POIBottomConstraint;
 
 - (IBAction)refreshPOI:(id)sender;
 

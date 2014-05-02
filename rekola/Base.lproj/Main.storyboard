@@ -145,12 +145,81 @@
                                     <outlet property="delegate" destination="yff-8R-Vj8" id="86y-n6-6Dj"/>
                                 </connections>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rut-JN-UWC" customClass="POIDetailView">
+                                <rect key="frame" x="0.0" y="225" width="320" height="230"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ynq-Kr-5XI">
+                                        <rect key="frame" x="20" y="20" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Close">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismissView:" destination="Rut-JN-UWC" eventType="touchUpInside" id="bg6-s2-1Cp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Sq-Ps-nyX">
+                                        <rect key="frame" x="254" y="100" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Detail">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="showDetail:" destination="Rut-JN-UWC" eventType="touchUpInside" id="Pv7-12-p1W"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d5u-SE-XHz">
+                                        <rect key="frame" x="22" y="58" width="233" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AiK-nB-Wh9">
+                                        <rect key="frame" x="22" y="87" width="235" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="NDg-hV-0f6">
+                                        <rect key="frame" x="37" y="140" width="20" height="20"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </activityIndicatorView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yso-q5-2B8">
+                                        <rect key="frame" x="27" y="135" width="41" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Route">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="findDirections:" destination="Rut-JN-UWC" eventType="touchUpInside" id="pqt-P1-Wfd"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="230" id="AGh-do-5lS"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="closeButton" destination="Ynq-Kr-5XI" id="UOh-Sz-lwm"/>
+                                    <outlet property="delegate" destination="yff-8R-Vj8" id="CkM-z3-oW8"/>
+                                    <outlet property="descriptionLabel" destination="AiK-nB-Wh9" id="gtj-ZS-Wl8"/>
+                                    <outlet property="detailButton" destination="1Sq-Ps-nyX" id="Vib-V3-qrm"/>
+                                    <outlet property="directionButton" destination="yso-q5-2B8" id="qXQ-ny-ykz"/>
+                                    <outlet property="indicatorView" destination="NDg-hV-0f6" id="CLr-iB-Ka2"/>
+                                    <outlet property="titleLabel" destination="d5u-SE-XHz" id="DT6-UV-thi"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="RYn-Ta-zOX" firstAttribute="leading" secondItem="Gx8-OE-QpG" secondAttribute="leading" id="DKz-eA-zcV"/>
                             <constraint firstItem="chG-UP-Lcb" firstAttribute="top" secondItem="RYn-Ta-zOX" secondAttribute="bottom" id="NUu-UH-zXL"/>
                             <constraint firstAttribute="trailing" secondItem="RYn-Ta-zOX" secondAttribute="trailing" id="Pqe-mc-VBV"/>
+                            <constraint firstItem="chG-UP-Lcb" firstAttribute="top" secondItem="Rut-JN-UWC" secondAttribute="bottom" id="a1r-CF-Yed"/>
+                            <constraint firstItem="Rut-JN-UWC" firstAttribute="leading" secondItem="Gx8-OE-QpG" secondAttribute="leading" id="fw7-Rs-UMh"/>
+                            <constraint firstAttribute="trailing" secondItem="Rut-JN-UWC" secondAttribute="trailing" id="iTi-kK-FHz"/>
                             <constraint firstItem="RYn-Ta-zOX" firstAttribute="top" secondItem="0BW-LF-Nvj" secondAttribute="bottom" id="oAh-ra-kr8"/>
                         </constraints>
                     </view>
@@ -163,6 +232,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="POIBottomConstraint" destination="a1r-CF-Yed" id="h15-iQ-8E3"/>
+                        <outlet property="POIView" destination="Rut-JN-UWC" id="6hl-to-w6d"/>
                         <outlet property="mapView" destination="RYn-Ta-zOX" id="CRI-9p-HdC"/>
                         <outlet property="refreshButton" destination="dGW-oi-gs8" id="Qeg-2U-wSQ"/>
                         <segue destination="kjL-TW-p8o" kind="push" identifier="BikeDetailSegue" id="VKJ-1s-Sbg"/>
