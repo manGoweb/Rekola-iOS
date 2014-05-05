@@ -48,7 +48,8 @@
         [[ContentManager manager] bikeStateWithCompletion:^(Bike *bike, NSError *error) {
             if (weakSelf) {
                 // __strong __typeof(weakSelf)strongSelf = weakSelf;
-                if (error.statusCode == 404 || error.statusCode == 200) {
+                // TODO: neni dobre, musi zjistit
+                if (!error || error.statusCode == 404 || error.statusCode == 200) {
                     if (bike) {
                         [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Uz jedno kolo pujceno mate", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
                         

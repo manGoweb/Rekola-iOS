@@ -9,7 +9,9 @@
 #import "APIManager.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
-NSString *const AppStoreID = @"missing";
+NSString *const AppStoreID = @"862678016";
+NSString *const APIVersion = @"1.0.0";
+
 #if defined(REKOLA_DEV)
 NSString *const RekolaAPIURLString = @"http://roboclevis.apiary-mock.com";
 #else
@@ -39,8 +41,6 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(networkingOperationDidFinish:) name:AFNetworkingOperationDidFinishNotification object:nil];
         
-        [self updateUserAgent];
-        
         // Custom networking serialized for request and response.
         self.responseSerializer = [AFJSONResponseSerializer serializer];
         self.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -52,6 +52,7 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
         
         // Prepare network activity indicator for the UIApplication.
         [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+        [self updateUserAgent];
     }
     return self;
 }
@@ -79,7 +80,7 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
     NSString *locale = [[[NSLocale currentLocale] objectForKey:NSLocaleIdentifier] stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
     
-    NSString *userAgent = [NSString stringWithFormat:@"%@;%@;%@;iOS %@;%.0f;%.0f;%@;CZ)", appName, appVersion, deviceFullName, systemVersion, size.width * scale, size.height * scale, locale];
+    NSString *userAgent = [NSString stringWithFormat:@"%@/%@ API %@ (%@; iOS %@; %.0f; %.0f; %@)", appName, appVersion, APIVersion, deviceFullName, systemVersion, size.width * scale, size.height * scale, locale];
     
 #pragma clang diagnostic pop
     
@@ -90,6 +91,7 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
             userAgent = mutableUserAgent;
         }
         [self.requestSerializer setValue:userAgent forHTTPHeaderField:@"User-Agent"];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"UserAgent" : userAgent}];
     }
 }
 
@@ -118,7 +120,6 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
             [alert showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
                 _flags.handlingUpdate = 0;
                 
-                // TODO: missing app apple id
                 if (buttonIndex != alert.cancelButtonIndex) {
                     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"itms://itunes.apple.com/cz/app/id%@?mt=8", AppStoreID]];
                     [[UIApplication sharedApplication] openURL:url];

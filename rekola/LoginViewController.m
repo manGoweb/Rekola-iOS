@@ -75,7 +75,7 @@
         NSString *pass = [[NSString alloc] initWithData:passData encoding:NSUTF8StringEncoding];
         
         _nameField.text = username;
-        _passField.text = pass;
+        _passField.text = @"......";
         
         [self signInWithName:username password:pass];
     }

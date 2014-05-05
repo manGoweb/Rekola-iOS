@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, HttpStatusCode) {
     /// There was an uncaught exception in the api
     HttpStatusCodeInternalServerError =     500,
     /// Force update application
-    HttpStatusCodeForceUpdate =             999
+    HttpStatusCodeForceUpdate =             426
 };
 
 @interface APIManager : AFHTTPRequestOperationManager

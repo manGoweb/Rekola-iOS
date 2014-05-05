@@ -25,6 +25,7 @@
     #import "UIColor+RKColor.h"
     #import "NSNumber+RKUtils.h"
     #import "UIButton+RKUtils.h"
+    #import "UIImage+Tint.h"
     // Project's core classes and libraries.
 
     // Shared managers

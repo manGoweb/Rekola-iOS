@@ -67,6 +67,7 @@
 		5E2CAE841913D0A800244206 /* ic_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E2CAE641913D0A800244206 /* ic_arrow.png */; };
 		5E2CAEC91913E51100244206 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2CAEC81913E51100244206 /* QuartzCore.framework */; };
 		5E2CAECC1913FB0E00244206 /* UIButton+RKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CAECB1913FB0E00244206 /* UIButton+RKUtils.m */; };
+		5E3E686A1916B816005653D4 /* UIImage+Tint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3E68681916B816005653D4 /* UIImage+Tint.m */; };
 		5E4307F01907C2A500B36CE8 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307EF1907C2A500B36CE8 /* APIManager.m */; };
 		5E4308031907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307F31907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m */; };
 		5E4308041907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307F51907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m */; };
@@ -193,6 +194,8 @@
 		5E2CAEC81913E51100244206 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		5E2CAECA1913FB0E00244206 /* UIButton+RKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+RKUtils.h"; path = "rekola/UIButton+RKUtils.h"; sourceTree = "<group>"; };
 		5E2CAECB1913FB0E00244206 /* UIButton+RKUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+RKUtils.m"; path = "rekola/UIButton+RKUtils.m"; sourceTree = "<group>"; };
+		5E3E68681916B816005653D4 /* UIImage+Tint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Tint.m"; path = "rekola/UIImage+Tint.m"; sourceTree = "<group>"; };
+		5E3E68691916B816005653D4 /* UIImage+Tint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Tint.h"; path = "rekola/UIImage+Tint.h"; sourceTree = "<group>"; };
 		5E4307EE1907C2A500B36CE8 /* APIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APIManager.h; path = rekola/APIManager.h; sourceTree = "<group>"; };
 		5E4307EF1907C2A500B36CE8 /* APIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIManager.m; path = rekola/APIManager.m; sourceTree = "<group>"; };
 		5E4307F21907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
@@ -457,6 +460,8 @@
 				5E2CAE431913C07800244206 /* NSNumber+RKUtils.m */,
 				5E2CAECA1913FB0E00244206 /* UIButton+RKUtils.h */,
 				5E2CAECB1913FB0E00244206 /* UIButton+RKUtils.m */,
+				5E3E68691916B816005653D4 /* UIImage+Tint.h */,
+				5E3E68681916B816005653D4 /* UIImage+Tint.m */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -735,6 +740,7 @@
 				5E4308071907C2ED00B36CE8 /* UIImageView+AFNetworking.m in Sources */,
 				5E1DF8EE1907BE4700127F56 /* AFURLRequestSerialization.m in Sources */,
 				5E1DF8FA1907BF7700127F56 /* BaseViewController.m in Sources */,
+				5E3E686A1916B816005653D4 /* UIImage+Tint.m in Sources */,
 				5E86CF00190936FB001C1382 /* ReturnBikeViewController.m in Sources */,
 				5E86CF23190A5C06001C1382 /* RKMapView.m in Sources */,
 				5E4308051907C2ED00B36CE8 /* UIAlertView+AFNetworking.m in Sources */,

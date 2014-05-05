@@ -107,6 +107,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         if (completion) {
             completion([error message:operation.responseString]);
         }
+        [weakSelf removeKeychainObjectForKey:KeychainUserPassword];
     }];
 }
 
