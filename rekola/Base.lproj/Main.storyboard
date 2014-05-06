@@ -732,12 +732,13 @@
                             <constraint firstItem="b55-Fe-uuA" firstAttribute="trailing" secondItem="URh-VV-Yhw" secondAttribute="trailing" id="8Gb-W0-slm"/>
                             <constraint firstItem="grJ-yc-neb" firstAttribute="top" secondItem="ymB-lf-Tqb" secondAttribute="bottom" constant="31" id="CVC-21-KrE"/>
                             <constraint firstItem="U36-D2-yhM" firstAttribute="leading" secondItem="by8-dg-jGX" secondAttribute="leading" constant="20" id="Fkc-k6-sUr"/>
-                            <constraint firstItem="b55-Fe-uuA" firstAttribute="top" secondItem="1Dp-7O-9T5" secondAttribute="bottom" constant="72" id="IxH-mu-j7O"/>
                             <constraint firstItem="b55-Fe-uuA" firstAttribute="leading" secondItem="nsS-ph-jGf" secondAttribute="leading" id="QE0-ZA-aBl"/>
+                            <constraint firstItem="JvU-zx-gmV" firstAttribute="top" secondItem="URh-VV-Yhw" secondAttribute="bottom" priority="900" constant="124" id="QnP-iG-n2d"/>
                             <constraint firstItem="1Dp-7O-9T5" firstAttribute="top" secondItem="GfY-pP-u8E" secondAttribute="bottom" constant="8" id="RVS-UK-n3X"/>
                             <constraint firstItem="b55-Fe-uuA" firstAttribute="leading" secondItem="1Dp-7O-9T5" secondAttribute="leading" id="Rg7-qt-Vb7"/>
                             <constraint firstItem="ymB-lf-Tqb" firstAttribute="top" secondItem="XXh-GN-tHj" secondAttribute="bottom" id="Tr5-Lq-Sun"/>
                             <constraint firstAttribute="trailing" secondItem="grJ-yc-neb" secondAttribute="trailing" constant="39" id="TtI-M2-xOi"/>
+                            <constraint firstItem="U36-D2-yhM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1Dp-7O-9T5" secondAttribute="bottom" constant="12" id="WqQ-xD-l6s"/>
                             <constraint firstItem="URh-VV-Yhw" firstAttribute="top" secondItem="b55-Fe-uuA" secondAttribute="bottom" constant="10" id="coN-jV-gSH"/>
                             <constraint firstAttribute="trailing" secondItem="1Dp-7O-9T5" secondAttribute="trailing" constant="36" id="hOa-bK-anA"/>
                             <constraint firstAttribute="trailing" secondItem="U36-D2-yhM" secondAttribute="trailing" constant="20" id="jE7-3s-RbM"/>
