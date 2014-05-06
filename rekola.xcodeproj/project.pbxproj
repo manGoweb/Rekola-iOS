@@ -635,7 +635,7 @@
 				ORGANIZATIONNAME = "Martin Banas";
 				TargetAttributes = {
 					5E1DF8971907BB8100127F56 = {
-						DevelopmentTeam = 35FKME99KG;
+						DevelopmentTeam = 9L3K6GLV7S;
 					};
 					5E1DF8B81907BB8100127F56 = {
 						TestTargetID = 5E1DF8971907BB8100127F56;

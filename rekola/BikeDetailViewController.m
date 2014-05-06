@@ -13,7 +13,7 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        self.title = [ContentManager manager].usingBike.name ?: NSLocalizedString(@"Bike Detail", nil);
+        self.title = [ContentManager manager].usingBike.name ?: NSLocalizedString(@"Bike Detail", @"Bar button title in navigation bar");
     }
     return self;
 }

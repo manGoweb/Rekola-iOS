@@ -14,7 +14,7 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        self.title = NSLocalizedString(@"Borrow", @"Title in segmented control");
+        self.title = NSLocalizedString(@"Borrow Bike", @"Title in segmented control");
         self.navigationController.tabBarItem.title = self.title;
         
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:self.title image:[UIImage imageNamed:@"tabbar_ic_borrow_active.png"] selectedImage:[[UIImage imageNamed:@"tabbar_ic_borrow_active.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -28,15 +28,15 @@
     _indicatorView.hidden = YES;
     _borrowButton.enabled = NO;
     
-    _titleLabel.text = NSLocalizedString(@"Borrow Bike", nil);
-    _descriptionLabel.text = NSLocalizedString(@"After entering the code, you will receive a code bike lock. Ever since you running out of time for which you pay karma.", nil);
-    _codeLabel.text = NSLocalizedString(@"Code can be found on the side of the wheel on bike.", nil);
+    _titleLabel.text = NSLocalizedString(@"Borrow Bike", @"A label text somewhere on the screen");
+    _descriptionLabel.text = NSLocalizedString(@"After entering the code, you will receive a code bike lock. Ever since you running out of time for which you pay karma.", @"A label text somewhere on the screen");
+    _codeLabel.text = NSLocalizedString(@"Code can be found on the side of the wheel on bike.", @"A label text somewhere on the screen");
     
-    _bikeCodeField.placeholder = NSLocalizedString(@"code", nil);
+    _bikeCodeField.placeholder = NSLocalizedString(@"code", @"Placeholder text inside a TextField");
     _bikeCodeField.layer.borderColor = COLOR(0xAAAAAA).CGColor;
     _bikeCodeField.layer.borderWidth = 1;
     
-    [_borrowButton setTitleForAllState:NSLocalizedString(@"Borrow", nil)];
+    [_borrowButton setTitleForAllState:NSLocalizedString(@"Borrow", @"A button title somewhere on the screen")];
     [_borrowButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateDisabled];
     [_borrowButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateHighlighted];
     
@@ -177,7 +177,6 @@
         } completion:nil];
     }
 }
-
 
 #pragma mark - UIGestureRecognizer methods
 

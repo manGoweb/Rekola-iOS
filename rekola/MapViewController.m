@@ -37,6 +37,10 @@
     return self;
 }
 
+- (void)dealloc {
+    _mapView.delegate = nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

@@ -183,16 +183,14 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     __weak __typeof(self)weakSelf = self;
     _borrowOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/lock-code?bikeCode=%@",code] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                Bike *bike = [[Bike alloc] initWithDictionary:responseObject[@"bike"]];
-                bike.lockCode = responseObject[@"lockCode"];
-                weakSelf.usingBike = bike;
-                weakSelf.bikesUpdateDate = nil;
-                
-                if (completion) {
-                    completion(bike.lockCode,nil);
-                }
-            });
+            Bike *bike = [[Bike alloc] initWithDictionary:responseObject[@"bike"]];
+            bike.lockCode = responseObject[@"lockCode"];
+            weakSelf.usingBike = bike;
+            weakSelf.bikesUpdateDate = nil;
+            
+            if (completion) {
+                completion(bike.lockCode,nil);
+            }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {

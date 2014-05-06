@@ -17,7 +17,7 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        self.title = NSLocalizedString(@"Return", @"Title in nav & tab controller");
+        self.title = NSLocalizedString(@"Return Bike", @"Title in nav & tab controller");
         self.navigationController.tabBarItem.title = self.title;
         
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:self.title image:[UIImage imageNamed:@"tabbar_ic_borrow_active.png"] selectedImage:[[UIImage imageNamed:@"tabbar_ic_borrow_active.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -29,6 +29,8 @@
     [super viewDidLoad];
     
     _indicatorView.hidden = YES;
+    _titleLabel.text = NSLocalizedString(@"Let's Go!", @"A label text somewhere on the screen");
+    _codeLabel.text = NSLocalizedString(@"Lock code:", @"A label text somewhere on the screen");
     
     // TODO: missing url
     _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
@@ -50,6 +52,8 @@
     }];
 
     _codeField.text = code;
+    NSString *bikeName = [ContentManager manager].usingBike.name? [NSString stringWithFormat:@" %@",[ContentManager manager].usingBike.name] : @"";
+    _descriptionLabel.text = [NSString stringWithFormat:@"%@%@ %@",NSLocalizedString(@"Bike", @"A label text somewhere on the screen"), bikeName, NSLocalizedString(@"in your service.", @"A label text somewhere on the screen")];
 }
 
 #pragma mark - Segues
@@ -59,9 +63,6 @@
         _returnButton.enabled = NO;
         [(LocateViewController *)segue.destinationViewController setDelegate:self];
     }
-//    else if ([segue.identifier isEqualToString:@"SuccessSegue"]) {
-//       // BikeDetailViewController *controller = segue.destinationViewController;
-//    }
 }
 
 #pragma mark - UIWebViewDelegate methods
@@ -114,7 +115,7 @@
             [[ContentManager manager] returnBike:[ContentManager manager].usingBike location:location note:note completion:^(NSError *error) {
                 if (weakSelf) {
                     if (!error) {
-                        // TODO parse URL for succes webView
+                        // TODO: parse URL for succes webView
                         SuccessViewController *controller = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"SuccessViewController"];
                         [weakSelf.tabBarController presentViewController:controller animated:YES completion:^{
                             [ContentManager manager].usingBike = nil;

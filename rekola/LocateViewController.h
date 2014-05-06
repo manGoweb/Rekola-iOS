@@ -19,7 +19,9 @@
 
 @property (nonatomic, weak) id<LocateViewControllerDelegate> delegate;
 @property (nonatomic, weak) IBOutlet RKMapView *mapView;
+@property (nonatomic, weak) IBOutlet UIView *contentView;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *closeButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *doneButton;
 @property (nonatomic, weak) IBOutlet UIButton *returnBikeButton;
 @property (nonatomic, weak) IBOutlet UIImageView *annotationView;
 @property (nonatomic, weak) IBOutlet UITextView *textView;
@@ -27,5 +29,6 @@
 
 - (IBAction)close:(id)sender;
 - (IBAction)done:(id)sender;
+- (IBAction)returnBike:(id)sender;
 
 @end

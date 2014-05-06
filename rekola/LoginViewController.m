@@ -26,22 +26,22 @@
     _signButton.enabled = NO;
     _recoverDescriptionLabel.alpha = 0;
     
-    _titleLabel.text = NSLocalizedString(@"Log In", nil);
-    _recoverDescriptionLabel.text = NSLocalizedString(@"Enter your email to get instructions on how to reset your password.", nil);
+    _titleLabel.text = NSLocalizedString(@"Log In", @"A label text somewhere on the screen");
+    _recoverDescriptionLabel.text = NSLocalizedString(@"Enter your email to get instructions on how to reset your password.", @"A label text somewhere on the screen");
     
-    _nameField.placeholder = NSLocalizedString(@"email", nil);
+    _nameField.placeholder = NSLocalizedString(@"email", @"Placeholder inside a Text Field");
     _nameField.layer.borderColor = COLOR(0xAAAAAA).CGColor;
     _nameField.layer.borderWidth = 1;
     
-    _passField.placeholder = NSLocalizedString(@"password", nil);
+    _passField.placeholder = NSLocalizedString(@"password", @"Placeholder inside a Text Field");
     _passField.layer.borderColor = COLOR(0xAAAAAA).CGColor;
     _passField.layer.borderWidth = 1;
     
-    [_signButton setTitleForAllState:NSLocalizedString(@"Log In", nil)];
+    [_signButton setTitleForAllState:NSLocalizedString(@"Log In", @"A button title somewhere on the screen")];
     [_signButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateDisabled];
     [_signButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateSelected];
 
-    [_recoverButton setTitleForAllState:NSLocalizedString(@"Forgot Password?", nil)];
+    [_recoverButton setTitleForAllState:NSLocalizedString(@"Forgot Password?", @"A button title somewhere on the screen")];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self.view addGestureRecognizer:tapGesture];
@@ -96,7 +96,7 @@
 
 - (IBAction)signin:(id)sender {
     if (_flags.recoverPassword == 1) {
-        // TODO: recover password
+        // TODO: recover password - API missing endpoint
     } else {
         [self signInWithName:_nameField.text password:_passField.text];
     }
@@ -137,7 +137,7 @@
     
     if (textField == _nameField) {
         if (_flags.recoverPassword == 1) {
-            // TODO: recover password;
+            // TODO: recover password - API missing endpoint
         } else {
             [_passField becomeFirstResponder];
         }
