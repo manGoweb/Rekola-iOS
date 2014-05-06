@@ -16,5 +16,11 @@
 
 - (void)clusterAnnotations;
 - (void)clearAnnotations;
+- (void)centerByOffset:(CGPoint)offset from:(CLLocationCoordinate2D)coordinate;
 
 @end
+
+extern CGFloat const DefaultLatitude;
+extern CGFloat const DefaultLongtitude;
+extern CGFloat const DefaultUserZoom;
+extern CGFloat const DefaultDistance;

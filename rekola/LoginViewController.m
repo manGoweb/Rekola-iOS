@@ -39,15 +39,12 @@
     
     [_signButton setTitleForAllState:NSLocalizedString(@"Log In", nil)];
     [_signButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateDisabled];
+    [_signButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateSelected];
 
     [_recoverButton setTitleForAllState:NSLocalizedString(@"Forgot Password?", nil)];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self.view addGestureRecognizer:tapGesture];
-    
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [center removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -196,6 +193,8 @@
         [self.view endEditing:YES];
     }
 }
+
+#pragma mark - UIKeyboard methods
 
 - (void)keyboardWillShow:(NSNotification*)notification {
     if (IS_IPHONE && !IS_WIDESCREEN) {

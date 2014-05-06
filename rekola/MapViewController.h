@@ -16,6 +16,7 @@
 @property (nonatomic, strong) IBOutlet UIBarButtonItem *refreshButton;
 @property (nonatomic, weak) IBOutlet POIDetailView *POIView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *POIBottomConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *POIHeightConstraint;
 
 - (IBAction)refreshPOI:(id)sender;
 

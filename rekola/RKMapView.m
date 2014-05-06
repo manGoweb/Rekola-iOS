@@ -9,6 +9,11 @@
 #import "RKMapView.h"
 #import "RKAnnotation.h"
 
+CGFloat const DefaultLatitude = 50.079167;
+CGFloat const DefaultLongtitude = 14.428414;
+CGFloat const DefaultUserZoom = 2500;
+CGFloat const DefaultDistance = 3500;
+
 @implementation RKMapView {
     NSMutableSet *_allAnnotations;
     MKCoordinateRegion _lastMapRegion;
@@ -100,6 +105,13 @@
     
     return ((fabs(lastPoint.x - currentPoint.x) > self.frame.size.width / 3.0) ||
             (fabs(lastPoint.y - currentPoint.y) > self.frame.size.height / 3.0));
+}
+
+- (void)centerByOffset:(CGPoint)offset from:(CLLocationCoordinate2D)coordinate {
+    CGPoint point = [self convertCoordinate:coordinate toPointToView:self];
+    point.x += offset.x;
+    point.y += offset.y;
+    [self setCenterCoordinate:[self convertPoint:point toCoordinateFromView:self] animated:YES];
 }
 
 #pragma mark - Clustering

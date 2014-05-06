@@ -20,7 +20,6 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 
 @implementation ContentManager {
     NSOperation *_loginOperation;
-    NSOperation *_changePassOperation;
     NSOperation *_bikesOperation;
     NSOperation *_bikeStateOperation;
     NSOperation *_returnOperation;
@@ -90,16 +89,16 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
                     [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
                 }
                 
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                [[[[UIApplication sharedApplication] windows] firstObject] setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"TabBarController"]];
-                
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    [[[[UIApplication sharedApplication] windows] firstObject] setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"TabBarController"]];
+                    
                     [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:weakSelf userInfo:nil];
+                    
+                    if (completion) {
+                        completion(nil);
+                    }
                 });
-                
-                if (completion) {
-                    completion(nil);
-                }
             }];
         }
         
@@ -108,21 +107,6 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
             completion([error message:operation.responseString]);
         }
         [weakSelf removeKeychainObjectForKey:KeychainUserPassword];
-    }];
-}
-
-- (void)changePassword:(NSString *)password completion:(void (^)(NSError *error))completion {
-    NSParameterAssert(password);
-    
-    [_changePassOperation cancel];
-    _changePassOperation = [[APIManager manager] PUT:@"accounts/mine/password" parameters:@{@"newPassword" : password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (completion) {
-            completion(nil);
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        if (completion) {
-            completion([error message:operation.responseString]);
-        }
     }];
 }
 
@@ -138,9 +122,6 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:self userInfo:nil];
     });
-    
-    [[RKLocationManager manager] stopTracking];
-    [[RKLocationManager manager] stopUpdateHeading];
 }
 
 #pragma mark - Bikes methods
@@ -184,7 +165,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         if (weakSelf) {
             weakSelf.usingBike = [[Bike alloc] initWithDictionary:responseObject];
             if (completion) {
-                completion([[Bike alloc] initWithDictionary:responseObject], nil);
+                completion(weakSelf.usingBike, nil);
             }
         }
         
@@ -202,13 +183,16 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     __weak __typeof(self)weakSelf = self;
     _borrowOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"bikes/lock-code?bikeCode=%@",code] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            strongSelf.usingBike = [[Bike alloc] initWithDictionary:responseObject[@"bike"]];
-            strongSelf->_bikesUpdateDate = nil;
-            
-            if (completion) {
-                completion(responseObject[@"lockCode"],nil);
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                Bike *bike = [[Bike alloc] initWithDictionary:responseObject[@"bike"]];
+                bike.lockCode = responseObject[@"lockCode"];
+                weakSelf.usingBike = bike;
+                weakSelf.bikesUpdateDate = nil;
+                
+                if (completion) {
+                    completion(bike.lockCode,nil);
+                }
+            });
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
@@ -217,12 +201,12 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     }];
 }
 
-- (void)returnBike:(Bike *)bike location:(CLLocationCoordinate2D)location note:(NSString *)note completion:(void (^)(NSError *error))completion {
+- (void)returnBike:(Bike *)bike location:(CLLocation *)location note:(NSString *)note completion:(void (^)(NSError *error))completion {
     NSParameterAssert(bike);
     
     NSDictionary *loc = @{
-                            @"lat": @(location.latitude),
-                            @"lng": @(location.longitude),
+                            @"lat": @(location.coordinate.latitude),
+                            @"lng": @(location.coordinate.longitude),
                             @"note": note ?: @""
                          };
     
@@ -235,10 +219,6 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     __weak __typeof(self)weakSelf = self;
     _returnOperation = [[APIManager manager] PUT:[NSString stringWithFormat:@"bikes/%@/return",[bike.identifier stringValue]] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            strongSelf.usingBike = nil;
-            strongSelf->_bikesUpdateDate = nil;
-            
             if (completion) {
                 completion(nil);
             }
@@ -259,6 +239,24 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
         _bikesUpdateDate = [NSDate date];
     }
     return result;
+}
+
+- (BOOL)isLocationServiceAuthorized {
+	CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    
+    switch (status) {
+		case kCLAuthorizationStatusAuthorized:
+		case kCLAuthorizationStatusNotDetermined:
+			return YES;
+            
+		case kCLAuthorizationStatusDenied:
+		case kCLAuthorizationStatusRestricted: {
+			return NO;
+		}
+		default:
+			NSLog (@"LocationService: Unknown status %d", status);
+			return NO;
+	}
 }
 
 @end

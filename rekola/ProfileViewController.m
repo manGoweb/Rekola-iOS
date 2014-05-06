@@ -21,6 +21,8 @@
         
         // TODO: missing proper page url
         _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/logout.html";
+        
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:self.title image:[UIImage imageNamed:@"tabbar_ic_profile_active.png"] selectedImage:[[UIImage imageNamed:@"tabbar_ic_profile_active.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }
     return self;
 }
@@ -39,6 +41,19 @@
     [_webView loadRequest:request];
 }
 
+#pragma mark - Actions
+
+- (IBAction)logout:(id)sender {
+    [self showLogoutDialog];
+}
+
+#pragma mark - Private methods
+
+- (void)showLogoutDialog {
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to log out?", @"Title in Action Sheet") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button in Action Sheet") destructiveButtonTitle:NSLocalizedString(@"Log Out", @"Button in Action Sheet") otherButtonTitles:nil, nil];
+    [sheet showFromTabBar:self.tabBarController.tabBar];
+}
+
 #pragma mark - UIWebViewDelegate methods
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
@@ -53,8 +68,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     _indicatorView.hidden = YES;
-    
-    // Request has been
+
     if (error.code != -999) {
         [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] show];
     }
@@ -81,8 +95,7 @@
         }
         
     } else {
-        UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to log out?", @"Title in Action Sheet") delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button in Action Sheet") destructiveButtonTitle:NSLocalizedString(@"Log Out", @"Button in Action Sheet") otherButtonTitles:nil, nil];
-        [sheet showFromTabBar:self.tabBarController.tabBar];
+        [self showLogoutDialog];
     }
     return result;
 }
@@ -90,7 +103,6 @@
 #pragma mark - UIActionSheetDelegate methods
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    // TODO: can't click logout twice
     if (buttonIndex == 0) {
         [[ContentManager manager] logout];
     }

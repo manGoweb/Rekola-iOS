@@ -18,20 +18,23 @@
     [super viewDidLoad];
     
     self.tabBar.tintColor = [UIColor RKPinkColor];
+    [self reloadData];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:ContentManagerDidChangeUsingBikeNotification object:nil];
 }
 
 - (void)reloadData {
     NSMutableArray *controllers = self.viewControllers.mutableCopy;
-    UIViewController *newController = nil;
+    UINavigationController *nav = nil;
     
     if ([ContentManager manager].usingBike) {
-        newController = [self.storyboard instantiateViewControllerWithIdentifier:@"ReturnBikeViewController"];
+        nav = [[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ReturnBikeViewController"]];
     } else {
-        newController = [self.storyboard instantiateViewControllerWithIdentifier:@"BikeViewController"];
+        nav = [[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"BikeViewController"]];
     }
     
-    [controllers replaceObjectAtIndex:0 withObject:newController];
+    [controllers replaceObjectAtIndex:0 withObject:nav];
+    [self setViewControllers:controllers animated:YES];
 }
 
 #pragma mark - Public methods

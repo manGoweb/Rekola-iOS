@@ -25,8 +25,7 @@
                completion:(void (^)(NSError *error))completion;
 
 - (BOOL)updateTime;
-- (void)changePassword:(NSString *)password
-            completion:(void (^)(NSError *error))completion;
+- (BOOL)isLocationServiceAuthorized;
 
 - (void)logout;
 
@@ -40,7 +39,7 @@
         completion:(void (^)(NSString *code, NSError *error))completion;
 
 - (void)returnBike:(Bike *)bike
-          location:(CLLocationCoordinate2D)location
+          location:(CLLocation *)location
               note:(NSString *)note
         completion:(void (^)(NSError *error))completion;
 

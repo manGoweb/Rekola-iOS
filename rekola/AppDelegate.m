@@ -12,6 +12,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [[UINavigationBar appearance] setTintColor:[UIColor RKPinkColor]];
+    
     return YES;
 }
 							

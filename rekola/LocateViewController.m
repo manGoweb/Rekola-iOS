@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Martin Banas. All rights reserved.
 //
 
-static CGFloat DefaultUserZoom = 2500;
-
 #import "LocateViewController.h"
 
 @implementation LocateViewController {
@@ -15,107 +13,86 @@ static CGFloat DefaultUserZoom = 2500;
         unsigned int firtstUpdate:1;
     } _flags;
     
+    NSString *_textViewText;
     CLLocationCoordinate2D _newLocation;
-    Bike *_userBike;
+    MKUserTrackingBarButtonItem *_trackingButton;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _flags.firtstUpdate = 1;
-    _doneButton.enabled = NO;
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    [_mapView addGestureRecognizer:tapGesture];
+    _trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapView];
+    _navBarItem.rightBarButtonItem = _trackingButton;
+    
+    _returnBikeButton.enabled = NO;
+    
+    _textView.layer.borderColor = COLOR(0xAAAAAA).CGColor;
+    _textView.layer.borderWidth = 1;
+    _textViewText = @"";
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+        
+    if (![[ContentManager manager] isLocationServiceAuthorized]) {
+        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Polohové služby nejsou zapnuté, aplikace nebude schopna poskytovat plnou fukncionalitu. Povolit je můžete v nastavení svého zařízení v záložce soukromí.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+        
+        [self zoomToDefaultLocation];
+    }
+    
+    _returnBikeButton.enabled = YES;
 }
 
 #pragma mark - Actions
 
 - (IBAction)close:(id)sender {
-    if ([_delegate respondsToSelector:@selector(controller:didFinishWithLocation:)]) {
-        [_delegate performSelector:@selector(controller:didFinishWithLocation:) withObject:self withObject:nil];
+    if ([_delegate respondsToSelector:@selector(controller:didFinishWithLocation:note:)]) {
+        [_delegate controller:self didFinishWithLocation:nil note:nil];
     }
 }
 
 - (IBAction)done:(id)sender {
-    if ([_delegate respondsToSelector:@selector(controller:didFinishWithLocation:)]) {
-        [_delegate performSelector:@selector(controller:didFinishWithLocation:) withObject:self withObject:[[CLLocation alloc] initWithLatitude:_newLocation.latitude longitude:_newLocation.longitude]];
+    if ([_delegate respondsToSelector:@selector(controller:didFinishWithLocation:note:)]) {
+        [_delegate controller:self didFinishWithLocation:[[CLLocation alloc] initWithLatitude:_mapView.centerCoordinate.latitude longitude:_mapView.centerCoordinate.longitude] note:_textViewText];
     }
 }
 
-#pragma mark - UIGestureRecognizer methods
+#pragma mark - UITextViewDelegate methods
 
-- (void)handleTapGesture:(UITapGestureRecognizer *)tapGesture {
-    if (_flags.firtstUpdate == 0) {
-        if (tapGesture.state == UIGestureRecognizerStateRecognized) {
-            [_mapView removeAnnotation:_userBike];
-            
-            CGPoint touchPoint = [tapGesture locationInView:_mapView];
-            CLLocationCoordinate2D coordinate = [_mapView convertPoint:touchPoint toCoordinateFromView:_mapView];
-            _userBike.coordinate = coordinate;
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    textView.text = @"";
+    textView.textColor = [UIColor RKPinkColor];
+    return YES;
+}
 
-            [_mapView addAnnotation:_userBike];
-        }
+- (void)textViewDidChange:(UITextView *)textView {
+    
+    if (textView.text.length == 0) {
+        textView.textColor = [UIColor lightGrayColor];
+        textView.text = @"Comment";
+        
+    } else {
+        _textViewText = textView.text;
     }
+}
+
+#pragma mark - Private methods
+
+- (void)zoomToDefaultLocation {
+    CLLocationCoordinate2D zoomLocation = [[[CLLocation alloc] initWithLatitude:DefaultLatitude longitude:DefaultLongtitude] coordinate];
+    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, DefaultDistance, DefaultDistance);
+    [_mapView setRegion:viewRegion animated:YES];
 }
 
 #pragma mark - MKMapKitDelegate methods
-
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    
-    static NSString *BikeAnnotationViewIdentifier = @"BikeAnnotationViewIdentifier";
-    MKAnnotationView *retPinView = nil;
-    
-    if (![annotation isKindOfClass:[MKUserLocation class]]) {
-        // Single pin
-        MKPinAnnotationView *pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:BikeAnnotationViewIdentifier];
-        
-        if (!pinView) {
-            pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:BikeAnnotationViewIdentifier];
-            
-            pinView.draggable = YES;
-            pinView.canShowCallout = YES;
-            pinView.pinColor = MKPinAnnotationColorRed;
-            
-        } else {
-            pinView.annotation = annotation;
-        }
-        
-        retPinView = pinView;
-    }
-    return retPinView;
-}
-
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState {
-    
-    if (newState == MKAnnotationViewDragStateEnding) {
-//        CLGeocoder *geocoder = [CLGeocoder new];
-        _newLocation = annotationView.annotation.coordinate;
-//        [geocoder reverseGeocodeLocation:[[CLLocation alloc] initWithLatitude:_newLocation.latitude longitude:_newLocation.longitude] completionHandler:^(NSArray *placemarks, NSError *error) {
-//            NSLog(@"Searching..");
-//            if (!error) {
-//                CLPlacemark *placemark = [placemarks lastObject];
-//                NSLog(@"%@",[NSString stringWithFormat:@"%@", placemark.thoroughfare]);
-//            } else {
-//                NSLog(@"%@",error.localizedDescription);
-//            }
-//        }];
-    }
-}
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     if (_flags.firtstUpdate == 1) {
         _flags.firtstUpdate = 0;
     
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, DefaultUserZoom, DefaultUserZoom);
-        [_mapView setRegion:region animated:YES];
-        
-        _userBike = [Bike new];
-        _userBike.title = NSLocalizedString(@"Your Bike", nil);
-        _userBike.coordinate = userLocation.coordinate;
-        _newLocation = userLocation.coordinate;
-        
-        [_mapView addAnnotation:_userBike];
-        _doneButton.enabled = YES;
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, DefaultUserZoom / 4, DefaultUserZoom / 4);
+        [_mapView setRegion:region animated:NO];
     }
 }
 

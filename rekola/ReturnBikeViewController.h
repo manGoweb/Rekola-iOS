@@ -12,8 +12,9 @@
 @interface ReturnBikeViewController : BaseViewController <LocateViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIButton *returnButton;
-@property (nonatomic, weak) IBOutlet UILabel *addressLabel;
-
-- (IBAction)returnBike:(id)sender;
+@property (nonatomic, weak) IBOutlet UIWebView *webView;
+@property (nonatomic, weak) IBOutlet UITextField *codeField;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicatorView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *webIndicatorView;
 
 @end

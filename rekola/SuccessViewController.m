@@ -1,26 +1,20 @@
 //
-//  BikeDetailViewController.m
+//  SuccessViewController.m
 //  rekola
 //
-//  Created by Martin Banas on 28/04/14.
+//  Created by Martin Banas on 06/05/14.
 //  Copyright (c) 2014 Martin Banas. All rights reserved.
 //
 
-#import "BikeDetailViewController.h"
+#import "SuccessViewController.h"
 
-@implementation BikeDetailViewController
-
-- (instancetype)initWithCoder:(NSCoder *)coder {
-    self = [super initWithCoder:coder];
-    if (self) {
-        self.title = [ContentManager manager].usingBike.name ?: NSLocalizedString(@"Bike Detail", nil);
-    }
-    return self;
+@implementation SuccessViewController {
+    NSString *_urlPath;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     // TODO: missing url
     _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
     [self reloadData];
@@ -30,6 +24,13 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
     [_webView loadRequest:request];
 }
+
+#pragma mark - Actions
+
+- (IBAction)done:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 #pragma mark - UIWebViewDelegate methods
 
@@ -55,17 +56,26 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    BOOL result = YES;
-    BOOL headerIsPresent = ([[request allHTTPHeaderFields] objectForKey:@"X-Api-Key"] != nil);
-    if (!headerIsPresent) {
-        NSURL *url = [request URL];
+    BOOL result = NO;
+    NSString *query = request.URL.absoluteString;
+    if ([query rangeOfString:@"dismiss_view"].location == NSNotFound) {
         
-        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+        BOOL headerIsPresent = ([[request allHTTPHeaderFields] objectForKey:@"X-Api-Key"] != nil);
+        if (!headerIsPresent) {
+            result = NO;
+            NSURL *url = [request URL];
+            
+            NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+            
+            [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
+            [_webView loadRequest:request];
+            
+        } else {
+            result = YES;
+        }
         
-        [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
-        [_webView loadRequest:request];
-        result = NO;
-        
+    } else {
+        [self done:nil];
     }
     return result;
 }

@@ -26,6 +26,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *directionButton;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, weak) IBOutlet UILabel *descriptionLabel;
+@property (nonatomic, weak) IBOutlet UILabel *addressLabel;
 
 - (IBAction)showDetail:(id)sender;
 - (IBAction)dismissView:(id)sender;

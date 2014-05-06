@@ -1,19 +1,19 @@
 //
-//  ProfileViewController.h
+//  SuccessViewController.h
 //  rekola
 //
-//  Created by Martin Banas on 23/04/14.
+//  Created by Martin Banas on 06/05/14.
 //  Copyright (c) 2014 Martin Banas. All rights reserved.
 //
 
 #import "BaseViewController.h"
 
-@interface ProfileViewController : BaseViewController <UIActionSheetDelegate>
+@interface SuccessViewController : BaseViewController
 
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem *logOutButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *doneButton;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicatorView;
 
-- (IBAction)logout:(id)sender;
+- (IBAction)done:(id)sender;
 
 @end

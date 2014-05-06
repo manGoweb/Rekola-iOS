@@ -35,4 +35,12 @@
     }
 }
 
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if (CGRectContainsPoint(_closeButton.frame, point)) {
+        return YES;
+    } else {
+        return [super pointInside:point withEvent:event];
+    }
+}
+
 @end

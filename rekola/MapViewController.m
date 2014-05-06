@@ -9,11 +9,6 @@
 #import "MapViewController.h"
 #import "RKAnnotation.h"
 
-static CGFloat DefaultLatitude = 50.079167;
-static CGFloat DefaultLongtitude = 14.428414;
-static CGFloat DefaultUserZoom = 2500;
-static CGFloat DefaultDistance = 3500;
-
 @implementation MapViewController {
     MKUserTrackingBarButtonItem *_trackingButton;
     MKPolyline *_routePolyline;
@@ -36,6 +31,8 @@ static CGFloat DefaultDistance = 3500;
     if (self) {
         self.title = NSLocalizedString(@"Map", @"Title in nav & tab controller");
         self.navigationController.tabBarItem.title = self.title;
+        
+        self.tabBarItem = [[UITabBarItem alloc] initWithTitle:self.title image:[UIImage imageNamed:@"tabbar_ic_map_active.png"] selectedImage:[[UIImage imageNamed:@"tabbar_ic_map_active.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }
     return self;
 }
@@ -54,8 +51,8 @@ static CGFloat DefaultDistance = 3500;
     _flags.firtstUpdate = 1;
     _flags.firstLaunch = 1;
     _mapView.clusteringEnabled = NO;
-    
-    _POIBottomConstraint.constant = -230;
+
+    _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
     [self.view layoutIfNeeded];
 }
 
@@ -70,10 +67,7 @@ static CGFloat DefaultDistance = 3500;
     if (_flags.firstLaunch == 1) {
         _flags.firstLaunch = 0;
         
-        if ([[RKLocationManager manager] isAuthorized]) {
-            [[RKLocationManager manager] startTracking];
-            
-        } else {
+        if (![[ContentManager manager] isLocationServiceAuthorized]) {
             [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Polohové služby nejsou zapnuté, aplikace nebude schopna poskytovat plnou fukncionalitu. Povolit je můžete v nastavení svého zařízení v záložce soukromí.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
             
             [self zoomToDefaultLocation];
@@ -89,7 +83,7 @@ static CGFloat DefaultDistance = 3500;
         
         [self startRefreshing];
         __weak __typeof(self)weakSelf = self;
-        [[ContentManager manager] bikesWithLocation:([RKLocationManager manager].currentLocation != nil)? [RKLocationManager manager].currentLocation.coordinate : CLLocationCoordinate2DMake(DefaultLatitude, DefaultLongtitude) completion:^(NSArray *bikes, NSError *error) {
+        [[ContentManager manager] bikesWithLocation:CLLocationCoordinate2DMake(DefaultLatitude, DefaultLongtitude) completion:^(NSArray *bikes, NSError *error) {
             if (weakSelf) {
                 if (!error) {
                     __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -181,10 +175,9 @@ static CGFloat DefaultDistance = 3500;
         
         if (mapView.userLocation.location != nil) {
             NSNumber *distance = @([mapView.userLocation.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:bike.coordinate.latitude longitude:bike.coordinate.longitude]]);
-            _POIView.titleLabel.text = distance.formattedDistance;
-        
+            _POIView.titleLabel.text = [NSString stringWithFormat:@"%@, %@",distance.formattedDistance, bike.name];
         } else {
-            _POIView.titleLabel.text = nil;
+            _POIView.titleLabel.text = bike.name;
         }
         
         [_directionsRequest cancel];
@@ -193,11 +186,10 @@ static CGFloat DefaultDistance = 3500;
         [_POIView.indicatorView stopAnimating];
         _POIView.directionButton.hidden = NO;
         
-        //_POIView.titleLabel.text = bike.name;
+        _POIView.addressLabel.text = bike.location.note;
         _POIView.descriptionLabel.text = bike.bikeDescription;
         
-        MKPinAnnotationView *pinView = (MKPinAnnotationView *)view;
-        pinView.pinColor = MKPinAnnotationColorRed;
+        view.image = [UIImage imageNamed:@"ic_pin_pressed.png"];
         
         [self.view layoutIfNeeded];
         [UIView animateWithDuration:0.25 animations:^{
@@ -207,15 +199,25 @@ static CGFloat DefaultDistance = 3500;
             _POIBottomConstraint.constant = 0;
         }];
         
-        [_mapView setCenterCoordinate:view.annotation.coordinate animated:YES];
+        [_mapView centerByOffset:CGPointMake(0, _POIHeightConstraint.constant / 2) from:view.annotation.coordinate];
     }
 }
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
     if ([view.annotation isKindOfClass:[Bike class]]) {
         
-        MKPinAnnotationView *pinView = (MKPinAnnotationView *)view;
-        pinView.pinColor = MKPinAnnotationColorPurple;
+        view.image = [UIImage imageNamed:@"ic_pin_normal.png"];
+
+        // TODO: should hide when user deselect annotation
+        if (_selectedBikeIdentifier == -1) {
+            
+            [self.view layoutIfNeeded];
+            [UIView animateWithDuration:0.25 animations:^{
+                _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
+                [self.view layoutIfNeeded];
+                
+            } completion:nil];
+        }
     }
 }
 
@@ -230,7 +232,7 @@ static CGFloat DefaultDistance = 3500;
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id < MKOverlay >)overlay {
     MKPolylineRenderer *renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
-    renderer.strokeColor = [UIColor blueColor];
+    renderer.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
     renderer.lineWidth = 4.;
     return renderer;
 }
@@ -256,21 +258,18 @@ static CGFloat DefaultDistance = 3500;
             
             // Single pin
         } else {
-            MKPinAnnotationView *pinView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:BikeAnnotationViewIdentifier];
+            MKAnnotationView *pinView = [mapView dequeueReusableAnnotationViewWithIdentifier:BikeAnnotationViewIdentifier];
             
             if (!pinView) {
-                pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:BikeAnnotationViewIdentifier];
+                pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:BikeAnnotationViewIdentifier];
                 
                 pinView.canShowCallout = NO;
-                pinView.pinColor = MKPinAnnotationColorPurple;
+                pinView.image = [UIImage imageNamed:@"ic_pin_normal.png"];
+                pinView.centerOffset = CGPointMake(0, - pinView.image.size.height / 2);
                 
                 // Add a detail disclosure button to the callout.
                 UIButton *detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
                 pinView.leftCalloutAccessoryView = detailButton;
-                
-                // TODO: Missing left image for annotation
-                // UIImageView *iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
-                // pinView.leftCalloutAccessoryView = iconView;
                 
             } else {
                 pinView.annotation = annotation;
@@ -278,9 +277,9 @@ static CGFloat DefaultDistance = 3500;
             
             Bike *bike = (Bike *)annotation;
             if ([bike.identifier integerValue] == _selectedBikeIdentifier) {
-                pinView.pinColor = MKPinAnnotationColorRed;
+                pinView.image = [UIImage imageNamed:@"ic_pin_pressed.png"];
             } else {
-                pinView.pinColor = MKPinAnnotationColorPurple;
+                pinView.image = [UIImage imageNamed:@"ic_pin_normal.png"];;
             }
             
             retPinView = pinView;
@@ -343,11 +342,11 @@ static CGFloat DefaultDistance = 3500;
     
     [self.view layoutIfNeeded];
     [UIView animateWithDuration:0.25 animations:^{
-        _POIBottomConstraint.constant = -230;
+        _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
         [self.view layoutIfNeeded];
         
     } completion:^(BOOL finished) {
-        _POIBottomConstraint.constant = -230;
+        _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
         _selectedBikeIdentifier = -1;
         
         [_mapView deselectAnnotation:[_mapView.selectedAnnotations firstObject] animated:YES];

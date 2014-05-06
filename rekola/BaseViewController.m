@@ -42,6 +42,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationController.navigationBar.translucent = NO;
     NSLog(@"controller loaded: %@",NSStringFromClass([self class]));
 }
 
