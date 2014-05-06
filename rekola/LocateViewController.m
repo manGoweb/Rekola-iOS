@@ -31,7 +31,7 @@
     [super viewDidLoad];
     _flags.firtstUpdate = 1;
     
-    self.title = NSLocalizedString(@"Edit Location", @"Title in navigation bar");
+    _navBarItem.title = NSLocalizedString(@"Edit Location", @"Title in navigation bar");
     
     _trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapView];
     _navBarItem.rightBarButtonItem = _trackingButton;
@@ -44,6 +44,9 @@
     _placeHolderString = NSLocalizedString(@"Upresnete prosim, kde kolo presne stoji (napr. 3. lampa od ulice X)", @"Placeholder text inside a Text View");
     _textViewText = @"";
     _textView.text = _placeHolderString;
+    
+    [_returnBikeButton setTitleForAllState:NSLocalizedString(@"Return Bike", @"A button title somewhere on the screen")];
+    _closeButton.title = NSLocalizedString(@"Close", @"Bar button title in navigation bar");
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self.view addGestureRecognizer:tapGesture];

@@ -23,5 +23,7 @@
 @property (nonatomic, weak) IBOutlet UITextField *codeField;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicatorView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *webIndicatorView;
+@property (nonatomic, weak) IBOutlet UIButton *detailButton;
+@property (nonatomic, weak) IBOutlet UIButton *reportButton;
 
 @end

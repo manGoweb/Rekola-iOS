@@ -33,6 +33,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _logOutButton.title = NSLocalizedString(@"Log Out", @"Bar button title in navigation bar");
 }
 
 - (void)viewWillAppear:(BOOL)animated {

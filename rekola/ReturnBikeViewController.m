@@ -36,6 +36,10 @@
     _titleLabel.text = NSLocalizedString(@"Let's Go!", @"A label text somewhere on the screen");
     _codeLabel.text = NSLocalizedString(@"Lock code:", @"A label text somewhere on the screen");
     
+    [_returnButton setTitleForAllState:NSLocalizedString(@"Return Bike", @"A button title somewhere on the screen")];
+    [_detailButton setTitleForAllState:NSLocalizedString(@"Bike Detail", @"A button title somewhere on the screen")];
+    [_reportButton setTitleForAllState:NSLocalizedString(@"Report Issue", @"A button title somewhere on the screen")];
+    
     // TODO: missing url
     _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
 }

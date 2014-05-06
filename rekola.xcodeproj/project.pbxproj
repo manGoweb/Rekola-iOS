@@ -69,6 +69,7 @@
 		5E2CAECC1913FB0E00244206 /* UIButton+RKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CAECB1913FB0E00244206 /* UIButton+RKUtils.m */; };
 		5E3E686A1916B816005653D4 /* UIImage+Tint.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E3E68681916B816005653D4 /* UIImage+Tint.m */; };
 		5E41C93A191904B800316BB5 /* SuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E41C939191904B800316BB5 /* SuccessViewController.m */; };
+		5E41C94019192F3C00316BB5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5E41C93E19192F3C00316BB5 /* Localizable.strings */; };
 		5E4307F01907C2A500B36CE8 /* APIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307EF1907C2A500B36CE8 /* APIManager.m */; };
 		5E4308031907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307F31907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.m */; };
 		5E4308041907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E4307F51907C2ED00B36CE8 /* UIActivityIndicatorView+AFNetworking.m */; };
@@ -200,6 +201,8 @@
 		5E3E68691916B816005653D4 /* UIImage+Tint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Tint.h"; path = "rekola/UIImage+Tint.h"; sourceTree = "<group>"; };
 		5E41C938191904B800316BB5 /* SuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuccessViewController.h; path = rekola/SuccessViewController.h; sourceTree = "<group>"; };
 		5E41C939191904B800316BB5 /* SuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuccessViewController.m; path = rekola/SuccessViewController.m; sourceTree = "<group>"; };
+		5E41C93F19192F3C00316BB5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5E41C94119192F4800316BB5 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5E4307EE1907C2A500B36CE8 /* APIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APIManager.h; path = rekola/APIManager.h; sourceTree = "<group>"; };
 		5E4307EF1907C2A500B36CE8 /* APIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIManager.m; path = rekola/APIManager.m; sourceTree = "<group>"; };
 		5E4307F21907C2ED00B36CE8 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
@@ -341,6 +344,7 @@
 		5E1DF8A21907BB8100127F56 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5E41C93E19192F3C00316BB5 /* Localizable.strings */,
 				5E1DF8A31907BB8100127F56 /* rekola-Info.plist */,
 				5E1DF8A41907BB8100127F56 /* InfoPlist.strings */,
 				5E1DF8A71907BB8100127F56 /* main.m */,
@@ -649,6 +653,7 @@
 			knownRegions = (
 				en,
 				Base,
+				cs,
 			);
 			mainGroup = 5E1DF88F1907BB8100127F56;
 			productRefGroup = 5E1DF8991907BB8100127F56 /* Products */;
@@ -701,6 +706,7 @@
 				5EAAC04B1917C610007B6D0A /* walk-highlight.png in Resources */,
 				5E2CAE731913D0A800244206 /* tabbar_ic_borrow_active@2x.png in Resources */,
 				5E2CAE671913D0A800244206 /* tabbar_ic_return_active@2x.png in Resources */,
+				5E41C94019192F3C00316BB5 /* Localizable.strings in Resources */,
 				5E2CAE661913D0A800244206 /* tabbar_ic_return_inactive.png in Resources */,
 				5E2CAE7E1913D0A800244206 /* ic_pin_normal.png in Resources */,
 			);
@@ -810,6 +816,15 @@
 				5E1DF8C41907BB8100127F56 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5E41C93E19192F3C00316BB5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5E41C93F19192F3C00316BB5 /* en */,
+				5E41C94119192F4800316BB5 /* cs */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -44,7 +44,8 @@
     [_signButton setTitleForAllState:NSLocalizedString(@"Log In", @"A button title somewhere on the screen")];
     [_signButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateDisabled];
     [_signButton setTitleColor:[[UIColor whiteColor] colorWithAlphaComponent:0.4] forState:UIControlStateSelected];
-
+    
+    [_signUpButton setTitleForAllState:NSLocalizedString(@"Not a member?", @"A button title somewhere on the screen")];
     [_recoverButton setTitleForAllState:NSLocalizedString(@"Forgot Password?", @"A button title somewhere on the screen")];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];

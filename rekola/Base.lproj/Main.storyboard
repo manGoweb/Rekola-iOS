@@ -647,7 +647,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="signin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="d9b-74-jCz"/>
                                     <segue destination="kjL-TW-p8o" kind="push" identifier="ReturnBikeDetailSegue" id="G9P-6B-oGY"/>
                                 </connections>
                             </button>
@@ -664,7 +663,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="signin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XMi-eq-G6F"/>
                                     <segue destination="kjL-TW-p8o" kind="push" identifier="IssueBikeDetailSegue" id="Smh-PW-3zx"/>
                                 </connections>
                             </button>
@@ -758,7 +756,9 @@
                         <outlet property="codeField" destination="1Dp-7O-9T5" id="V5u-Uz-UnX"/>
                         <outlet property="codeLabel" destination="GfY-pP-u8E" id="XYQ-CI-x3A"/>
                         <outlet property="descriptionLabel" destination="U36-D2-yhM" id="va3-iJ-weN"/>
+                        <outlet property="detailButton" destination="nsS-ph-jGf" id="VUx-IX-9w1"/>
                         <outlet property="indicatorView" destination="3Wn-te-BEW" id="WMQ-4Q-6rd"/>
+                        <outlet property="reportButton" destination="URh-VV-Yhw" id="rTu-PJ-dPK"/>
                         <outlet property="returnButton" destination="b55-Fe-uuA" id="BHx-6o-hI4"/>
                         <outlet property="titleLabel" destination="grJ-yc-neb" id="V9k-c3-oMJ"/>
                         <outlet property="webIndicatorView" destination="XTw-hx-Qgk" id="1XU-yJ-Sxn"/>
