@@ -82,6 +82,8 @@
         }
         _mapView.showsUserLocation = YES;
     }
+    
+    _POIView.directionButton.enabled = [[ContentManager manager] isLocationServiceAuthorized];
 }
 
 - (void)reloadData {
@@ -173,7 +175,7 @@
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     if ([view.annotation isKindOfClass:[Bike class]] && _flags.refreshingSelectedAnnotation == 0) {
 
-         Bike *bike = (Bike *)view.annotation;
+        Bike *bike = (Bike *)view.annotation;
         
         if ([bike.identifier integerValue] == _selectedBikeIdentifier && _routePolyline) {
             [_mapView removeOverlay:_routePolyline];
@@ -183,10 +185,13 @@
         
         if (mapView.userLocation.location != nil) {
             NSNumber *distance = @([mapView.userLocation.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:bike.coordinate.latitude longitude:bike.coordinate.longitude]]);
-            _POIView.titleLabel.text = [NSString stringWithFormat:@"%@, %@",distance.formattedDistance, bike.name];
+            _POIView.titleLabel.text = [NSString stringWithFormat:@", %@, %@",distance.formattedDistance, bike.name];
         } else {
-            _POIView.titleLabel.text = bike.name;
+            _POIView.titleLabel.text = [NSString stringWithFormat:@", %@",bike.name];
         }
+        
+        _POIView.titlePaddingConstraint.constant = 64;
+        [_POIView layoutIfNeeded];
         
         [_directionsRequest cancel];
         
@@ -317,8 +322,9 @@
     
     MKDirectionsRequest *request = [MKDirectionsRequest new];
     request.source = [MKMapItem mapItemForCurrentLocation];
-        
-    MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:[self bikeWithId:_selectedBikeIdentifier].coordinate addressDictionary:nil]];
+    
+    Bike *bike = [self bikeWithId:_selectedBikeIdentifier];
+    MKMapItem *destination = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:bike.coordinate addressDictionary:nil]];
     
     request.destination = destination;
     request.transportType = MKDirectionsTransportTypeWalking;
@@ -328,17 +334,35 @@
     detailView.directionButton.hidden = YES;
     
     _directionsRequest = [[MKDirections alloc] initWithRequest:request];
+    
+    __weak __typeof(self)weakSelf = self;
     [_directionsRequest calculateDirectionsWithCompletionHandler: ^(MKDirectionsResponse *response, NSError *error) {
         if (!error) {
             MKRoute *route = [response.routes firstObject];
-            [self showRoute:route];
-            detailView.titleLabel.text = @(route.expectedTravelTime).formattedDuration;
+            [weakSelf showRoute:route];
+
+            NSString *durationString = (@(route.expectedTravelTime).formattedDuration.length > 0)? [NSString stringWithFormat:@"%@, ",@(route.expectedTravelTime).formattedDuration] : @"";
+            detailView.titleLabel.text = [NSString stringWithFormat:@"%@%@",durationString, bike.name];
             
-        } else if (error.code != -999){
+            [UIView animateWithDuration:0.25 animations:^{
+                detailView.titlePaddingConstraint.constant = 12;
+                [detailView layoutIfNeeded];
+            }];
+            
+        } else if (error.code != -999) {
             NSString *message = [[error userInfo] objectForKey:@"NSLocalizedFailureReason"];
             message = message ?: error.localizedDescription;
             [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
             detailView.directionButton.hidden = NO;
+        }
+        
+        if (error) {
+            if (weakSelf.mapView.userLocation.location != nil) {
+                NSNumber *distance = @([weakSelf.mapView.userLocation.location distanceFromLocation:[[CLLocation alloc] initWithLatitude:bike.coordinate.latitude longitude:bike.coordinate.longitude]]);
+                detailView.titleLabel.text = [NSString stringWithFormat:@", %@, %@",distance.formattedDistance, bike.name];
+            } else {
+                detailView.titleLabel.text = [NSString stringWithFormat:@", %@",bike.name];
+            }
         }
         
         detailView.indicatorView.hidden = YES;

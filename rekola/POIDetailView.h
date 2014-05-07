@@ -24,6 +24,7 @@
 @interface POIDetailView : UIView
 
 @property (nonatomic, weak) IBOutlet id<POIDetailViewDelegate> delegate;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *titlePaddingConstraint;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicatorView;
 @property (nonatomic, weak) IBOutlet UIButton *closeButton;
 @property (nonatomic, weak) IBOutlet UIButton *detailButton;

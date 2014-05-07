@@ -17,6 +17,13 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     _indicatorView.hidden = YES;
+    
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"route", @"A button title somewhere on the screen")];
+    
+    [title addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, title.length)];
+    [title addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:NSMakeRange(0, title.length)];
+
+    [_directionButton setAttributedTitle:title forState:UIControlStateNormal];
 }
 
 #pragma mark - Actions
