@@ -25,8 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // TODO: missing url
-    _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
+    _errorLabel.hidden = YES;
+    _errorLabel.text = NSLocalizedString(@"Something went wrong so the page failed to load.", @"A label text somewhere on the screen");
+    
     [self reloadData];
 }
 
@@ -40,6 +41,7 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     webView.userInteractionEnabled = NO;
     _indicatorView.hidden = NO;
+    _errorLabel.hidden = YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -54,6 +56,7 @@
         [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
             [self.navigationController popViewControllerAnimated:YES];
         }];
+        _errorLabel.hidden = NO;
     }
 }
 

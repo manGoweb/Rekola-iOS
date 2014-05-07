@@ -40,8 +40,7 @@
     [_detailButton setTitleForAllState:NSLocalizedString(@"Bike Detail", @"A button title somewhere on the screen")];
     [_reportButton setTitleForAllState:NSLocalizedString(@"Report Issue", @"A button title somewhere on the screen")];
     
-    // TODO: missing url
-    _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
+    _urlPath = [NSString stringWithFormat:@"%@/bikes/%@/status-webview",RekolaAPIURLString,[[ContentManager manager].usingBike.identifier stringValue]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,6 +69,20 @@
     if ([segue.identifier isEqualToString:@"LocateSegue"]) {
         _returnButton.enabled = NO;
         [(LocateViewController *)segue.destinationViewController setDelegate:self];
+        
+    } else if ([segue.identifier isEqualToString:@"ReturnBikeDetailSegue"]) {
+        Bike *bike = [ContentManager manager].usingBike;
+        NSString *urlPath = [NSString stringWithFormat:@"%@/bikes/%@/info-webview",RekolaAPIURLString,[bike.identifier stringValue]];
+        BikeDetailViewController *controller = segue.destinationViewController;
+        controller.urlPath = urlPath;
+        controller.title = bike.name;
+        
+    } else if ([segue.identifier isEqualToString:@"IssueBikeDetailSegue"]) {
+        Bike *bike = [ContentManager manager].usingBike;
+        NSString *urlPath = [NSString stringWithFormat:@"%@/bikes/%@/info-webview",RekolaAPIURLString,[bike.identifier stringValue]];
+        BikeDetailViewController *controller = segue.destinationViewController;
+        controller.urlPath = urlPath;
+        controller.title = bike.name;
     }
 }
 

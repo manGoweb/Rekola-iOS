@@ -11,6 +11,7 @@
  */
 
 #import "MapViewController.h"
+#import "BikeDetailViewController.h"
 #import "RKAnnotation.h"
 
 @implementation MapViewController {
@@ -128,6 +129,18 @@
                 [weakSelf stopRefreshing];
             }
         }];
+    }
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"BikeDetailSegue"]) {
+        Bike *bike = sender;
+        NSString *urlPath = [NSString stringWithFormat:@"%@/bikes/%@/info-webview",RekolaAPIURLString,[bike.identifier stringValue]];
+        BikeDetailViewController *controller = segue.destinationViewController;
+        controller.urlPath = urlPath;
+        controller.title = bike.name;
     }
 }
 
@@ -317,7 +330,7 @@
 #pragma mark - POIDetailViewDelegate methods
 
 - (void)POIDetailWillOpenDetail:(POIDetailView *)detailView {
-    [self performSegueWithIdentifier:@"BikeDetailSegue" sender:nil];
+    [self performSegueWithIdentifier:@"BikeDetailSegue" sender:[self bikeWithId:_selectedBikeIdentifier]];
 }
 
 - (void)POIDetailWillFindDirections:(POIDetailView *)detailView {

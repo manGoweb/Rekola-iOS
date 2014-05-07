@@ -16,6 +16,7 @@
 
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *logOutButton;
+@property (nonatomic, weak) IBOutlet UILabel *errorLabel;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicatorView;
 
 - (IBAction)logout:(id)sender;

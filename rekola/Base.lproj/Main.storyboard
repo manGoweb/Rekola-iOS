@@ -354,11 +354,11 @@
                         <viewControllerLayoutGuide type="bottom" id="38p-Yf-EFM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="KHn-0y-vBM">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView opaque="NO" contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f5T-8I-gpg">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="456"/>
+                            <webView opaque="NO" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f5T-8I-gpg">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <dataDetectorType key="dataDetectorTypes"/>
@@ -366,24 +366,36 @@
                                     <outlet property="delegate" destination="kjL-TW-p8o" id="3aM-3j-X5o"/>
                                 </connections>
                             </webView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something went wrong so the page failed to load." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="248" translatesAutoresizingMaskIntoConstraints="NO" id="L8K-cj-iUw">
+                                <rect key="frame" x="36" y="235" width="248" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="t1b-vV-2QY">
-                                <rect key="frame" x="150" y="218" width="20" height="20"/>
+                                <rect key="frame" x="150" y="242" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="L8K-cj-iUw" secondAttribute="centerY" constant="0.5" id="5Lz-74-mks"/>
                             <constraint firstAttribute="centerY" secondItem="t1b-vV-2QY" secondAttribute="centerY" id="GsV-u9-eWY"/>
                             <constraint firstItem="38p-Yf-EFM" firstAttribute="top" secondItem="f5T-8I-gpg" secondAttribute="bottom" id="L1k-c1-3hJ"/>
+                            <constraint firstAttribute="trailing" secondItem="L8K-cj-iUw" secondAttribute="trailing" constant="36" id="aZq-QO-ZFQ"/>
+                            <constraint firstAttribute="centerX" secondItem="L8K-cj-iUw" secondAttribute="centerX" id="lbZ-t8-tL2"/>
                             <constraint firstAttribute="trailing" secondItem="f5T-8I-gpg" secondAttribute="trailing" id="mMN-fi-f3E"/>
                             <constraint firstItem="f5T-8I-gpg" firstAttribute="leading" secondItem="KHn-0y-vBM" secondAttribute="leading" id="qvN-Fn-xsl"/>
                             <constraint firstItem="f5T-8I-gpg" firstAttribute="top" secondItem="2Hg-gl-yWe" secondAttribute="bottom" id="rwE-7R-Dpl"/>
                             <constraint firstAttribute="centerX" secondItem="t1b-vV-2QY" secondAttribute="centerX" id="xVQ-pt-VDU"/>
+                            <constraint firstItem="L8K-cj-iUw" firstAttribute="leading" secondItem="KHn-0y-vBM" secondAttribute="leading" constant="36" id="yLJ-fU-NTc"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="tJp-zw-sdp"/>
                     <connections>
+                        <outlet property="errorLabel" destination="L8K-cj-iUw" id="7V4-JO-1ac"/>
                         <outlet property="indicatorView" destination="t1b-vV-2QY" id="A9e-Ey-J3E"/>
                         <outlet property="webView" destination="f5T-8I-gpg" id="EA5-ZZ-CwK"/>
                     </connections>
@@ -543,6 +555,13 @@
                                     <outlet property="delegate" destination="jyq-BC-kVq" id="8ne-qA-f1I"/>
                                 </connections>
                             </webView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something went wrong so the page failed to load." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="248" translatesAutoresizingMaskIntoConstraints="NO" id="vlk-63-lef">
+                                <rect key="frame" x="36" y="211" width="248" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="dmR-nW-evJ">
                                 <rect key="frame" x="150" y="218" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -551,11 +570,15 @@
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="J80-FM-Lg8" firstAttribute="leading" secondItem="xYw-OS-A0C" secondAttribute="leading" id="73x-Lr-2Ku"/>
+                            <constraint firstItem="vlk-63-lef" firstAttribute="leading" secondItem="xYw-OS-A0C" secondAttribute="leading" constant="36" id="CbJ-Kc-TrI"/>
                             <constraint firstItem="J80-FM-Lg8" firstAttribute="top" secondItem="yTx-Na-fVb" secondAttribute="bottom" id="Ryx-2L-TDf"/>
                             <constraint firstAttribute="trailing" secondItem="J80-FM-Lg8" secondAttribute="trailing" id="caF-7F-Cpq"/>
+                            <constraint firstAttribute="centerX" secondItem="vlk-63-lef" secondAttribute="centerX" id="h0s-21-PDV"/>
+                            <constraint firstAttribute="trailing" secondItem="vlk-63-lef" secondAttribute="trailing" constant="36" id="jU5-Ng-Kxz"/>
                             <constraint firstItem="Vwc-eh-dkX" firstAttribute="top" secondItem="J80-FM-Lg8" secondAttribute="bottom" id="mIu-By-pHI"/>
                             <constraint firstAttribute="centerX" secondItem="dmR-nW-evJ" secondAttribute="centerX" id="sbu-yp-GNe"/>
-                            <constraint firstAttribute="centerY" secondItem="dmR-nW-evJ" secondAttribute="centerY" constant="-0.5" id="wvj-5p-AVL"/>
+                            <constraint firstAttribute="centerY" secondItem="vlk-63-lef" secondAttribute="centerY" id="tFq-at-RXa"/>
+                            <constraint firstAttribute="centerY" secondItem="dmR-nW-evJ" secondAttribute="centerY" id="wvj-5p-AVL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="eb0-jJ-WVI">
@@ -566,6 +589,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="errorLabel" destination="vlk-63-lef" id="G7w-9g-DmK"/>
                         <outlet property="indicatorView" destination="dmR-nW-evJ" id="3Df-Xh-icM"/>
                         <outlet property="logOutButton" destination="HeU-6U-Br4" id="53X-EC-XTM"/>
                         <outlet property="webView" destination="J80-FM-Lg8" id="oF8-KS-uqn"/>
@@ -627,7 +651,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ymB-lf-Tqb">
+                            <webView opaque="NO" contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ymB-lf-Tqb">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -834,11 +858,20 @@
                                 <rect key="frame" x="150" y="306" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Something went wrong so the page failed to load." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="233" translatesAutoresizingMaskIntoConstraints="NO" id="56x-eb-war">
+                                <rect key="frame" x="44" y="300" width="233" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="dJ3-gb-vJ4" firstAttribute="centerX" secondItem="23w-Cr-hSm" secondAttribute="centerX" id="1yV-HC-3VW"/>
+                            <constraint firstItem="56x-eb-war" firstAttribute="leading" secondItem="tXk-hH-CN7" secondAttribute="leading" constant="44" id="AdP-fq-ivY"/>
                             <constraint firstItem="dJ3-gb-vJ4" firstAttribute="centerY" secondItem="23w-Cr-hSm" secondAttribute="centerY" constant="-1" id="DvZ-Gm-QFF"/>
+                            <constraint firstItem="23w-Cr-hSm" firstAttribute="centerY" secondItem="56x-eb-war" secondAttribute="centerY" id="P1l-8q-Zj8"/>
                             <constraint firstAttribute="trailing" secondItem="23w-Cr-hSm" secondAttribute="trailing" id="Sav-jz-lzS"/>
                             <constraint firstAttribute="trailing" secondItem="m30-5W-XMo" secondAttribute="trailing" id="T0M-oa-iS1"/>
                             <constraint firstItem="m30-5W-XMo" firstAttribute="top" secondItem="CJL-N9-nwJ" secondAttribute="bottom" id="Xea-z5-Zmb"/>
@@ -846,10 +879,13 @@
                             <constraint firstItem="m30-5W-XMo" firstAttribute="leading" secondItem="tXk-hH-CN7" secondAttribute="leading" id="fkc-Zh-YCl"/>
                             <constraint firstItem="1aA-PO-KaI" firstAttribute="top" secondItem="23w-Cr-hSm" secondAttribute="bottom" id="gOQ-Lv-VTP"/>
                             <constraint firstItem="23w-Cr-hSm" firstAttribute="leading" secondItem="tXk-hH-CN7" secondAttribute="leading" id="q1q-r6-5wa"/>
+                            <constraint firstItem="23w-Cr-hSm" firstAttribute="centerX" secondItem="56x-eb-war" secondAttribute="centerX" id="xoX-z9-HTw"/>
+                            <constraint firstAttribute="trailing" secondItem="56x-eb-war" secondAttribute="trailing" constant="43" id="zgT-cu-UIO"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="doneButton" destination="jzc-Kh-N2Q" id="t3g-0H-XnZ"/>
+                        <outlet property="errorLabel" destination="56x-eb-war" id="6NP-Wt-kqp"/>
                         <outlet property="indicatorView" destination="dJ3-gb-vJ4" id="4kz-fV-VFp"/>
                         <outlet property="webView" destination="23w-Cr-hSm" id="1FY-oA-PHt"/>
                     </connections>
@@ -1060,6 +1096,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="VKJ-1s-Sbg"/>
+        <segue reference="Smh-PW-3zx"/>
     </inferredMetricsTieBreakers>
 </document>

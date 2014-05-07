@@ -15,6 +15,7 @@
 @interface SuccessViewController : BaseViewController
 
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
+@property (nonatomic, weak) IBOutlet UILabel *errorLabel;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *doneButton;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *indicatorView;
 

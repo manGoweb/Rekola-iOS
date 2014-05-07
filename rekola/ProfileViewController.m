@@ -23,8 +23,7 @@
         self.title = NSLocalizedString(@"Profile", @"Title in nav & tab controller");
         self.navigationController.tabBarItem.title = self.title;
         
-        // TODO: missing proper page url
-        _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/logout.html";
+        _urlPath = [NSString stringWithFormat:@"%@/accounts/mine/profile-webview",RekolaAPIURLString];
         
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:self.title image:[UIImage imageNamed:@"tabbar_ic_profile_active.png"] selectedImage:[[UIImage imageNamed:@"tabbar_ic_profile_active.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }
@@ -35,6 +34,8 @@
     [super viewDidLoad];
     
     _logOutButton.title = NSLocalizedString(@"Log Out", @"Bar button title in navigation bar");
+    _errorLabel.text = NSLocalizedString(@"Something went wrong so the page failed to load.", @"A label text somewhere on the screen");
+    _errorLabel.hidden = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -65,6 +66,7 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView {
     webView.userInteractionEnabled = NO;
     _indicatorView.hidden = NO;
+    _errorLabel.hidden = YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -77,6 +79,7 @@
 
     if (error.code != -999) {
         [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] show];
+        _errorLabel.hidden = NO;
     }
 }
 
