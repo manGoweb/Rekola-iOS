@@ -43,6 +43,7 @@
 
 - (void)dealloc {
     _mapView.delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewDidLoad {
@@ -59,7 +60,7 @@
     _flags.firtstUpdate = 1;
     _flags.firstLaunch = 1;
     _mapView.clusteringEnabled = NO;
-
+    
     _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
     [self.view layoutIfNeeded];
 }
@@ -120,9 +121,9 @@
                         [weakSelf POIDetailWillDismiss:weakSelf.POIView];
                     }
                     strongSelf->_flags.loadingData = 0;
-
+                    
                 } else {
-                   [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+                    [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
                 }
                 [weakSelf stopRefreshing];
             }
@@ -166,6 +167,15 @@
     return bike;
 }
 
+- (void)hidePOIDetailView {
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.25 animations:^{
+        _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
+        [self.view layoutIfNeeded];
+        
+    } completion:nil];
+}
+
 #pragma mark - MapKitDelegate methods
 
 - (void)mapView:(MKMapView *)aMapView regionDidChangeAnimated:(BOOL)animated {
@@ -174,7 +184,9 @@
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     if ([view.annotation isKindOfClass:[Bike class]] && _flags.refreshingSelectedAnnotation == 0) {
-
+        
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hidePOIDetailView) object:nil];
+        
         Bike *bike = (Bike *)view.annotation;
         
         if ([bike.identifier integerValue] == _selectedBikeIdentifier && _routePolyline) {
@@ -204,13 +216,16 @@
         
         view.image = [UIImage imageNamed:@"ic_pin_pressed.png"];
         
-        [self.view layoutIfNeeded];
-        [UIView animateWithDuration:0.25 animations:^{
-            _POIBottomConstraint.constant = 0;
+        if (_POIBottomConstraint.constant != 0) {
             [self.view layoutIfNeeded];
-        } completion:^(BOOL finished) {
-            _POIBottomConstraint.constant = 0;
-        }];
+            [UIView animateWithDuration:0.25 animations:^{
+                _POIBottomConstraint.constant = 0;
+                [self.view layoutIfNeeded];
+                
+            } completion:^(BOOL finished) {
+                _POIBottomConstraint.constant = 0;
+            }];
+        }
         
         [_mapView centerByOffset:CGPointMake(0, _POIHeightConstraint.constant / 2) from:view.annotation.coordinate];
     }
@@ -220,17 +235,7 @@
     if ([view.annotation isKindOfClass:[Bike class]]) {
         
         view.image = [UIImage imageNamed:@"ic_pin_normal.png"];
-
-        // TODO: should hide when user deselect annotation
-        if (_selectedBikeIdentifier == -1) {
-            
-            [self.view layoutIfNeeded];
-            [UIView animateWithDuration:0.25 animations:^{
-                _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
-                [self.view layoutIfNeeded];
-                
-            } completion:nil];
-        }
+        [self performSelector:@selector(hidePOIDetailView) withObject:nil afterDelay:0.1];
     }
 }
 
@@ -265,7 +270,6 @@
                 pinView.canShowCallout = NO;
             }
             
-            // set title
             pinView.pinColor = MKPinAnnotationColorGreen;
             retPinView = pinView;
             
@@ -340,7 +344,7 @@
         if (!error) {
             MKRoute *route = [response.routes firstObject];
             [weakSelf showRoute:route];
-
+            
             NSString *durationString = (@(route.expectedTravelTime).formattedDuration.length > 0)? [NSString stringWithFormat:@"%@, ",@(route.expectedTravelTime).formattedDuration] : @"";
             detailView.titleLabel.text = [NSString stringWithFormat:@"%@%@",durationString, bike.name];
             
