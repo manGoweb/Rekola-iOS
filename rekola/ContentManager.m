@@ -24,6 +24,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 
 @implementation ContentManager {
     NSOperation *_loginOperation;
+    NSOperation *_recoverPassOperation;
     NSOperation *_bikesOperation;
     NSOperation *_bikeStateOperation;
     NSOperation *_returnOperation;
@@ -81,30 +82,29 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     [self setKeychainObject:username forKey:KeychainUserName];
     [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerWillAuthenticateUserNotification object:self];
     
-    __weak typeof(self)weakSelf = self;
     [_loginOperation cancel];
+    
+    __weak typeof(self)weakSelf = self;
     _loginOperation = [[APIManager manager] POST:@"accounts/mine/login" parameters:@{@"username": username, @"password": password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (weakSelf) {
-            [APIManager manager].accessToken = responseObject[@"apiKey"];
-            [weakSelf setKeychainObject:[[password dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0] forKey:KeychainUserPassword];
+        [APIManager manager].accessToken = responseObject[@"apiKey"];
+        [weakSelf setKeychainObject:[[password dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0] forKey:KeychainUserPassword];
+        
+        [weakSelf bikeStateWithCompletion:^(Bike *bike, NSError *error) {
+            if (error && error.statusCode != 404) {
+                [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+            }
             
-            [weakSelf bikeStateWithCompletion:^(Bike *bike, NSError *error) {
-                if (error && error.statusCode != 404) {
-                    [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-                }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                [[[[UIApplication sharedApplication] windows] firstObject] setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"TabBarController"]];
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                    [[[[UIApplication sharedApplication] windows] firstObject] setRootViewController:[storyboard instantiateViewControllerWithIdentifier:@"TabBarController"]];
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:weakSelf userInfo:nil];
-                    
-                    if (completion) {
-                        completion(nil);
-                    }
-                });
-            }];
-        }
+                [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:weakSelf userInfo:nil];
+                
+                if (completion) {
+                    completion(nil);
+                }
+            });
+        }];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
@@ -126,6 +126,21 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:ContentManagerDidAuthenticateUserNotification object:self userInfo:nil];
     });
+}
+
+- (void)recoverPassword:(NSString *)username completion:(void (^)(NSError *error))completion {
+    NSParameterAssert(username);
+    [_recoverPassOperation cancel];
+    
+    _recoverPassOperation = [[APIManager manager] GET:@"account/mine/passwordrecovery" parameters:@{@"username" : username } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (completion) {
+            completion(nil);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completion) {
+            completion([error message:operation.responseString]);
+        }
+    }];
 }
 
 #pragma mark - Bikes methods

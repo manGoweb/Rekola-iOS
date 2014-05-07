@@ -101,7 +101,7 @@
 
 - (IBAction)signin:(id)sender {
     if (_flags.recoverPassword == 1) {
-        // TODO: recover password - API missing endpoint
+        [self recoverPassword];
     } else {
         [self signInWithName:_nameField.text password:_passField.text];
     }
@@ -142,7 +142,7 @@
     
     if (textField == _nameField) {
         if (_flags.recoverPassword == 1) {
-            // TODO: recover password - API missing endpoint
+            [self recoverPassword];
         } else {
             [_passField becomeFirstResponder];
         }
@@ -174,7 +174,7 @@
     [self.view endEditing:YES];
     
     _indicatorView.hidden = NO;
-    _signUpButton.enabled = NO;
+    _signButton.enabled = NO;
     [_indicatorView startAnimating];
     _contentView.userInteractionEnabled = NO;
     
@@ -185,16 +185,38 @@
         }
         weakSelf.passField.text = nil;
         weakSelf.contentView.userInteractionEnabled = YES;
-        weakSelf.signUpButton.enabled = YES;
+        weakSelf.signButton.enabled = YES;
         weakSelf.indicatorView.hidden = YES;
         [weakSelf.indicatorView stopAnimating];
+    }];
+}
+
+- (void)recoverPassword {
+    
+    _indicatorView.hidden = NO;
+    _signButton.enabled = NO;
+    [_indicatorView startAnimating];
+    
+    __weak __typeof(self)weakSelf = self;
+    [[ContentManager manager] recoverPassword:_nameField.text completion:^(NSError *error) {
+        if (error) {
+            [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
+        // success
+        } else {
+            [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Please check your email for additional informations.", @"Text message in Alert View") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
+        }
+        
+        weakSelf.signButton.enabled = YES;
+        weakSelf.indicatorView.hidden = YES;
+        [weakSelf.indicatorView stopAnimating];
+        [weakSelf.view endEditing:YES];
     }];
 }
 
 #pragma mark - UIGestureRecognizer methods
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)tapGesture {
-    if (tapGesture.state == UIGestureRecognizerStateRecognized) {
+    if (tapGesture.state == UIGestureRecognizerStateRecognized && _flags.recoverPassword == 0) {
         [self.view endEditing:YES];
     }
 }

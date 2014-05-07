@@ -28,6 +28,8 @@
                  password:(NSString *)password
                completion:(void (^)(NSError *error))completion;
 
+- (void)recoverPassword:(NSString *)username completion:(void (^)(NSError *error))completion;
+
 - (BOOL)updateTime;
 - (BOOL)isLocationServiceAuthorized;
 
