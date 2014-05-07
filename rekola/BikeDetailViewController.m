@@ -72,7 +72,6 @@
         [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
         [_webView loadRequest:request];
         result = NO;
-        
     }
     return result;
 }

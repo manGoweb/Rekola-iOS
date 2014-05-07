@@ -85,26 +85,26 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
-    BOOL result = NO;
+    BOOL result = YES;
     NSString *query = request.URL.absoluteString;
-    if ([query rangeOfString:@"log_out"].location == NSNotFound) {
-        
-        BOOL headerIsPresent = ([[request allHTTPHeaderFields] objectForKey:@"X-Api-Key"] != nil);
-        if (!headerIsPresent) {
-            result = NO;
-            NSURL *url = [request URL];
+    if (query) {
+        if ([query rangeOfString:@"log_out"].location == NSNotFound) {
             
-            NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+            BOOL headerIsPresent = ([[request allHTTPHeaderFields] objectForKey:@"X-Api-Key"] != nil);
+            if (!headerIsPresent) {
+                result = NO;
+                NSURL *url = [request URL];
+                
+                NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+                
+                [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
+                [_webView loadRequest:request];
+            }
             
-            [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
-            [_webView loadRequest:request];
-
         } else {
-            result = YES;
+            result = NO;
+            [self showLogoutDialog];
         }
-        
-    } else {
-        [self showLogoutDialog];
     }
     return result;
 }
