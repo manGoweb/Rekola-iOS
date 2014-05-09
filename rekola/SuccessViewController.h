@@ -14,6 +14,7 @@
 
 @interface SuccessViewController : BaseViewController
 
+@property (nonatomic, copy) NSString *urlPath;
 @property (nonatomic, weak) IBOutlet UIWebView *webView;
 @property (nonatomic, weak) IBOutlet UILabel *errorLabel;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *doneButton;

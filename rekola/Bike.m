@@ -29,6 +29,18 @@
         JSON_PARSE_STRING(_bikeCode, @"bikeCode");
         JSON_PARSE_STRING(_lockCode, @"lockCode");
         
+        NSString *stringColor = nil;
+        JSON_PARSE_STRING(stringColor, @"backgroundColor");
+        
+        if (stringColor) {
+            stringColor = [stringColor substringFromIndex:1];
+            
+            NSUInteger hexColor;
+            if ([[NSScanner scannerWithString:stringColor] scanHexInt:&hexColor]) {
+                _backgroundColor = COLOR(hexColor);
+            }
+        }
+        
         _title = _name;
         _subtitle = _location.address;
         _coordinate = _location.coordinate;

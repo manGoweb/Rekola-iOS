@@ -61,6 +61,7 @@
     _flags.firtstUpdate = 1;
     _flags.firstLaunch = 1;
     _mapView.clusteringEnabled = NO;
+    _mapView.showsUserLocation = YES;
     
     _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
     [self.view layoutIfNeeded];
@@ -82,7 +83,6 @@
             
             [self zoomToDefaultLocation];
         }
-        _mapView.showsUserLocation = YES;
     }
     
     _POIView.directionButton.enabled = [[ContentManager manager] isLocationServiceAuthorized];

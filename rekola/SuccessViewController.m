@@ -12,15 +12,11 @@
 
 #import "SuccessViewController.h"
 
-@implementation SuccessViewController {
-    NSString *_urlPath;
-}
+@implementation SuccessViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    // TODO: missing url
-    _urlPath = @"https://dl.dropboxusercontent.com/u/43851739/index.html";
     _errorLabel.text = NSLocalizedString(@"Something went wrong so the page failed to load.", @"A label text somewhere on the screen");
     _errorLabel.hidden = YES;
     

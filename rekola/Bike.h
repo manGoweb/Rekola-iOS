@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSString *lastSeen;
 @property (nonatomic, strong) NSString *bikeCode;
 @property (nonatomic, strong) NSString *lockCode;
+@property (nonatomic, strong) UIColor *backgroundColor;
 
 // Title and subtitle for use by selection UI.
 @property (nonatomic, copy) NSString *title;

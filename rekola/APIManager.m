@@ -111,7 +111,7 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
             // the auth token is not valid, clear it
             NSLog(@"The auth token is not valid");
             
-            [[[UIAlertView alloc] initWithTitle:nil message:nil delegate:NSLocalizedString(@"You have been logged out because your session has expired.", @"Text message in Alert View.") cancelButtonTitle:nil otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
+            [[[UIAlertView alloc] initWithTitle:nil message:nil delegate:NSLocalizedString(@"You have been logged out because your session has expired.", @"Text message in Alert View.") cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button title in Alert View.") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
                 if (_accessToken != nil) {
                     _accessToken = nil;
                     [[ContentManager manager] logout];

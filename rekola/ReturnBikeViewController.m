@@ -130,14 +130,15 @@
     } else {
         _returnButton.enabled = YES;
     }
+    
     [controller dismissViewControllerAnimated:YES completion:^{
         if (location) {
             __weak __typeof(self)weakSelf = self;
-            [[ContentManager manager] returnBike:[ContentManager manager].usingBike location:location note:note completion:^(NSError *error) {
+            [[ContentManager manager] returnBike:[ContentManager manager].usingBike location:location note:note completion:^(NSString *successUrl, NSError *error) {
                 if (weakSelf) {
                     if (!error) {
-                        // TODO: parse URL for succes webView
                         SuccessViewController *controller = [weakSelf.storyboard instantiateViewControllerWithIdentifier:@"SuccessViewController"];
+                        controller.urlPath = successUrl;
                         [weakSelf.tabBarController presentViewController:controller animated:YES completion:^{
                             [ContentManager manager].usingBike = nil;
                             [ContentManager manager].bikesUpdateDate = nil;

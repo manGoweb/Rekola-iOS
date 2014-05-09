@@ -132,7 +132,7 @@
         _flags.firtstUpdate = 0;
     
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, DefaultUserZoom / 4, DefaultUserZoom / 4);
-        [_mapView setRegion:region animated:NO];
+        [_mapView setRegion:region animated:YES];
     }
 }
 

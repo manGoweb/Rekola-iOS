@@ -47,7 +47,7 @@
 - (void)returnBike:(Bike *)bike
           location:(CLLocation *)location
               note:(NSString *)note
-        completion:(void (^)(NSError *error))completion;
+        completion:(void (^)(NSString *successUrl, NSError *error))completion;
 
 @end
 

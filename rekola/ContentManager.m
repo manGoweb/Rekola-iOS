@@ -218,7 +218,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     }];
 }
 
-- (void)returnBike:(Bike *)bike location:(CLLocation *)location note:(NSString *)note completion:(void (^)(NSError *error))completion {
+- (void)returnBike:(Bike *)bike location:(CLLocation *)location note:(NSString *)note completion:(void (^)(NSString *successUrl, NSError *error))completion {
     NSParameterAssert(bike);
     
     NSDictionary *loc = @{
@@ -237,13 +237,13 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     _returnOperation = [[APIManager manager] PUT:[NSString stringWithFormat:@"bikes/%@/return",[bike.identifier stringValue]] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
             if (completion) {
-                completion(nil);
+                completion(responseObject[@"successUrl"], nil);
             }
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (completion) {
-            completion([error message:operation.responseString]);
+            completion(nil, [error message:operation.responseString]);
         }
     }];
 }

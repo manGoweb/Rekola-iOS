@@ -58,3 +58,4 @@
 #define _color3(r, g, b) _color4(r, g, b, 1.0)
 #define _color4(r, g, b, a) [UIColor colorWithRed:((float)r / 255.) \ green:((float)g / 255.) \
                                             blue:((float)b / 255.) alpha:a]
+
