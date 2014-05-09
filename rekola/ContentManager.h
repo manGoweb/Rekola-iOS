@@ -40,6 +40,9 @@
 - (void)bikesWithLocation:(CLLocationCoordinate2D)location
                completion:(void (^)(NSArray *bikes, NSError *error))completion;
 
+- (void)POIsWithLocation:(CLLocationCoordinate2D)location
+               completion:(void (^)(NSArray *pois, NSError *error))completion;
+
 - (void)borrowBikeWithCode:(NSString *)code
           location:(CLLocationCoordinate2D)location
         completion:(void (^)(NSString *code, NSError *error))completion;

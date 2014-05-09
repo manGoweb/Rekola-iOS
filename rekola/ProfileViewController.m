@@ -16,6 +16,10 @@
 
 @implementation ProfileViewController {
     NSString *_urlPath;
+    
+    struct {
+        unsigned int errorState:1;
+    } _flags;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -37,6 +41,8 @@
     _logOutButton.title = NSLocalizedString(@"Log Out", @"Bar button title in navigation bar");
     _errorLabel.text = NSLocalizedString(@"Something went wrong so the page failed to load.", @"A label text somewhere on the screen");
     _errorLabel.hidden = YES;
+    
+    _flags.errorState = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -48,6 +54,7 @@
     // TODO: rewrite credentials
     // TODO: refactor! with contentmanager
     
+    if (_flags.errorState == 1) {
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
     
     _webView.requestSerializer = [APIManager manager].requestSerializer;
@@ -56,6 +63,7 @@
     } failure:^(NSError *error) {
         //
     }];
+    }
 }
 
 #pragma mark - Actions
@@ -77,6 +85,8 @@
     webView.userInteractionEnabled = NO;
     _indicatorView.hidden = NO;
     _errorLabel.hidden = YES;
+    
+    _flags.errorState = 0;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -86,6 +96,7 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     _indicatorView.hidden = YES;
+    _flags.errorState = 1;
 
     if (error.code != -999) {
         [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] show];

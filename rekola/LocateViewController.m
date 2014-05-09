@@ -11,16 +11,18 @@
  */
 
 #import "LocateViewController.h"
+#import "POI.h"
 
 @implementation LocateViewController {
-    struct {
-        unsigned int firtstUpdate:1;
-    } _flags;
-    
     NSString *_textViewText;
     NSString *_placeHolderString;
     CLLocationCoordinate2D _newLocation;
     MKUserTrackingBarButtonItem *_trackingButton;
+    UIActivityIndicatorView *_indicatorView;
+    
+    struct {
+        unsigned int firtstUpdate:1;
+    } _flags;
 }
 
 - (void)dealloc {
@@ -35,6 +37,8 @@
     
     _trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapView];
     _navBarItem.rightBarButtonItem = _trackingButton;
+    
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     _returnBikeButton.enabled = NO;
     
@@ -59,6 +63,14 @@
         [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Polohové služby nejsou zapnuté, aplikace nebude schopna poskytovat plnou fukncionalitu. Povolit je můžete v nastavení svého zařízení v záložce soukromí.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
         
         [self zoomToDefaultLocation];
+        
+    } else if (_mapView.userLocation != nil && _flags.firtstUpdate == 1) {
+        _flags.firtstUpdate = 0;
+        
+        [self fetchPOIs];
+    
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(_mapView.userLocation.coordinate, DefaultUserZoom / 4, DefaultUserZoom / 4);
+        [_mapView setRegion:region animated:YES];
     }
     
     _returnBikeButton.enabled = YES;
@@ -93,6 +105,38 @@
 
 - (IBAction)done:(id)sender {
     [self.view endEditing:YES];
+}
+
+#pragma mark - Private methods
+
+- (void)startRefreshing {
+    [_indicatorView startAnimating];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_indicatorView];
+}
+
+- (void)stopRefreshing {
+    self.navigationItem.leftBarButtonItem = _trackingButton;
+    [_indicatorView stopAnimating];
+}
+
+- (void)fetchPOIs {
+    [self startRefreshing];
+    __weak __typeof(self)weakSelf = self;
+    [[ContentManager manager] POIsWithLocation:_mapView.userLocation.coordinate completion:^(NSArray *pois, NSError *error) {
+        if (weakSelf) {
+            if (!error) {
+                NSMutableArray *annotations = @[].mutableCopy;
+                
+                [pois enumerateObjectsUsingBlock:^(Bike *obj, NSUInteger idx, BOOL *stop) {
+                    [annotations addObject:[[RKAnnotation alloc] initWithAnnotation:obj]];
+                }];
+                
+                [weakSelf.mapView clearAnnotations];
+                [weakSelf.mapView addAnnotations:annotations];
+            }
+            [weakSelf stopRefreshing];
+        }
+    }];
 }
 
 #pragma mark - UITextViewDelegate methods
@@ -130,10 +174,45 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     if (_flags.firtstUpdate == 1) {
         _flags.firtstUpdate = 0;
+        
+        [self fetchPOIs];
     
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, DefaultUserZoom / 4, DefaultUserZoom / 4);
         [_mapView setRegion:region animated:YES];
     }
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    
+    static NSString *POIAnnotationViewIdentifier = @"POIAnnotationViewIdentifier";
+    MKAnnotationView *retPinView = nil;
+    
+    if (![annotation isKindOfClass:[MKUserLocation class]]) {
+        MKAnnotationView *pinView = [mapView dequeueReusableAnnotationViewWithIdentifier:POIAnnotationViewIdentifier];
+        
+        if (!pinView) {
+            pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:POIAnnotationViewIdentifier];
+            
+            pinView.canShowCallout = YES;
+            // TODO: missing assets
+            pinView.image = [UIImage imageNamed:@"ic_pin_normal.png"];
+            pinView.centerOffset = CGPointMake(0, - pinView.image.size.height / 2);
+            
+        } else {
+            pinView.annotation = annotation;
+        }
+        
+        // TODO: missing assets
+        POI *poi = (POI *)annotation;
+        if (poi.type == POITypeBay) {
+            pinView.image = [UIImage imageNamed:@"ic_pin_pressed.png"];
+        } else if (poi.type == POITypeGrave) {
+            pinView.image = [UIImage imageNamed:@"ic_pin_normal.png"];
+        }
+        
+        retPinView = pinView;
+    }
+    return retPinView;
 }
 
 #pragma mark - UIKeyboard methods

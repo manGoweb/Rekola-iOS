@@ -14,6 +14,7 @@
 #import "APIManager.h"
 #import "LoginViewController.h"
 #import "Bike.h"
+#import "POI.h"
 
 NSString *const ContentManagerDidAuthenticateUserNotification = @"ContentManagerDidAuthenticateUserNotification";
 NSString *const ContentManagerWillAuthenticateUserNotification = @"ContentManagerWillAuthenticateUserNotification";
@@ -29,6 +30,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     NSOperation *_bikeStateOperation;
     NSOperation *_returnOperation;
     NSOperation *_borrowOperation;
+    NSOperation *_poisOperation;
     
     struct {
         unsigned int authenticating:1;
@@ -86,6 +88,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     
     __weak typeof(self)weakSelf = self;
     _loginOperation = [[APIManager manager] POST:@"accounts/mine/login" parameters:@{@"username": username, @"password": password} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
         [APIManager manager].accessToken = responseObject[@"apiKey"];
         [weakSelf setKeychainObject:[[password dataUsingEncoding:NSUTF8StringEncoding] base64EncodedStringWithOptions:0] forKey:KeychainUserPassword];
         
@@ -181,11 +184,9 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     
     __weak __typeof(self)weakSelf = self;
     _bikeStateOperation = [[APIManager manager] GET:@"bikes/mine" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (weakSelf) {
-            weakSelf.usingBike = [[Bike alloc] initWithDictionary:responseObject];
-            if (completion) {
-                completion(weakSelf.usingBike, nil);
-            }
+        weakSelf.usingBike = [[Bike alloc] initWithDictionary:responseObject];
+        if (completion) {
+            completion(weakSelf.usingBike, nil);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -232,12 +233,34 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
                             };
     
     [_returnOperation cancel];
-    
-    __weak __typeof(self)weakSelf = self;
     _returnOperation = [[APIManager manager] PUT:[NSString stringWithFormat:@"bikes/%@/return",[bike.identifier stringValue]] parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (completion) {
+            completion(responseObject[@"successUrl"], nil);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completion) {
+            completion(nil, [error message:operation.responseString]);
+        }
+    }];
+}
+
+#pragma mark - POIs methods
+
+- (void)POIsWithLocation:(CLLocationCoordinate2D)location
+             completion:(void (^)(NSArray *pois, NSError *error))completion {
+    
+    [_poisOperation cancel];
+    __weak __typeof(self)weakSelf = self;
+    _poisOperation = [[APIManager manager] GET:[NSString stringWithFormat:@"location/pois?lat=%f&lng=%f",location.latitude, location.longitude] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (weakSelf) {
+            NSMutableArray *pois = @[].mutableCopy;
+            NSArray *data = responseObject;
+            [data enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                [pois addObject:[[POI alloc] initWithDictionary:obj]];
+            }];
             if (completion) {
-                completion(responseObject[@"successUrl"], nil);
+                completion(pois, nil);
             }
         }
         
