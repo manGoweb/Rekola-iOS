@@ -49,11 +49,14 @@
     _textViewText = @"";
     _textView.text = _placeHolderString;
     
-    [_returnBikeButton setTitleForAllState:NSLocalizedString(@"Return Bike", @"A button title somewhere on the screen")];
+    [_returnBikeButton setTitleForAllState:NSLocalizedString(@"Bike Returned", @"A button title somewhere on the screen")];
     _closeButton.title = NSLocalizedString(@"Close", @"Bar button title in navigation bar");
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self.view addGestureRecognizer:tapGesture];
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(5.3297021841444163, 7.2027525576011158);
+    [_mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(49.826988220214851, 15.472262382507363), span) animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -122,7 +125,7 @@
 - (void)fetchPOIs {
     [self startRefreshing];
     __weak __typeof(self)weakSelf = self;
-    [[ContentManager manager] POIsWithLocation:_mapView.userLocation.coordinate completion:^(NSArray *pois, NSError *error) {
+    [[ContentManager manager] POIsWithLocation:(_mapView.userLocation != nil)? _mapView.userLocation.coordinate : CLLocationCoordinate2DMake(DefaultLatitude, DefaultLongtitude) completion:^(NSArray *pois, NSError *error) {
         if (weakSelf) {
             if (!error) {
                 NSMutableArray *annotations = @[].mutableCopy;

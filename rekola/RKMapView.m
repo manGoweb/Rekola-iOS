@@ -54,6 +54,11 @@ CGFloat const DefaultDistance = 3500;
     
     _clusteringEnabled = YES;
     _needsClusturing = YES;
+
+    // CR region
+    // span (latitudeDelta = 6.60817772436409, longitudeDelta = 7.2027526803690023)
+    // center (latitude = 49.826988220214851, longitude = 15.472262382507363)
+    
 }
 
 #pragma mark - MKMapView Accessors

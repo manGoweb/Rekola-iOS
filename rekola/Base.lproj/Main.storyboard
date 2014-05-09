@@ -599,10 +599,10 @@
             </objects>
             <point key="canvasLocation" x="3382" y="765"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Base Navigation Controller-->
         <scene sceneID="qqJ-gd-3aA">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yCf-hu-zpC" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yCf-hu-zpC" customClass="BaseNavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="" id="Eeu-oJ-Jo0"/>
                     <toolbarItems/>
@@ -619,10 +619,10 @@
             </objects>
             <point key="canvasLocation" x="2856" y="765"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Base Navigation Controller-->
         <scene sceneID="r25-Y5-eZb">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qnP-7L-R6N" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qnP-7L-R6N" customClass="BaseNavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="" id="33g-Di-c7e"/>
                     <toolbarItems/>
@@ -1021,10 +1021,10 @@
             </objects>
             <point key="canvasLocation" x="3933" y="-1484"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Base Navigation Controller-->
         <scene sceneID="xi9-jB-HFr">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tyg-uO-REe" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tyg-uO-REe" customClass="BaseNavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="" id="n9d-KH-Ota"/>
                     <toolbarItems/>
@@ -1041,10 +1041,10 @@
             </objects>
             <point key="canvasLocation" x="2856" y="-754"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Base Navigation Controller-->
         <scene sceneID="UYb-tD-u4P">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="czh-3u-7sd" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="czh-3u-7sd" customClass="BaseNavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="QVk-Tm-KRm">

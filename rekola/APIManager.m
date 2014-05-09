@@ -110,17 +110,18 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
         } else if (operation.response.statusCode == HttpStatusCodeUnauthorize) {
             // the auth token is not valid, clear it
             NSLog(@"The auth token is not valid");
-            
-            [[[UIAlertView alloc] initWithTitle:nil message:nil delegate:NSLocalizedString(@"You have been logged out because your session has expired.", @"Text message in Alert View.") cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button title in Alert View.") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
-                if (_accessToken != nil) {
-                    _accessToken = nil;
-                    [[ContentManager manager] logout];
-                }
-            }];
+            if (_accessToken != nil) {
+                [[ContentManager manager] logout];
+            }
             
         } else if (!_flags.handlingUpdate && operation.response.statusCode == HttpStatusCodeForceUpdate) {
             
             _flags.handlingUpdate = 1;
+            
+            if (_accessToken != nil) {
+                [[ContentManager manager] logout];
+            }
+            
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"New version", @"Title in Alert View") message:NSLocalizedString(@"Sorry, but your client is outdated.\n\nPlese upgrade to latest version.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button title in Alert View.") otherButtonTitles:NSLocalizedString(@"Download", @"Button title in Alert View."), nil];
             
             [alert showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {

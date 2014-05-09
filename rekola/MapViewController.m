@@ -49,7 +49,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     _trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapView];
     self.navigationItem.rightBarButtonItem = _trackingButton;
     

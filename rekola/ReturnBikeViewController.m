@@ -21,7 +21,7 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        self.title = NSLocalizedString(@"Return Bike", @"Title in nav & tab controller");
+        self.title = NSLocalizedString(@"My Bike", @"Title in nav & tab controller");
         self.navigationController.tabBarItem.title = self.title;
         
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:self.title image:[UIImage imageNamed:@"tabbar_ic_borrow_active.png"] selectedImage:[[UIImage imageNamed:@"tabbar_ic_borrow_active.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -36,7 +36,7 @@
     _titleLabel.text = NSLocalizedString(@"Let's Go!", @"A label text somewhere on the screen");
     _codeLabel.text = NSLocalizedString(@"Lock code:", @"A label text somewhere on the screen");
     
-    [_returnButton setTitleForAllState:NSLocalizedString(@"Return Bike", @"A button title somewhere on the screen")];
+    [_returnButton setTitleForAllState:NSLocalizedString(@"Return", @"A button title somewhere on the screen")];
     [_detailButton setTitleForAllState:NSLocalizedString(@"Bike Detail", @"A button title somewhere on the screen")];
     [_reportButton setTitleForAllState:NSLocalizedString(@"Report Issue", @"A button title somewhere on the screen")];
     

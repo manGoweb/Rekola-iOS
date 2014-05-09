@@ -11,6 +11,7 @@
  */
 
 #import "TabBarController.h"
+#import "BaseNavigationController.h"
 
 @implementation TabBarController
 
@@ -29,12 +30,12 @@
 
 - (void)reloadData {
     NSMutableArray *controllers = self.viewControllers.mutableCopy;
-    UINavigationController *nav = nil;
+    BaseNavigationController *nav = nil;
     
     if ([ContentManager manager].usingBike) {
-        nav = [[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ReturnBikeViewController"]];
+        nav = [[BaseNavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"ReturnBikeViewController"]];
     } else {
-        nav = [[UINavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"BikeViewController"]];
+        nav = [[BaseNavigationController alloc] initWithRootViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"BikeViewController"]];
     }
     
     [controllers replaceObjectAtIndex:0 withObject:nav];

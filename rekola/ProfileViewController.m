@@ -28,7 +28,7 @@
         self.title = NSLocalizedString(@"Profile", @"Title in nav & tab controller");
         self.navigationController.tabBarItem.title = self.title;
         
-        _urlPath = [NSString stringWithFormat:@"%@/accounts/mine/profile-webview",RekolaAPIURLString];
+        _urlPath = [NSString stringWithFormat:@"%@/accounts/mine/profile-webview2",RekolaAPIURLString];
         
         self.tabBarItem = [[UITabBarItem alloc] initWithTitle:self.title image:[UIImage imageNamed:@"tabbar_ic_profile_active.png"] selectedImage:[[UIImage imageNamed:@"tabbar_ic_profile_active.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }
@@ -42,7 +42,9 @@
     _errorLabel.text = NSLocalizedString(@"Something went wrong so the page failed to load.", @"A label text somewhere on the screen");
     _errorLabel.hidden = YES;
     
-    _flags.errorState = 0;
+    _flags.errorState = 1;
+    
+    [self reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -55,14 +57,16 @@
     // TODO: refactor! with contentmanager
     
     if (_flags.errorState == 1) {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
-    
-    _webView.requestSerializer = [APIManager manager].requestSerializer;
-    [_webView loadRequest:request progress:nil success:^NSString *(NSHTTPURLResponse *response, NSString *HTML) {
-        return HTML;
-    } failure:^(NSError *error) {
-        //
-    }];
+        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+        
+        _webView.requestSerializer = [APIManager manager].requestSerializer;
+        [_webView loadRequest:request progress:nil success:^NSString *(NSHTTPURLResponse *response, NSString *HTML) {
+            return HTML;
+        } failure:^(NSError *error) {
+            _flags.errorState = 1;
+            _indicatorView.hidden = YES;
+            _errorLabel.hidden = NO;
+        }];
     }
 }
 

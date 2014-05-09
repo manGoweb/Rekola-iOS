@@ -132,6 +132,7 @@
             
         } completion:^(BOOL finished) {
             [_nameField becomeFirstResponder];
+            _passField.text = nil;
         }];
     }
 }
@@ -216,7 +217,7 @@
 #pragma mark - UIGestureRecognizer methods
 
 - (void)handleTapGesture:(UITapGestureRecognizer *)tapGesture {
-    if (tapGesture.state == UIGestureRecognizerStateRecognized && _flags.recoverPassword == 0) {
+    if (tapGesture.state == UIGestureRecognizerStateRecognized) {
         [self.view endEditing:YES];
     }
 }

@@ -32,6 +32,7 @@
 		5E1DF8FA1907BF7700127F56 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8F91907BF7700127F56 /* BaseViewController.m */; };
 		5E1DF8FD1907BF9700127F56 /* BaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E1DF8FC1907BF9700127F56 /* BaseCell.m */; };
 		5E21A8FB191CD71A003ACE9C /* POI.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E21A8FA191CD71A003ACE9C /* POI.m */; };
+		5E21A8FE191D1148003ACE9C /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E21A8FD191D1148003ACE9C /* BaseNavigationController.m */; };
 		5E2CAE41191396FF00244206 /* POIDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CAE40191396FF00244206 /* POIDetailView.m */; };
 		5E2CAE441913C07800244206 /* NSNumber+RKUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2CAE431913C07800244206 /* NSNumber+RKUtils.m */; };
 		5E2CAE651913D0A800244206 /* tabbar_ic_return_inactive@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E2CAE451913D0A800244206 /* tabbar_ic_return_inactive@2x.png */; };
@@ -161,6 +162,8 @@
 		5E1DF8FC1907BF9700127F56 /* BaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseCell.m; path = rekola/BaseCell.m; sourceTree = "<group>"; };
 		5E21A8F9191CD71A003ACE9C /* POI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POI.h; path = rekola/POI.h; sourceTree = "<group>"; };
 		5E21A8FA191CD71A003ACE9C /* POI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POI.m; path = rekola/POI.m; sourceTree = "<group>"; };
+		5E21A8FC191D1148003ACE9C /* BaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNavigationController.h; path = rekola/BaseNavigationController.h; sourceTree = "<group>"; };
+		5E21A8FD191D1148003ACE9C /* BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNavigationController.m; path = rekola/BaseNavigationController.m; sourceTree = "<group>"; };
 		5E2CAE3F191396FF00244206 /* POIDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POIDetailView.h; path = rekola/POIDetailView.h; sourceTree = "<group>"; };
 		5E2CAE40191396FF00244206 /* POIDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POIDetailView.m; path = rekola/POIDetailView.m; sourceTree = "<group>"; };
 		5E2CAE421913C07800244206 /* NSNumber+RKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+RKUtils.h"; path = "rekola/NSNumber+RKUtils.h"; sourceTree = "<group>"; };
@@ -530,6 +533,8 @@
 			children = (
 				5E1DF8F81907BF7700127F56 /* BaseViewController.h */,
 				5E1DF8F91907BF7700127F56 /* BaseViewController.m */,
+				5E21A8FC191D1148003ACE9C /* BaseNavigationController.h */,
+				5E21A8FD191D1148003ACE9C /* BaseNavigationController.m */,
 				5E074170190FCFD600688477 /* TabBarController.h */,
 				5E074171190FCFD600688477 /* TabBarController.m */,
 			);
@@ -767,6 +772,7 @@
 				5EDE21F71907F96E0017D36E /* JSONObject.m in Sources */,
 				5EDE2216190819D70017D36E /* BikeViewController.m in Sources */,
 				5E86CEF119090034001C1382 /* SettingsCell.m in Sources */,
+				5E21A8FE191D1148003ACE9C /* BaseNavigationController.m in Sources */,
 				5E21A8FB191CD71A003ACE9C /* POI.m in Sources */,
 				5E1DF8F01907BE4700127F56 /* AFURLSessionManager.m in Sources */,
 				5E2CAE441913C07800244206 /* NSNumber+RKUtils.m in Sources */,
