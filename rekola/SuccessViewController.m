@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    _errorLabel.text = NSLocalizedString(@"Something went wrong so the page failed to load.", @"A label text somewhere on the screen");
+    _errorLabel.text = NSLocalizedString(@"Something went wrong.", @"A label text somewhere on the screen");
     _errorLabel.hidden = YES;
     
     [self reloadData];

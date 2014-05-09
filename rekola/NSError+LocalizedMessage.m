@@ -19,7 +19,7 @@ NSString *const AFNetworkingOperationMessageURLResponseErrorKey = @"AFNetworking
 
 - (NSString *)localizedMessage {
     if (self.code == -1009) {
-        return NSLocalizedString(@"Připojení k internetu je zřejmě neaktivní.", @"Text message in Alert View.");
+        return NSLocalizedString(@"The Internet connection appears to be offline.", @"Text message in Alert View.");
         
     } else if (self.message.length > 0) {
         return self.message;

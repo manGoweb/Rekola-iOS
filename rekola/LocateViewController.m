@@ -45,7 +45,7 @@
     _textView.layer.borderColor = COLOR(0xAAAAAA).CGColor;
     _textView.textColor = [UIColor lightGrayColor];
     _textView.layer.borderWidth = 1;
-    _placeHolderString = NSLocalizedString(@"Upresnete prosim, kde kolo presne stoji (napr. 3. lampa od ulice X)", @"Placeholder text inside a Text View");
+    _placeHolderString = NSLocalizedString(@"Please specify where exactly you will leave the bike. (e.g.. 2nd pole on 3rd Street.).", @"Placeholder text inside a Text View");
     _textViewText = @"";
     _textView.text = _placeHolderString;
     
@@ -63,7 +63,7 @@
     [super viewDidAppear:animated];
         
     if (![[ContentManager manager] isLocationServiceAuthorized]) {
-        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Polohové služby nejsou zapnuté, aplikace nebude schopna poskytovat plnou fukncionalitu. Povolit je můžete v nastavení svého zařízení v záložce soukromí.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Location Services are turned off. The application will not be able to provide full functionality. You can turn on Location Services by going to the Settings > Privacy > and switching Location Services On.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
         
         [self zoomToDefaultLocation];
         

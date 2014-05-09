@@ -33,8 +33,8 @@
     _borrowButton.enabled = NO;
     
     _titleLabel.text = NSLocalizedString(@"Borrow Bike", @"A label text somewhere on the screen");
-    _descriptionLabel.text = NSLocalizedString(@"After entering the code, you will receive a code bike lock. Ever since you running out of time for which you pay karma.", @"A label text somewhere on the screen");
-    _codeLabel.text = NSLocalizedString(@"Code can be found on the side of the wheel on bike.", @"A label text somewhere on the screen");
+    _descriptionLabel.text = NSLocalizedString(@"After entering the code, you will receive a bike lock code and you can start using the bike.", @"A label text somewhere on the screen");
+    _codeLabel.text = NSLocalizedString(@"Code can be found on the rear fender or on rear stick.", @"A label text somewhere on the screen");
     
     _bikeCodeField.placeholder = NSLocalizedString(@"code", @"Placeholder text inside a TextField");
     _bikeCodeField.layer.borderColor = COLOR(0xAAAAAA).CGColor;
@@ -77,42 +77,37 @@
     [self.view endEditing:YES];
 
     NSString *bikeCode = _bikeCodeField.text;
-    if (bikeCode.length > 0) {
-        _indicatorView.hidden = NO;
-        _borrowButton.enabled = NO;
-        [_indicatorView startAnimating];
-        _contentView.userInteractionEnabled = NO;
-        
-        __weak __typeof(self)weakSelf = self;
-        [[ContentManager manager] bikeStateWithCompletion:^(Bike *bike, NSError *error) {
-            if (weakSelf) {
-                if (!error || error.statusCode == 404 || error.statusCode == 200) {
-                    if (bike) {
-                        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Uz jedno kolo pujceno mate", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-                        [weakSelf restoreState];
-                        
-                    } else {
-                        [[ContentManager manager] borrowBikeWithCode:bikeCode location:CLLocationCoordinate2DMake(DefaultLatitude, DefaultLongtitude)  completion:^(NSString *code, NSError *error) {
-                            if (!error) {
-                                NSLog(@"Bike successfully borrowed %@", code);
-                                
-                            } else {
-                                [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-                                [weakSelf restoreState];
-                            }
-                        }];
-                    }
+    _indicatorView.hidden = NO;
+    _borrowButton.enabled = NO;
+    [_indicatorView startAnimating];
+    _contentView.userInteractionEnabled = NO;
+    
+    __weak __typeof(self)weakSelf = self;
+    [[ContentManager manager] bikeStateWithCompletion:^(Bike *bike, NSError *error) {
+        if (weakSelf) {
+            if (!error || error.statusCode == 404 || error.statusCode == 200) {
+                if (bike) {
+                    [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"You already borrowed a bike.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+                    [weakSelf restoreState];
                     
                 } else {
-                    [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-                    [weakSelf restoreState];
+                    [[ContentManager manager] borrowBikeWithCode:bikeCode location:CLLocationCoordinate2DMake(DefaultLatitude, DefaultLongtitude)  completion:^(NSString *code, NSError *error) {
+                        if (!error) {
+                            NSLog(@"Bike successfully borrowed %@", code);
+                            
+                        } else {
+                            [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+                            [weakSelf restoreState];
+                        }
+                    }];
                 }
+                
+            } else {
+                [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
+                [weakSelf restoreState];
             }
-        }];
-        
-    } else {
-        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Bike Code ma spatnou delku", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
-    }
+        }
+    }];
 }
 
 #pragma mark - Private methods

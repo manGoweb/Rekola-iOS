@@ -122,7 +122,7 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
                 [[ContentManager manager] logout];
             }
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"New version", @"Title in Alert View") message:NSLocalizedString(@"Sorry, but your client is outdated.\n\nPlese upgrade to latest version.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button title in Alert View.") otherButtonTitles:NSLocalizedString(@"Download", @"Button title in Alert View."), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"New version", @"Title in Alert View") message:NSLocalizedString(@"Sorry, but your application is outdated.\n\nPlese upgrade to latest version.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Cancel", @"Button title in Alert View.") otherButtonTitles:NSLocalizedString(@"Download", @"Button title in Alert View."), nil];
             
             [alert showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
                 _flags.handlingUpdate = 0;

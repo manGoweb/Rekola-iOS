@@ -34,7 +34,7 @@
     
     _indicatorView.hidden = YES;
     _titleLabel.text = NSLocalizedString(@"Let's Go!", @"A label text somewhere on the screen");
-    _codeLabel.text = NSLocalizedString(@"Lock code:", @"A label text somewhere on the screen");
+    _codeLabel.text = NSLocalizedString(@"Bike lock code:", @"A label text somewhere on the screen");
     
     [_returnButton setTitleForAllState:NSLocalizedString(@"Return", @"A button title somewhere on the screen")];
     [_detailButton setTitleForAllState:NSLocalizedString(@"Bike Detail", @"A button title somewhere on the screen")];

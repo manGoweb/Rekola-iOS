@@ -39,7 +39,7 @@
     [super viewDidLoad];
     
     _logOutButton.title = NSLocalizedString(@"Log Out", @"Bar button title in navigation bar");
-    _errorLabel.text = NSLocalizedString(@"Something went wrong so the page failed to load.", @"A label text somewhere on the screen");
+    _errorLabel.text = NSLocalizedString(@"Something went wrong.", @"A label text somewhere on the screen");
     _errorLabel.hidden = YES;
     
     _flags.errorState = 1;

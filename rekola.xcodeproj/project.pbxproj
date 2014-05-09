@@ -164,6 +164,7 @@
 		5E21A8FA191CD71A003ACE9C /* POI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POI.m; path = rekola/POI.m; sourceTree = "<group>"; };
 		5E21A8FC191D1148003ACE9C /* BaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseNavigationController.h; path = rekola/BaseNavigationController.h; sourceTree = "<group>"; };
 		5E21A8FD191D1148003ACE9C /* BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseNavigationController.m; path = rekola/BaseNavigationController.m; sourceTree = "<group>"; };
+		5E21A90A191D2326003ACE9C /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5E2CAE3F191396FF00244206 /* POIDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = POIDetailView.h; path = rekola/POIDetailView.h; sourceTree = "<group>"; };
 		5E2CAE40191396FF00244206 /* POIDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = POIDetailView.m; path = rekola/POIDetailView.m; sourceTree = "<group>"; };
 		5E2CAE421913C07800244206 /* NSNumber+RKUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+RKUtils.h"; path = "rekola/NSNumber+RKUtils.h"; sourceTree = "<group>"; };
@@ -833,6 +834,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5E41C93F19192F3C00316BB5 /* en */,
+				5E21A90A191D2326003ACE9C /* cs */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

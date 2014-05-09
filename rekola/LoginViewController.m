@@ -204,7 +204,7 @@
             [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
         // success
         } else {
-            [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Please check your email for additional informations.", @"Text message in Alert View") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Please check your email for further instructions.", @"Text message in Alert View") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil] show];
         }
         
         weakSelf.signButton.enabled = YES;
