@@ -132,7 +132,7 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
     NSParameterAssert(username);
     [_recoverPassOperation cancel];
     
-    _recoverPassOperation = [[APIManager manager] GET:@"account/mine/passwordrecovery" parameters:@{@"username" : username } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    _recoverPassOperation = [[APIManager manager] PUT:@"password-recovery" parameters:@{@"email" : username } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (completion) {
             completion(nil);
         }

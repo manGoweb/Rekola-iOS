@@ -95,7 +95,6 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
             userAgent = mutableUserAgent;
         }
         [self.requestSerializer setValue:userAgent forHTTPHeaderField:@"User-Agent"];
-        [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"UserAgent" : userAgent}];
     }
 }
 
@@ -111,10 +110,13 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
         } else if (operation.response.statusCode == HttpStatusCodeUnauthorize) {
             // the auth token is not valid, clear it
             NSLog(@"The auth token is not valid");
-            if (_accessToken != nil) {
-                _accessToken = nil;
-                [[ContentManager manager] logout];
-            }
+            
+            [[[UIAlertView alloc] initWithTitle:nil message:nil delegate:NSLocalizedString(@"You have been logged out because your session has expired.", @"Text message in Alert View.") cancelButtonTitle:nil otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
+                if (_accessToken != nil) {
+                    _accessToken = nil;
+                    [[ContentManager manager] logout];
+                }
+            }];
             
         } else if (!_flags.handlingUpdate && operation.response.statusCode == HttpStatusCodeForceUpdate) {
             
@@ -130,7 +132,7 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
                 }
             }];
         }
-        else if (operation.response.statusCode != HttpStatusCodeOk && operation.response.statusCode != HttpStatusCodeNoContent && operation.response.statusCode != HttpStatusCodeCreated) {
+        else if (operation.response.statusCode != HttpStatusCodeOk) {
             NSLog(@"Code: %li, Error: %@",(long)operation.response.statusCode, operation.responseString);
         }
     } else {

@@ -12,6 +12,7 @@
 
 #import "ProfileViewController.h"
 #import "SettingsCell.h"
+#import "UIWebView+AFNetworking.h"
 
 @implementation ProfileViewController {
     NSString *_urlPath;
@@ -44,8 +45,17 @@
 }
 
 - (void)reloadData {
+    // TODO: rewrite credentials
+    // TODO: refactor! with contentmanager
+    
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
-    [_webView loadRequest:request];
+    
+    _webView.requestSerializer = [APIManager manager].requestSerializer;
+    [_webView loadRequest:request progress:nil success:^NSString *(NSHTTPURLResponse *response, NSString *HTML) {
+        return HTML;
+    } failure:^(NSError *error) {
+        //
+    }];
 }
 
 #pragma mark - Actions
@@ -91,15 +101,15 @@
         if ([query rangeOfString:@"log_out"].location == NSNotFound) {
             
             BOOL headerIsPresent = ([[request allHTTPHeaderFields] objectForKey:@"X-Api-Key"] != nil);
-            if (!headerIsPresent) {
-                result = NO;
-                NSURL *url = [request URL];
-                
-                NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
-                
-                [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
-                [_webView loadRequest:request];
-            }
+//            if (!headerIsPresent) {
+//                result = NO;
+//                NSURL *url = [request URL];
+//                
+//                NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+//                
+//                [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
+//                [_webView loadRequest:request];
+//            }
             
         } else {
             result = NO;
