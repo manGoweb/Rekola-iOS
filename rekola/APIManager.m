@@ -95,6 +95,7 @@ NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api
             userAgent = mutableUserAgent;
         }
         [self.requestSerializer setValue:userAgent forHTTPHeaderField:@"User-Agent"];
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"UserAgent" : userAgent}];
     }
 }
 

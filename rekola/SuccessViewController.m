@@ -11,6 +11,7 @@
  */
 
 #import "SuccessViewController.h"
+#import "UIWebView+AFNetworking.h"
 
 @implementation SuccessViewController
 
@@ -20,12 +21,12 @@
     _errorLabel.text = NSLocalizedString(@"Something went wrong.", @"A label text somewhere on the screen");
     _errorLabel.hidden = YES;
     
+    _webView.requestSerializer = [APIManager manager].requestSerializer;
     [self reloadData];
 }
 
 - (void)reloadData {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
-    [_webView loadRequest:request];
+    [self loadURL:[NSURL URLWithString:_urlPath]];
 }
 
 #pragma mark - Actions
@@ -34,6 +35,25 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Private methods
+
+- (void)loadURL:(NSURL *)url {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+    
+    [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
+    
+    __weak __typeof(self)weakSelf = self;
+    [_webView loadRequest:request progress:nil success:nil failure:^(NSError *error) {
+        if (weakSelf) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            
+            if (error.code != -999) {
+                strongSelf.errorLabel.hidden = NO;
+                strongSelf.indicatorView.hidden = YES;
+            }
+        }
+    }];
+}
 
 #pragma mark - UIWebViewDelegate methods
 
@@ -48,36 +68,13 @@
     _indicatorView.hidden = YES;
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    _indicatorView.hidden = YES;
-    
-    if (error.code != -999) {
-        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
-        
-        _errorLabel.hidden = NO;
-    }
-}
-
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     
     BOOL result = YES;
     NSString *query = request.URL.absoluteString;
     if (query) {
         if ([query rangeOfString:@"dismiss_view"].location == NSNotFound) {
-            
-            BOOL headerIsPresent = ([[request allHTTPHeaderFields] objectForKey:@"X-Api-Key"] != nil);
-            if (!headerIsPresent) {
-                result = NO;
-                NSURL *url = [request URL];
-                
-                NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
-                
-                [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
-                [_webView loadRequest:request];
-            }
-            
+            //
         } else {
             result = NO;
             [self done:nil];

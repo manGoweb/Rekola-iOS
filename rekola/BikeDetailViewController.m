@@ -11,6 +11,7 @@
  */
 
 #import "BikeDetailViewController.h"
+#import "UIWebView+AFNetworking.h"
 
 @implementation BikeDetailViewController
 
@@ -28,12 +29,32 @@
     _errorLabel.hidden = YES;
     _errorLabel.text = NSLocalizedString(@"Something went wrong.", @"A label text somewhere on the screen");
     
+     _webView.requestSerializer = [APIManager manager].requestSerializer;
     [self reloadData];
 }
 
 - (void)reloadData {
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:_urlPath] cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
-    [_webView loadRequest:request];
+    [self loadURL:[NSURL URLWithString:_urlPath]];
+}
+
+#pragma mark - Private methods
+
+- (void)loadURL:(NSURL *)url {
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
+    
+    [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
+    
+    __weak __typeof(self)weakSelf = self;
+    [_webView loadRequest:request progress:nil success:nil failure:^(NSError *error) {
+        if (weakSelf) {
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            
+            if (error.code != -999) {
+                strongSelf.errorLabel.hidden = NO;
+                strongSelf.indicatorView.hidden = YES;
+            }
+        }
+    }];
 }
 
 #pragma mark - UIWebViewDelegate methods
@@ -47,33 +68,6 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     webView.userInteractionEnabled = YES;
     _indicatorView.hidden = YES;
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    _indicatorView.hidden = YES;
-    
-    if (error.code != -999) {
-        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Title in alert button") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
-        _errorLabel.hidden = NO;
-    }
-}
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
-    BOOL result = YES;
-    BOOL headerIsPresent = ([[request allHTTPHeaderFields] objectForKey:@"X-Api-Key"] != nil);
-    if (!headerIsPresent) {
-        NSURL *url = [request URL];
-        
-        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:15];
-        
-        [request addValue:[APIManager manager].accessToken forHTTPHeaderField:@"X-Api-Key"];
-        [_webView loadRequest:request];
-        result = NO;
-    }
-    return result;
 }
 
 @end
