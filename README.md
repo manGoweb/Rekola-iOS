@@ -5,4 +5,4 @@ Chceme publikovat zdrojové kódy aplikace otevřeně na Github, aby se komunita
 
 Pokud to chceš urychlit; máš čas, energii a myslíš, že jsi natolik zkušený; napiš nám prosím mail na info@rekola.cz. Budeme se těšit!
 
-Případně - pokud se chceš jen přihlásit do newsletteru a být tak mezi prvními, kdo dostanou informace o zveřejnění zdrojových kódů: mrkni na "informace pro vývojáře na stránkách Rekol":http://www.rekola.cz/dev. 
+Případně - pokud se chceš jen přihlásit do newsletteru a být tak mezi prvními, kdo dostanou informace o zveřejnění zdrojových kódů: mrkni na [informace pro vývojáře na stránkách Rekol](http://www.rekola.cz/dev). 
