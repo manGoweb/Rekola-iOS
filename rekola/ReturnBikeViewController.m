@@ -80,7 +80,7 @@
         
     } else if ([segue.identifier isEqualToString:@"IssueBikeDetailSegue"]) {
         Bike *bike = [ContentManager manager].usingBike;
-        NSString *urlPath = [NSString stringWithFormat:@"%@/bikes/%@/info-webview",RekolaAPIURLString,[bike.identifier stringValue]];
+        NSString *urlPath = [NSString stringWithFormat:@"%@/bikes/%@/issues-webview",RekolaAPIURLString,[bike.identifier stringValue]];
         BikeDetailViewController *controller = segue.destinationViewController;
         controller.urlPath = urlPath;
         controller.title = bike.name;

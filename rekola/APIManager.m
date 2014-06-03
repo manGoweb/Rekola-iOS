@@ -17,9 +17,9 @@ NSString *const AppStoreID = @"862678016";
 NSString *const APIVersion = @"1.0.0";
 
 #if defined(REKOLA_DEV)
-NSString *const RekolaAPIURLString = @"http://roboclevis.apiary-mock.com";
-#else
 NSString *const RekolaAPIURLString = @"http://vps.clevis.org/rekola-demo/www/api";
+#else
+NSString *const RekolaAPIURLString = @"https://moje.rekola.cz/api";
 #endif
 
 @implementation APIManager {
