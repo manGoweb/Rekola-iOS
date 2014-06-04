@@ -937,9 +937,12 @@
                                             <action selector="signin:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="eqr-eB-U9J"/>
                                         </connections>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_pin_pressed.png" translatesAutoresizingMaskIntoConstraints="NO" id="s0k-yk-IaM">
-                                        <rect key="frame" x="140" y="62" width="41" height="53"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_pin_focused_pressed.png" translatesAutoresizingMaskIntoConstraints="NO" id="s0k-yk-IaM">
+                                        <rect key="frame" x="136" y="62" width="48" height="53"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="53" id="k3F-eR-w4h"/>
+                                        </constraints>
                                     </imageView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="240" verticalCompressionResistancePriority="740" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ywh-kJ-hb3">
                                         <rect key="frame" x="15" y="240" width="290" height="106"/>
@@ -1085,7 +1088,7 @@
     <resources>
         <image name="ic_arrow.png" width="13" height="21"/>
         <image name="ic_close.png" width="39" height="32"/>
-        <image name="ic_pin_pressed.png" width="41" height="53"/>
+        <image name="ic_pin_focused_pressed.png" width="48" height="52"/>
         <image name="navbar_ic_logo.png" width="105" height="27"/>
         <image name="walk-highlight.png" width="22" height="18"/>
     </resources>

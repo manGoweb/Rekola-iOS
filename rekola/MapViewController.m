@@ -227,7 +227,7 @@
         _POIView.addressLabel.text = bike.location.note;
         _POIView.descriptionLabel.text = bike.bikeDescription;
         
-        view.image = [UIImage imageNamed:@"ic_pin_pressed.png"];
+        view.image = [UIImage imageNamed:@"ic_pin_focused_pressed.png"];
         
         if (_POIBottomConstraint.constant != 0) {
             [self.view layoutIfNeeded];
@@ -307,7 +307,7 @@
             
             Bike *bike = (Bike *)annotation;
             if ([bike.identifier integerValue] == _selectedBikeIdentifier) {
-                pinView.image = [UIImage imageNamed:@"ic_pin_pressed.png"];
+                pinView.image = [UIImage imageNamed:@"ic_pin_focused_pressed.png"];
             } else {
                 pinView.image = [UIImage imageNamed:@"ic_pin_normal.png"];;
             }

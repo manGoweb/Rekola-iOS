@@ -208,9 +208,9 @@
         // TODO: missing assets
         POI *poi = (POI *)annotation;
         if (poi.type == POITypeBay) {
-            pinView.image = [UIImage imageNamed:@"ic_pin_pressed.png"];
+            pinView.image = [UIImage imageNamed:@"ic_pin_parking_normal.png"];
         } else if (poi.type == POITypeGrave) {
-            pinView.image = [UIImage imageNamed:@"ic_pin_normal.png"];
+            pinView.image = [UIImage imageNamed:@"ic_pin_ic_grave.png"];
         }
         
         retPinView = pinView;
