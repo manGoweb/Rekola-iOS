@@ -103,6 +103,12 @@
 		5EDE21FF1907FDBE0017D36E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EDE21FE1907FDBE0017D36E /* CoreLocation.framework */; };
 		5EDE2213190819C60017D36E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE2212190819C60017D36E /* ProfileViewController.m */; };
 		5EDE2216190819D70017D36E /* BikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE2215190819D70017D36E /* BikeViewController.m */; };
+		5EDEBF63193DD1A6006846BA /* ic_pin_ic_parking@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF5D193DD1A6006846BA /* ic_pin_ic_parking@2x.png */; };
+		5EDEBF64193DD1A6006846BA /* ic_pin_ic_parking.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF5E193DD1A6006846BA /* ic_pin_ic_parking.png */; };
+		5EDEBF65193DD1A6006846BA /* ic_pin_ic_noparking@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF5F193DD1A6006846BA /* ic_pin_ic_noparking@2x.png */; };
+		5EDEBF66193DD1A6006846BA /* ic_pin_ic_noparking.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF60193DD1A6006846BA /* ic_pin_ic_noparking.png */; };
+		5EDEBF67193DD1A6006846BA /* ic_pin_ic_grave@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF61193DD1A6006846BA /* ic_pin_ic_grave@2x.png */; };
+		5EDEBF68193DD1A6006846BA /* ic_pin_ic_grave.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF62193DD1A6006846BA /* ic_pin_ic_grave.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -264,6 +270,12 @@
 		5EDE2212190819C60017D36E /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = rekola/ProfileViewController.m; sourceTree = "<group>"; };
 		5EDE2214190819D70017D36E /* BikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BikeViewController.h; path = rekola/BikeViewController.h; sourceTree = "<group>"; };
 		5EDE2215190819D70017D36E /* BikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BikeViewController.m; path = rekola/BikeViewController.m; sourceTree = "<group>"; };
+		5EDEBF5D193DD1A6006846BA /* ic_pin_ic_parking@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_pin_ic_parking@2x.png"; sourceTree = "<group>"; };
+		5EDEBF5E193DD1A6006846BA /* ic_pin_ic_parking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_pin_ic_parking.png; sourceTree = "<group>"; };
+		5EDEBF5F193DD1A6006846BA /* ic_pin_ic_noparking@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_pin_ic_noparking@2x.png"; sourceTree = "<group>"; };
+		5EDEBF60193DD1A6006846BA /* ic_pin_ic_noparking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_pin_ic_noparking.png; sourceTree = "<group>"; };
+		5EDEBF61193DD1A6006846BA /* ic_pin_ic_grave@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_pin_ic_grave@2x.png"; sourceTree = "<group>"; };
+		5EDEBF62193DD1A6006846BA /* ic_pin_ic_grave.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_pin_ic_grave.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -407,6 +419,12 @@
 				5E2CAE4A1913D0A800244206 /* tabbar_ic_profile_inactive.png */,
 				5E2CAE4B1913D0A800244206 /* tabbar_ic_profile_active@2x.png */,
 				5E2CAE4C1913D0A800244206 /* tabbar_ic_profile_active.png */,
+				5EDEBF5D193DD1A6006846BA /* ic_pin_ic_parking@2x.png */,
+				5EDEBF5E193DD1A6006846BA /* ic_pin_ic_parking.png */,
+				5EDEBF5F193DD1A6006846BA /* ic_pin_ic_noparking@2x.png */,
+				5EDEBF60193DD1A6006846BA /* ic_pin_ic_noparking.png */,
+				5EDEBF61193DD1A6006846BA /* ic_pin_ic_grave@2x.png */,
+				5EDEBF62193DD1A6006846BA /* ic_pin_ic_grave.png */,
 				5E2CAE4D1913D0A800244206 /* tabbar_ic_map_inactive@2x.png */,
 				5E2CAE4E1913D0A800244206 /* tabbar_ic_map_inactive.png */,
 				5E2CAE4F1913D0A800244206 /* tabbar_ic_map_active@2x.png */,
@@ -696,6 +714,8 @@
 				5E2CAE781913D0A800244206 /* navbar_ic_back.png in Resources */,
 				5E2CAE7A1913D0A800244206 /* navbar_ic_back_transition.png in Resources */,
 				5E2CAE821913D0A800244206 /* ic_close.png in Resources */,
+				5EDEBF68193DD1A6006846BA /* ic_pin_ic_grave.png in Resources */,
+				5EDEBF65193DD1A6006846BA /* ic_pin_ic_noparking@2x.png in Resources */,
 				5E2CAE6E1913D0A800244206 /* tabbar_ic_map_inactive.png in Resources */,
 				5E2CAE811913D0A800244206 /* ic_close@2x.png in Resources */,
 				5E2CAE6B1913D0A800244206 /* tabbar_ic_profile_active@2x.png in Resources */,
@@ -705,11 +725,13 @@
 				5E2CAE6F1913D0A800244206 /* tabbar_ic_map_active@2x.png in Resources */,
 				5E6EA54219139210001FC7AD /* Images.xcassets in Resources */,
 				5E2CAE681913D0A800244206 /* tabbar_ic_return_active.png in Resources */,
+				5EDEBF64193DD1A6006846BA /* ic_pin_ic_parking.png in Resources */,
 				5E2CAE761913D0A800244206 /* navbar_ic_logo.png in Resources */,
 				5E2CAE651913D0A800244206 /* tabbar_ic_return_inactive@2x.png in Resources */,
 				5E2CAE7F1913D0A800244206 /* ic_facebook@2x.png in Resources */,
 				5E2CAE6A1913D0A800244206 /* tabbar_ic_profile_inactive.png in Resources */,
 				5E2CAE741913D0A800244206 /* tabbar_ic_borrow_active.png in Resources */,
+				5EDEBF66193DD1A6006846BA /* ic_pin_ic_noparking.png in Resources */,
 				5E1DF8A61907BB8100127F56 /* InfoPlist.strings in Resources */,
 				5E2CAE771913D0A800244206 /* navbar_ic_back@2x.png in Resources */,
 				5E2CAE691913D0A800244206 /* tabbar_ic_profile_inactive@2x.png in Resources */,
@@ -717,6 +739,8 @@
 				5E2CAE731913D0A800244206 /* tabbar_ic_borrow_active@2x.png in Resources */,
 				5E2CAE671913D0A800244206 /* tabbar_ic_return_active@2x.png in Resources */,
 				5E41C94019192F3C00316BB5 /* Localizable.strings in Resources */,
+				5EDEBF67193DD1A6006846BA /* ic_pin_ic_grave@2x.png in Resources */,
+				5EDEBF63193DD1A6006846BA /* ic_pin_ic_parking@2x.png in Resources */,
 				5E2CAE661913D0A800244206 /* tabbar_ic_return_inactive.png in Resources */,
 				5E2CAE7E1913D0A800244206 /* ic_pin_normal.png in Resources */,
 			);
