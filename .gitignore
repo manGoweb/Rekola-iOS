@@ -1,0 +1,29 @@
+# osx image file
+.DS_Store
+
+# xcode4 backup files
+*.swp
+*~.nib
+
+# xcode4 builds and user settings
+build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcworkspace
+!default.xcworkspace
+xcuserdata
+profile
+*.moved-aside
+
+# old skool
+.svn
+.cvs
+
+# mergetool
+*.orig
