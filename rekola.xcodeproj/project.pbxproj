@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5E074172190FCFD600688477 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E074171190FCFD600688477 /* TabBarController.m */; };
 		5E074175190FD1E900688477 /* UIColor+RKColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E074174190FD1E900688477 /* UIColor+RKColor.m */; };
+		5E086CAF194CA628000389C3 /* prague_center.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 5E086CAE194CA628000389C3 /* prague_center.gpx */; };
 		5E1DF89C1907BB8100127F56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89B1907BB8100127F56 /* Foundation.framework */; };
 		5E1DF89E1907BB8100127F56 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89D1907BB8100127F56 /* CoreGraphics.framework */; };
 		5E1DF8A01907BB8100127F56 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1DF89F1907BB8100127F56 /* UIKit.framework */; };
@@ -113,7 +114,6 @@
 		5EDE2216190819D70017D36E /* BikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE2215190819D70017D36E /* BikeViewController.m */; };
 		5EDEBF67193DD1A6006846BA /* ic_pin_ic_grave@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF61193DD1A6006846BA /* ic_pin_ic_grave@2x.png */; };
 		5EDEBF68193DD1A6006846BA /* ic_pin_ic_grave.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF62193DD1A6006846BA /* ic_pin_ic_grave.png */; };
-		5EED3FE5194A174F00E1AFB2 /* loc.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 5EED3FE4194A174F00E1AFB2 /* loc.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +131,7 @@
 		5E074171190FCFD600688477 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabBarController.m; path = rekola/TabBarController.m; sourceTree = "<group>"; };
 		5E074173190FD1E900688477 /* UIColor+RKColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+RKColor.h"; path = "rekola/UIColor+RKColor.h"; sourceTree = "<group>"; };
 		5E074174190FD1E900688477 /* UIColor+RKColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+RKColor.m"; path = "rekola/UIColor+RKColor.m"; sourceTree = "<group>"; };
+		5E086CAE194CA628000389C3 /* prague_center.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = prague_center.gpx; sourceTree = "<group>"; };
 		5E1DF8981907BB8100127F56 /* rekola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = rekola.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E1DF89B1907BB8100127F56 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5E1DF89D1907BB8100127F56 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -285,7 +286,6 @@
 		5EDE2215190819D70017D36E /* BikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BikeViewController.m; path = rekola/BikeViewController.m; sourceTree = "<group>"; };
 		5EDEBF61193DD1A6006846BA /* ic_pin_ic_grave@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_pin_ic_grave@2x.png"; sourceTree = "<group>"; };
 		5EDEBF62193DD1A6006846BA /* ic_pin_ic_grave.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_pin_ic_grave.png; sourceTree = "<group>"; };
-		5EED3FE4194A174F00E1AFB2 /* loc.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = loc.gpx; path = ../../../../Downloads/loc.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -372,7 +372,7 @@
 		5E1DF8A21907BB8100127F56 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5EED3FE4194A174F00E1AFB2 /* loc.gpx */,
+				5E086CAE194CA628000389C3 /* prague_center.gpx */,
 				5E41C93E19192F3C00316BB5 /* Localizable.strings */,
 				5E1DF8A31907BB8100127F56 /* rekola-Info.plist */,
 				5E1DF8A41907BB8100127F56 /* InfoPlist.strings */,
@@ -715,7 +715,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E2CAE791913D0A800244206 /* navbar_ic_back_transition@2x.png in Resources */,
-				5EED3FE5194A174F00E1AFB2 /* loc.gpx in Resources */,
 				5E2CAE711913D0A800244206 /* tabbar_ic_borrow_inactive@2x.png in Resources */,
 				5E2CAE7D1913D0A800244206 /* ic_pin_normal@2x.png in Resources */,
 				5E2CAE701913D0A800244206 /* tabbar_ic_map_active.png in Resources */,
@@ -735,6 +734,7 @@
 				5E2CAE811913D0A800244206 /* ic_close@2x.png in Resources */,
 				5E36BF1F193F094B00C214E6 /* ic_pin_noparking_normal@2x.png in Resources */,
 				5E2CAE6B1913D0A800244206 /* tabbar_ic_profile_active@2x.png in Resources */,
+				5E086CAF194CA628000389C3 /* prague_center.gpx in Resources */,
 				5E36BF23193F094B00C214E6 /* ic_pin_parking_normal@2x.png in Resources */,
 				5EAAC04A1917C610007B6D0A /* walk-highlight@2x.png in Resources */,
 				5E2CAE751913D0A800244206 /* navbar_ic_logo@2x.png in Resources */,
