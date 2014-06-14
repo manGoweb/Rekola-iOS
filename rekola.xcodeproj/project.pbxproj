@@ -113,6 +113,7 @@
 		5EDE2216190819D70017D36E /* BikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDE2215190819D70017D36E /* BikeViewController.m */; };
 		5EDEBF67193DD1A6006846BA /* ic_pin_ic_grave@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF61193DD1A6006846BA /* ic_pin_ic_grave@2x.png */; };
 		5EDEBF68193DD1A6006846BA /* ic_pin_ic_grave.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EDEBF62193DD1A6006846BA /* ic_pin_ic_grave.png */; };
+		5EED3FE5194A174F00E1AFB2 /* loc.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 5EED3FE4194A174F00E1AFB2 /* loc.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -284,6 +285,7 @@
 		5EDE2215190819D70017D36E /* BikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BikeViewController.m; path = rekola/BikeViewController.m; sourceTree = "<group>"; };
 		5EDEBF61193DD1A6006846BA /* ic_pin_ic_grave@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_pin_ic_grave@2x.png"; sourceTree = "<group>"; };
 		5EDEBF62193DD1A6006846BA /* ic_pin_ic_grave.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_pin_ic_grave.png; sourceTree = "<group>"; };
+		5EED3FE4194A174F00E1AFB2 /* loc.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = loc.gpx; path = ../../../../Downloads/loc.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 		5E1DF8A21907BB8100127F56 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5EED3FE4194A174F00E1AFB2 /* loc.gpx */,
 				5E41C93E19192F3C00316BB5 /* Localizable.strings */,
 				5E1DF8A31907BB8100127F56 /* rekola-Info.plist */,
 				5E1DF8A41907BB8100127F56 /* InfoPlist.strings */,
@@ -712,6 +715,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E2CAE791913D0A800244206 /* navbar_ic_back_transition@2x.png in Resources */,
+				5EED3FE5194A174F00E1AFB2 /* loc.gpx in Resources */,
 				5E2CAE711913D0A800244206 /* tabbar_ic_borrow_inactive@2x.png in Resources */,
 				5E2CAE7D1913D0A800244206 /* ic_pin_normal@2x.png in Resources */,
 				5E2CAE701913D0A800244206 /* tabbar_ic_map_active.png in Resources */,
