@@ -117,8 +117,17 @@
 }
 
 - (IBAction)returnBike:(id)sender {
-    if ([_delegate respondsToSelector:@selector(controller:didFinishWithLocation:note:)]) {
-        [_delegate controller:self didFinishWithLocation:[[CLLocation alloc] initWithLatitude:_mapView.centerCoordinate.latitude longitude:_mapView.centerCoordinate.longitude] note:_textViewText];
+    if (_textViewText.length < 3) {
+        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Please specify where exactly you will leave the bike. (e.g.. 2nd pole on 3rd Street.).", @"Placeholder text inside a Text View") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] showWithCompletionBlock:^(UIAlertView *alert, NSInteger buttonIndex) {
+            if (!_textView.isFirstResponder) {
+                [_textView becomeFirstResponder];
+            }
+        }];
+        
+    } else {
+        if ([_delegate respondsToSelector:@selector(controller:didFinishWithLocation:note:)]) {
+            [_delegate controller:self didFinishWithLocation:[[CLLocation alloc] initWithLatitude:_mapView.centerCoordinate.latitude longitude:_mapView.centerCoordinate.longitude] note:_textViewText];
+        }
     }
 }
 
