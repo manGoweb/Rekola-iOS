@@ -77,7 +77,11 @@
     _mapView.showsUserLocation = YES;
     
     _POIBottomConstraint.constant = - (_POIHeightConstraint.constant + 30 + self.tabBarController.tabBar.bounds.size.height);
+    
     [self.view layoutIfNeeded];
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(5.3297021841444163, 7.2027525576011158);
+    [_mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(49.826988220214851, 15.472262382507363), span) animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
