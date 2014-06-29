@@ -120,6 +120,8 @@ NSString *const KeychainUserPassword = @"KeychainUserPassword";
 - (void)logout {
     [APIManager manager].accessToken = nil;
     _bikesUpdateDate = nil;
+    _usingBike = nil;
+    _bikes = nil;
     
     [self removeKeychainObjectForKey:KeychainUserPassword];
     
