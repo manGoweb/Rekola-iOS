@@ -62,7 +62,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     _trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:_mapView];
     self.navigationItem.rightBarButtonItem = _trackingButton;
     
@@ -80,8 +80,10 @@
     
     [self.view layoutIfNeeded];
     
-    MKCoordinateSpan span = MKCoordinateSpanMake(5.3297021841444163, 7.2027525576011158);
-    [_mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(49.826988220214851, 15.472262382507363), span) animated:NO];
+    if (_flags.firtstUpdate == 1) {
+        MKCoordinateSpan span = MKCoordinateSpanMake(5.3297021841444163, 7.2027525576011158);
+        [_mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(49.826988220214851, 15.472262382507363), span) animated:NO];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,6 +101,12 @@
             [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Location Services are turned off. The application will not be able to provide full functionality. You can turn on Location Services by going to the Settings > Privacy > and switching Location Services On.", @"Text message in Alert View.") delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
             
             [self zoomToDefaultLocation];
+            
+        } else if (_mapView.userLocation.location.horizontalAccuracy > 0 && _mapView.userLocation.location.horizontalAccuracy <= kCLLocationAccuracyHundredMeters && _flags.firtstUpdate == 1) {
+            _flags.firtstUpdate = 0;
+            
+            MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(_mapView.userLocation.coordinate, DefaultUserZoom / 4, DefaultUserZoom / 4);
+            [_mapView setRegion:region animated:YES];
         }
     }
     

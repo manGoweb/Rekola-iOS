@@ -25,6 +25,7 @@
 
 #import "LocateViewController.h"
 #import "POI.h"
+#import "RKAnnotation.h"
 
 @implementation LocateViewController {
     NSString *_textViewText;
@@ -54,6 +55,8 @@
     _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     _returnBikeButton.enabled = NO;
+    _mapView.clusteringEnabled = NO;
+    _mapView.showsUserLocation = YES;
     
     _textView.layer.borderColor = COLOR(0xAAAAAA).CGColor;
     _textView.textColor = [UIColor lightGrayColor];
@@ -70,6 +73,8 @@
     
     MKCoordinateSpan span = MKCoordinateSpanMake(5.3297021841444163, 7.2027525576011158);
     [_mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(49.826988220214851, 15.472262382507363), span) animated:NO];
+    
+    [self fetchPOIs];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -80,10 +85,8 @@
         
         [self zoomToDefaultLocation];
         
-    } else if (_mapView.userLocation != nil && _flags.firtstUpdate == 1) {
+    } else if (_mapView.userLocation.location.horizontalAccuracy > 0 && _mapView.userLocation.location.horizontalAccuracy <= kCLLocationAccuracyHundredMeters && _flags.firtstUpdate == 1) {
         _flags.firtstUpdate = 0;
-        
-        [self fetchPOIs];
     
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(_mapView.userLocation.coordinate, DefaultUserZoom / 4, DefaultUserZoom / 4);
         [_mapView setRegion:region animated:YES];
@@ -191,8 +194,6 @@
     if (_flags.firtstUpdate == 1) {
         _flags.firtstUpdate = 0;
         
-        [self fetchPOIs];
-    
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, DefaultUserZoom / 4, DefaultUserZoom / 4);
         [_mapView setRegion:region animated:YES];
     }
@@ -203,7 +204,7 @@
     static NSString *POIAnnotationViewIdentifier = @"POIAnnotationViewIdentifier";
     MKAnnotationView *retPinView = nil;
     
-    if (![annotation isKindOfClass:[MKUserLocation class]]) {
+    if (![annotation isKindOfClass:[MKUserLocation class]] && ![annotation isKindOfClass:[RKAnnotation class]]) {
         MKAnnotationView *pinView = [mapView dequeueReusableAnnotationViewWithIdentifier:POIAnnotationViewIdentifier];
         
         if (!pinView) {
