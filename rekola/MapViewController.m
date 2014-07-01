@@ -122,8 +122,8 @@
         __weak __typeof(self)weakSelf = self;
         [[ContentManager manager] bikesWithLocation:CLLocationCoordinate2DMake(DefaultLatitude, DefaultLongtitude) completion:^(NSArray *bikes, NSError *error) {
             if (weakSelf) {
+                __strong __typeof(weakSelf)strongSelf = weakSelf;
                 if (!error) {
-                    __strong __typeof(weakSelf)strongSelf = weakSelf;
                     NSMutableArray *annotations = @[].mutableCopy;
                     
                     __block Bike *selectedBike = nil;
@@ -146,11 +146,11 @@
                     } else {
                         [weakSelf POIDetailWillDismiss:weakSelf.POIView];
                     }
-                    strongSelf->_flags.loadingData = 0;
                     
                 } else {
                     [[[UIAlertView alloc] initWithTitle:nil message:error.localizedMessage delegate:nil cancelButtonTitle:NSLocalizedString(@"Close", @"Button title in Alert View.") otherButtonTitles:nil, nil] show];
                 }
+                strongSelf->_flags.loadingData = 0;
                 [weakSelf stopRefreshing];
             }
         }];
