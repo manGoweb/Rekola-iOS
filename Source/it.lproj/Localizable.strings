@@ -1,0 +1,33 @@
+/* 
+  Localizable.strings
+  LandOfStories
+
+  Created by Dominik Vesely on 21/04/15.
+  Copyright (c) 2015 Ackee s.r.o. All rights reserved.
+*/
+
+"Person" = "Person-it";
+"Done" = "Fatto";
+"CameraTut" = "CameraTut-it";
+"MontageTut" = "MontageTut-it";
+"Edit" = "Edita";
+"Share" = "Condividi";
+"Save" = "Salva";
+"Finish_1" = "Ti trovi in ";
+"Finish_2" = ". Affascinante!";
+"Image_Saved" = "Immagine salvata";
+"Foto_1" = "Castello di Hluboká nad Vltavou";
+"Foto_2" = "Moravia Meridionale - Pálava";
+"Foto_3" = "Telč";
+"Foto_4" = "Mariánské Lázně";
+"Foto_5" = "Svizzera Boema";
+"Foto_6" = "Praga – Ponte Carlo";
+"Foto_7" = "Kuks";
+"Foto_8" = "Pilsen";
+"Foto_9" = "Český Krumlov";
+"Foto_10" = "Olomouc";
+"Foto_11" = "Kutná Hora";
+"Foto_12" = "Ostrava";
+"Foto_13" = "Litomyšl";
+"Foto_14" = "Praga - Piazza della Città Vecchia";
+"Foto_15" = "Liberec – Monte Ještěd";

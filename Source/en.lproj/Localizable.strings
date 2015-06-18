@@ -1,0 +1,33 @@
+/* 
+  Localizable.strings
+  LandOfStories
+
+  Created by Dominik Vesely on 21/04/15.
+  Copyright (c) 2015 Ackee s.r.o. All rights reserved.
+*/
+
+"Person" = "Person";
+"Done" = "Done";
+"CameraTut" = "CameraTut";
+"MontageTut" = "MontageTut";
+"Edit" = "Edit";
+"Share" = "Share";
+"Save" = "Save";
+"Finish_1" = "This is you at ";
+"Finish_2" = ". Amazing!";
+"Image_Saved" = "Image Saved";
+"Foto_1" = "Hluboká nad Vltavou Chateau";
+"Foto_2" = "South Moravia - Pálava";
+"Foto_3" = "Telč";
+"Foto_4" = "Mariánské Lázně";
+"Foto_5" = "Bohemian Switzerland";
+"Foto_6" = "Prague – Charles Bridge";
+"Foto_7" = "Kuks";
+"Foto_8" = "Pilsen";
+"Foto_9" = "Český Krumlov";
+"Foto_10" = "Olomouc";
+"Foto_11" = "Kutná Hora";
+"Foto_12" = "Ostrava";
+"Foto_13" = "Litomyšl";
+"Foto_14" = "Prague – Old Town Square";
+"Foto_15" = "Liberec – Ještěd";
