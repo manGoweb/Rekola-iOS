@@ -16,7 +16,7 @@ class ViewController : UIViewController {
     var label = UILabel()
     
     override func viewDidLoad() {
-        
+       // self.backgroundColor = .redColor()
     }
     
     

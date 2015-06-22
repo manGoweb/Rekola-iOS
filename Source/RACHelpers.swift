@@ -59,7 +59,7 @@ public func rac_decode<T: Decodable where T == T.DecodedType>(object: AnyObject)
 public func rac_decodeByOne<T: Decodable where T == T.DecodedType>(object: AnyObject) -> SignalProducer<T, NSError>  {
     return SignalProducer { sink, disposable in
         
-        let user : [T]? = decode(object)
+        let user : [T]? = decode(object).value
         if let user = user {
             for u in user {
                 sendNext(sink, u)

@@ -30,8 +30,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         let producer = RekolaAPI.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(RekolaAPI.bikes(49, longitude: 14))
         producer.start()
         
+        
+        let vc = UINavigationController(rootViewController: ViewController())
+        let item = TabItem(controller: vc, selectedImage: UIImage(named: "LockOn")!, deselectedImage: UIImage(named: "LockOff")!)
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window?.rootViewController = UINavigationController(rootViewController: ViewController())
+        window?.rootViewController = ACKTabBarController(items: [item])
         window?.makeKeyAndVisible()
         
         

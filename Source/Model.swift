@@ -36,11 +36,12 @@ public struct Address {
     let lng : Double
     let address : String
     let distance : String
+    let note : String?
 }
 
 extension Address : Decodable {
-    static func create(lat: Double)( lng: Double)( address: String)( distance: String) -> Address {
-        return Address(lat: lat, lng: lng, address: address, distance: distance)
+    static func create(lat: Double)( lng: Double)( address: String)( distance: String) (note : String?) -> Address {
+        return Address(lat: lat, lng: lng, address: address, distance: distance, note: note)
     }
     public static func decode(json: JSON) -> Decoded<Address> {
         return Address.create
@@ -48,6 +49,8 @@ extension Address : Decodable {
             <*> json <| "lng"
             <*> json <| "address"
             <*> json <| "distance"
+            <*> json <|? "note"
+
     }
 }
 
@@ -62,12 +65,12 @@ public struct Bike {
     var issues : [String]
     let borrowed : Bool
     let operational : Bool
-    let lastSeen : String
+    let lastSeen : String?
     
 }
 
 extension Bike : Decodable  {
-    static func create(id : Int) (name: String) (description: String) (location: Address) (issues: [String]) (borrowed : Bool) (operational : Bool) (lastSeen: String) -> Bike {
+    static func create(id : Int) (name: String) (description: String) (location: Address) (issues: [String]) (borrowed : Bool) (operational : Bool) (lastSeen: String?) -> Bike {
         return Bike(id: id, name : name, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen)
     }
     
@@ -80,7 +83,7 @@ extension Bike : Decodable  {
             <*> json <|| "issues"
             <*> json <| "borrowed"
             <*> json <| "operational"
-            <*> json <| "lastSeen"
+            <*> json <|? "lastSeen"
 
         //  <*> json <| "issues"
         

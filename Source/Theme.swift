@@ -34,6 +34,10 @@ extension UIColor {
         return UIColor(hex: 0x0000000)
     }
     
+    class func rekolaGreenColor() -> UIColor! {
+        return UIColor(hex: 0x7d8d38)
+    }
+    
 }
 
 

@@ -123,6 +123,7 @@ class RekolaAPI {
                 })
                 |> on(next: {
                     //provedu save do databaze napriklad
+                    println($0)
                     NSUserDefaults.standardUserDefaults().setValue($0, forKey: "apiKey")
                 })
                 //chytne error a specific request error codes handling
