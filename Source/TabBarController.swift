@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SnapKit
 
 
 protocol ACKTabBarItem {
@@ -15,8 +16,10 @@ protocol ACKTabBarItem {
     func deselect()
     
     var view : UIView {get}
+    var index : Int! {get set}
+
     var viewController: UIViewController {get set}
-    var tabBar : ACKTabBar? {get set}
+    var tabBar : ACKTabBar! {get set}
     
     func didSelect()
     func didDeselect()
@@ -27,7 +30,7 @@ protocol ACKTabBarItem {
 protocol ACKTabBar : class {
     
     func selectTab(index : Int)
-    var items : [ACKTabBarItem] {get set}
+    var items : [ACKTabBarItem]! {get set}
     var selectedIndex : Int { get set}
     var selectedController : UIViewController! { get set}
     
@@ -44,11 +47,17 @@ class TabItem : UIButton, ACKTabBarItem {
     required init(controller: UIViewController, selectedImage : UIImage, deselectedImage : UIImage ) {
         self.viewController = controller
         super.init(frame: CGRectZero)
-        self.setBackgroundImage(UIImage(color:selectedBackgroundColor), forState: UIControlState.Selected)
+        self.setBackgroundImage(UIImage(color:selectedBackgroundColor), forState: UIControlState.Selected | UIControlState.Highlighted)
         self.setBackgroundImage(UIImage(color:deselectedBackgroundColor), forState: UIControlState.Normal)
         self.setImage(selectedImage, forState: UIControlState.Selected)
         self.setImage(deselectedImage, forState: UIControlState.Normal)
-
+        self.imageEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+        self.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
+        self.adjustsImageWhenHighlighted = false
+        self.addEventHandler({[weak self] (item) -> Void in
+            self?.select()
+            }, forControlEvents: UIControlEvents.TouchUpInside)
+        
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -58,7 +67,8 @@ class TabItem : UIButton, ACKTabBarItem {
     //MARK: TabBar
     
     var viewController : UIViewController
-    weak var tabBar : ACKTabBar?
+    var tabBar : ACKTabBar!
+    var index : Int!
     var view : UIView  {
         get {
             return self
@@ -67,21 +77,33 @@ class TabItem : UIButton, ACKTabBarItem {
     
     
     func select() {
-        
+        self.tabBar.selectTab(index)
+        self.didSelect()
     }
     
     func deselect() {
-        
+        self.didDeselect()
     }
     
     func didSelect() {
-        
+        selected = true
+        playAnimation()
     }
     
     func didDeselect() {
+        selected = false
         
     }
     
+    
+    func playAnimation() {
+        let bounceAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+        bounceAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
+        bounceAnimation.duration = NSTimeInterval(0.5)
+        bounceAnimation.calculationMode = kCAAnimationCubic
+        
+        self.imageView!.layer.addAnimation(bounceAnimation, forKey: "bounceAnimation")
+    }
     
 }
 
@@ -95,20 +117,21 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
     weak var selectedController: UIViewController!
     
     
-    var items : [ACKTabBarItem]  {
-        didSet {
-            for index in 0..<items.count {
-                items[index].tabBar = self
-            }
+    var items : [ACKTabBarItem]!
+    
+    func setUpItems() {
+        for index in 0..<items.count {
+            items[index].tabBar = self
+            items[index].index = index
         }
     }
     
     
-    
     required init(items : [ACKTabBarItem]) {
-        self.items = items
-        self.selectedController = items[selectedIndex].viewController
         super.init(nibName: nil, bundle: nil)
+        self.items = items
+        setUpItems()
+        self.selectedController = items[selectedIndex].viewController
         
     }
     
@@ -121,6 +144,40 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
     override func loadView() {
         self.view = UIView()
         
+        
+        let tabbar = UIView()
+        self.view.addSubview(tabbar)
+        tabbar.snp_makeConstraints { (make) -> Void in
+            make.left.right.bottom.equalTo(view)
+            make.height.equalTo(42)
+        }
+        
+        var last:  UIView? = nil
+        for item in items {
+            tabbar.addSubview(item.view)
+            item.view.snp_makeConstraints({ (make) -> Void in
+                make.bottom.top.equalTo(tabbar)
+                if let last = last {
+                    make.left.equalTo(last.snp_right)
+                } else {
+                    make.left.equalTo(tabbar)
+                }
+               make.width.equalTo(tabbar).dividedBy(items.count)
+                
+            })
+            last = item.view
+        }
+        self.tabBarView = tabbar
+        
+        let container = UIView()
+        view.addSubview(container)
+        container.snp_makeConstraints { (make) -> Void in
+            make.top.left.right.equalTo(self.view)
+            make.bottom.equalTo(tabbar.snp_top)
+        }
+        self.containerView = container
+        
+        
     }
     
     override func viewDidLoad() {
@@ -131,6 +188,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         selectedController.didMoveToParentViewController(self)
         containerView.addSubview(selectedController.view);
         selectedController.view.frame = self.containerView.bounds
+        items[0].didSelect()
     }
     
     
@@ -143,16 +201,14 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
             return
         }
         
-        //  controller.willMoveToParentViewController(nil)
-        //  controller.view.removeFromSuperview()
-        //  controller.removeFromParentViewController()
-        
-        // }
+      
         
         let newC = items[index].viewController
         selectedController.willMoveToParentViewController(nil)
         addChildViewController(newC)
-        
+        self.items[index].didSelect()
+        self.items[self.selectedIndex].deselect()
+
         self.transitionFromViewController(selectedController, toViewController: newC, duration: 0.25, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             
             newC.view.frame = self.containerView.bounds
@@ -162,7 +218,10 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
                 newC.didMoveToParentViewController(self)
                 self.selectedController = newC
                 self.selectedIndex = index
+                
         }
+        
+        
         
         
     }

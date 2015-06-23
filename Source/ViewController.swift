@@ -17,6 +17,16 @@ class ViewController : UIViewController {
     
     override func viewDidLoad() {
        // self.backgroundColor = .redColor()
+        
+        let button = UIButton()
+        button.addEventHandler({ [weak self] (sender) in
+            // push navigation
+            
+        }, forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let img = UIImageView()
+        
+        
     }
     
     

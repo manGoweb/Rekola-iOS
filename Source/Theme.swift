@@ -9,6 +9,14 @@
 import Foundation
 
 
+extension UIImage {
+    //tady bude enum z wwwdc
+    
+    
+    //tady enum + funkce na toggle 
+    
+}
+
 extension UIFont {
     
     class func mainRegular(size : CGFloat) -> UIFont {
@@ -26,6 +34,8 @@ extension UIFont {
         }
     }
 }
+
+
 
 
 extension UIColor {
