@@ -22,14 +22,14 @@
 
 /* Begin PBXBuildFile section */
 		2C11B62737F94D37BC3FA5B5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E8AEF0CA62243AAB2D73904 /* libPods.a */; };
+		6D0BE16A1B3AC49F0030E6AC /* ArgoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */; };
+		6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
 		B4020772195199490027B407 /* BDDTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = B4ABA24F195196930069FAD4 /* BDDTestCase.m */; };
 		B433E4AE19530092006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
 		B433E4AF195300A4006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
 		B433E4B219530FD0006BEBF1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B433E4B119530FD0006BEBF1 /* Images.xcassets */; };
 		B433E4B419539281006BEBF1 /* XCTextCase.m in Sources */ = {isa = PBXBuildFile; fileRef = B47536F21951A15A00DB8D6D /* XCTextCase.m */; };
-		B433E4B719545597006BEBF1 /* ACKEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = B433E4B619545597006BEBF1 /* ACKEnvironment.m */; };
-		B433E4B819545597006BEBF1 /* ACKEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = B433E4B619545597006BEBF1 /* ACKEnvironment.m */; };
 		B44456EF1B34493100597A66 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44456EE1B34493100597A66 /* MapViewModel.swift */; };
 		B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44456F01B3462FA00597A66 /* TabBarController.swift */; };
 		B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0BA8E1AD4972300715A9F /* Theme.swift */; };
@@ -90,6 +90,8 @@
 /* Begin PBXFileReference section */
 		0E8AEF0CA62243AAB2D73904 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2477C39DCE66EC69ACED7E /* Pods.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.appstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.appstore.xcconfig"; sourceTree = "<group>"; };
+		6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgoExtensions.swift; sourceTree = "<group>"; };
+		6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		6D7861D41B397903009F8865 /* UIResponder+Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Errors.swift"; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
 		ABA3E22A1E6F145A094D2DF0 /* Pods-Tests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.development.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.development.xcconfig"; sourceTree = "<group>"; };
@@ -99,8 +101,6 @@
 		B433E4A919530092006BEBF1 /* environment-Development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-Development.plist"; sourceTree = "<group>"; };
 		B433E4AA19530092006BEBF1 /* environment.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = environment.plist; sourceTree = "<group>"; };
 		B433E4B119530FD0006BEBF1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B433E4B519545597006BEBF1 /* ACKEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACKEnvironment.h; sourceTree = "<group>"; };
-		B433E4B619545597006BEBF1 /* ACKEnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACKEnvironment.m; sourceTree = "<group>"; };
 		B44456EE1B34493100597A66 /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		B44456F01B3462FA00597A66 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		B47536F21951A15A00DB8D6D /* XCTextCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCTextCase.m; sourceTree = "<group>"; };
@@ -196,8 +196,7 @@
 				B433E4A819530092006BEBF1 /* environment-AppStore.plist */,
 				B433E4A919530092006BEBF1 /* environment-Development.plist */,
 				B433E4AA19530092006BEBF1 /* environment.plist */,
-				B433E4B519545597006BEBF1 /* ACKEnvironment.h */,
-				B433E4B619545597006BEBF1 /* ACKEnvironment.m */,
+				6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */,
 			);
 			path = Environment;
 			sourceTree = SOURCE_ROOT;
@@ -363,6 +362,7 @@
 				6D7861D41B397903009F8865 /* UIResponder+Errors.swift */,
 				B4EE778D1B28A61700ED956B /* UIKitExtensions.swift */,
 				B4EE778E1B28A61700ED956B /* RACHelpers.swift */,
+				6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -517,7 +517,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "dir=${PROJECT_DIR}\necho \"Starting environment configuration for project: \" $dir\n\n# environment variable from value passed in to xcodebuild.\n# if not specified, we default to DEV\nenv=${ACK_ENVIRONMENT}\nif [ -z \"$env\" ]\nthen\nenv=\"Development\"\nfi\necho \"Using $env environment\"\n\n# copy the environment-specific file\necho \"cp $dir/environment/environment-$env.plist $dir/environment/environment.plist\"\ncp $dir/environment/environment-$env.plist $dir/environment/environment.plist\n\n# app settings\nappName=`/usr/libexec/PlistBuddy -c \"Print :appName\" \"$dir/environment/environment.plist\"`\n\nif [ $CONFIGURATION != Development && $CONFIGURATION != AppStore ]; then\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/Source/Project-Info.plist\necho $plist\n# increment the build number (ie 115 to 116)\nbuildnum=$(git rev-list HEAD --count)\nif [[ \"${buildnum}\" == \"\" ]]; then\necho \"No build number in $plist\"\nfi\n\nbuildnum=$(expr $buildnum + 1)\n/usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\necho \"Bumped build number to $buildnum\"\n\nappName=\"$appName $buildnum\"\n\n\nelse\necho $CONFIGURATION \" build - Not bumping build number.\"\nfi\n\n\n# Build the preprocess file\ncd ${PROJECT_DIR}/environment/\n\npreprocessFile=\"environment_preprocess.h\"\necho \"Creating header file\"\n\necho -e \"//-----------------------------------------\" > $preprocessFile\necho -e \"// Auto generated file\" >> $preprocessFile\necho -e \"// Created $buildDate\" >> $preprocessFile\necho -e \"//-----------------------------------------\" >> $preprocessFile\necho -e \"\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT              $env\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_VERSION  $buildnum\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_APP_NAME     $appName\" >> $preprocessFile\n\n# dump out file to build log\ncat $preprocessFile\n\n# Force the system to process the plist file\necho \"Touching plist at: \"${PROJECT_DIR}/Source/Project-Info.plist\ntouch ${PROJECT_DIR}/Source/Project-Info.plist\n\n# done\necho \"Done.\"";
+			shellScript = "dir=${PROJECT_DIR}\necho \"Starting environment configuration for project: \" $dir\n\n# environment variable from value passed in to xcodebuild.\n# if not specified, we default to DEV\nenv=${ACK_ENVIRONMENT}\nif [ -z \"$env\" ]\nthen\nenv=\"Development\"\nfi\necho \"Using $env environment\"\n\n# copy the environment-specific file\necho \"cp $dir/environment/environment-$env.plist $dir/environment/environment.plist\"\ncp $dir/environment/environment-$env.plist $dir/environment/environment.plist\n\n#write environment to environment.plist\n`/usr/libexec/PlistBuddy -c \"Add :scheme string $env\" \"$dir/environment/environment.plist\"`\n# app settings\nappName=`/usr/libexec/PlistBuddy -c \"Print :appName\" \"$dir/environment/environment.plist\"`\n\nif [ $CONFIGURATION != Development && $CONFIGURATION != AppStore ]; then\necho \"Bumping build number...\"\nplist=${PROJECT_DIR}/Source/Project-Info.plist\necho $plist\n# increment the build number (ie 115 to 116)\nbuildnum=$(git rev-list HEAD --count)\nif [[ \"${buildnum}\" == \"\" ]]; then\necho \"No build number in $plist\"\nfi\n\nbuildnum=$(expr $buildnum + 1)\n/usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\necho \"Bumped build number to $buildnum\"\n\nappName=\"$appName $buildnum\"\n\n\nelse\necho $CONFIGURATION \" build - Not bumping build number.\"\nfi\n\n\n# Build the preprocess file\ncd ${PROJECT_DIR}/environment/\n\npreprocessFile=\"environment_preprocess.h\"\necho \"Creating header file\"\n\necho -e \"//-----------------------------------------\" > $preprocessFile\necho -e \"// Auto generated file\" >> $preprocessFile\necho -e \"// Created $buildDate\" >> $preprocessFile\necho -e \"//-----------------------------------------\" >> $preprocessFile\necho -e \"\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT              $env\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_VERSION  $buildnum\" >> $preprocessFile\necho -e \"#define ACK_ENVIRONMENT_APP_NAME     $appName\" >> $preprocessFile\n\n# dump out file to build log\ncat $preprocessFile\n\n# Force the system to process the plist file\necho \"Touching plist at: \"${PROJECT_DIR}/Source/Project-Info.plist\ntouch ${PROJECT_DIR}/Source/Project-Info.plist\n\n# done\necho \"Done.\"";
 		};
 		B4A800961B2869F700453A28 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -579,7 +579,8 @@
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
 				B4EE77921B28D1AA00ED956B /* APIService.swift in Sources */,
 				6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */,
-				B433E4B719545597006BEBF1 /* ACKEnvironment.m in Sources */,
+				6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */,
+				6D0BE16A1B3AC49F0030E6AC /* ArgoExtensions.swift in Sources */,
 				B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* ViewController.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
@@ -595,7 +596,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B433E4B419539281006BEBF1 /* XCTextCase.m in Sources */,
-				B433E4B819545597006BEBF1 /* ACKEnvironment.m in Sources */,
 				B4020772195199490027B407 /* BDDTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

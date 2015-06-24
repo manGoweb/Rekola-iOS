@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "ProjectName.app"
-            BlueprintName = "ProjectName"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BuildableName = "Rekola.app"
+            BlueprintName = "Rekola"
+            ReferencedContainer = "container:Rekola.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -63,9 +63,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B4ABA1DB195193330069FAD4"
-            BuildableName = "ProjectName.app"
-            BlueprintName = "ProjectName"
-            ReferencedContainer = "container:ProjectName.xcodeproj">
+            BuildableName = "Rekola.app"
+            BlueprintName = "Rekola"
+            ReferencedContainer = "container:Rekola.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>

@@ -15,6 +15,6 @@ class MapViewModel : NSObject {
     
     let selectedBike = MutableProperty<Bike?>(nil)
     
-    
+	
     
 }

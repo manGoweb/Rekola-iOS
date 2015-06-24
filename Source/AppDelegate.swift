@@ -27,8 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
      //   Flurry.startSession("")
         
         
-        let producer = RekolaAPI.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(RekolaAPI.bikes(49, longitude: 14))
-            producer.start()
+        let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(49, longitude: 14))
+		producer.start(error: { [weak self] error in
+			self?.handleError(error)
+		})
         
         
         let vc = UINavigationController(rootViewController: ViewController())

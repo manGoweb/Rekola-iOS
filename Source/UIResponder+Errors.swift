@@ -17,12 +17,12 @@ public protocol ErrorHandlerType {
 
 public class DefaultErrorHandler : NSObject, ErrorHandlerType, UIAlertViewDelegate {
 	
-	let isAdHoc = { return true } //TODO: get from environment
+	let isAdHoc = { return Environment.scheme == .AdHoc } //TODO: get from environment
 	
 	var pendingCompletions : [NSObject : ErrorHandlerCompletion] = [:]
 	
 	public func errorHandlingStep(error: NSError, severity: ErrorSeverity, sender: AnyObject?, userInfo: [NSObject: AnyObject]?, completion: ErrorHandlerCompletion?) -> (hasCompletion: Bool, stop: Bool) {
-		print("Error: \(error), severity: \(severity), sender: \(sender), userInfo: \(userInfo)")
+		println("Error: \(error), severity: \(severity), sender: \(sender), userInfo: \(userInfo)")
 		
 		var hasCompletion = false
 		func presentError(_ messagePrefix: String = "") {
@@ -105,5 +105,13 @@ public enum ErrorSeverity {
 	case Debug
 	case InformUser
 	case UserAction
+	
+	var description: String {
+		switch self {
+		case .Debug: return "Debug"
+		case .InformUser: return "InformUser"
+		case .UserAction: return "UserAction"
+		}
+	}
 }
 
