@@ -42,15 +42,13 @@ class TabItem : UIButton, ACKTabBarItem {
     var selectedBackgroundColor : UIColor = .rekolaGreenColor()
     var deselectedBackgroundColor : UIColor = .rekolaGreenColor()
     
-    
-    
-    required init(controller: UIViewController, selectedImage : UIImage, deselectedImage : UIImage ) {
+    required init(controller: UIViewController, images: (UIImage!, UIImage!) ) {
         self.viewController = controller
         super.init(frame: CGRectZero)
         self.setBackgroundImage(UIImage(color:selectedBackgroundColor), forState: UIControlState.Selected | UIControlState.Highlighted)
         self.setBackgroundImage(UIImage(color:deselectedBackgroundColor), forState: UIControlState.Normal)
-        self.setImage(selectedImage, forState: UIControlState.Selected)
-        self.setImage(deselectedImage, forState: UIControlState.Normal)
+        self.setImage(images.0, forState: UIControlState.Selected)
+        self.setImage(images.1, forState: UIControlState.Normal)
         self.imageEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10)
         self.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         self.adjustsImageWhenHighlighted = false
@@ -148,7 +146,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         let tabbar = UIView()
         self.view.addSubview(tabbar)
         tabbar.snp_makeConstraints { (make) -> Void in
-            make.left.right.bottom.equalTo(view)
+            make.left.right.bottom.equalTo(view) 
             make.height.equalTo(42)
         }
         
@@ -200,8 +198,6 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
             self.items[index].viewController.navigationController?.popToRootViewControllerAnimated(true)
             return
         }
-        
-      
         
         let newC = items[index].viewController
         selectedController.willMoveToParentViewController(nil)

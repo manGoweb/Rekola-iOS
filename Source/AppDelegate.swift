@@ -36,18 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         let vc = UINavigationController(rootViewController: ViewController())
         let vc2 = UINavigationController(rootViewController: ViewController())
         let vc3 = UINavigationController(rootViewController: ViewController())
-
-        let item = TabItem(controller: vc, selectedImage: UIImage(named: "LockOn")!, deselectedImage: UIImage(named: "LockOff")!)
-        let item2 = TabItem(controller: vc2, selectedImage: UIImage(named: "MapOn")!, deselectedImage: UIImage(named: "MapOff")!)
-        let item3 = TabItem(controller: vc3, selectedImage: UIImage(named: "ProfileOn")!, deselectedImage: UIImage(named: "ProfileOff")!)
-
+        
+        let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
+        let item2 = TabItem(controller: vc2, images: UIImage.toggleImage(UIImage.ImagesForToggle.Map))
+        let item3 = TabItem(controller: vc3, images: UIImage.toggleImage(UIImage.ImagesForToggle.Profile))
         
         let tabbar = ACKTabBarController(items: [item,item2,item3])
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = tabbar
         window?.makeKeyAndVisible()
-        
-        
+        window?.tintColor = UIColor.whiteColor()
         
         return true
     }
