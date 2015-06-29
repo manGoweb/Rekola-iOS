@@ -33,9 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		})
         
         
-        let vc = UINavigationController(rootViewController: ViewController())
-        let vc2 = UINavigationController(rootViewController: ViewController())
-        let vc3 = UINavigationController(rootViewController: ViewController())
+        let vc = UINavigationController(rootViewController: LockViewController())
+        let vc2 = UINavigationController(rootViewController: LockViewController())
+        let vc3 = UINavigationController(rootViewController: LockViewController())
         
         let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
         let item2 = TabItem(controller: vc2, images: UIImage.toggleImage(UIImage.ImagesForToggle.Map))

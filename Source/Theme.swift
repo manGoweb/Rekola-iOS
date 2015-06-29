@@ -52,8 +52,12 @@ extension UIColor {
         return UIColor(hex: 0xfd349c)
     }
     
-    class func rekolaGreyColor() -> UIColor! {
+    class func rekolaGrayTextFieldColor() -> UIColor! {
         return UIColor(hex: 0xececec)
+    }
+    
+    class func rekolaGrayTextColor() -> UIColor! {
+        return UIColor(hex: 0xb0b0b0)
     }
     
 }
@@ -93,40 +97,65 @@ extension UIImage {
 }
 
 
+enum L {
+    static let contentInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+    static let verticalSpacing = 10.0
+    static let horizontalSpacing = 10.0
+}
+
 /**
  Theme class for creating standard UI elements for the app 
 
 */
 class Theme {
-    class func blueButton() -> UIButton? {
+    class func blueButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = UIColor.blueColor()
         return button
     }
     
-    class func pinkButton() -> UIButton? {
+    class func pinkButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = UIColor.rekolaPinkColor()
         return button
     }
     
-    class func greenButton() -> UIButton? {
+    class func greenButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = UIColor.rekolaGreenColor()
         return button
     }
     
-    class func greenBorderButton() -> UIButton? {
+    class func greenBorderButton() -> UIButton {
         let button = UIButton()
         button.layer.borderColor = UIColor.rekolaGreenColor().CGColor
         button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
         return button
     }
     
-    class func whiteButton() -> UIButton? {
+    class func whiteButton() -> UIButton {
         let button = UIButton()
         button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
         return button
     }
+    
+    class func textField() -> UITextField {
+        let tf = UITextField()
+        tf.backgroundColor = .rekolaGrayTextFieldColor()
+        return tf
+    }
+    
+    class func titleLabel() -> UILabel {
+        let l = UILabel()
+        return l
+    }
+    
+    class func subTitleLabel() -> UILabel {
+        let l = UILabel()
+        l.font = l.font.fontWithSize(13.0)
+        l.textColor = .rekolaGrayTextColor()
+        return l
+    }
+
 }
     

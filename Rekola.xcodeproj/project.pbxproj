@@ -54,7 +54,7 @@
 		B4EE779C1B28E54F00ED956B /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A800901B28688600453A28 /* Box.framework */; };
 		B4EE779D1B28E54F00ED956B /* Runes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4EE77941B28E3F500ED956B /* Runes.framework */; };
 		B4EE779F1B29072800ED956B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EE779E1B29072800ED956B /* Model.swift */; };
-		B4F14CA61B20502000DDBE9B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F14CA51B20502000DDBE9B /* ViewController.swift */; };
+		B4F14CA61B20502000DDBE9B /* LockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F14CA51B20502000DDBE9B /* LockViewController.swift */; };
 		C0774D6F294C4C0095E7E845 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B215BAF68D134DF9BE4C6B93 /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -137,7 +137,7 @@
 		B4EE77931B28E3F500ED956B /* Argo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Argo.framework; path = Carthage/Build/iOS/Argo.framework; sourceTree = "<group>"; };
 		B4EE77941B28E3F500ED956B /* Runes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Runes.framework; path = Carthage/Build/iOS/Runes.framework; sourceTree = "<group>"; };
 		B4EE779E1B29072800ED956B /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		B4F14CA51B20502000DDBE9B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B4F14CA51B20502000DDBE9B /* LockViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockViewController.swift; sourceTree = "<group>"; };
 		BADA99D185E2204B40C7DFAF /* Pods-Tests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.appstore.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.appstore.xcconfig"; sourceTree = "<group>"; };
 		D3795ADD4F12A6412E2E6D16 /* Pods.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.development.xcconfig; path = "Pods/Target Support Files/Pods/Pods.development.xcconfig"; sourceTree = "<group>"; };
 		E5DC75F4F8CEB2D10877DF20 /* Pods-Tests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.adhoc.xcconfig"; sourceTree = "<group>"; };
@@ -227,7 +227,7 @@
 		B47536F61951A87A00DB8D6D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B4F14CA51B20502000DDBE9B /* ViewController.swift */,
+				B4F14CA51B20502000DDBE9B /* LockViewController.swift */,
 				B44456F01B3462FA00597A66 /* TabBarController.swift */,
 			);
 			name = Controllers;
@@ -582,7 +582,7 @@
 				6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */,
 				6D0BE16A1B3AC49F0030E6AC /* ArgoExtensions.swift in Sources */,
 				B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */,
-				B4F14CA61B20502000DDBE9B /* ViewController.swift in Sources */,
+				B4F14CA61B20502000DDBE9B /* LockViewController.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
