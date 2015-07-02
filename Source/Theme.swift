@@ -60,16 +60,25 @@ extension UIColor {
         return UIColor(hex: 0xb0b0b0)
     }
     
+    class func staticGrayTextColor() -> UIColor! {
+        return UIColor(hex: 0x757575)
+    }
+    
+    class func rekolaGrayButtonColor() -> UIColor! {
+        return UIColor(hex: 0xe1e1e1)
+    }
+    
+    class func rekolaGrayLineColor() -> UIColor! {
+        return UIColor(hex: 0xf1f1f1)
+    }
+    
 }
 
 extension UIImage {
     enum ImageIdentifier: String {
-        case LockOff = "LockOff"
-        case LockOn = "LockOn"
-        case MapOff = "MapOff"
-        case MapOn = "MapOn"
-        case ProfileOff = "ProfileOff"
-        case ProfileOn = "ProfileOn"
+        case logo = "logo"
+        case mapPin = "mapPin"
+        case logoutButton = "logoutButton"
     }
     
     convenience init!(imageIdentifier: ImageIdentifier) {
@@ -85,7 +94,7 @@ extension UIImage {
     /**
     Toggle on/off on UIButton image.
     
-    :param: name enum of names of the images.
+    :param: name enum of name of the images.
     
     :returns: tuple of images with on/off postfix.
     */
@@ -117,6 +126,7 @@ class Theme {
     class func pinkButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = UIColor.rekolaPinkColor()
+        button.layer.cornerRadius = 4
         return button
     }
     
@@ -126,10 +136,11 @@ class Theme {
         return button
     }
     
-    class func greenBorderButton() -> UIButton {
+    class func grayButton() -> UIButton {
         let button = UIButton()
-        button.layer.borderColor = UIColor.rekolaGreenColor().CGColor
-        button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
+        button.backgroundColor = .rekolaGrayButtonColor()
+        button.setTitleColor(.staticGrayTextColor(), forState: .Normal)
+        button.layer.cornerRadius = 4
         return button
     }
     
@@ -155,6 +166,13 @@ class Theme {
         l.font = l.font.fontWithSize(13.0)
         l.textColor = .rekolaGrayTextColor()
         return l
+    }
+    
+    class func lineView() -> UIView! {
+        let line = UIView()
+//        line.backgroundColor = .blackColor()
+        line.backgroundColor = .rekolaGrayLineColor()
+        return line
     }
 
 }

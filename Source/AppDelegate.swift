@@ -27,15 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
      //   Flurry.startSession("")
         
         
-        let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(49, longitude: 14))
-		producer.start(error: { [weak self] error in
-			self?.handleError(error)
-		})
-        
+        let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(50, longitude: 14))
+        producer.start(error: { println($0) }, next: { [weak self] (bikes : [Bike]) in
+            })
         
         let vc = UINavigationController(rootViewController: LockViewController())
-        let vc2 = UINavigationController(rootViewController: LockViewController())
-        let vc3 = UINavigationController(rootViewController: LockViewController())
+        let vc2 = UINavigationController(rootViewController: MapViewController())
+        let vc3 = UINavigationController(rootViewController: ProfileViewController())
         
         let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
         let item2 = TabItem(controller: vc2, images: UIImage.toggleImage(UIImage.ImagesForToggle.Map))

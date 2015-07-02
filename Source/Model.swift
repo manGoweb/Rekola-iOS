@@ -52,6 +52,17 @@ extension Address : Decodable {
             <*> json <|? "note"
 
     }
+    
+//    only for testing!
+    static func myDumbAddress() -> Address {
+        let lat = 50.0825967
+        let lng = 14.4260456
+        let address = "Václavské náměstí 19, Praha 1"
+        let distance = "120 m"
+        let note = "u druhého patníku vlevo"
+        
+        return Address(lat: lat, lng: lng, address: address, distance: distance, note: note)
+    }
 }
 
 
@@ -67,11 +78,13 @@ public struct Bike {
     let operational : Bool
     let lastSeen : String?
     
+//    icons
+    let iconUrl : String
 }
 
 extension Bike : Decodable  {
-    static func create(id : Int) (name: String) (description: String) (location: Address) (issues: [String]) (borrowed : Bool) (operational : Bool) (lastSeen: String?) -> Bike {
-        return Bike(id: id, name : name, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen)
+    static func create(id : Int) (name: String) (description: String) (location: Address) (issues: [String]) (borrowed : Bool) (operational : Bool) (lastSeen: String?) (iconUrl: String) -> Bike {
+        return Bike(id: id, name : name, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen, iconUrl: iconUrl)
     }
     
     public static func decode(json: JSON) -> Decoded<Bike> {
@@ -84,9 +97,24 @@ extension Bike : Decodable  {
             <*> json <| "borrowed"
             <*> json <| "operational"
             <*> json <|? "lastSeen"
+            <*> json <| "iconUrl"
 
         //  <*> json <| "issues"
         
+    }
+    
+    static func myBike()->Bike {
+        let id = 123
+        let name = "Kolo kolo mlýnské"
+        let description = "horské kolo s gumama jako salámy"
+        let issues = ["5","8"]
+        let borrowed = false
+        let lastSeen = "30.10. 11:56"
+        let operational = true
+        let adrress = Address.myDumbAddress()
+        let iconUrl = "https://www.rekola.cz/api/images/1.svg"
+        
+        return Bike(id: id, name: name, description: description, location: adrress, issues: issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen, iconUrl: iconUrl)
     }
 }
 

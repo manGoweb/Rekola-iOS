@@ -34,13 +34,13 @@ class LockViewController : UIViewController, UITextFieldDelegate {
         }
         self.container = container
         
-        let iv = UIImageView(image: UIImage(named: "logo.png"))
+        let iv = UIImageView(image: UIImage(imageIdentifier: .logo))
         container.addSubview(iv)
         iv.snp_makeConstraints { make in
             make.top.left.right.equalTo(container)
             make.height.equalTo(150)
         }
-        logoImageView = iv
+        self.logoImageView = iv
         
         let titleLabel = Theme.titleLabel()
         titleLabel.numberOfLines = 0
@@ -101,7 +101,6 @@ class LockViewController : UIViewController, UITextFieldDelegate {
         textField.delegate = self
         textField.placeholder = "Enter 6-digit code"
         borrowButton!.setTitle("Borrow", forState: .Normal)
-        borrowButton!.layer.cornerRadius = 4
         }
 
 //    MARK: UITextFieldDelegate
