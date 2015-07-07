@@ -9,12 +9,14 @@
 import UIKit
 import ReactiveCocoa
 
+
+
+
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate {
-
     var window: UIWindow?
-
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         #if !DEBUG
@@ -26,11 +28,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
      //   Flurry.startSession("")
         
+       
         
         let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(50, longitude: 14))
         producer.start(error: { println($0) }, next: { [weak self] (bikes : [Bike]) in
             })
-        
+                
         let vc = UINavigationController(rootViewController: LockViewController())
         let vc2 = UINavigationController(rootViewController: MapViewController())
         let vc3 = UINavigationController(rootViewController: ProfileViewController())
@@ -40,10 +43,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         let item3 = TabItem(controller: vc3, images: UIImage.toggleImage(UIImage.ImagesForToggle.Profile))
         
         let tabbar = ACKTabBarController(items: [item,item2,item3])
+        let signIn = SignInViewController()
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window?.rootViewController = tabbar
+        window?.rootViewController = signIn
         window?.makeKeyAndVisible()
         window?.tintColor = UIColor.whiteColor()
+        
+        UINavigationBar.appearance().shadowImage = UIImage()
         
         return true
     }

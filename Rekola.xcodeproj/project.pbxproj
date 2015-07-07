@@ -29,6 +29,8 @@
 		9244D2861B43FA840039B5EC /* TinTingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2851B43FA840039B5EC /* TinTingButton.swift */; };
 		928049DB1B41614700535485 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928049DA1B41614700535485 /* MapViewController.swift */; };
 		92E6770D1B4293E200819FC5 /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E6770C1B4293E200819FC5 /* MapPin.swift */; };
+		92F0DA301B4BC1BD00C42BB4 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F0DA2F1B4BC1BD00C42BB4 /* AboutAppViewController.swift */; };
+		92F0DA321B4BD3EC00C42BB4 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F0DA311B4BD3EC00C42BB4 /* SignInViewController.swift */; };
 		B4020772195199490027B407 /* BDDTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = B4ABA24F195196930069FAD4 /* BDDTestCase.m */; };
 		B433E4AE19530092006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
 		B433E4AF195300A4006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
@@ -102,6 +104,8 @@
 		9244D2851B43FA840039B5EC /* TinTingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinTingButton.swift; sourceTree = "<group>"; };
 		928049DA1B41614700535485 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		92E6770C1B4293E200819FC5 /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
+		92F0DA2F1B4BC1BD00C42BB4 /* AboutAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
+		92F0DA311B4BD3EC00C42BB4 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		ABA3E22A1E6F145A094D2DF0 /* Pods-Tests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.development.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.development.xcconfig"; sourceTree = "<group>"; };
 		B215BAF68D134DF9BE4C6B93 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B433E4A719530092006BEBF1 /* environment-AdHoc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-AdHoc.plist"; sourceTree = "<group>"; };
@@ -237,7 +241,9 @@
 			children = (
 				B4F14CA51B20502000DDBE9B /* LockViewController.swift */,
 				928049DA1B41614700535485 /* MapViewController.swift */,
+				92F0DA2F1B4BC1BD00C42BB4 /* AboutAppViewController.swift */,
 				9244D2831B43DCE60039B5EC /* ProfileViewController.swift */,
+				92F0DA311B4BD3EC00C42BB4 /* SignInViewController.swift */,
 				B44456F01B3462FA00597A66 /* TabBarController.swift */,
 			);
 			name = Controllers;
@@ -588,6 +594,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92F0DA301B4BC1BD00C42BB4 /* AboutAppViewController.swift in Sources */,
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
 				B4EE77921B28D1AA00ED956B /* APIService.swift in Sources */,
 				92E6770D1B4293E200819FC5 /* MapPin.swift in Sources */,
@@ -601,6 +608,7 @@
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
+				92F0DA321B4BD3EC00C42BB4 /* SignInViewController.swift in Sources */,
 				9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */,
 				B4EE779F1B29072800ED956B /* Model.swift in Sources */,
 				B44456EF1B34493100597A66 /* MapViewModel.swift in Sources */,

@@ -72,6 +72,10 @@ extension UIColor {
         return UIColor(hex: 0xf1f1f1)
     }
     
+    class func rekolaPinkTextFieldColor() -> UIColor! {
+        return UIColor(hex: 0xff7abf)
+    }
+    
 }
 
 extension UIImage {
@@ -79,6 +83,12 @@ extension UIImage {
         case logo = "logo"
         case mapPin = "mapPin"
         case logoutButton = "logoutButton"
+        case locationButton = "locationButton"
+        case directionButton = "directionButton"
+        case bike = "bike"
+        case aboutApp = "aboutApp"
+        case signInBike = "signInBike"
+        case ackee = "ackee"
     }
     
     convenience init!(imageIdentifier: ImageIdentifier) {
@@ -156,6 +166,12 @@ class Theme {
         return tf
     }
     
+    class func pinkTextField() -> UITextField {
+        let tf = UITextField()
+        tf.backgroundColor = .rekolaPinkTextFieldColor()
+        return tf
+    }
+    
     class func titleLabel() -> UILabel {
         let l = UILabel()
         return l
@@ -170,9 +186,14 @@ class Theme {
     
     class func lineView() -> UIView! {
         let line = UIView()
-//        line.backgroundColor = .blackColor()
         line.backgroundColor = .rekolaGrayLineColor()
         return line
+    }
+    
+    class func whiteLabel() -> UILabel {
+        let l = UILabel()
+        l.textColor = .whiteColor()
+        return l
     }
 
 }

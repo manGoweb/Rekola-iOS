@@ -148,21 +148,37 @@ class ProfileViewController: UIViewController {
     weak var phoneLabel: UILabel!
     weak var aboutAppButton: UIButton!
     
-    override func viewDidLoad() {
+    override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+
+    }
+    
+    override func viewDidLoad() {
         self.view.backgroundColor = .whiteColor()
-        
         
 //        following text will be replace with text from API
         self.nameLabel.text = "Korben Dallas"
         self.nameLabel.font = UIFont.boldSystemFontOfSize(26)
-        self.dateLabel.text = "Členství do 21.08.2015"
+        self.dateLabel.text = dateLabelFormat("21.08.2015")
         self.dateLabel.textColor = .rekolaPinkColor()
-        self.logoutButton.setTitle("Odhlásit se", forState: .Normal)
+        self.logoutButton.setTitle("  Odhlásit se", forState: .Normal)
         self.emailLabel.text = "korben.dallas@multipass.com"
         self.addressLabel.text = "Bechynova 274/8, Praha 6"
         self.phoneLabel.text = "+420 555 555 555"
         self.aboutAppButton.setTitle("O Aplikaci", forState: .Normal)
-        
+        self.aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)
     }
+    
+    func aboutAppPressed() {
+        let aboutAppVC = AboutAppViewController()
+        
+        self.showViewController(aboutAppVC, sender: nil)
+    }
+    
+    func dateLabelFormat(date: String) -> String! {
+        let str = "Členství do " + date
+        return str
+    }
+    
+    
 }
