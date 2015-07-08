@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
-		setupKeyboardLayoutGuide()
+//		setupKeyboardLayoutGuide()
 		
         #if !DEBUG
         //BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)

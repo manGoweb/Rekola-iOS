@@ -73,7 +73,7 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		forgotPasswd.snp_makeConstraints { make in
 			make.top.equalTo(register.snp_bottom)
 			make.left.right.equalTo(view)
-			make.bottom.lessThanOrEqualTo(keyboardLayoutGuide)
+//			make.bottom.lessThanOrEqualTo(keyboardLayoutGuide)
 		}
 		self.forgotPasswd = forgotPasswd
 		
@@ -99,18 +99,18 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		super.viewDidLoad()
 //		UIApplication.sharedApplication().statusBarStyle = .LightContent
 		
-		self.emailTextField.attributedPlaceholder = NSAttributedString(string:"Email",
+		self.emailTextField.attributedPlaceholder = NSAttributedString(string:NSLocalizedString("SIGNIN_email", comment: ""),
 			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
 		
-		self.passwordTextField.attributedPlaceholder = NSAttributedString(string:"Heslo",
+		self.passwordTextField.attributedPlaceholder = NSAttributedString(string:NSLocalizedString("SIGNIN_passwd", comment: ""),
 			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
 		
-		self.signInButton.setTitle("Přihlásit se", forState: .Normal)
+		self.signInButton.setTitle(NSLocalizedString("SIGNIN_signin", comment: ""), forState: .Normal)
 		self.signInButton.addTarget(self, action: "signIn:", forControlEvents: .TouchUpInside)
 		
-		self.registerButton.setTitle("Registrovat se", forState: .Normal)
+		self.registerButton.setTitle(NSLocalizedString("SIGNIN_register", comment: ""), forState: .Normal)
 		
-		self.forgotPasswd.setTitle("Zapomenuté heslo", forState: .Normal)
+		self.forgotPasswd.setTitle(NSLocalizedString("SIGNIN_lostPasswd", comment: ""), forState: .Normal)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {

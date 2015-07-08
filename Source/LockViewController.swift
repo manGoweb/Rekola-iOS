@@ -96,11 +96,11 @@ class LockViewController : UIViewController, UITextFieldDelegate {
         self.view.backgroundColor = .whiteColor()
         
         logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
-        titleLabel.text = "Enter the bike 6-digit code to receive the lock passcode and start using your bike."
-        subtitleLabel.text = "Code can be found on the rear fender or on a rear stick."
+        titleLabel.text = NSLocalizedString("LOCK_codeInfo", comment: "")
+        subtitleLabel.text = NSLocalizedString("LOCK_codeDescription", comment: "")
         textField.delegate = self
-        textField.placeholder = "Enter 6-digit code"
-        borrowButton!.setTitle("Borrow", forState: .Normal)
+        textField.placeholder = NSLocalizedString("LOCK_enterCode", comment: "")
+        borrowButton!.setTitle(NSLocalizedString("LOCK_borrow", comment: ""), forState: .Normal)
         borrowButton.addTarget(self, action: "borrowBike", forControlEvents: .TouchUpInside)
     }
     

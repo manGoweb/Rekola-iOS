@@ -33,7 +33,7 @@ class ProfileViewController: UIViewController {
         self.dateLabel = dateLabel
         
         let logoutButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: .rekolaGreenColor())
-        logoutButton.setTitle("Odhlásit se", forState: .Normal)
+        logoutButton.setTitle(NSLocalizedString("PROFILE_logout", comment: ""), forState: .Normal)
         logoutButton.setImage(UIImage(imageIdentifier: .logoutButton), forState: .Normal)
         logoutButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
         logoutButton.layer.borderWidth = 1
@@ -49,7 +49,7 @@ class ProfileViewController: UIViewController {
         self.logoutButton = logoutButton
         
         let staticEmailLabel = UILabel()
-        staticEmailLabel.text = "Email"
+        staticEmailLabel.text = NSLocalizedString("PROFILE_email", comment: "")
         staticEmailLabel.textColor = .staticGrayTextColor()
         staticEmailLabel.textAlignment = .Left
         view.addSubview(staticEmailLabel)
@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController {
         }
         
         let staticAddressLabel = UILabel()
-        staticAddressLabel.text = "Adresa"
+        staticAddressLabel.text = NSLocalizedString("PROFILE_address", comment: "")
         staticAddressLabel.textColor = .staticGrayTextColor()
         staticAddressLabel.textAlignment = .Left
         view.addSubview(staticAddressLabel)
@@ -109,7 +109,7 @@ class ProfileViewController: UIViewController {
         }
         
         let staticPhoneLabel = UILabel()
-        staticPhoneLabel.text = "Telefon"
+        staticPhoneLabel.text = NSLocalizedString("PROFILE_phone", comment: "")
         staticPhoneLabel.textColor = .staticGrayTextColor()
         staticPhoneLabel.textAlignment = .Left
         view.addSubview(staticPhoneLabel)
@@ -165,7 +165,8 @@ class ProfileViewController: UIViewController {
         self.emailLabel.text = "korben.dallas@multipass.com"
         self.addressLabel.text = "Bechynova 274/8, Praha 6"
         self.phoneLabel.text = "+420 555 555 555"
-        self.aboutAppButton.setTitle("O Aplikaci", forState: .Normal)
+        
+        self.aboutAppButton.setTitle(NSLocalizedString("PROFILE_about", comment: ""), forState: .Normal)
         self.aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)
     }
     
@@ -176,7 +177,7 @@ class ProfileViewController: UIViewController {
     }
     
     func dateLabelFormat(date: String) -> String! {
-        let str = "Členství do " + date
+        let str = NSLocalizedString("PROFILE_membership", comment: "") + date
         return str
     }
     

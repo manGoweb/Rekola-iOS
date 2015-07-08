@@ -112,7 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        self.navigationItem.title = "Mapa"
+        self.navigationItem.title = NSLocalizedString("MAP_title", comment: "")
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
         self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()

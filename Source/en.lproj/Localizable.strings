@@ -6,6 +6,27 @@
   Copyright (c) 2015 Ackee s.r.o. All rights reserved.
 */
 
+"LOCK_codeInfo" = "Vlož 6 místný kód a obdržíš kód zámku a můžeš začít používat kolo.";
+"LOCK_codeDescription" = "Kód najdeš na zadním blatníku nebo na zadní části rámu.";
+"LOCK_enterCode" = "Vlož 6 místný kód";
+"LOCK_borrow" = "Půjčit";
+"SIGNIN_email" = "Email";
+"SIGNIN_passwd" = "Heslo";
+"SIGNIN_signin" = "Přihlásit se";
+"SIGNIN_register" = "Registrovat se";
+"SIGNIN_lostPasswd" = "Zapomenuté heslo";
+"BORROWBIKE_detail" = "Detail kola";
+"BORROWBIKE_code" = "Kód zámku";
+"BORROWBIKE_return" = "Vrátit kolo";
+"BORROWBIKE_lent" = "Půjčeno ";
+"MAP_title" = "Mapa";
+"PROFILE_membership"= "Členství do ";
+"PROFILE_logout" = "Odhlásit se";
+"PROFILE_email" = "Email";
+"PROFILE_address" = "Adresa";
+"PROFILE_phone" = "Telefon";
+"PROFILE_about" = "O aplikaci";
+
 "Person" = "Person";
 "Done" = "Done";
 "CameraTut" = "CameraTut";

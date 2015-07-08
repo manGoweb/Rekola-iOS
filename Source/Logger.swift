@@ -95,7 +95,7 @@ private class LogViewController : UIViewController {
 		tv.snp_makeConstraints { make in
 			make.left.right.equalTo(view)
 			make.top.equalTo(snp_topLayoutGuideBottom)
-			make.bottom.equalTo(keyboardLayoutGuide)
+//			make.bottom.equalTo(keyboardLayoutGuide)
 		}
 		textView = tv
 	}
