@@ -58,6 +58,7 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		
 		let register = UIButton()
 		register.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+		register.titleLabel?.font = UIFont.systemFontOfSize(14)
 		view.addSubview(register)
 		register.snp_makeConstraints { make in
 			make.top.equalTo(signInButton.snp_bottom).offset(L.verticalSpacing)
@@ -67,6 +68,7 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		
 		let forgotPasswd = UIButton()
 		forgotPasswd.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+		forgotPasswd.titleLabel?.font = UIFont.systemFontOfSize(14)
 		view.addSubview(forgotPasswd)
 		forgotPasswd.snp_makeConstraints { make in
 			make.top.equalTo(register.snp_bottom)
@@ -104,13 +106,11 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
 		
 		self.signInButton.setTitle("Přihlásit se", forState: .Normal)
-		self.signInButton.addTarget(self, action: "signIn", forControlEvents: .TouchUpInside)
+		self.signInButton.addTarget(self, action: "signIn:", forControlEvents: .TouchUpInside)
 		
 		self.registerButton.setTitle("Registrovat se", forState: .Normal)
-		self.registerButton.titleLabel?.font = UIFont.systemFontOfSize(14)
 		
 		self.forgotPasswd.setTitle("Zapomenuté heslo", forState: .Normal)
-		self.forgotPasswd.titleLabel?.font = UIFont.systemFontOfSize(14)
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
@@ -123,7 +123,8 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		return .LightContent
 	}
 	
-	func signIn() {
+	func signIn(sender: AnyObject?) {
+		
 		let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
 		
 		let vc = UINavigationController(rootViewController: LockViewController())

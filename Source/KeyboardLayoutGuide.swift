@@ -141,7 +141,8 @@ extension UIViewController {
 			delegate.keyboardHeight.producer
 				|> start(next: { height in
 				c.constraint.updateOffset(-height)
-				view.setNeedsLayout()
+//				view.setNeedsLayout() 
+					//TODO whole window is layed out when height changes
 			})
 		}else{
 			logA("Appdelegate is nil or not of class AppDelegate")

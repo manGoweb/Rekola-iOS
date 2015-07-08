@@ -205,6 +205,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         self.items[index].didSelect()
         self.items[self.selectedIndex].deselect()
 
+		view.userInteractionEnabled = false
         self.transitionFromViewController(selectedController, toViewController: newC, duration: 0.25, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             
             newC.view.frame = self.containerView.bounds
@@ -214,10 +215,10 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
                 newC.didMoveToParentViewController(self)
                 self.selectedController = newC
                 self.selectedIndex = index
-                
+                self.view.userInteractionEnabled = true
         }
         
-        
+		
         
         
     }
