@@ -89,6 +89,7 @@ extension UIImage {
         case aboutApp = "aboutApp"
         case signInBike = "signInBike"
         case ackee = "ackee"
+        case borrowBike = "borrowBike"
     }
     
     convenience init!(imageIdentifier: ImageIdentifier) {

@@ -49,7 +49,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         window?.makeKeyAndVisible()
         window?.tintColor = UIColor.whiteColor()
         
-        UINavigationBar.appearance().shadowImage = UIImage()
+//        UINavigationBar.appearance().shadowImage = UIImage()
+//        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         
         return true
     }

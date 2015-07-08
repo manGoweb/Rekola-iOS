@@ -101,7 +101,14 @@ class LockViewController : UIViewController, UITextFieldDelegate {
         textField.delegate = self
         textField.placeholder = "Enter 6-digit code"
         borrowButton!.setTitle("Borrow", forState: .Normal)
-        }
+        borrowButton.addTarget(self, action: "borrowBike", forControlEvents: .TouchUpInside)
+    }
+    
+    func borrowBike() {
+        let vc = BorrowBikeViewController()
+        presentViewController(vc, animated: true, completion: nil)
+    }
+
 
 //    MARK: UITextFieldDelegate
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -114,6 +121,7 @@ class LockViewController : UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
+        borrowBike()
         return false
     }
 }

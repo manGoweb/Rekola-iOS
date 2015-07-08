@@ -110,6 +110,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
 //        navigationBar settings + tintColor
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         self.navigationItem.title = "Mapa"
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
@@ -175,6 +177,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.detailView.alpha = 1.0
         self.navigationController?.navigationBarHidden = false
         
+//        following text will be replaced with text from API
         self.bikeImage.contentMode = UIViewContentMode.ScaleAspectFit
         self.bikeNameLabel.text = "Pivoňka"
         self.bikeDistanceLabel.text = "850 m"
@@ -184,6 +187,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {
         self.detailView.alpha = 0.0
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 }
