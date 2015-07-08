@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
         let tabbar = ACKTabBarController(items: [item,item2,item3])
         let signIn = SignInViewController()
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = signIn
         window?.makeKeyAndVisible()
         window?.tintColor = UIColor.whiteColor()

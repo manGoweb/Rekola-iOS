@@ -22,7 +22,8 @@ class LockViewController : UIViewController, UITextFieldDelegate {
         scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)
         scrollView.snp_makeConstraints { make in
-            make.left.top.width.height.equalTo(view)
+            make.left.top.right.equalTo(view)
+			make.bottom.equalTo(keyboardLayoutGuide)
         }
         self.scrollView = scrollView
         
@@ -35,6 +36,7 @@ class LockViewController : UIViewController, UITextFieldDelegate {
         self.container = container
         
         let iv = UIImageView(image: UIImage(imageIdentifier: .logo))
+		iv.contentMode = UIViewContentMode.ScaleAspectFit
         container.addSubview(iv)
         iv.snp_makeConstraints { make in
             make.top.left.right.equalTo(container)
@@ -94,8 +96,7 @@ class LockViewController : UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.view.backgroundColor = .whiteColor()
-        
-        logoImageView.contentMode = UIViewContentMode.ScaleAspectFit
+		
         titleLabel.text = NSLocalizedString("LOCK_codeInfo", comment: "")
         subtitleLabel.text = NSLocalizedString("LOCK_codeDescription", comment: "")
         textField.delegate = self

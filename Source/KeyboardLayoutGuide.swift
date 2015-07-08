@@ -15,45 +15,34 @@ import ReactiveCocoa
 
 
 
-extension AppDelegate {
+extension UIWindow {
 	
 	private static var key : Selector { return Selector("keyboardHeight") }
 	
 	private struct AssociatedKeys {
-		static var KeyboardHeight = "keyboardHeight"
+		static var KeyboardLayoutGuide = "keyboardLayoutGuide"
 	}
 	
-	var keyboardHeight : MutableProperty<CGFloat>! {
-		if let storage = objc_getAssociatedObject(self, &AssociatedKeys.KeyboardHeight) as? MutableProperty<CGFloat> {
+	var keyboardLayoutGuide : UIView! {
+		if let storage = objc_getAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide) as? UIView {
 			return storage
 		}else {
-			logA("keyboardHeight was accessed before it was setup. Did you forget to call setupKeyboardLayoutGuide() in AppDelegate?")
+			logA("keyboardLayoutGuide was accessed before it was setup. Did you forget to call setupKeyboardLayoutGuide() in AppDelegate?")
 			return nil
 		}
 	}
 	
-//	var keyboardLayoutGuide : UIView! {
-//		if let g = objc_getAssociatedObject(self, &key) as? UIView {
-//			return g
-//		}else {
-//			logA("Key window's keyboardLayoutGuide property was accessed before it was setup. Did you forget to call window?.setupKeyboardLayoutGuide() in AppDelegate?")
-//			return nil
-//		}
-//	}
-	
 	func setupKeyboardLayoutGuide() {
-		let storage = MutableProperty<CGFloat>(0)
-		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardHeight, storage, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-		
-		//		let guide = UIView()
-//		addSubview(guide)
-//		var c : ConstraintDescriptionEditable!
-//		guide.snp_makeConstraints { make in
-//			make.height.equalTo(0)
-//			make.left.right.equalTo(self)
-//			c = make.bottom.equalTo(self).offset(0)
-//		}
-//		objc_setAssociatedObject(self, &key, guide, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)) //held strongly, cant do weak ref easily
+
+		let guide = UIView()
+		addSubview(guide)
+		var c : ConstraintDescriptionEditable!
+		guide.snp_makeConstraints { make in
+			make.height.equalTo(0)
+			make.left.right.equalTo(self)
+			c = make.bottom.equalTo(self).offset(0)
+		}
+		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide, guide, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)) //held strongly, cant do weak ref easily
 		
 		let show = NSNotificationCenter.defaultCenter().rac_addObserverForName(UIKeyboardWillShowNotification, object: nil).toSignalProducer()
 			|> ignoreError
@@ -96,8 +85,8 @@ extension AppDelegate {
 			UIView.beginAnimations(nil, context: nil)
 			UIView.setAnimationDuration($0.duration)
 			UIView.setAnimationCurve($0.curve)
-			self.keyboardHeight.value = $0.height
-			UIApplication.sharedApplication().keyWindow!.layoutIfNeeded() //TODO: dont layout whole window, let every vc layout its view. Currently, this would cause a deadlock on org.reactivecocoa.ReactiveCocoa.SignalProducer.buffer but should be fixed in future versions of rac
+			c.constraint.updateOffset(-$0.height)
+			self.layoutIfNeeded()
 			UIView.commitAnimations()
 			})
 	}
@@ -132,25 +121,22 @@ extension UIViewController {
 		}
 		let guide = UIView()
 		view.addSubview(guide)
-		var c : ConstraintDescriptionEditable!
-		guide.snp_makeConstraints { make in
-			make.left.right.equalTo(view)
-			make.height.equalTo(0)
-			c = make.bottom.equalTo(view).offset(0)
-		}
+		var c : ConstraintDescriptionEditable?
+
 		objc_setAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide, guide, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC)) //held strongy, cant do weak ref easily
-		if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate {
-			delegate.keyboardHeight.producer
-				|> start(next: { height in
-				let origin = view.frame.origin.y
-					
-				c.constraint.updateOffset(-height)
-//				view.setNeedsLayout() 
-					//TODO whole window is layed out when height changes
-			})
-		}else{
-			logA("Appdelegate is nil or not of class AppDelegate")
-		}
+		
+		
+		let didMoveToWindow = view.rac_signalForSelector("didMoveToWindow").toSignalProducer()
+		didMoveToWindow.start(next: { [weak self] _ in
+			if let window = view.window where window == UIApplication.sharedApplication().keyWindow {
+				self?.keyboardLayoutGuide.snp_remakeConstraints { make in
+					c = make.edges.equalTo(window.keyboardLayoutGuide)
+				}
+			}else{
+				self?.keyboardLayoutGuide.snp_remakeConstraints { make in }
+			}
+		})
+		
 		
 		let appear = rac_signalForSelector("viewWillAppear:").toSignalProducer()
 			|> ignoreError
@@ -162,9 +148,9 @@ extension UIViewController {
 		
 		viewIsActive.start(next: {
 			if $0 {
-				c.constraint.activate()
+				c?.constraint.activate()
 			}else{
-				c.constraint.deactivate()
+				c?.constraint.deactivate()
 			}
 		})
 	}
