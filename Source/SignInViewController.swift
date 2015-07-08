@@ -136,12 +136,14 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		let item3 = TabItem(controller: vc3, images: UIImage.toggleImage(UIImage.ImagesForToggle.Profile))
 		
 		let tabBar = ACKTabBarController(items: [item,item2,item3])
-		delegate.window!.rootViewController = tabBar
+		UIView.transitionWithView(delegate.window!, duration: 0.2, options: .TransitionCrossDissolve, animations: {
+			delegate.window!.rootViewController = tabBar
+		}, completion: nil)
 		
-		tabBar.view.alpha = 0.0
-		UIView.animateWithDuration(0.2, animations: { () -> Void in
-			tabBar.view.alpha = 1.0
-		})
+//		tabBar.view.alpha = 0.0
+//		UIView.animateWithDuration(0.2, animations: { () -> Void in
+//			tabBar.view.alpha = 1.0
+//		})
 		
 		delegate.window!.makeKeyAndVisible()
 		
