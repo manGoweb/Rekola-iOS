@@ -64,7 +64,7 @@ extension UIWindow {
 					let rect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
 					let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
 										let curve = UIViewAnimationCurve(rawValue: (userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue)!
-					return (height: rect.size.height, duration: duration, curve: curve)
+					return (height: self.bounds.size.height - rect.origin.y, duration: duration, curve: curve)
 				}
 				return nil
 			}
@@ -128,9 +128,9 @@ extension UIViewController {
 		
 		let didMoveToWindow = view.rac_signalForSelector("didMoveToWindow").toSignalProducer()
 		didMoveToWindow.start(next: { [weak self] _ in
-			if let window = view.window where window == UIApplication.sharedApplication().keyWindow {
+			if let windowGuide = view.window?.keyboardLayoutGuide {
 				self?.keyboardLayoutGuide.snp_remakeConstraints { make in
-					c = make.edges.equalTo(window.keyboardLayoutGuide)
+					c = make.edges.equalTo(windowGuide)
 				}
 			}else{
 				self?.keyboardLayoutGuide.snp_remakeConstraints { make in }

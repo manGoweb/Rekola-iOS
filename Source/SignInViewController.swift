@@ -73,7 +73,7 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		forgotPasswd.snp_makeConstraints { make in
 			make.top.equalTo(register.snp_bottom)
 			make.left.right.equalTo(view)
-//			make.bottom.lessThanOrEqualTo(keyboardLayoutGuide)
+			make.bottom.lessThanOrEqualTo(keyboardLayoutGuide)
 		}
 		self.forgotPasswd = forgotPasswd
 		
