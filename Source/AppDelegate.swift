@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
-		setupKeyboardLayoutGuide()
+		window = UIWindow(frame: UIScreen.mainScreen().bounds)
+		window?.setupKeyboardLayoutGuide()
 		
         #if !DEBUG
         //BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)
@@ -47,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
         let tabbar = ACKTabBarController(items: [item,item2,item3])
         let signIn = SignInViewController()
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = signIn
         window?.makeKeyAndVisible()
         window?.tintColor = UIColor.whiteColor()
