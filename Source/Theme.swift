@@ -76,6 +76,10 @@ extension UIColor {
         return UIColor(hex: 0xff7abf)
     }
     
+    class func rekolaGrayBorderColor() -> UIColor! {
+        return UIColor(hex: 0xc2c2c2)
+    }
+    
 }
 
 extension UIImage {
@@ -90,6 +94,7 @@ extension UIImage {
         case signInBike = "signInBike"
         case ackee = "ackee"
         case borrowBike = "borrowBike"
+        case code = "code"
     }
     
     convenience init!(imageIdentifier: ImageIdentifier) {

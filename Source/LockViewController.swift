@@ -12,6 +12,7 @@ import ReactiveCocoa
 
 
 class LockViewController : UIViewController, UITextFieldDelegate {
+
 	
 	override func loadView() {
 		
