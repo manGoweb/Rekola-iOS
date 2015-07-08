@@ -102,7 +102,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        UIApplication.sharedApplication().statusBarStyle = .LightContent
+//        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
     override func viewDidLoad() {
@@ -150,7 +150,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+//        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
     }
     
 //    this needs to be repaired with API

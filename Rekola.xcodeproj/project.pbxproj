@@ -25,6 +25,11 @@
 		6D0BE16A1B3AC49F0030E6AC /* ArgoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */; };
 		6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
+		6DE50C7A1B4D19BE007F847A /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */; };
+		6DE50C7C1B4D1AB7007F847A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C7B1B4D1AB7007F847A /* Logger.swift */; };
+		6DE50C851B4D1E28007F847A /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE50C811B4D1E20007F847A /* CocoaLumberjack.framework */; };
+		6DE50C861B4D1E28007F847A /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE50C821B4D1E20007F847A /* CocoaLumberjackSwift.framework */; };
+		6DE50C881B4D1E46007F847A /* MBSwizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C871B4D1E46007F847A /* MBSwizzler.swift */; };
 		9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2831B43DCE60039B5EC /* ProfileViewController.swift */; };
 		9244D2861B43FA840039B5EC /* TinTingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2851B43FA840039B5EC /* TinTingButton.swift */; };
 		9254E8261B4D356300D06738 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9254E8251B4D356300D06738 /* InsetLabel.swift */; };
@@ -101,6 +106,13 @@
 		6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgoExtensions.swift; sourceTree = "<group>"; };
 		6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		6D7861D41B397903009F8865 /* UIResponder+Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Errors.swift"; sourceTree = "<group>"; };
+		6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutGuide.swift; sourceTree = "<group>"; };
+		6DE50C7B1B4D1AB7007F847A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		6DE50C7D1B4D1DF9007F847A /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = "../project-skeleton-swift/Carthage/Build/iOS/CocoaLumberjack.framework"; sourceTree = "<group>"; };
+		6DE50C7E1B4D1DF9007F847A /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = "../project-skeleton-swift/Carthage/Build/iOS/CocoaLumberjackSwift.framework"; sourceTree = "<group>"; };
+		6DE50C811B4D1E20007F847A /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
+		6DE50C821B4D1E20007F847A /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
+		6DE50C871B4D1E46007F847A /* MBSwizzler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSwizzler.swift; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
 		9244D2831B43DCE60039B5EC /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9244D2851B43FA840039B5EC /* TinTingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinTingButton.swift; sourceTree = "<group>"; };
@@ -164,6 +176,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DE50C851B4D1E28007F847A /* CocoaLumberjack.framework in Frameworks */,
+				6DE50C861B4D1E28007F847A /* CocoaLumberjackSwift.framework in Frameworks */,
 				B4EE779A1B28E54F00ED956B /* SnapKit.framework in Frameworks */,
 				B4EE779B1B28E54F00ED956B /* Argo.framework in Frameworks */,
 				B4EE779C1B28E54F00ED956B /* Box.framework in Frameworks */,
@@ -310,6 +324,10 @@
 		B4ABA1DE195193330069FAD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6DE50C811B4D1E20007F847A /* CocoaLumberjack.framework */,
+				6DE50C821B4D1E20007F847A /* CocoaLumberjackSwift.framework */,
+				6DE50C7D1B4D1DF9007F847A /* CocoaLumberjack.framework */,
+				6DE50C7E1B4D1DF9007F847A /* CocoaLumberjackSwift.framework */,
 				B4EE77931B28E3F500ED956B /* Argo.framework */,
 				B4EE77941B28E3F500ED956B /* Runes.framework */,
 				B4A8008C1B28688600453A28 /* ReactiveCocoa.framework */,
@@ -383,10 +401,13 @@
 		B4EE778C1B28A5AA00ED956B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6DE50C871B4D1E46007F847A /* MBSwizzler.swift */,
 				6D7861D41B397903009F8865 /* UIResponder+Errors.swift */,
 				B4EE778D1B28A61700ED956B /* UIKitExtensions.swift */,
 				B4EE778E1B28A61700ED956B /* RACHelpers.swift */,
 				6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */,
+				6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */,
+				6DE50C7B1B4D1AB7007F847A /* Logger.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -447,7 +468,7 @@
 				ORGANIZATIONNAME = "Ackee s.r.o.";
 				TargetAttributes = {
 					B4ABA1DB195193330069FAD4 = {
-						DevelopmentTeam = 3SMVP6VZP8;
+						DevelopmentTeam = PXDF48X6VX;
 					};
 					B4ABA1FC195193330069FAD4 = {
 						TestTargetID = B4ABA1DB195193330069FAD4;
@@ -556,6 +577,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Runes.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Argo.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjackSwift.framework",
 			);
 			outputPaths = (
 			);
@@ -609,12 +632,15 @@
 				6D0BE16A1B3AC49F0030E6AC /* ArgoExtensions.swift in Sources */,
 				B44456F11B3462FA00597A66 /* TabBarController.swift in Sources */,
 				9244D2861B43FA840039B5EC /* TinTingButton.swift in Sources */,
+				6DE50C7A1B4D19BE007F847A /* KeyboardLayoutGuide.swift in Sources */,
 				928049DB1B41614700535485 /* MapViewController.swift in Sources */,
 				928F84561B4D0DD60034F5C6 /* BorrowBikeViewController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* LockViewController.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
+				6DE50C881B4D1E46007F847A /* MBSwizzler.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
+				6DE50C7C1B4D1AB7007F847A /* Logger.swift in Sources */,
 				92F0DA321B4BD3EC00C42BB4 /* SignInViewController.swift in Sources */,
 				9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */,
 				B4EE779F1B29072800ED956B /* Model.swift in Sources */,
@@ -723,11 +749,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Czechtourism (D83NU93K87)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"/Users/pt/workspace/xcode/project-skeleton-swift/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
@@ -873,6 +900,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"/Users/pt/workspace/xcode/project-skeleton-swift/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";
@@ -895,11 +923,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ackee, s.r.o.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"/Users/pt/workspace/xcode/project-skeleton-swift/Carthage/Build/iOS",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Source/Project-Prefix.pch";

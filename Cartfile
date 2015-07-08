@@ -2,3 +2,4 @@ github "ReactiveCocoa/ReactiveCocoa" "v3.0-beta.8"
 github "SnapKit/SnapKit"
 github "Alamofire/Alamofire" >= 1.2
 github "thoughtbot/Argo"
+github "CocoaLumberjack/CocoaLumberjack"

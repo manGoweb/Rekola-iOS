@@ -1,5 +1,6 @@
 github "Alamofire/Alamofire" "1.2.3"
 github "robrix/Box" "1.2.2"
+github "CocoaLumberjack/CocoaLumberjack" "2.0.1"
 github "thoughtbot/Runes" "v2.0.0"
 github "SnapKit/SnapKit" "0.12.0"
 github "antitypical/Result" "0.4.4"
