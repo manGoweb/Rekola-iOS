@@ -134,6 +134,7 @@ class BorrowBikeViewController: UIViewController {
         self.bikeCodeLabel.text = "11121"
         
         self.bikeReturnButton.setTitle(NSLocalizedString("BORROWBIKE_return", comment: ""), forState: .Normal)
+        self.bikeReturnButton.addTarget(self, action: "returnBike", forControlEvents: .TouchUpInside)
     }
     
     func formatLabel(label: UILabel, date: String, time: String) -> UILabel! {
@@ -145,5 +146,10 @@ class BorrowBikeViewController: UIViewController {
         
         label.attributedText = atribute
         return label
+    }
+    
+    func returnBike() {
+        let vc = ReturnBikeViewController()
+        showViewController(vc, sender: nil)
     }
 }
