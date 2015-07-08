@@ -23,7 +23,8 @@ class LockViewController : UIViewController, UITextFieldDelegate {
 		scrollView.showsVerticalScrollIndicator = false
 		view.addSubview(scrollView)
 		scrollView.snp_makeConstraints { make in
-			make.left.top.width.height.equalTo(view)
+			make.left.top.right.equalTo(view)
+			make.bottom.equalTo(keyboardLayoutGuide)
 		}
 		self.scrollView = scrollView
 		
@@ -122,11 +123,11 @@ class LockViewController : UIViewController, UITextFieldDelegate {
 	
 	//    MARK: UITextFieldDelegate
 	func textFieldDidBeginEditing(textField: UITextField) {
-		self.view.frame.origin.y -= 150
+//		self.view.frame.origin.y -= 150
 	}
 	
 	func textFieldDidEndEditing(textField: UITextField) {
-		self.view.frame.origin.y += 150
+//		self.view.frame.origin.y += 150
 	}
 	
 	func textFieldShouldReturn(textField: UITextField) -> Bool {

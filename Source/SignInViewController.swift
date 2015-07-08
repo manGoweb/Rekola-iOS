@@ -139,12 +139,7 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		UIView.transitionWithView(delegate.window!, duration: 0.2, options: .TransitionCrossDissolve, animations: {
 			delegate.window!.rootViewController = tabBar
 		}, completion: nil)
-		
-//		tabBar.view.alpha = 0.0
-//		UIView.animateWithDuration(0.2, animations: { () -> Void in
-//			tabBar.view.alpha = 1.0
-//		})
-		
+
 		delegate.window!.makeKeyAndVisible()
 		
 	}

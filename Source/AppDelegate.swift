@@ -16,7 +16,8 @@ import ReactiveCocoa
 
 class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate {
     var window: UIWindow?
-    
+	
+	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
 		setupKeyboardLayoutGuide()

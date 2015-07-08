@@ -127,7 +127,9 @@ extension UIViewController {
 	
 	@objc func kblg_setView(view: UIView) {
 		kblg_setView(view)
-
+		if self.isKindOfClass(NSClassFromString("UIStatusBarViewController")) { //Private class initialized before appdelegate lifecycle methods get called. TODO: this is fragile code that may break in the future, find another way to make sure keyboardLayoutGuide is initialized in time
+			return
+		}
 		let guide = UIView()
 		view.addSubview(guide)
 		var c : ConstraintDescriptionEditable!
@@ -140,6 +142,8 @@ extension UIViewController {
 		if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate {
 			delegate.keyboardHeight.producer
 				|> start(next: { height in
+				let origin = view.frame.origin.y
+					
 				c.constraint.updateOffset(-height)
 //				view.setNeedsLayout() 
 					//TODO whole window is layed out when height changes
