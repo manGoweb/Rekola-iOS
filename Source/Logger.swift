@@ -53,7 +53,7 @@ private func configure() {
 }
 
 enum Logger {
-	static var loggingIsAsync = true
+	static var loggingIsAsync = false
 }
 
 func logA(@autoclosure debugText: () -> String, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
