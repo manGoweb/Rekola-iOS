@@ -44,7 +44,7 @@ class BorrowBikeViewController: UIViewController {
         self.bikeBorrowLabel = borrowLabel
         
         let detailButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: .rekolaGreenColor())
-        detailButton.setTitle("Detail kola", forState: .Normal)
+        detailButton.setTitle(NSLocalizedString("BORROWBIKE_detail", comment: ""), forState: .Normal)
         detailButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
         detailButton.layer.cornerRadius = 4
         detailButton.layer.borderWidth = 2
@@ -71,7 +71,7 @@ class BorrowBikeViewController: UIViewController {
         
         let lockCodeLabel = InsetLabel()
         lockCodeLabel.textColor = .rekolaGrayBorderColor()
-        lockCodeLabel.text = "Kod zámku"
+        lockCodeLabel.text = NSLocalizedString("BORROWBIKE_code", comment: "")
         lockCodeLabel.inset.left = 5
         lockCodeLabel.inset.right = 5
         lockCodeLabel.textAlignment = .Center
@@ -133,11 +133,11 @@ class BorrowBikeViewController: UIViewController {
         
         self.bikeCodeLabel.text = "11121"
         
-        self.bikeReturnButton.setTitle("Vrátit kolo", forState: .Normal)
+        self.bikeReturnButton.setTitle(NSLocalizedString("BORROWBIKE_return", comment: ""), forState: .Normal)
     }
     
     func formatLabel(label: UILabel, date: String, time: String) -> UILabel! {
-        let text = "Půjčeno " + date + "/" + time
+        let text = NSLocalizedString("BORROWBIKE_lent", comment: "") + date + "/" + time
         
         let atribute = NSMutableAttributedString(string: text)
         atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 8, length: 5))

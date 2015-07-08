@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
+
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		window?.setupKeyboardLayoutGuide()
 		
