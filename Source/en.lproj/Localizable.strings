@@ -26,6 +26,9 @@
 "PROFILE_address" = "Adresa";
 "PROFILE_phone" = "Telefon";
 "PROFILE_about" = "O aplikaci";
+"RETURNBIKE_return" = "Vrátit kolo";
+"RETURNBIKE_description" = "Přesná poloha kola";
+"RETURNBIKE_title" = "Vrácení kola";
 
 "Person" = "Person";
 "Done" = "Done";

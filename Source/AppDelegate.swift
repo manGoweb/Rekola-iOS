@@ -56,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 //        UINavigationBar.appearance().shadowImage = UIImage()
 //        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         
+//        UINavigationBar.appearance().barTintColor = 
         return true
     }
 

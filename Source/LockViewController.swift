@@ -95,6 +95,7 @@ class LockViewController : UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.navigationBar.tintColor = .rekolaGreenColor()
         self.view.backgroundColor = .whiteColor()
 		
         titleLabel.text = NSLocalizedString("LOCK_codeInfo", comment: "")
