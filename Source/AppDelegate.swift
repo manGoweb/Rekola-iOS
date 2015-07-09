@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		
 
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		window?.setupKeyboardLayoutGuide()
+//		window?.setupKeyboardLayoutGuide()
 		
         #if !DEBUG
         //BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)
