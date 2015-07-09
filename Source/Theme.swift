@@ -80,6 +80,14 @@ extension UIColor {
         return UIColor(hex: 0xc2c2c2)
     }
     
+    class func rekolaWarningYellowColor() -> UIColor! {
+        return UIColor(hex: 0xffca82)
+    }
+    
+    class func rekolaWarningRedColor() -> UIColor! {
+        return UIColor(hex: 0xff4862)
+    }
+    
 }
 
 extension UIImage {
@@ -95,6 +103,17 @@ extension UIImage {
         case ackee = "ackee"
         case borrowBike = "borrowBike"
         case code = "code"
+        case biggerBorrowBike = "biggerBorrowBike"
+        case yellowWarning = "yellowWarning"
+        case redWarning = "redWarning"
+        case clock = "clock"
+        case calendar = "calendar"
+        case trunk = "trunk"
+        case frontlight = "frontlight"
+        case backlight = "backlight"
+        case basket = "basket"
+        case buzzer = "buzzer"
+        case mudguard = "mudguard"
     }
     
     convenience init!(imageIdentifier: ImageIdentifier) {
@@ -124,8 +143,8 @@ extension UIImage {
 
 enum L {
     static let contentInsets = UIEdgeInsetsMake(10, 10, 10, 10)
-    static let verticalSpacing = 10.0
-    static let horizontalSpacing = 10.0
+    static let verticalSpacing = 15.0
+    static let horizontalSpacing = 15.0
 }
 
 /**
@@ -199,6 +218,13 @@ class Theme {
     class func whiteLabel() -> UILabel {
         let l = UILabel()
         l.textColor = .whiteColor()
+        return l
+    }
+    
+    class func pinkLabel() -> UILabel {
+        let l = UILabel()
+        l.textColor = .rekolaPinkColor()
+        l.font = UIFont.systemFontOfSize(16)
         return l
     }
 

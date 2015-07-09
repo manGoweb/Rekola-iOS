@@ -129,7 +129,7 @@ class BorrowBikeViewController: UIViewController {
         
         self.bikeBorrowLabel = formatLabel(self.bikeBorrowLabel,date: "25.08", time: "14:53")
         
-//        self.bikeCodeImage.contentMode = .ScaleAspectFit
+        self.bikeDetailButton.addTarget(self, action: "bikeDetail", forControlEvents: .TouchUpInside)
         
         self.bikeCodeLabel.text = "11121"
         
@@ -150,6 +150,11 @@ class BorrowBikeViewController: UIViewController {
     
     func returnBike() {
         let vc = ReturnBikeViewController()
+        showViewController(vc, sender: nil)
+    }
+    
+    func bikeDetail() {
+        let vc = BikeDetailViewController()
         showViewController(vc, sender: nil)
     }
 }

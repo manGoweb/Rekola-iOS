@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 import SnapKit
 import MapKit
+import CoreLocation
 
 class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate {
     override func loadView() {
@@ -90,8 +91,11 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.mapView.scrollEnabled = true
         self.mapView.zoomEnabled = true
         
-        let button = MKUserTrackingBarButtonItem()
-        self.navigationController?.navigationItem.rightBarButtonItem = button
+        let button = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "showLocation")
+        self.navigationItem.rightBarButtonItem = button
+    }
+    
+    func showLocation() {
     }
     
 //    MARK: UITextViewDelegate

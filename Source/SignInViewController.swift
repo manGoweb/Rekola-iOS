@@ -79,6 +79,7 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		
 		let ackeeIm = UIImageView(image: UIImage(imageIdentifier: .ackee))
 		view.addSubview(ackeeIm)
+        ackeeIm.contentMode = .ScaleAspectFit
 		ackeeIm.snp_makeConstraints { make in
 			make.top.equalTo(forgotPasswd.snp_bottom).offset(L.verticalSpacing)
 			make.left.right.equalTo(view)
