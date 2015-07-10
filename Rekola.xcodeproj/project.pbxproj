@@ -30,6 +30,7 @@
 		6DE50C851B4D1E28007F847A /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE50C811B4D1E20007F847A /* CocoaLumberjack.framework */; };
 		6DE50C861B4D1E28007F847A /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE50C821B4D1E20007F847A /* CocoaLumberjackSwift.framework */; };
 		6DE50C881B4D1E46007F847A /* MBSwizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C871B4D1E46007F847A /* MBSwizzler.swift */; };
+		923D69B31B4FBA2200FEF89A /* AddProblemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */; };
 		9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2831B43DCE60039B5EC /* ProfileViewController.swift */; };
 		9244D2861B43FA840039B5EC /* TinTingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2851B43FA840039B5EC /* TinTingButton.swift */; };
 		9254E8261B4D356300D06738 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9254E8251B4D356300D06738 /* InsetLabel.swift */; };
@@ -116,6 +117,7 @@
 		6DE50C821B4D1E20007F847A /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/iOS/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
 		6DE50C871B4D1E46007F847A /* MBSwizzler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSwizzler.swift; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
+		923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProblemViewController.swift; sourceTree = "<group>"; };
 		9244D2831B43DCE60039B5EC /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9244D2851B43FA840039B5EC /* TinTingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinTingButton.swift; sourceTree = "<group>"; };
 		9254E8251B4D356300D06738 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */,
 				92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */,
 				929466501B4E73C400630B7C /* BikeDetailViewController.swift */,
+				923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 				6DE50C7C1B4D1AB7007F847A /* Logger.swift in Sources */,
 				92F0DA321B4BD3EC00C42BB4 /* SignInViewController.swift in Sources */,
 				9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */,
+				923D69B31B4FBA2200FEF89A /* AddProblemViewController.swift in Sources */,
 				B4EE779F1B29072800ED956B /* Model.swift in Sources */,
 				9254E8261B4D356300D06738 /* InsetLabel.swift in Sources */,
 				B44456EF1B34493100597A66 /* MapViewModel.swift in Sources */,

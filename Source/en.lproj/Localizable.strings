@@ -34,6 +34,8 @@
 "BIKEDETAIL_moreInfo" = "Více info";
 "BIKEDETAIL_problems" = "Problémy";
 "BIKEDETAIL_addProblem" = "Přidat problém";
+"ADDPROBLEM_typeOfProblem" = "Typ problému";
+"ADDPROBLEM_chooseProblem" = "Vyberte typ";
 
 "Person" = "Person";
 "Done" = "Done";

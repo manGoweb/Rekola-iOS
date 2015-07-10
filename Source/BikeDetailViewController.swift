@@ -9,9 +9,10 @@
 import UIKit
 import Foundation
 import SnapKit
+//import
 
 
-class BikeDetailViewController: UIViewController {
+class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
     override func loadView() {
         let view = UIView()
         self.view = view
@@ -20,7 +21,7 @@ class BikeDetailViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)
         scrollView.snp_makeConstraints { make in
-            make.left.top.right.equalTo(view)
+            make.left.top.right.bottom.equalTo(view)
             make.bottom.equalTo(keyboardLayoutGuide)
         }
         self.scrollView = scrollView
@@ -29,7 +30,7 @@ class BikeDetailViewController: UIViewController {
         scrollView.addSubview(container)
         container.snp_makeConstraints { make in
             make.width.equalTo(scrollView).offset(-(L.contentInsets.left + L.contentInsets.right))
-            make.height.equalTo(scrollView)
+            make.height.equalTo(scrollView).offset(500)
             make.edges.equalTo(scrollView).insets(L.contentInsets)
         }
         self.container = container
@@ -267,13 +268,6 @@ class BikeDetailViewController: UIViewController {
             make.right.equalTo(container).offset(-L.horizontalSpacing)
         }
         self.addProblemButton = addProblemButton
-        
-//        let fillingView = UIView()
-//        container.addSubview(fillingView)
-//        fillingView.snp_makeConstraints { make in
-//            make.bottom.equalTo(container)
-//            make.height.equalTo(44)
-//        }
     }
     
     weak var scrollView: UIScrollView!
@@ -304,13 +298,16 @@ class BikeDetailViewController: UIViewController {
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        scrollView.delegate = self
+        
+        
+        deleteLineUnderNavBar()
         
         self.view.backgroundColor = .whiteColor()
         self.view.tintColor = .whiteColor()
@@ -327,5 +324,39 @@ class BikeDetailViewController: UIViewController {
         self.moreInfoButton.setTitle(NSLocalizedString("BIKEDETAIL_moreInfo", comment: ""), forState: .Normal)
         self.problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
         self.addProblemButton.setTitle(NSLocalizedString("BIKEDETAIL_addProblem", comment: ""), forState: .Normal)
+        self.addProblemButton.addTarget(self, action: "addProblemSegue", forControlEvents: .TouchUpInside)
+    }
+    
+    func deleteLineUnderNavBar() {
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+    }
+    
+    func addProblemSegue() {
+        let vc = AddProblemViewController()
+        showViewController(vc, sender: nil)
+    }
+    
+//    navigationBar settings
+    func scrollViewDidScroll(scrollview: UIScrollView) {
+        let color = UIColor.rekolaGreenColor()
+        let changePoint = 50 as CGFloat
+        let offsetY = scrollView.contentOffset.y
+        
+        if offsetY > changePoint {
+            let alpha = min(1, 1-((changePoint + 64 - offsetY)/64))
+            self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(alpha))
+            self.navigationController?.navigationBar.tintColor = .whiteColor()
+            
+        } else {
+            self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(0))
+            self.navigationController?.navigationBar.tintColor = .rekolaPinkColor()
+            deleteLineUnderNavBar()
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar .lt_reset()
     }
 }

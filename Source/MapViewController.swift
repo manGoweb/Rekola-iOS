@@ -12,7 +12,7 @@ import UIKit
 import ReactiveCocoa
 
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     override func loadView() {
         let view = UIView()
@@ -39,6 +39,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         let bikeImage = UIImageView(image: UIImage(imageIdentifier: .bike))
         detailView.addSubview(bikeImage)
+        bikeImage.contentMode = .ScaleAspectFit
         bikeImage.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -69,7 +70,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         descriptionLabel.numberOfLines = 0
         detailView.addSubview(descriptionLabel)
         descriptionLabel.snp_makeConstraints { make in
-            make.top.equalTo(distanceLabel.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(distanceLabel.snp_bottom).offset(10)
             make.left.equalTo(bikeImage.snp_right)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
         }
@@ -80,7 +81,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         noteLabel.numberOfLines = 0
         detailView.addSubview(noteLabel)
         noteLabel.snp_makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(descriptionLabel.snp_bottom).offset(10)
             make.left.equalTo(bikeImage.snp_right)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
         }
@@ -98,6 +99,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     weak var bikeNoteLabel: UILabel!
     weak var bikeImage: UIImageView!
     var bikes: [Bike]?
+    let locationManager = CLLocationManager()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -118,7 +120,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
         
         let leftBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .directionButton), style:.Plain, target: self, action: "leftBarButtonClicked")
-        let rightBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "rightBarButtonClicked")
+        let rightBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "showLocations")
         
         self.navigationItem.leftBarButtonItem = leftBarButton
         self.navigationItem.rightBarButtonItem = rightBarButton
@@ -127,6 +129,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         mapView.zoomEnabled = true
         mapView.scrollEnabled = true
+        mapView.showsUserLocation = true
+        
+//        locationManager settings
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
         
 //        API calling
         let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(49, longitude: 14))
@@ -140,7 +147,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 let mapPin = MapPin(bike: bike)
                 mapView.addAnnotation(mapPin)
             }
-        } else {
+        } else { //dumbBike for testing when API is not working
             let myBike = Bike.myBike()
             let mapPin = MapPin(bike: myBike)
             mapView.addAnnotation(mapPin)
@@ -151,6 +158,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewWillDisappear(animated)
         
 //        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+    }
+    
+    func showLocations() {
+        mapView.setCenterCoordinate(mapView.userLocation.location.coordinate, animated: true)
     }
     
 //    this needs to be repaired with API
@@ -177,8 +188,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         self.detailView.alpha = 1.0
         self.navigationController?.navigationBarHidden = false
         
+        mapView.setCenterCoordinate(view.annotation.coordinate, animated: true)
+        
 //        following text will be replaced with text from API
-        self.bikeImage.contentMode = UIViewContentMode.ScaleAspectFit
         self.bikeNameLabel.text = "Pivoňka"
         self.bikeDistanceLabel.text = "850 m"
         self.bikeDescriptionLabel.text = "Pod železničním mostem na dohled od Tesca"

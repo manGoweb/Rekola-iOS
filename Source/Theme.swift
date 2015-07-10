@@ -142,7 +142,7 @@ extension UIImage {
 
 
 enum L {
-    static let contentInsets = UIEdgeInsetsMake(10, 10, 10, 10)
+    static let contentInsets = UIEdgeInsetsMake(15, 15, 10, 10)
     static let verticalSpacing = 15.0
     static let horizontalSpacing = 15.0
 }
