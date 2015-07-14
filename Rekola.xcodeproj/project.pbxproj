@@ -33,6 +33,8 @@
 		923D69B31B4FBA2200FEF89A /* AddProblemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */; };
 		9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2831B43DCE60039B5EC /* ProfileViewController.swift */; };
 		9244D2861B43FA840039B5EC /* TinTingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2851B43FA840039B5EC /* TinTingButton.swift */; };
+		92514D4A1B539D4300BF0541 /* ProblemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92514D491B539D4300BF0541 /* ProblemsViewController.swift */; };
+		92514D4C1B53DB4500BF0541 /* ProblemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92514D4B1B53DB4500BF0541 /* ProblemCell.swift */; };
 		9254E8261B4D356300D06738 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9254E8251B4D356300D06738 /* InsetLabel.swift */; };
 		928049DB1B41614700535485 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928049DA1B41614700535485 /* MapViewController.swift */; };
 		928F84561B4D0DD60034F5C6 /* BorrowBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */; };
@@ -120,6 +122,8 @@
 		923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProblemViewController.swift; sourceTree = "<group>"; };
 		9244D2831B43DCE60039B5EC /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9244D2851B43FA840039B5EC /* TinTingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinTingButton.swift; sourceTree = "<group>"; };
+		92514D491B539D4300BF0541 /* ProblemsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemsViewController.swift; sourceTree = "<group>"; };
+		92514D4B1B53DB4500BF0541 /* ProblemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemCell.swift; sourceTree = "<group>"; };
 		9254E8251B4D356300D06738 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		928049DA1B41614700535485 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowBikeViewController.swift; sourceTree = "<group>"; };
@@ -273,6 +277,7 @@
 				92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */,
 				929466501B4E73C400630B7C /* BikeDetailViewController.swift */,
 				923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */,
+				92514D491B539D4300BF0541 /* ProblemsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -304,6 +309,7 @@
 				B4EE77911B28D1AA00ED956B /* APIService.swift */,
 				92E6770C1B4293E200819FC5 /* MapPin.swift */,
 				9244D2851B43FA840039B5EC /* TinTingButton.swift */,
+				92514D4B1B53DB4500BF0541 /* ProblemCell.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -645,8 +651,10 @@
 				928049DB1B41614700535485 /* MapViewController.swift in Sources */,
 				92E891EC1B4D590C00637FC4 /* ReturnBikeViewController.swift in Sources */,
 				928F84561B4D0DD60034F5C6 /* BorrowBikeViewController.swift in Sources */,
+				92514D4C1B53DB4500BF0541 /* ProblemCell.swift in Sources */,
 				929466511B4E73C400630B7C /* BikeDetailViewController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* LockViewController.swift in Sources */,
+				92514D4A1B539D4300BF0541 /* ProblemsViewController.swift in Sources */,
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				6DE50C881B4D1E46007F847A /* MBSwizzler.swift in Sources */,
@@ -823,7 +831,7 @@
 		B4ABA20C195193330069FAD4 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.myApp.dev;
+				ACK_BUNDLEID = cz.ackee.enterprise.rekola.dev;
 				ACK_ENVIRONMENT = Development;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -907,7 +915,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -920,7 +928,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "547d33ad-ab05-4ef2-bdc0-79b5e435a950";
+				PROVISIONING_PROFILE = "76a7e454-4195-4360-8665-586b307d4ae6";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;

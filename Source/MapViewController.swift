@@ -27,9 +27,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let detailView = UIView()
         view.addSubview(detailView)
-        detailView.backgroundColor = .rekolaPinkColor()
-        detailView.opaque = true
-        detailView.alpha = 0
         detailView.snp_makeConstraints { make in
             make.height.equalTo(192)
             make.top.equalTo(view)
@@ -39,7 +36,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let bikeImage = UIImageView(image: UIImage(imageIdentifier: .bike))
         detailView.addSubview(bikeImage)
-        bikeImage.contentMode = .ScaleAspectFit
         bikeImage.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -47,7 +43,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.bikeImage = bikeImage
         
         let nameLabel = Theme.whiteLabel()
-        nameLabel.font = UIFont.boldSystemFontOfSize(17)
         detailView.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70)
@@ -57,7 +52,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.bikeNameLabel = nameLabel
         
         let distanceLabel = Theme.whiteLabel()
-        distanceLabel.font = UIFont.italicSystemFontOfSize(16)
         detailView.addSubview(distanceLabel)
         distanceLabel.snp_makeConstraints { make in
             make.top.equalTo(nameLabel.snp_bottom)
@@ -66,8 +60,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.bikeDistanceLabel = distanceLabel
         
         let descriptionLabel = Theme.whiteLabel()
-        descriptionLabel.font = UIFont.boldSystemFontOfSize(15)
-        descriptionLabel.numberOfLines = 0
         detailView.addSubview(descriptionLabel)
         descriptionLabel.snp_makeConstraints { make in
             make.top.equalTo(distanceLabel.snp_bottom).offset(10)
@@ -77,8 +69,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.bikeDescriptionLabel = descriptionLabel
         
         let noteLabel = Theme.whiteLabel()
-        noteLabel.font = UIFont.systemFontOfSize(15)
-        noteLabel.numberOfLines = 0
         detailView.addSubview(noteLabel)
         noteLabel.snp_makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp_bottom).offset(10)
@@ -130,6 +120,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.zoomEnabled = true
         mapView.scrollEnabled = true
         mapView.showsUserLocation = true
+        
+//        detailView setting
+        self.detailView.backgroundColor = .rekolaPinkColor()
+        self.detailView.opaque = true
+        self.detailView.alpha = 0
+        
+        self.bikeImage.contentMode = .ScaleAspectFit
+        
+        self.bikeNameLabel.font = UIFont.boldSystemFontOfSize(17)
+        self.bikeDistanceLabel.font = UIFont.italicSystemFontOfSize(16)
+        self.bikeDescriptionLabel.font = UIFont.boldSystemFontOfSize(15)
+        self.bikeDescriptionLabel.numberOfLines = 0
+        self.bikeNoteLabel.font = UIFont.systemFontOfSize(15)
+        self.bikeNoteLabel.numberOfLines = 0
+
         
 //        locationManager settings
         locationManager.delegate = self

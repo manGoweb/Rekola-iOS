@@ -15,34 +15,44 @@ class AboutAppViewController: UIViewController {
         let view = UIView()
         self.view = view
         
-        let iv = UIImageView(image: UIImage(imageIdentifier: .aboutApp))
-        view.addSubview(iv)
-        iv.snp_makeConstraints { make in
-            make.bottom.equalTo(view).offset(-L.verticalSpacing)
-            make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
+        let button = UIButton()
+        view.addSubview(button)
+        button.snp_makeConstraints { make in
+            make.bottom.equalTo(view).offset(-10)
+            make.left.equalTo(view)
+            make.right.equalTo(view)
+            make.height.equalTo(414)
         }
-        self.iv = iv
+        self.button = button
     }
     
-    weak var iv: UIImageView!
+    weak var button: UIButton!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
 //        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
 		
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "O aplikaci"
+        self.navigationItem.title = NSLocalizedString("PROFILE_about", comment: "")
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
         self.navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
         
         self.view.backgroundColor = UIColor.whiteColor()
-        self.iv.contentMode = .ScaleAspectFit
+        self.button.setBackgroundImage(UIImage(imageIdentifier: .aboutApp), forState: .Normal)
+        self.button.imageView?.contentMode = .ScaleAspectFit
+        self.button.addTarget(self, action: "openUrl", forControlEvents: .TouchUpInside)
+    }
+    
+    func openUrl() {
+        if let url = NSURL(string: "http://ackee.cz") {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {

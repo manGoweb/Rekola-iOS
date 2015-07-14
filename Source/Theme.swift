@@ -114,6 +114,8 @@ extension UIImage {
         case basket = "basket"
         case buzzer = "buzzer"
         case mudguard = "mudguard"
+        case textFieldButton = "textFieldButton"
+        case cancelButton = "cancelButton"
     }
     
     convenience init!(imageIdentifier: ImageIdentifier) {
@@ -124,6 +126,7 @@ extension UIImage {
         case Lock = "Lock"
         case Map = "Map"
         case Profile = "Profile"
+        case BikeToggle = "bikeToggle"
     }
     
     /**
@@ -227,6 +230,5 @@ class Theme {
         l.font = UIFont.systemFontOfSize(16)
         return l
     }
-
 }
     

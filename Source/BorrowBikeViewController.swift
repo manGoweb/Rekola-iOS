@@ -24,8 +24,6 @@ class BorrowBikeViewController: UIViewController {
         self.bikeImageView = iv
         
         let nameLabel = UILabel()
-        nameLabel.font = UIFont.systemFontOfSize(24)
-        nameLabel.textAlignment = .Center
         view.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(iv.snp_bottom).offset(L.verticalSpacing)
@@ -34,8 +32,6 @@ class BorrowBikeViewController: UIViewController {
         self.bikeNameLabel = nameLabel
         
         let borrowLabel = UILabel()
-        borrowLabel.font = UIFont.systemFontOfSize(14)
-        borrowLabel.textAlignment = .Center
         view.addSubview(borrowLabel)
         borrowLabel.snp_makeConstraints { make in
             make.top.equalTo(nameLabel.snp_bottom).offset(L.verticalSpacing)
@@ -44,10 +40,6 @@ class BorrowBikeViewController: UIViewController {
         self.bikeBorrowLabel = borrowLabel
         
         let detailButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: .rekolaGreenColor())
-        detailButton.setTitle(NSLocalizedString("BORROWBIKE_detail", comment: ""), forState: .Normal)
-        detailButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
-        detailButton.layer.cornerRadius = 4
-        detailButton.layer.borderWidth = 2
         view.addSubview(detailButton)
         detailButton.snp_makeConstraints { make in
             make.top.equalTo(borrowLabel.snp_bottom).offset(L.verticalSpacing)
@@ -83,8 +75,6 @@ class BorrowBikeViewController: UIViewController {
         }
         
         let codeLabel = UILabel()
-        codeLabel.font = UIFont.boldSystemFontOfSize(70)
-        codeLabel.textAlignment = .Center
         view.addSubview(codeLabel)
         codeLabel.snp_makeConstraints { make in
             make.top.equalTo(rectangle.snp_top).offset(5)
@@ -126,12 +116,23 @@ class BorrowBikeViewController: UIViewController {
         self.bikeImageView.contentMode = .ScaleAspectFit
         
         self.bikeNameLabel.text = "Kníže Pupík Ignor"
+        self.bikeNameLabel.font = UIFont.systemFontOfSize(24)
+        self.bikeNameLabel.textAlignment = .Center
         
         self.bikeBorrowLabel = formatLabel(self.bikeBorrowLabel,date: "25.08", time: "14:53")
+        self.bikeBorrowLabel.font = UIFont.systemFontOfSize(14)
+        self.bikeBorrowLabel.textAlignment = .Center
+        
+        self.bikeDetailButton.setTitle(NSLocalizedString("BORROWBIKE_detail", comment: ""), forState: .Normal)
+        self.bikeDetailButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
+        self.bikeDetailButton.layer.cornerRadius = 4
+        self.bikeDetailButton.layer.borderWidth = 2
         
         self.bikeDetailButton.addTarget(self, action: "bikeDetail", forControlEvents: .TouchUpInside)
         
         self.bikeCodeLabel.text = "11121"
+        self.bikeCodeLabel.font = UIFont.boldSystemFontOfSize(70)
+        self.bikeCodeLabel.textAlignment = .Center
         
         self.bikeReturnButton.setTitle(NSLocalizedString("BORROWBIKE_return", comment: ""), forState: .Normal)
         self.bikeReturnButton.addTarget(self, action: "returnBike", forControlEvents: .TouchUpInside)

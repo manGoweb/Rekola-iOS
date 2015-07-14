@@ -15,7 +15,6 @@ class ProfileViewController: UIViewController {
         self.view = view
         
         let nameLabel = UILabel()
-        nameLabel.textAlignment = .Center
         view.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { make in
             make.left.right.equalTo(view)
@@ -24,7 +23,6 @@ class ProfileViewController: UIViewController {
         self.nameLabel = nameLabel
         
         let dateLabel = UILabel()
-        dateLabel.textAlignment = .Center
         view.addSubview(dateLabel)
         dateLabel.snp_makeConstraints { make in
             make.left.right.equalTo(view)
@@ -33,11 +31,6 @@ class ProfileViewController: UIViewController {
         self.dateLabel = dateLabel
         
         let logoutButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: .rekolaGreenColor())
-        logoutButton.setTitle(NSLocalizedString("PROFILE_logout", comment: ""), forState: .Normal)
-        logoutButton.setImage(UIImage(imageIdentifier: .logoutButton), forState: .Normal)
-        logoutButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
-        logoutButton.layer.borderWidth = 1
-        logoutButton.layer.cornerRadius = 4
         view.addSubview(logoutButton)
         logoutButton.snp_makeConstraints { make in
             make.width.equalTo(169)
@@ -59,7 +52,6 @@ class ProfileViewController: UIViewController {
         }
         
         let emailLabel = UILabel()
-        emailLabel.textAlignment = .Right
         view.addSubview(emailLabel)
         emailLabel.snp_makeConstraints { make in
             make.left.greaterThanOrEqualTo(staticEmailLabel.snp_right).offset(L.horizontalSpacing)
@@ -89,7 +81,6 @@ class ProfileViewController: UIViewController {
         }
         
         let addressLabel = UILabel()
-        addressLabel.textAlignment = .Left
         view.addSubview(addressLabel)
         addressLabel.snp_makeConstraints { make in
             make.right.equalTo(view).offset(-L.horizontalSpacing).priorityLow()
@@ -119,7 +110,6 @@ class ProfileViewController: UIViewController {
         }
         
         let phoneLabel = UILabel()
-        phoneLabel.textAlignment = .Right
         view.addSubview(phoneLabel)
         phoneLabel.snp_makeConstraints { make in
             make.left.greaterThanOrEqualTo(staticPhoneLabel.snp_right).offset(L.horizontalSpacing)
@@ -159,12 +149,27 @@ class ProfileViewController: UIViewController {
 //        following text will be replace with text from API
         self.nameLabel.text = "Korben Dallas"
         self.nameLabel.font = UIFont.boldSystemFontOfSize(26)
+        self.nameLabel.textAlignment = .Center
+
         self.dateLabel.text = dateLabelFormat("21.08.2015")
         self.dateLabel.textColor = .rekolaPinkColor()
+        self.dateLabel.textAlignment = .Center
+
         self.logoutButton.setTitle("  Odhlásit se", forState: .Normal)
+        self.logoutButton.setTitle(NSLocalizedString("PROFILE_logout", comment: ""), forState: .Normal)
+        self.logoutButton.setImage(UIImage(imageIdentifier: .logoutButton), forState: .Normal)
+        self.logoutButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
+        self.logoutButton.layer.borderWidth = 1
+        self.logoutButton.layer.cornerRadius = 4
+        
         self.emailLabel.text = "korben.dallas@multipass.com"
+        self.emailLabel.textAlignment = .Right
+
         self.addressLabel.text = "Bechynova 274/8, Praha 6"
+        self.addressLabel.textAlignment = .Left
+        
         self.phoneLabel.text = "+420 555 555 555"
+        self.phoneLabel.textAlignment = .Right
         
         self.aboutAppButton.setTitle(NSLocalizedString("PROFILE_about", comment: ""), forState: .Normal)
         self.aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)

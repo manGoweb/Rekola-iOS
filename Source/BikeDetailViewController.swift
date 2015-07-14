@@ -45,9 +45,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         
         let bikeTypeLabel = UILabel()
         container.addSubview(bikeTypeLabel)
-        bikeTypeLabel.textAlignment = .Center
-        bikeTypeLabel.textColor = .rekolaPinkColor()
-        bikeTypeLabel.font = UIFont.systemFontOfSize(14)
         bikeTypeLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeIV.snp_bottom).offset(L.verticalSpacing)
             make.left.right.equalTo(container)
@@ -56,8 +53,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         
         let bikeNameLabel = UILabel()
         container.addSubview(bikeNameLabel)
-        bikeNameLabel.textAlignment = .Center
-        bikeNameLabel.font = UIFont.systemFontOfSize(27)
         bikeNameLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeTypeLabel.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -65,8 +60,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         self.bikeNameLabel = bikeNameLabel
         
         let warningLabel = UILabel()
-        warningLabel.textAlignment = .Center
-        warningLabel.textColor = .rekolaWarningYellowColor()
         container.addSubview(warningLabel)
         warningLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeNameLabel.snp_bottom).offset(L.verticalSpacing)
@@ -85,8 +78,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         
         let descriptionLabel = Theme.subTitleLabel()
         container.addSubview(descriptionLabel)
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .Center
         descriptionLabel.snp_makeConstraints{ make in
             make.top.equalTo(warningLabel.snp_bottom).offset(L.verticalSpacing)
             make.left.right.equalTo(container)
@@ -104,8 +95,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         
         let lastReturnLabel = UILabel()
         container.addSubview(lastReturnLabel)
-        lastReturnLabel.textAlignment = .Center
-        lastReturnLabel.font = UIFont.boldSystemFontOfSize(17)
         lastReturnLabel.snp_makeConstraints { make in
             make.top.equalTo(line1.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -145,9 +134,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         self.timeLabel = timeLabel
         
         let locationLabel = UILabel()
-        locationLabel.textColor = .rekolaGrayTextColor()
-        locationLabel.font = UIFont.systemFontOfSize(15)
-        locationLabel.textAlignment = .Center
         container.addSubview(locationLabel)
         locationLabel.snp_makeConstraints { make in
             make.top.equalTo(dateLabel.snp_bottom).offset(L.verticalSpacing)
@@ -166,8 +152,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         
         let equipmentLabel = UILabel()
         container.addSubview(equipmentLabel)
-        equipmentLabel.textAlignment = .Center
-        equipmentLabel.font = UIFont.boldSystemFontOfSize(17)
         equipmentLabel.snp_makeConstraints { make in
             make.top.equalTo(line2.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -230,9 +214,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         
         let moreInfoButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: .rekolaGreenColor())
         container.addSubview(moreInfoButton)
-        moreInfoButton.layer.borderWidth = 1
-        moreInfoButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
-        moreInfoButton.layer.cornerRadius = 5
         moreInfoButton.snp_makeConstraints { make in
             make.top.equalTo(trunkIV.snp_bottom).offset(L.verticalSpacing)
             make.width.equalTo(110)
@@ -252,8 +233,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         
         let problemsLabel = UILabel()
         container.addSubview(problemsLabel)
-        problemsLabel.textAlignment = .Center
-        problemsLabel.font = UIFont.boldSystemFontOfSize(17)
         problemsLabel.snp_makeConstraints { make in
             make.top.equalTo(line3.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -266,8 +245,19 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
             make.top.equalTo(problemsLabel.snp_bottom).offset(20)
             make.left.equalTo(container).offset(L.horizontalSpacing)
             make.right.equalTo(container).offset(-L.horizontalSpacing)
+            make.height.equalTo(44)
         }
         self.addProblemButton = addProblemButton
+        
+//        let moreInfoView = UIView()
+//        container.addSubview(moreInfoView)
+//        moreInfoView.opaque = true
+//        moreInfoView.alpha = 0
+//        moreInfoView.snp_makeConstraints{ make in
+//            make.left.top.right.bottom.equalTo(container)
+//        }
+//        self.moreInfoView = moreInfoView
+        
     }
     
     weak var scrollView: UIScrollView!
@@ -292,6 +282,7 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
     weak var moreInfoButton: TintingButton!
     weak var problemsLabel: UILabel!
     weak var addProblemButton: UIButton!
+//    weak var moreInfoView: UIView!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -313,16 +304,47 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         self.view.tintColor = .whiteColor()
         
         self.bikeTypeLabel.text = "Lady Favorit"
+        self.bikeTypeLabel.textAlignment = .Center
+        self.bikeTypeLabel.textColor = .rekolaPinkColor()
+        self.bikeTypeLabel.font = UIFont.systemFontOfSize(14)
+        
         self.bikeNameLabel.text = "Kníže Pupík Ignor"
+        self.bikeNameLabel.textAlignment = .Center
+        self.bikeNameLabel.font = UIFont.systemFontOfSize(27)
+        
         self.warningLabel.text = "Pozor, nepojizdne!"
+        self.warningLabel.textAlignment = .Center
+        self.warningLabel.textColor = .rekolaWarningYellowColor()
+        
         self.descriptionLabel.text = "Mestske kolo s nosicem, kosikem, protislapnou brzdou a nabojovou prevodovkou."
+        self.descriptionLabel.numberOfLines = 0
+        self.descriptionLabel.textAlignment = .Center
+        
         self.lastReturnLabel.text = NSLocalizedString("BIKEDETAIL_lastReturn", comment: "")
+        self.lastReturnLabel.textAlignment = .Center
+        self.lastReturnLabel.font = UIFont.boldSystemFontOfSize(17)
+        
         self.dateLabel.text = "15.06"
         self.timeLabel.text = "13:08"
         self.locationLabel.text = "Pred galerii Myslbek na rohu u znacky"
+        self.locationLabel.textColor = .rekolaGrayTextColor()
+        self.locationLabel.font = UIFont.systemFontOfSize(15)
+        self.locationLabel.textAlignment = .Center
+        
         self.bikeEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
+        self.bikeEquipmentLabel.textAlignment = .Center
+        self.bikeEquipmentLabel.font = UIFont.boldSystemFontOfSize(17)
+        
         self.moreInfoButton.setTitle(NSLocalizedString("BIKEDETAIL_moreInfo", comment: ""), forState: .Normal)
+        self.moreInfoButton.layer.borderWidth = 1
+        self.moreInfoButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
+        self.moreInfoButton.layer.cornerRadius = 5
+        self.moreInfoButton.addTarget(self, action: "viewMoreInfo", forControlEvents: .TouchUpInside)
+        
         self.problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
+        self.problemsLabel.textAlignment = .Center
+        self.problemsLabel.font = UIFont.boldSystemFontOfSize(17)
+        
         self.addProblemButton.setTitle(NSLocalizedString("BIKEDETAIL_addProblem", comment: ""), forState: .Normal)
         self.addProblemButton.addTarget(self, action: "addProblemSegue", forControlEvents: .TouchUpInside)
     }
@@ -330,6 +352,12 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
     func deleteLineUnderNavBar() {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+    }
+    
+    func viewMoreInfo() {
+//        UIView.animateWithDuration(0.1, animations: {
+//            self.moreInfoView.alpha = 0.5
+//        })
     }
     
     func addProblemSegue() {

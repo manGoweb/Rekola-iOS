@@ -28,10 +28,9 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.returnButton = returnButton
         
         let textView = UITextView()
-        view.addSubview(textView)
-        textView.editable = true
         textView.layer.borderWidth = 0.5
         textView.layer.cornerRadius = 4
+        view.addSubview(textView)
         textView.snp_makeConstraints { make in
             make.bottom.equalTo(returnButton.snp_top).offset(-L.horizontalSpacing)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -41,7 +40,6 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.textView = textView
         
         let descriptionLabel = UILabel()
-        descriptionLabel.textAlignment = .Left
         view.addSubview(descriptionLabel)
         descriptionLabel.snp_makeConstraints { make in
             make.bottom.equalTo(textView.snp_top).offset(-L.verticalSpacing)
@@ -62,6 +60,8 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
     weak var returnButton: UIButton!
     weak var textView: UITextView!
     weak var descriptionLabel: UILabel!
+    let locationManager = CLLocationManager()
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -80,22 +80,28 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.view.backgroundColor = .whiteColor()
         
         self.descriptionLabel.text = NSLocalizedString("RETURNBIKE_description", comment: "")
+        self.descriptionLabel.textAlignment = .Left
+
         
         self.textView.delegate = self
         self.textView.text = "Např.: před vstupem do kavárny"
         self.textView.textColor = .grayColor()
+        self.textView.editable = true
+
         
         self.returnButton.setTitle(NSLocalizedString("RETURNBIKE_return" , comment: ""), forState: .Normal)
         
         self.mapView.delegate = self
         self.mapView.scrollEnabled = true
         self.mapView.zoomEnabled = true
+        self.mapView.showsUserLocation = true
         
         let button = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "showLocation")
         self.navigationItem.rightBarButtonItem = button
     }
     
     func showLocation() {
+        self.mapView.centerCoordinate = self.mapView.userLocation.coordinate
     }
     
 //    MARK: UITextViewDelegate
