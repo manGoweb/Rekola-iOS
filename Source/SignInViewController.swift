@@ -26,9 +26,9 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		
 		let emailTF = Theme.pinkTextField()
 		view.addSubview(emailTF)
-        var spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)) //inset for textField
+        let spacerView1 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)) //inset for textField
         emailTF.leftViewMode = .Always
-        emailTF.leftView = spacerView
+        emailTF.leftView = spacerView1
 		emailTF.snp_makeConstraints { make in
 			make.top.equalTo(iv.snp_bottom).offset(L.verticalSpacing)//.priority(250)
 			make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -39,8 +39,9 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		
 		let passwdTF = Theme.pinkTextField()
 		view.addSubview(passwdTF)
+        let spacerView2 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         passwdTF.leftViewMode = .Always
-        passwdTF.leftView = spacerView
+        passwdTF.leftView = spacerView2
 		passwdTF.snp_makeConstraints { make in
 			make.top.equalTo(emailTF.snp_bottom).offset(L.verticalSpacing)
 			make.right.equalTo(view).offset(-L.horizontalSpacing)
@@ -104,6 +105,7 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		
 		self.passwordTextField.attributedPlaceholder = NSAttributedString(string:NSLocalizedString("SIGNIN_passwd", comment: ""),
 			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        self.passwordTextField.secureTextEntry = true
 		
         self.signInButton.setTitle(NSLocalizedString("SIGNIN_signin", comment: ""), forState: .Normal)
         self.signInButton.backgroundColor = .whiteColor()

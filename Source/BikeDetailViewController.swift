@@ -149,7 +149,8 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
             make.right.equalTo(container).offset(-L.horizontalSpacing)
             make.height.equalTo(1)
         }
-        
+ 
+//        following 6 UIImageView will be downloaded from API
         let equipmentLabel = UILabel()
         container.addSubview(equipmentLabel)
         equipmentLabel.snp_makeConstraints { make in
@@ -249,15 +250,126 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         }
         self.addProblemButton = addProblemButton
         
-//        let moreInfoView = UIView()
-//        container.addSubview(moreInfoView)
+        let moreInfoView = UIView()
+        container.addSubview(moreInfoView)
 //        moreInfoView.opaque = true
-//        moreInfoView.alpha = 0
-//        moreInfoView.snp_makeConstraints{ make in
-//            make.left.top.right.bottom.equalTo(container)
-//        }
-//        self.moreInfoView = moreInfoView
+        moreInfoView.alpha = 0
+        moreInfoView.snp_makeConstraints{ make in
+            make.left.top.right.bottom.equalTo(container)
+            make.height.equalTo(435)
+        }
+        self.moreInfoView = moreInfoView
         
+        let infoEquipmentLabel = UILabel()
+        moreInfoView.addSubview(infoEquipmentLabel)
+        infoEquipmentLabel.snp_makeConstraints { make in
+            make.top.equalTo(moreInfoView).offset(L.verticalSpacing)
+            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
+        }
+        self.infoEquipmentLabel = infoEquipmentLabel
+        
+        let infoMudguardIV = UIImageView(image: UIImage(imageIdentifier: .mudguard))
+        moreInfoView.addSubview(infoMudguardIV)
+        infoMudguardIV.contentMode = .ScaleAspectFit
+        infoMudguardIV.snp_makeConstraints { make in
+            make.top.equalTo(infoEquipmentLabel.snp_bottom).offset(20)
+            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
+        }
+        
+        let infoBasketIV = UIImageView(image: UIImage(imageIdentifier: .basket))
+        moreInfoView.addSubview(infoBasketIV)
+        infoBasketIV.contentMode = .ScaleAspectFit
+        infoBasketIV.snp_makeConstraints { make in
+            make.top.equalTo(infoMudguardIV.snp_bottom).offset(20)
+            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
+        }
+        
+        let infoBuzzerIV = UIImageView(image: UIImage(imageIdentifier: .buzzer))
+        moreInfoView.addSubview(infoBuzzerIV)
+        infoBuzzerIV.contentMode = .ScaleAspectFit
+        infoBuzzerIV.snp_makeConstraints { make in
+            make.top.equalTo(infoBasketIV.snp_bottom).offset(20)
+            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
+        }
+        
+        let infoBacklightIV = UIImageView(image: UIImage(imageIdentifier: .backlight))
+        moreInfoView.addSubview(infoBacklightIV)
+        infoBacklightIV.contentMode = .ScaleAspectFit
+        infoBacklightIV.snp_makeConstraints { make in
+            make.top.equalTo(infoBuzzerIV.snp_bottom).offset(20)
+            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
+        }
+        
+        let infoFrontlightIV = UIImageView(image: UIImage(imageIdentifier: .frontlight))
+        moreInfoView.addSubview(infoFrontlightIV)
+        infoFrontlightIV.contentMode = .ScaleAspectFit
+        infoFrontlightIV.snp_makeConstraints { make in
+            make.top.equalTo(infoBacklightIV.snp_bottom).offset(20)
+            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
+        }
+        
+        let infoTrunkIV = UIImageView(image: UIImage(imageIdentifier: .trunk))
+        moreInfoView.addSubview(infoTrunkIV)
+        infoTrunkIV.contentMode = .ScaleAspectFit
+        infoTrunkIV.snp_makeConstraints { make in
+            make.top.equalTo(infoFrontlightIV.snp_bottom).offset(20)
+            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
+        }
+        
+//        need to repair it (strings and position)Ç
+        let infoMudguardLabel = UILabel()
+        moreInfoView.addSubview(infoMudguardLabel)
+        infoMudguardLabel.textAlignment = .Left
+        infoMudguardLabel.text = "Blatniky"
+        infoMudguardLabel.snp_makeConstraints { make in
+            make.top.equalTo(infoEquipmentLabel.snp_bottom).offset(25)
+            make.left.equalTo(infoMudguardIV.snp_right).offset(20)
+        }
+        
+        let infoBasketLabel = UILabel()
+        moreInfoView.addSubview(infoBasketLabel)
+        infoBasketLabel.textAlignment = .Left
+        infoBasketLabel.text = "Kosik"
+        infoBasketLabel.snp_makeConstraints { make in
+            make.top.equalTo(infoMudguardLabel.snp_bottom).offset(25)
+            make.left.equalTo(infoBasketIV.snp_right).offset(20)
+        }
+        
+        let infoBuzzerLabel = UILabel()
+        moreInfoView.addSubview(infoBuzzerLabel)
+        infoBuzzerLabel.textAlignment = .Left
+        infoBuzzerLabel.text = "Zvonek"
+        infoBuzzerLabel.snp_makeConstraints { make in
+            make.top.equalTo(infoBasketLabel.snp_bottom).offset(25)
+            make.left.equalTo(infoBuzzerIV.snp_right).offset(20)
+        }
+        
+        let infoBacklightLabel = UILabel()
+        moreInfoView.addSubview(infoBacklightLabel)
+        infoBacklightLabel.textAlignment = .Left
+        infoBacklightLabel.text = "Zadni svetla"
+        infoBacklightLabel.snp_makeConstraints { make in
+            make.top.equalTo(infoBuzzerLabel.snp_bottom).offset(25)
+            make.left.equalTo(infoBacklightIV.snp_right).offset(20)
+        }
+        
+        let infoFrontlightLabel = UILabel()
+        moreInfoView.addSubview(infoFrontlightLabel)
+        infoFrontlightLabel.textAlignment = .Left
+        infoFrontlightLabel.text = "Predni svetla"
+        infoFrontlightLabel.snp_makeConstraints { make in
+            make.top.equalTo(infoBacklightLabel.snp_bottom).offset(25)
+            make.left.equalTo(infoFrontlightIV.snp_right).offset(20)
+        }
+        
+        let infoTrunkLabel = UILabel()
+        moreInfoView.addSubview(infoTrunkLabel)
+        infoTrunkLabel.textAlignment = .Left
+        infoTrunkLabel.text = "Nosic"
+        infoTrunkLabel.snp_makeConstraints { make in
+            make.top.equalTo(infoFrontlightLabel.snp_bottom).offset(25)
+            make.left.equalTo(infoTrunkIV.snp_right).offset(20)
+        }
     }
     
     weak var scrollView: UIScrollView!
@@ -282,7 +394,8 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
     weak var moreInfoButton: TintingButton!
     weak var problemsLabel: UILabel!
     weak var addProblemButton: UIButton!
-//    weak var moreInfoView: UIView!
+    weak var moreInfoView: UIView!
+    weak var infoEquipmentLabel: UILabel!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -341,6 +454,8 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         self.moreInfoButton.layer.cornerRadius = 5
         self.moreInfoButton.addTarget(self, action: "viewMoreInfo", forControlEvents: .TouchUpInside)
         
+        self.infoEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
+        
         self.problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
         self.problemsLabel.textAlignment = .Center
         self.problemsLabel.font = UIFont.boldSystemFontOfSize(17)
@@ -355,9 +470,11 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func viewMoreInfo() {
-//        UIView.animateWithDuration(0.1, animations: {
-//            self.moreInfoView.alpha = 0.5
-//        })
+        UIView.animateWithDuration(0.2, animations: {
+            self.scrollView.backgroundColor = UIColor.rekolaBackgroundColor().colorWithAlphaComponent(0.3)
+            self.moreInfoView.alpha = 1
+            self.moreInfoView.backgroundColor = .whiteColor()
+        })
     }
     
     func addProblemSegue() {
