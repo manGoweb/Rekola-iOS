@@ -107,6 +107,7 @@ class LockViewController : UIViewController, UITextFieldDelegate {
     }
     
     func borrowBike() {
+//        let vc = ViewController()
         let vc = BorrowBikeViewController()
         showViewController(vc, sender: nil)
 //        presentViewController(vc, animated: true, completion: nil)

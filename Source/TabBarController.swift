@@ -12,16 +12,16 @@ import SnapKit
 
 protocol ACKTabBarItem {
     
-    func select()
+    func select(animated: Bool!) //cant be just Bool, swift compiler bug?
     func deselect()
     
     var view : UIView {get}
     var index : Int! {get set}
-
+    
     var viewController: UIViewController {get set}
     var tabBar : ACKTabBar! {get set}
     
-    func didSelect()
+    func didSelect(animated: Bool)
     func didDeselect()
     
     
@@ -53,11 +53,11 @@ class TabItem : UIButton, ACKTabBarItem {
         self.imageView?.contentMode = UIViewContentMode.ScaleAspectFit
         self.adjustsImageWhenHighlighted = false
         self.addEventHandler({[weak self] (item) -> Void in
-            self?.select()
+            self?.select(true)
             }, forControlEvents: UIControlEvents.TouchUpInside)
         
     }
-
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -74,18 +74,20 @@ class TabItem : UIButton, ACKTabBarItem {
     }
     
     
-    func select() {
+    func select(animated: Bool!) { //cant be just Bool, swift compiler bug?
         self.tabBar.selectTab(index)
-        self.didSelect()
+        self.didSelect(animated)
     }
     
     func deselect() {
         self.didDeselect()
     }
     
-    func didSelect() {
+    func didSelect(animated: Bool) {
         selected = true
-        playAnimation()
+        if(animated) {
+            playAnimation()
+        }
     }
     
     func didDeselect() {
@@ -146,7 +148,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         let tabbar = UIView()
         self.view.addSubview(tabbar)
         tabbar.snp_makeConstraints { (make) -> Void in
-            make.left.right.bottom.equalTo(view) 
+            make.left.right.bottom.equalTo(view)
             make.height.equalTo(42)
         }
         
@@ -160,7 +162,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
                 } else {
                     make.left.equalTo(tabbar)
                 }
-               make.width.equalTo(tabbar).dividedBy(items.count)
+                make.width.equalTo(tabbar).dividedBy(items.count)
                 
             })
             last = item.view
@@ -183,10 +185,14 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         
         selectedController.willMoveToParentViewController(self)
         self.addChildViewController(selectedController!)
-        selectedController.didMoveToParentViewController(self)
         containerView.addSubview(selectedController.view);
-        selectedController.view.frame = self.containerView.bounds
-        items[0].didSelect()
+        selectedController.view.snp_makeConstraints { make in
+            make.center.width.height.equalTo(containerView)
+        }
+        selectedController.didMoveToParentViewController(self)
+        //        selectedController.view.frame = self.containerView.bounds
+        items[0].didSelect(false)
+        
     }
     
     
@@ -202,23 +208,22 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         let newC = items[index].viewController
         selectedController.willMoveToParentViewController(nil)
         addChildViewController(newC)
-        self.items[index].didSelect()
+        self.items[index].didSelect(true)
         self.items[self.selectedIndex].deselect()
-
-		view.userInteractionEnabled = false
         self.transitionFromViewController(selectedController, toViewController: newC, duration: 0.25, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-            
-            newC.view.frame = self.containerView.bounds
+            newC.view.snp_makeConstraints { make in
+                make.center.width.height.equalTo(containerView)
+            }
             
             }) { (finished) in
                 self.selectedController.removeFromParentViewController()
                 newC.didMoveToParentViewController(self)
                 self.selectedController = newC
                 self.selectedIndex = index
-                self.view.userInteractionEnabled = true
+                
         }
         
-		
+        
         
         
     }
@@ -232,3 +237,4 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
     
     
 }
+

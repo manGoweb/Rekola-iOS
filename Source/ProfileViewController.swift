@@ -67,7 +67,7 @@ class ProfileViewController: UIViewController {
             make.left.equalTo(view).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
             make.height.equalTo(1)
-            make.width.equalTo(300)
+//            make.width.equalTo(300)
         }
         
         let staticAddressLabel = UILabel()
@@ -94,9 +94,9 @@ class ProfileViewController: UIViewController {
         line2.snp_makeConstraints { make in
             make.top.equalTo(staticAddressLabel.snp_bottom).offset(L.verticalSpacing)
             make.left.equalTo(view).offset(L.horizontalSpacing)
-//            make.right.equalTo(view).offset(-L.horizontalSpacing)
+            make.right.equalTo(view).offset(-L.horizontalSpacing)
             make.height.equalTo(1)
-            make.width.equalTo(300)
+//            make.width.equalTo(300)
         }
         
         let staticPhoneLabel = UILabel()

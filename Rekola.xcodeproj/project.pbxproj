@@ -39,6 +39,7 @@
 		928049DB1B41614700535485 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928049DA1B41614700535485 /* MapViewController.swift */; };
 		928F84561B4D0DD60034F5C6 /* BorrowBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */; };
 		929466511B4E73C400630B7C /* BikeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929466501B4E73C400630B7C /* BikeDetailViewController.swift */; };
+		92C671B81B567AB800EAB048 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C671B71B567AB800EAB048 /* ViewController.swift */; };
 		92E6770D1B4293E200819FC5 /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E6770C1B4293E200819FC5 /* MapPin.swift */; };
 		92E891EC1B4D590C00637FC4 /* ReturnBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */; };
 		92F0DA301B4BC1BD00C42BB4 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F0DA2F1B4BC1BD00C42BB4 /* AboutAppViewController.swift */; };
@@ -128,6 +129,7 @@
 		928049DA1B41614700535485 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowBikeViewController.swift; sourceTree = "<group>"; };
 		929466501B4E73C400630B7C /* BikeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeDetailViewController.swift; sourceTree = "<group>"; };
+		92C671B71B567AB800EAB048 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		92E6770C1B4293E200819FC5 /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnBikeViewController.swift; sourceTree = "<group>"; };
 		92F0DA2F1B4BC1BD00C42BB4 /* AboutAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				929466501B4E73C400630B7C /* BikeDetailViewController.swift */,
 				923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */,
 				92514D491B539D4300BF0541 /* ProblemsViewController.swift */,
+				92C671B71B567AB800EAB048 /* ViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				B4ECD6121AD477910099D516 /* AppDelegate.swift in Sources */,
 				B4EE77901B28A61700ED956B /* RACHelpers.swift in Sources */,
 				6DE50C881B4D1E46007F847A /* MBSwizzler.swift in Sources */,
+				92C671B81B567AB800EAB048 /* ViewController.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
 				6DE50C7C1B4D1AB7007F847A /* Logger.swift in Sources */,
 				92F0DA321B4BD3EC00C42BB4 /* SignInViewController.swift in Sources */,

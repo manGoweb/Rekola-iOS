@@ -22,7 +22,7 @@ class BorrowBikeViewController: UIViewController {
             make.right.left.equalTo(view)
         }
         self.bikeImageView = iv
-        
+
         let nameLabel = UILabel()
         view.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { make in
@@ -78,7 +78,7 @@ class BorrowBikeViewController: UIViewController {
         view.addSubview(codeLabel)
         codeLabel.snp_makeConstraints { make in
             make.top.equalTo(rectangle.snp_top).offset(5)
-                make.left.equalTo(rectangle.snp_left)
+            make.left.equalTo(rectangle.snp_left)
             make.right.equalTo(rectangle.snp_right)
             make.bottom.equalTo(rectangle.snp_bottom)
         }
@@ -114,11 +114,11 @@ class BorrowBikeViewController: UIViewController {
         
         self.view.backgroundColor = .whiteColor()
         self.bikeImageView.contentMode = .ScaleAspectFit
-        
+
         self.bikeNameLabel.text = "Kníže Pupík Ignor"
         self.bikeNameLabel.font = UIFont.systemFontOfSize(24)
         self.bikeNameLabel.textAlignment = .Center
-        
+
         self.bikeBorrowLabel = formatLabel(self.bikeBorrowLabel,date: "25.08", time: "14:53")
         self.bikeBorrowLabel.font = UIFont.systemFontOfSize(14)
         self.bikeBorrowLabel.textAlignment = .Center

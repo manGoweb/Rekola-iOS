@@ -12,27 +12,25 @@ import SnapKit
 //import
 
 
-class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
+class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func loadView() {
         let view = UIView()
         self.view = view
         
-        let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = false
-        view.addSubview(scrollView)
-        scrollView.snp_makeConstraints { make in
+        let tableView = UITableView()
+        view.addSubview(tableView)
+        tableView.snp_makeConstraints { make in
             make.left.top.right.bottom.equalTo(view)
-            make.bottom.equalTo(keyboardLayoutGuide)
         }
-        self.scrollView = scrollView
+        self.tableView = tableView
         
         let container = UIView()
-        scrollView.addSubview(container)
-        container.snp_makeConstraints { make in
-            make.width.equalTo(scrollView).offset(-(L.contentInsets.left + L.contentInsets.right))
-            make.height.equalTo(scrollView).offset(500)
-            make.edges.equalTo(scrollView).insets(L.contentInsets)
-        }
+//        tableView.addSubview(container)
+//        container.snp_makeConstraints { make in
+//            make.width.equalTo(tableView).offset(-(L.contentInsets.left + L.contentInsets.right))
+//            make.height.equalTo(tableView).offset(500)
+//            make.edges.equalTo(tableView).insets(L.contentInsets)
+//        }
         self.container = container
         
         let bikeIV = UIImageView(image: UIImage(imageIdentifier: .biggerBorrowBike))
@@ -40,9 +38,9 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         container.addSubview(bikeIV)
         bikeIV.snp_makeConstraints { make in
             make.top.equalTo(container).offset(80)
-            make.centerX.equalTo(container.snp_centerX)
+            make.centerX.equalTo(container)
         }
-        
+
         let bikeTypeLabel = UILabel()
         container.addSubview(bikeTypeLabel)
         bikeTypeLabel.snp_makeConstraints { make in
@@ -140,7 +138,7 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
             make.left.right.equalTo(container)
         }
         self.locationLabel = locationLabel
-        
+
         let line2 = Theme.lineView()
         container.addSubview(line2)
         line2.snp_makeConstraints { make in
@@ -316,7 +314,7 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
             make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
         }
         
-//        need to repair it (strings and position)Ç
+//        need to repair it (strings and position)
         let infoMudguardLabel = UILabel()
         moreInfoView.addSubview(infoMudguardLabel)
         infoMudguardLabel.textAlignment = .Left
@@ -372,30 +370,30 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    weak var scrollView: UIScrollView!
-    weak var container: UIView!
+    weak var tableView: UITableView!
+    var container: UIView!
     weak var bikeIV: UIImageView!
-    weak var bikeTypeLabel: UILabel!
-    weak var bikeNameLabel: UILabel!
-    weak var warningIV: UIImageView!
-    weak var warningLabel: UILabel!
-    weak var descriptionLabel: UILabel!
-    weak var lastReturnLabel: UILabel!
-    weak var timeLabel: UILabel!
-    weak var dateLabel: UILabel!
-    weak var locationLabel: UILabel!
-    weak var bikeEquipmentLabel: UILabel!
-    weak var mudguardIV: UIImageView!
-    weak var basketIV: UIImageView!
-    weak var buzzerIV: UIImageView!
-    weak var backlightIV: UIImageView!
-    weak var frontlightIV: UIImageView!
-    weak var trunkIV: UIImageView!
-    weak var moreInfoButton: TintingButton!
-    weak var problemsLabel: UILabel!
-    weak var addProblemButton: UIButton!
-    weak var moreInfoView: UIView!
-    weak var infoEquipmentLabel: UILabel!
+    var bikeTypeLabel: UILabel!
+    var bikeNameLabel: UILabel!
+    var warningIV: UIImageView!
+    var warningLabel: UILabel!
+    var descriptionLabel: UILabel!
+    var lastReturnLabel: UILabel!
+    var timeLabel: UILabel!
+    var dateLabel: UILabel!
+    var locationLabel: UILabel!
+    var bikeEquipmentLabel: UILabel!
+    var mudguardIV: UIImageView!
+    var basketIV: UIImageView!
+    var buzzerIV: UIImageView!
+    var backlightIV: UIImageView!
+    var frontlightIV: UIImageView!
+    var trunkIV: UIImageView!
+    var moreInfoButton: TintingButton!
+    var problemsLabel: UILabel!
+    var addProblemButton: UIButton!
+    var moreInfoView: UIView!
+    var infoEquipmentLabel: UILabel!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -407,9 +405,13 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        scrollView.delegate = self
-        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 800
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .NoneÇ
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         deleteLineUnderNavBar()
         
@@ -439,6 +441,7 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         
         self.dateLabel.text = "15.06"
         self.timeLabel.text = "13:08"
+
         self.locationLabel.text = "Pred galerii Myslbek na rohu u znacky"
         self.locationLabel.textColor = .rekolaGrayTextColor()
         self.locationLabel.font = UIFont.systemFontOfSize(15)
@@ -471,7 +474,6 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
     
     func viewMoreInfo() {
         UIView.animateWithDuration(0.2, animations: {
-            self.scrollView.backgroundColor = UIColor.rekolaBackgroundColor().colorWithAlphaComponent(0.3)
             self.moreInfoView.alpha = 1
             self.moreInfoView.backgroundColor = .whiteColor()
         })
@@ -482,11 +484,11 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
         showViewController(vc, sender: nil)
     }
     
-//    navigationBar settings
+//    navigationBar settings (when scrolling)
     func scrollViewDidScroll(scrollview: UIScrollView) {
         let color = UIColor.rekolaGreenColor()
         let changePoint = 50 as CGFloat
-        let offsetY = scrollView.contentOffset.y
+        let offsetY = tableView.contentOffset.y
         
         if offsetY > changePoint {
             let alpha = min(1, 1-((changePoint + 64 - offsetY)/64))
@@ -503,5 +505,38 @@ class BikeDetailViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar .lt_reset()
+    }
+    
+//    MARK: UITableViewDelegate + UITableViewDataSource
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        
+        if indexPath.section == 0 {
+            cell.contentView.addSubview(container)
+            container.snp_makeConstraints { make in
+             make.edges.equalTo(cell.contentView)
+                
+            }
+        }
+        
+        return cell
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return 800
+        }
+        return 50
     }
 }
