@@ -120,6 +120,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.zoomEnabled = true
         mapView.scrollEnabled = true
         mapView.showsUserLocation = true
+        locationManager.requestAlwaysAuthorization()
         
 //        detailView setting
         self.detailView.backgroundColor = .rekolaPinkColor()

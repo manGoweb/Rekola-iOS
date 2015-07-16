@@ -12,7 +12,7 @@ import SnapKit
 //import
 
 
-class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     override func loadView() {
         let view = UIView()
         self.view = view
@@ -25,12 +25,6 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tableView = tableView
         
         let container = UIView()
-//        tableView.addSubview(container)
-//        container.snp_makeConstraints { make in
-//            make.width.equalTo(tableView).offset(-(L.contentInsets.left + L.contentInsets.right))
-//            make.height.equalTo(tableView).offset(500)
-//            make.edges.equalTo(tableView).insets(L.contentInsets)
-//        }
         self.container = container
         
         let bikeIV = UIImageView(image: UIImage(imageIdentifier: .biggerBorrowBike))
@@ -248,9 +242,15 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         self.addProblemButton = addProblemButton
         
+//        let subview = UIView()
+//        container.addSubview(subview)
+//        subview.snp_makeConstraints { make in
+//            make.left.top.right.bottom.equalTo(tableView)
+//        }
+//        self.subview = subview
+        
         let moreInfoView = UIView()
         container.addSubview(moreInfoView)
-//        moreInfoView.opaque = true
         moreInfoView.alpha = 0
         moreInfoView.snp_makeConstraints{ make in
             make.left.top.right.bottom.equalTo(container)
@@ -258,116 +258,6 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         self.moreInfoView = moreInfoView
         
-        let infoEquipmentLabel = UILabel()
-        moreInfoView.addSubview(infoEquipmentLabel)
-        infoEquipmentLabel.snp_makeConstraints { make in
-            make.top.equalTo(moreInfoView).offset(L.verticalSpacing)
-            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
-        }
-        self.infoEquipmentLabel = infoEquipmentLabel
-        
-        let infoMudguardIV = UIImageView(image: UIImage(imageIdentifier: .mudguard))
-        moreInfoView.addSubview(infoMudguardIV)
-        infoMudguardIV.contentMode = .ScaleAspectFit
-        infoMudguardIV.snp_makeConstraints { make in
-            make.top.equalTo(infoEquipmentLabel.snp_bottom).offset(20)
-            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
-        }
-        
-        let infoBasketIV = UIImageView(image: UIImage(imageIdentifier: .basket))
-        moreInfoView.addSubview(infoBasketIV)
-        infoBasketIV.contentMode = .ScaleAspectFit
-        infoBasketIV.snp_makeConstraints { make in
-            make.top.equalTo(infoMudguardIV.snp_bottom).offset(20)
-            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
-        }
-        
-        let infoBuzzerIV = UIImageView(image: UIImage(imageIdentifier: .buzzer))
-        moreInfoView.addSubview(infoBuzzerIV)
-        infoBuzzerIV.contentMode = .ScaleAspectFit
-        infoBuzzerIV.snp_makeConstraints { make in
-            make.top.equalTo(infoBasketIV.snp_bottom).offset(20)
-            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
-        }
-        
-        let infoBacklightIV = UIImageView(image: UIImage(imageIdentifier: .backlight))
-        moreInfoView.addSubview(infoBacklightIV)
-        infoBacklightIV.contentMode = .ScaleAspectFit
-        infoBacklightIV.snp_makeConstraints { make in
-            make.top.equalTo(infoBuzzerIV.snp_bottom).offset(20)
-            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
-        }
-        
-        let infoFrontlightIV = UIImageView(image: UIImage(imageIdentifier: .frontlight))
-        moreInfoView.addSubview(infoFrontlightIV)
-        infoFrontlightIV.contentMode = .ScaleAspectFit
-        infoFrontlightIV.snp_makeConstraints { make in
-            make.top.equalTo(infoBacklightIV.snp_bottom).offset(20)
-            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
-        }
-        
-        let infoTrunkIV = UIImageView(image: UIImage(imageIdentifier: .trunk))
-        moreInfoView.addSubview(infoTrunkIV)
-        infoTrunkIV.contentMode = .ScaleAspectFit
-        infoTrunkIV.snp_makeConstraints { make in
-            make.top.equalTo(infoFrontlightIV.snp_bottom).offset(20)
-            make.left.equalTo(moreInfoView).offset(L.horizontalSpacing)
-        }
-        
-//        need to repair it (strings and position)
-        let infoMudguardLabel = UILabel()
-        moreInfoView.addSubview(infoMudguardLabel)
-        infoMudguardLabel.textAlignment = .Left
-        infoMudguardLabel.text = "Blatniky"
-        infoMudguardLabel.snp_makeConstraints { make in
-            make.top.equalTo(infoEquipmentLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoMudguardIV.snp_right).offset(20)
-        }
-        
-        let infoBasketLabel = UILabel()
-        moreInfoView.addSubview(infoBasketLabel)
-        infoBasketLabel.textAlignment = .Left
-        infoBasketLabel.text = "Kosik"
-        infoBasketLabel.snp_makeConstraints { make in
-            make.top.equalTo(infoMudguardLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoBasketIV.snp_right).offset(20)
-        }
-        
-        let infoBuzzerLabel = UILabel()
-        moreInfoView.addSubview(infoBuzzerLabel)
-        infoBuzzerLabel.textAlignment = .Left
-        infoBuzzerLabel.text = "Zvonek"
-        infoBuzzerLabel.snp_makeConstraints { make in
-            make.top.equalTo(infoBasketLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoBuzzerIV.snp_right).offset(20)
-        }
-        
-        let infoBacklightLabel = UILabel()
-        moreInfoView.addSubview(infoBacklightLabel)
-        infoBacklightLabel.textAlignment = .Left
-        infoBacklightLabel.text = "Zadni svetla"
-        infoBacklightLabel.snp_makeConstraints { make in
-            make.top.equalTo(infoBuzzerLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoBacklightIV.snp_right).offset(20)
-        }
-        
-        let infoFrontlightLabel = UILabel()
-        moreInfoView.addSubview(infoFrontlightLabel)
-        infoFrontlightLabel.textAlignment = .Left
-        infoFrontlightLabel.text = "Predni svetla"
-        infoFrontlightLabel.snp_makeConstraints { make in
-            make.top.equalTo(infoBacklightLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoFrontlightIV.snp_right).offset(20)
-        }
-        
-        let infoTrunkLabel = UILabel()
-        moreInfoView.addSubview(infoTrunkLabel)
-        infoTrunkLabel.textAlignment = .Left
-        infoTrunkLabel.text = "Nosic"
-        infoTrunkLabel.snp_makeConstraints { make in
-            make.top.equalTo(infoFrontlightLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoTrunkIV.snp_right).offset(20)
-        }
     }
     
     weak var tableView: UITableView!
@@ -394,6 +284,7 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var addProblemButton: UIButton!
     var moreInfoView: UIView!
     var infoEquipmentLabel: UILabel!
+//    var subview: UIView!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -410,8 +301,10 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 800
         tableView.allowsSelection = false
-        tableView.separatorStyle = .NoneÇ
+        tableView.separatorStyle = .None
+        
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ProblemCell")
         
         deleteLineUnderNavBar()
         
@@ -457,7 +350,8 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         self.moreInfoButton.layer.cornerRadius = 5
         self.moreInfoButton.addTarget(self, action: "viewMoreInfo", forControlEvents: .TouchUpInside)
         
-        self.infoEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
+//        subview.backgroundColor = .blackColor()
+//        subview.alpha = 0
         
         self.problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
         self.problemsLabel.textAlignment = .Center
@@ -473,10 +367,8 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func viewMoreInfo() {
-        UIView.animateWithDuration(0.2, animations: {
-            self.moreInfoView.alpha = 1
-            self.moreInfoView.backgroundColor = .whiteColor()
-        })
+        let vc = EquipmentViewController()
+        presentPopupViewController(vc, completion: nil)
     }
     
     func addProblemSegue() {
@@ -511,22 +403,33 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
+        } else if section == 1 {
+            return 1
         }
+        
         return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
+        let problemCell = UITableViewCell(style: .Subtitle, reuseIdentifier: "ProblemCell")
         
         if indexPath.section == 0 {
             cell.contentView.addSubview(container)
             container.snp_makeConstraints { make in
-             make.edges.equalTo(cell.contentView)
-                
+                make.edges.equalTo(cell.contentView)
             }
+            return cell
+        } else {
+            problemCell.textLabel?.font = UIFont.boldSystemFontOfSize(14)
+            problemCell.textLabel!.text = "Jmeno, Prijmeni / Datum"
+            
+            problemCell.detailTextLabel!.text = "Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text "
+            problemCell.detailTextLabel?.numberOfLines = 0
+            problemCell.detailTextLabel?.textColor = .grayColor()
+            
+            return problemCell
         }
-        
-        return cell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -537,6 +440,29 @@ class BikeDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         if indexPath.section == 0 {
             return 800
         }
-        return 50
+        return 100
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return "Neco jineho"
+        }
+        return ""
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if section == 1 {
+            let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
+            header.contentView.backgroundColor = .whiteColor()
+            header.textLabel.textColor = .rekolaGreenColor()
+            header.textLabel.font = UIFont.boldSystemFontOfSize(16)
+        }
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section != 0 {
+            return 18
+        }
+        return 0
     }
 }

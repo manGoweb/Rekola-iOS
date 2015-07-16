@@ -11,37 +11,41 @@ import Foundation
 import SnapKit
 
 class ProblemCell: UITableViewCell {
-    weak var problemLabel: UILabel!
-    weak var bottomLine: UIView!
+    weak var nameLabel: UILabel!
+    weak var descriptionLabel: UILabel!
     
-    init() {
-        super.init(style: .Default, reuseIdentifier: "cell")
-        
-        self.problemLabel.textColor = .whiteColor()
-        self.problemLabel.textAlignment = .Left
-        self.problemLabel.font = UIFont.systemFontOfSize(15)
-        
-        self.bottomLine.backgroundColor = .whiteColor()
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let problemLbl = UILabel()
-        self.contentView.addSubview(problemLbl)
-        self.problemLabel = problemLbl
         
-        let line = UILabel()
-        self.contentView.addSubview(line)
-        line.snp_makeConstraints { make in
-            make.height.equalTo(1)
-            make.top.equalTo(problemLbl.snp_bottom).offset(10)
-            make.left.equalTo(self.contentView).offset(30)
-            make.right.equalTo(self.contentView).offset(-30)
+        nameLabel = UILabel()
+        nameLabel.textColor = .blackColor()
+        nameLabel.textAlignment = .Left
+        nameLabel.font = UIFont.boldSystemFontOfSize(16)
+        nameLabel.snp_makeConstraints { make in
+            make.top.equalTo(self.contentView).offset(L.verticalSpacing)
+            make.left.equalTo(self.contentView).offset(L.horizontalSpacing)
+            make.right.equalTo(self.contentView).offset(-L.horizontalSpacing)
         }
-        self.bottomLine = line
-    }
-    
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        self.contentView.addSubview(nameLabel)
+        
+        descriptionLabel = UILabel()
+        descriptionLabel.textColor = .grayColor()
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.textAlignment = .Left
+        descriptionLabel.snp_makeConstraints { make in
+            make.top.equalTo(nameLabel.snp_bottom).offset(L.verticalSpacing)
+            make.left.equalTo(self.contentView).offset(L.horizontalSpacing)
+            make.right.equalTo(self.contentView).offset(-L.horizontalSpacing)
+        }
+        self.contentView.addSubview(descriptionLabel)
+
     }
 }

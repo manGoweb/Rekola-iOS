@@ -47,7 +47,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>NSLocalizationAlwaysUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Rekola požadují přístup k vaší poloze.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>

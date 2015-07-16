@@ -17,6 +17,7 @@ pod 'FlurrySDK'
 #pod 'SVProgressHUD', :head
 #pod 'SDWebImage', '~> 3.6'
 pod 'LTNavigationBar', '~> 2.0'
+pod 'Masonry', '~> 0.6'
 
 
 

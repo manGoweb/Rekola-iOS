@@ -7,3 +7,4 @@
 #import <HockeySDK/HockeySDK.h>
 #import <ACKategories.h>
 #import "UINavigationBar+Awesome.h"
+#import "ModalAnimation.h"
