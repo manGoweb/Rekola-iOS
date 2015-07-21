@@ -16,12 +16,13 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		
 		let iv = UIImageView(image: UIImage(imageIdentifier: .signInBike))
 		iv.contentMode = .ScaleAspectFit
+//        iv.setContentCompressionResistancePriority(500, forAxis: .Vertical)
 		view.addSubview(iv)
 		iv.snp_makeConstraints { make in
-			make.top.equalTo(view).offset(60).priority(500)
-			make.left.equalTo(view).offset(L.horizontalSpacing)
-			make.right.equalTo(view).offset(-L.horizontalSpacing)
-		}
+			make.top.lessThanOrEqualTo(view).offset(60)
+			make.centerX.equalTo(view.snp_centerX)
+            make.height.equalTo(self.view).multipliedBy(0.2)
+        }
 		self.bikeImageView = iv
 		
 		let emailTF = Theme.pinkTextField()

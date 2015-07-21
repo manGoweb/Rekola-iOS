@@ -8,15 +8,6 @@
 
 import Foundation
 
-
-extension UIImage {
-    //tady bude enum z wwwdc
-    
-    
-    //tady enum + funkce na toggle 
-    
-}
-
 extension UIFont {
     
     class func mainRegular(size : CGFloat) -> UIFont! {
@@ -101,7 +92,8 @@ extension UIImage {
         case locationButton = "locationButton"
         case directionButton = "directionButton"
         case bike = "bike"
-        case aboutApp = "aboutApp"
+        case ackeeAboutLogo = "ackeeAboutLogo"
+        case aboutRest = "aboutRest"
         case signInBike = "signInBike"
         case ackee = "ackee"
         case borrowBike = "borrowBike"

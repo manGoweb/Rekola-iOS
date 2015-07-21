@@ -13,14 +13,30 @@ class EquipmentViewController: UIViewController {
         let view = UIView()
         self.view = view
         
+//        let container = UIView()
+//        view.addSubview(container)
+//        container.snp_makeConstraints { make in
+//            make.top.equalTo(view)
+//            make.left.right.equalTo(view)
+//        }
+//        self.container = container
+        
         let infoEquipmentLabel = UILabel()
         view.addSubview(infoEquipmentLabel)
         infoEquipmentLabel.snp_makeConstraints { make in
             make.top.equalTo(view).offset(L.verticalSpacing)
             make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
+//            make.right.equalTo(view).offset(-L.horizontalSpacing)
         }
         self.infoEquipmentLabel = infoEquipmentLabel
+        
+        let exitButton = UIButton()
+        view.addSubview(exitButton)
+        exitButton.snp_makeConstraints { make in
+            make.top.equalTo(view).offset(L.verticalSpacing)
+            make.right.equalTo(view).offset(-L.horizontalSpacing)
+        }
+        self.exitButton = exitButton
         
         let infoMudguardIV = UIImageView(image: UIImage(imageIdentifier: .mudguard))
         view.addSubview(infoMudguardIV)
@@ -28,12 +44,13 @@ class EquipmentViewController: UIViewController {
         infoMudguardIV.setContentHuggingPriority(1000, forAxis: .Horizontal)
         infoMudguardIV.snp_makeConstraints { make in
             make.top.equalTo(infoEquipmentLabel.snp_bottom).offset(20)
-            make.left.equalTo(L.horizontalSpacing)
+            make.left.equalTo(view).offset(L.horizontalSpacing)
         }
         
         let infoBasketIV = UIImageView(image: UIImage(imageIdentifier: .basket))
         view.addSubview(infoBasketIV)
         infoBasketIV.contentMode = .ScaleAspectFit
+        infoBasketIV.setContentHuggingPriority(1000, forAxis: .Horizontal)
         infoBasketIV.snp_makeConstraints { make in
             make.top.equalTo(infoMudguardIV.snp_bottom).offset(20)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -42,6 +59,7 @@ class EquipmentViewController: UIViewController {
         let infoBuzzerIV = UIImageView(image: UIImage(imageIdentifier: .buzzer))
         view.addSubview(infoBuzzerIV)
         infoBuzzerIV.contentMode = .ScaleAspectFit
+        infoBuzzerIV.setContentHuggingPriority(1000, forAxis: .Horizontal)
         infoBuzzerIV.snp_makeConstraints { make in
             make.top.equalTo(infoBasketIV.snp_bottom).offset(20)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -50,6 +68,7 @@ class EquipmentViewController: UIViewController {
         let infoBacklightIV = UIImageView(image: UIImage(imageIdentifier: .backlight))
         view.addSubview(infoBacklightIV)
         infoBacklightIV.contentMode = .ScaleAspectFit
+        infoBacklightIV.setContentHuggingPriority(1000, forAxis: .Horizontal)
         infoBacklightIV.snp_makeConstraints { make in
             make.top.equalTo(infoBuzzerIV.snp_bottom).offset(20)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -58,6 +77,7 @@ class EquipmentViewController: UIViewController {
         let infoFrontlightIV = UIImageView(image: UIImage(imageIdentifier: .frontlight))
         view.addSubview(infoFrontlightIV)
         infoFrontlightIV.contentMode = .ScaleAspectFit
+        infoFrontlightIV.setContentHuggingPriority(1000, forAxis: .Horizontal)
         infoFrontlightIV.snp_makeConstraints { make in
             make.top.equalTo(infoBacklightIV.snp_bottom).offset(20)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -66,6 +86,7 @@ class EquipmentViewController: UIViewController {
         let infoTrunkIV = UIImageView(image: UIImage(imageIdentifier: .trunk))
         view.addSubview(infoTrunkIV)
         infoTrunkIV.contentMode = .ScaleAspectFit
+        infoTrunkIV.setContentHuggingPriority(1000, forAxis: .Horizontal)
         infoTrunkIV.snp_makeConstraints { make in
             make.top.equalTo(infoFrontlightIV.snp_bottom).offset(20)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -134,11 +155,23 @@ class EquipmentViewController: UIViewController {
         }
     }
     
+    weak var container: UIView!
     weak var infoEquipmentLabel: UILabel!
+    weak var exitButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        container.backgroundColor = .blackColor()
+        
         infoEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
+        
+        exitButton.setImage(UIImage(imageIdentifier: .cancelButton), forState: .Normal)
+        exitButton.imageView?.contentMode = .ScaleAspectFit
+        exitButton.addTarget(self, action: "cancelView", forControlEvents: .TouchUpInside)
+    }
+    
+    func cancelView() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }

@@ -15,18 +15,28 @@ class AboutAppViewController: UIViewController {
         let view = UIView()
         self.view = view
         
+        let iv = UIImageView(image: UIImage(imageIdentifier: .aboutRest))
+        view.addSubview(iv)
+        iv.contentMode = .ScaleAspectFit
+        iv.snp_makeConstraints { make in
+            make.bottom.equalTo(view)
+            make.centerX.equalTo(view.snp_centerX)
+            make.left.right.equalTo(view)
+        }
+        self.logoIv = iv
+        
         let button = UIButton()
         view.addSubview(button)
         button.snp_makeConstraints { make in
-            make.bottom.equalTo(view).offset(-10)
-            make.left.equalTo(view)
-            make.right.equalTo(view)
-            make.height.equalTo(414)
+            make.bottom.equalTo(iv.snp_top).multipliedBy(0.7)
+            make.centerX.equalTo(view.snp_centerX)
+            make.height.equalTo(103)
         }
         self.button = button
     }
     
     weak var button: UIButton!
+    weak var logoIv: UIImageView!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -44,7 +54,7 @@ class AboutAppViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
         
         self.view.backgroundColor = UIColor.whiteColor()
-        self.button.setBackgroundImage(UIImage(imageIdentifier: .aboutApp), forState: .Normal)
+        self.button.setBackgroundImage(UIImage(imageIdentifier: .ackeeAboutLogo), forState: .Normal)
         self.button.imageView?.contentMode = .ScaleAspectFit
         self.button.addTarget(self, action: "openUrl", forControlEvents: .TouchUpInside)
     }

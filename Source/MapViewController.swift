@@ -36,6 +36,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let bikeImage = UIImageView(image: UIImage(imageIdentifier: .bike))
         detailView.addSubview(bikeImage)
+        bikeImage.setContentHuggingPriority(1000, forAxis: .Horizontal)
         bikeImage.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -46,7 +47,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         detailView.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70)
-            make.left.equalTo(bikeImage.snp_right)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
             
         }
         self.bikeNameLabel = nameLabel
@@ -55,7 +56,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         detailView.addSubview(distanceLabel)
         distanceLabel.snp_makeConstraints { make in
             make.top.equalTo(nameLabel.snp_bottom)
-            make.left.equalTo(bikeImage.snp_right)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
         }
         self.bikeDistanceLabel = distanceLabel
         
@@ -63,7 +64,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         detailView.addSubview(descriptionLabel)
         descriptionLabel.snp_makeConstraints { make in
             make.top.equalTo(distanceLabel.snp_bottom).offset(10)
-            make.left.equalTo(bikeImage.snp_right)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
         }
         self.bikeDescriptionLabel = descriptionLabel
@@ -72,7 +73,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         detailView.addSubview(noteLabel)
         noteLabel.snp_makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp_bottom).offset(10)
-            make.left.equalTo(bikeImage.snp_right)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
         }
         self.bikeNoteLabel = noteLabel

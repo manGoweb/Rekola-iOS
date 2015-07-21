@@ -18,8 +18,9 @@ class BorrowBikeViewController: UIViewController {
         let iv = UIImageView(image: UIImage(imageIdentifier: .borrowBike))
         view.addSubview(iv)
         iv.snp_makeConstraints { make in
-            make.top.equalTo(view).offset(50)
+            make.top.equalTo(view).offset(23)
             make.right.left.equalTo(view)
+            make.height.equalTo(self.view).multipliedBy(0.2)
         }
         self.bikeImageView = iv
 
@@ -56,7 +57,7 @@ class BorrowBikeViewController: UIViewController {
         view.addSubview(rectangle)
         rectangle.snp_makeConstraints { make in
             make.top.equalTo(detailButton.snp_bottom).multipliedBy(1.1)
-            make.height.equalTo(101)
+            make.height.equalTo(101).multipliedBy(0.1)
             make.left.right.equalTo(view).insets(L.contentInsets)
             make.centerX.equalTo(view.snp_centerX)
         }

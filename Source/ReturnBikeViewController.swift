@@ -56,6 +56,8 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.mapView = mapView
     }
     
+    weak var scrollView: UIScrollView!
+    weak var container: UIView!
     weak var mapView: MKMapView!
     weak var returnButton: UIButton!
     weak var textView: UITextView!
