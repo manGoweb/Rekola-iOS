@@ -91,10 +91,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var bikeImage: UIImageView!
     var bikes: [Bike]?
     let locationManager = CLLocationManager()
+    var bikeCoordinate = CLLocationCoordinate2D()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        checkLocationAuthorizationStatus()
 //        UIApplication.sharedApplication().statusBarStyle = .LightContent
     }
     
@@ -110,7 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
         self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
         
-        let leftBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .directionButton), style:.Plain, target: self, action: "leftBarButtonClicked")
+        let leftBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .directionButton), style:.Plain, target: self, action: "showDirections")
         let rightBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "showLocations")
         
         self.navigationItem.leftBarButtonItem = leftBarButton
@@ -121,7 +123,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.zoomEnabled = true
         mapView.scrollEnabled = true
         mapView.showsUserLocation = true
-        locationManager.requestAlwaysAuthorization()
         
 //        detailView setting
         self.detailView.backgroundColor = .rekolaPinkColor()
@@ -167,6 +168,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 //        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
     }
     
+    func showDirections() {
+        let placemark = MKPlacemark(coordinate: bikeCoordinate, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        mapItem.openInMapsWithLaunchOptions(launchOptions)
+    }
+    
     func showLocations() {
         mapView.setCenterCoordinate(mapView.userLocation.location.coordinate, animated: true)
     }
@@ -196,6 +204,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.navigationController?.navigationBarHidden = false
         
         mapView.setCenterCoordinate(view.annotation.coordinate, animated: true)
+        bikeCoordinate = view.annotation.coordinate
         
 //        following text will be replaced with text from API
         self.bikeNameLabel.text = "Pivoňka"
@@ -208,4 +217,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.detailView.alpha = 0.0
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
+    
+    func checkLocationAuthorizationStatus() {
+        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+            mapView.showsUserLocation = true
+        } else {
+            locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        let placemark = MKPlacemark(coordinate: view.annotation.coordinate, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        mapItem.openInMapsWithLaunchOptions(launchOptions)
+    }
 }
+
+

@@ -9,8 +9,6 @@
 import UIKit
 import Foundation
 import SnapKit
-//import
-
 
 class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     override func loadView() {
@@ -156,7 +154,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         container.addSubview(mudguardIV)
         mudguardIV.snp_makeConstraints { make in
             make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(container).offset(15)
+            make.left.equalTo(container).offset(25)
         }
         self.mudguardIV = mudguardIV
         
@@ -241,23 +239,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             make.height.equalTo(44)
         }
         self.addProblemButton = addProblemButton
-        
-//        let subview = UIView()
-//        container.addSubview(subview)
-//        subview.snp_makeConstraints { make in
-//            make.left.top.right.bottom.equalTo(tableView)
-//        }
-//        self.subview = subview
-        
-        let moreInfoView = UIView()
-        container.addSubview(moreInfoView)
-        moreInfoView.alpha = 0
-        moreInfoView.snp_makeConstraints{ make in
-            make.left.top.right.bottom.equalTo(container)
-            make.height.equalTo(435)
-        }
-        self.moreInfoView = moreInfoView
-        
     }
     
     weak var tableView: UITableView!
@@ -282,9 +263,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     var moreInfoButton: TintingButton!
     var problemsLabel: UILabel!
     var addProblemButton: UIButton!
-    var moreInfoView: UIView!
     var infoEquipmentLabel: UILabel!
-//    var subview: UIView!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -307,6 +286,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ProblemCell")
         
         deleteLineUnderNavBar()
+        
+        let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike")
+        self.navigationItem.rightBarButtonItem = lockButton
         
         self.view.backgroundColor = .whiteColor()
         self.view.tintColor = .whiteColor()
@@ -350,9 +332,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         self.moreInfoButton.layer.cornerRadius = 5
         self.moreInfoButton.addTarget(self, action: "viewMoreInfo", forControlEvents: .TouchUpInside)
         
-//        subview.backgroundColor = .blackColor()
-//        subview.alpha = 0
-        
         self.problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
         self.problemsLabel.textAlignment = .Center
         self.problemsLabel.font = UIFont.boldSystemFontOfSize(17)
@@ -364,6 +343,11 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     func deleteLineUnderNavBar() {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+    }
+    
+//    what this button do?
+    func lockButton() {
+        
     }
     
     func viewMoreInfo() {

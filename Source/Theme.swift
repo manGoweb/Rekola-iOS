@@ -111,6 +111,7 @@ extension UIImage {
         case mudguard = "mudguard"
         case textFieldButton = "textFieldButton"
         case cancelButton = "cancelButton"
+        case detailLock = "detailLock"
     }
     
     convenience init!(imageIdentifier: ImageIdentifier) {
