@@ -24,9 +24,9 @@
 		2C11B62737F94D37BC3FA5B5 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E8AEF0CA62243AAB2D73904 /* libPods.a */; };
 		6D0BE16A1B3AC49F0030E6AC /* ArgoExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */; };
 		6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */; };
+		6D6840951B66823600FFE2B7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6840941B66823600FFE2B7 /* Logger.swift */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
 		6DE50C7A1B4D19BE007F847A /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */; };
-		6DE50C7C1B4D1AB7007F847A /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C7B1B4D1AB7007F847A /* Logger.swift */; };
 		6DE50C851B4D1E28007F847A /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE50C811B4D1E20007F847A /* CocoaLumberjack.framework */; };
 		6DE50C861B4D1E28007F847A /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE50C821B4D1E20007F847A /* CocoaLumberjackSwift.framework */; };
 		6DE50C881B4D1E46007F847A /* MBSwizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C871B4D1E46007F847A /* MBSwizzler.swift */; };
@@ -113,9 +113,9 @@
 		0F2477C39DCE66EC69ACED7E /* Pods.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.appstore.xcconfig; path = "Pods/Target Support Files/Pods/Pods.appstore.xcconfig"; sourceTree = "<group>"; };
 		6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArgoExtensions.swift; sourceTree = "<group>"; };
 		6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		6D6840941B66823600FFE2B7 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6D7861D41B397903009F8865 /* UIResponder+Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Errors.swift"; sourceTree = "<group>"; };
 		6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutGuide.swift; sourceTree = "<group>"; };
-		6DE50C7B1B4D1AB7007F847A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6DE50C7D1B4D1DF9007F847A /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = "../project-skeleton-swift/Carthage/Build/iOS/CocoaLumberjack.framework"; sourceTree = "<group>"; };
 		6DE50C7E1B4D1DF9007F847A /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = "../project-skeleton-swift/Carthage/Build/iOS/CocoaLumberjackSwift.framework"; sourceTree = "<group>"; };
 		6DE50C811B4D1E20007F847A /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
@@ -432,8 +432,8 @@
 				B4EE778D1B28A61700ED956B /* UIKitExtensions.swift */,
 				B4EE778E1B28A61700ED956B /* RACHelpers.swift */,
 				6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */,
+				6D6840941B66823600FFE2B7 /* Logger.swift */,
 				6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */,
-				6DE50C7B1B4D1AB7007F847A /* Logger.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -649,6 +649,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D6840951B66823600FFE2B7 /* Logger.swift in Sources */,
 				92F0DA301B4BC1BD00C42BB4 /* AboutAppViewController.swift in Sources */,
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
 				B4EE77921B28D1AA00ED956B /* APIService.swift in Sources */,
@@ -673,7 +674,6 @@
 				92C671B81B567AB800EAB048 /* EquipmentViewController.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
 				92C6064E1B66581E002188BB /* ModalAnimation.m in Sources */,
-				6DE50C7C1B4D1AB7007F847A /* Logger.swift in Sources */,
 				92F0DA321B4BD3EC00C42BB4 /* SignInViewController.swift in Sources */,
 				9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */,
 				923D69B31B4FBA2200FEF89A /* AddProblemViewController.swift in Sources */,

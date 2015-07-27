@@ -56,25 +56,25 @@ enum Logger {
 	static var loggingIsAsync = false
 }
 
-func logA(@autoclosure debugText: () -> String, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
+func logA<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
 	if(!isConfigured) { configure() }
-	SwiftLogMacro(Logger.loggingIsAsync, .Error, flag: .Error, context: 0, file: file, function: function, line: line, tag: nil, string: debugText)
+	SwiftLogMacro(Logger.loggingIsAsync, .Error, flag: .Error, context: 0, file: file, function: function, line: line, tag: nil, string: toDebugString(value()))
 	return
 }
 
-func log(@autoclosure logText: () -> String, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
+func log<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
 	if(!isConfigured) { configure() }
-	SwiftLogMacro(Logger.loggingIsAsync, .Info, flag: .Info, context: 0, file: file, function: function, line: line, tag: nil, string: logText)
+	SwiftLogMacro(Logger.loggingIsAsync, .Info, flag: .Info, context: 0, file: file, function: function, line: line, tag: nil, string: toDebugString(value()))
 }
 
-func logE(@autoclosure errorText: () -> String, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
+func logE<T>(@autoclosure error: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
 	if(!isConfigured) { configure() }
-	SwiftLogMacro(Logger.loggingIsAsync, .Warning, flag: .Warning, context: 0, file: file, function: function, line: line, tag: nil, string: errorText)
+	SwiftLogMacro(Logger.loggingIsAsync, .Warning, flag: .Warning, context: 0, file: file, function: function, line: line, tag: nil, string: toDebugString(error()))
 }
 
-func logD(@autoclosure debugText: () -> String, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
+func logD<T>(@autoclosure value: () -> T, file: StaticString = __FILE__, function: StaticString = __FUNCTION__, line: UWord = __LINE__) {
 	if(!isConfigured) { configure() }
-	SwiftLogMacro(Logger.loggingIsAsync, .Debug, flag: .Debug, context: 0, file: file, function: function, line: line, tag: nil, string: debugText)
+	SwiftLogMacro(Logger.loggingIsAsync, .Debug, flag: .Debug, context: 0, file: file, function: function, line: line, tag: nil, string: toDebugString(value()))
 }
 
 
@@ -95,7 +95,7 @@ private class LogViewController : UIViewController {
 		tv.snp_makeConstraints { make in
 			make.left.right.equalTo(view)
 			make.top.equalTo(snp_topLayoutGuideBottom)
-//			make.bottom.equalTo(keyboardLayoutGuide)
+			make.bottom.equalTo(keyboardLayoutGuide)
 		}
 		textView = tv
 	}

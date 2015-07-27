@@ -14,6 +14,7 @@ struct AssociationKey {
   static var alpha: UInt8 = 2
   static var text: UInt8 = 3
   static var image: UInt8 = 4
+	static var enabled: UInt8 = 5
 }
 
 // lazily creates a gettable associated property via the given factory
@@ -80,4 +81,11 @@ extension UITextField {
   func changed() {
     rac_text.value = self.text
   }
+}
+
+
+extension UIButton {
+	public var rac_enabled: MutableProperty<Bool> {
+		return lazyMutableProperty(self, &AssociationKey.enabled, { self.enabled = $0 }, { self.enabled  })
+	}
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
 class SignInViewController: UIViewController, UIApplicationDelegate {
 	override func loadView() {
@@ -120,36 +121,56 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 		self.forgotPasswd.setTitle(NSLocalizedString("SIGNIN_lostPasswd", comment: ""), forState: .Normal)
         self.forgotPasswd.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         self.forgotPasswd.titleLabel?.font = UIFont.systemFontOfSize(14)
+		
+		let emailEmpty = merge([emailTextField.rac_textSignal().toSignalProducer(), emailTextField.rac_valuesForKeyPath("text", observer: self).toSignalProducer()])
+			|> ignoreError
+			|> map { ($0 as! String).isEmpty }
+		let pwEmpty = merge([passwordTextField.rac_textSignal().toSignalProducer(), passwordTextField.rac_valuesForKeyPath("text", observer: self).toSignalProducer()])
+			|> ignoreError
+			|> map { ($0 as! String).isEmpty }
+		
+		signInButton.rac_enabled <~ combineLatest([emailEmpty, pwEmpty, loggingIn.producer])
+			|> map { args in !(args[0] || args[1] || args[2])	}
+		
 	}
 	
 	override func viewWillDisappear(animated: Bool) {
 		super.viewWillDisappear(animated)
-		
-//		UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
 	}
 	
 	override func preferredStatusBarStyle() -> UIStatusBarStyle {
 		return .LightContent
 	}
 	
+	var loggingIn = MutableProperty(false)
+	
 	func signIn(sender: AnyObject?) {
-		
-		let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
-		
-		let vc = UINavigationController(rootViewController: LockViewController())
-		let vc2 = UINavigationController(rootViewController: MapViewController())
-		let vc3 = UINavigationController(rootViewController: ProfileViewController())
-		
-		let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
-		let item2 = TabItem(controller: vc2, images: UIImage.toggleImage(UIImage.ImagesForToggle.Map))
-		let item3 = TabItem(controller: vc3, images: UIImage.toggleImage(UIImage.ImagesForToggle.Profile))
-		
-		let tabBar = ACKTabBarController(items: [item,item2,item3])
-		UIView.transitionWithView(delegate.window!, duration: 0.2, options: .TransitionCrossDissolve, animations: {
-			delegate.window!.rootViewController = tabBar
-		}, completion: nil)
-
-		delegate.window!.makeKeyAndVisible()
-		
+		loggingIn.value = true
+		API.login(username: "tomas.krabac@ackee.cz", password: "ackee2015").start(completed: {
+			self.loggingIn.value = false
+			UIView.performWithoutAnimation{
+				view.endEditing(true)
+			}
+			let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+			
+			let vc = UINavigationController(rootViewController: LockViewController())
+			let vc2 = UINavigationController(rootViewController: MapViewController())
+			let vc3 = UINavigationController(rootViewController: ProfileViewController())
+			
+			let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
+			let item2 = TabItem(controller: vc2, images: UIImage.toggleImage(UIImage.ImagesForToggle.Map))
+			let item3 = TabItem(controller: vc3, images: UIImage.toggleImage(UIImage.ImagesForToggle.Profile))
+			
+			let tabBar = ACKTabBarController(items: [item,item2,item3])
+			UIView.transitionWithView(delegate.window!, duration: 0.2, options: .TransitionCrossDissolve, animations: {
+				delegate.window!.rootViewController = tabBar
+				}, completion: nil)
+			
+			delegate.window!.makeKeyAndVisible()
+			}, error: { error in
+				self.loggingIn.value = false
+				self.handleError(error)
+				//TODO: k erroru neni grafika a api zatim error nikdy nevrati
+		})
 	}
 }

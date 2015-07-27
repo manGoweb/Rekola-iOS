@@ -181,6 +181,7 @@ class Theme {
     class func whiteButton() -> UIButton {
         let button = UIButton()
         button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
+			button.setTitleColor(UIColor.rekolaGrayTextColor(), forState: .Disabled)
         return button
     }
     

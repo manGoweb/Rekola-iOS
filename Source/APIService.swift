@@ -83,7 +83,7 @@ class RekolaAPI {
 		if let response = error.userInfo?[APIErrorKeys.response] as? NSHTTPURLResponse {
 			switch response.statusCode {
 				case 401:
-					return _instance.login("putCurrentUsernameHere", password: "putCurrentPasswordHere") |> flatMap(.Merge) { _ in SignalProducer.empty } //login doesnt have to send any values. If it sends a value, the value is ignored, the signal completes and is unsubscribed from
+					return _instance.login(username: "putCurrentUsernameHere", password: "putCurrentPasswordHere") |> flatMap(.Merge) { _ in SignalProducer.empty } //login doesnt have to send any values. If it sends a value, the value is ignored, the signal completes and is unsubscribed from
 				default:
 					return nil
 			}
@@ -114,6 +114,7 @@ class RekolaAPI {
 							sendError(sink, jsonError)
 							return
 						}
+						logD(jsonString)
 						let str =  action(jsonString!)
 						str |> start(sink)
 						return
@@ -138,7 +139,7 @@ class RekolaAPI {
 
     
     
-    func login(username: String, password: String) -> SignalProducer<String,NSError>  {
+	func login(#username: String, password: String) -> SignalProducer<String,NSError>  {
         return  call(.Login(dictionary:["password" : password, "username" : username])) { data in
             //namapuju resp zgrootuju
             return rac_decode(data)

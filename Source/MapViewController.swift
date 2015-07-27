@@ -143,23 +143,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         
-//        API calling
-        let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(49, longitude: 14))
-        producer.start(error: { println($0) }, next: { [weak self] (bikes : [Bike]) in
-            self?.bikes = bikes
-            //            asynchronni volani bude
-            })
-        
-        if let nearBikes = bikes {
-            for bike in nearBikes {
-                let mapPin = MapPin(bike: bike)
-                mapView.addAnnotation(mapPin)
-            }
-        } else { //dumbBike for testing when API is not working
-            let myBike = Bike.myBike()
-            let mapPin = MapPin(bike: myBike)
-            mapView.addAnnotation(mapPin)
-        }
+////        API calling
+//        let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(49, longitude: 14))
+//        producer.start(error: { println($0) }, next: { [weak self] (bikes : [Bike]) in
+//            self?.bikes = bikes
+//            //            asynchronni volani bude
+//            })
+//        
+//        if let nearBikes = bikes {
+//            for bike in nearBikes {
+//                let mapPin = MapPin(bike: bike)
+//                mapView.addAnnotation(mapPin)
+//            }
+//        } else { //dumbBike for testing when API is not working
+//            let myBike = Bike.myBike()
+//            let mapPin = MapPin(bike: myBike)
+//            mapView.addAnnotation(mapPin)
+//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
