@@ -39,8 +39,8 @@
 		928049DB1B41614700535485 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928049DA1B41614700535485 /* MapViewController.swift */; };
 		928F84561B4D0DD60034F5C6 /* BorrowBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */; };
 		929466511B4E73C400630B7C /* BikeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929466501B4E73C400630B7C /* BikeDetailViewController.swift */; };
-		92AF53361B57CEE900AFAD1F /* ModalAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 92AF53351B57CEE900AFAD1F /* ModalAnimation.m */; };
 		92AF53381B57CF3E00AFAD1F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AF53371B57CF3E00AFAD1F /* BaseViewController.swift */; };
+		92C6064E1B66581E002188BB /* ModalAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C6064D1B66581E002188BB /* ModalAnimation.m */; };
 		92C671B81B567AB800EAB048 /* EquipmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C671B71B567AB800EAB048 /* EquipmentViewController.swift */; };
 		92E6770D1B4293E200819FC5 /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E6770C1B4293E200819FC5 /* MapPin.swift */; };
 		92E891EC1B4D590C00637FC4 /* ReturnBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */; };
@@ -131,9 +131,9 @@
 		928049DA1B41614700535485 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowBikeViewController.swift; sourceTree = "<group>"; };
 		929466501B4E73C400630B7C /* BikeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeDetailViewController.swift; sourceTree = "<group>"; };
-		92AF53341B57CEE900AFAD1F /* ModalAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModalAnimation.h; path = ../../../../Downloads/ModalAnimation.h; sourceTree = "<group>"; };
-		92AF53351B57CEE900AFAD1F /* ModalAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModalAnimation.m; path = ../../../../Downloads/ModalAnimation.m; sourceTree = "<group>"; };
 		92AF53371B57CF3E00AFAD1F /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		92C6064C1B66581E002188BB /* ModalAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalAnimation.h; sourceTree = "<group>"; };
+		92C6064D1B66581E002188BB /* ModalAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalAnimation.m; sourceTree = "<group>"; };
 		92C671B71B567AB800EAB048 /* EquipmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentViewController.swift; sourceTree = "<group>"; };
 		92E6770C1B4293E200819FC5 /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnBikeViewController.swift; sourceTree = "<group>"; };
@@ -314,8 +314,8 @@
 		B47536F91951AAFC00DB8D6D /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				92AF53341B57CEE900AFAD1F /* ModalAnimation.h */,
-				92AF53351B57CEE900AFAD1F /* ModalAnimation.m */,
+				92C6064C1B66581E002188BB /* ModalAnimation.h */,
+				92C6064D1B66581E002188BB /* ModalAnimation.m */,
 				B4A0BA8E1AD4972300715A9F /* Theme.swift */,
 				B4EE77911B28D1AA00ED956B /* APIService.swift */,
 				92E6770C1B4293E200819FC5 /* MapPin.swift */,
@@ -664,7 +664,6 @@
 				92E891EC1B4D590C00637FC4 /* ReturnBikeViewController.swift in Sources */,
 				928F84561B4D0DD60034F5C6 /* BorrowBikeViewController.swift in Sources */,
 				92514D4C1B53DB4500BF0541 /* ProblemCell.swift in Sources */,
-				92AF53361B57CEE900AFAD1F /* ModalAnimation.m in Sources */,
 				929466511B4E73C400630B7C /* BikeDetailViewController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* LockViewController.swift in Sources */,
 				92514D4A1B539D4300BF0541 /* ProblemsViewController.swift in Sources */,
@@ -673,6 +672,7 @@
 				6DE50C881B4D1E46007F847A /* MBSwizzler.swift in Sources */,
 				92C671B81B567AB800EAB048 /* EquipmentViewController.swift in Sources */,
 				B4EE778F1B28A61700ED956B /* UIKitExtensions.swift in Sources */,
+				92C6064E1B66581E002188BB /* ModalAnimation.m in Sources */,
 				6DE50C7C1B4D1AB7007F847A /* Logger.swift in Sources */,
 				92F0DA321B4BD3EC00C42BB4 /* SignInViewController.swift in Sources */,
 				9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */,
