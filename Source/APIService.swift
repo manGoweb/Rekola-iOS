@@ -18,6 +18,7 @@ enum Router : URLRequestConvertible {
     
     
     case Login(dictionary: [String:AnyObject])
+	case PasswordRecovery(email: String)
     case Bikes(dictionary: [String:Double])
     
     
@@ -25,7 +26,8 @@ enum Router : URLRequestConvertible {
         switch self {
         case .Login:
             return .POST
-            
+		case .PasswordRecovery:
+			return .PUT
         case .Bikes:
             return .GET
         }
@@ -35,6 +37,8 @@ enum Router : URLRequestConvertible {
         switch self {
         case .Login:
             return "/accounts/mine/login"
+		case .PasswordRecovery:
+			return "/password-recovery"
         case .Bikes:
             return "/bikes/all"
         }
@@ -54,8 +58,8 @@ enum Router : URLRequestConvertible {
             
         case .Login(let params):
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: params).0
-            
-            
+		case .PasswordRecovery(email: let email):
+			return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: ["email" : email]).0
         default:
             return mutableURLRequest
         }
@@ -93,7 +97,7 @@ class RekolaAPI {
 	
 	private func call<T>(route: Router, var authHandler: AuthHandler? = RekolaAPI.authHandler, action: (AnyObject -> (SignalProducer<T,NSError>))) -> SignalProducer<T,NSError> {
         var signal = SignalProducer<T,NSError> { sink, disposable in
-            
+            log(route.URLRequest)
             Alamofire.request(route)
 					.validate()
 					.response { (request, response, data, error) in
@@ -140,7 +144,7 @@ class RekolaAPI {
     
     
 	func login(#username: String, password: String) -> SignalProducer<String,NSError>  {
-        return  call(.Login(dictionary:["password" : password, "username" : username])) { data in
+		return  call(.Login(dictionary:["password" : password, "username" : username]), authHandler: nil) { data in
             //namapuju resp zgrootuju
             return rac_decode(data)
                 //side-effect jednotlivych requestů
@@ -159,7 +163,13 @@ class RekolaAPI {
             
         }
     }
-    
+	
+	func passwordRecovery(#email: String) -> SignalProducer<(), NSError> {
+		return call(.PasswordRecovery(email: email), authHandler: nil) { data in
+			return SignalProducer.empty
+		}
+	}
+	
     func bikes(latitude: Double, longitude: Double) -> SignalProducer<[Bike],NSError> {
         return call(Router.Bikes(dictionary: ["lat": latitude, "lng" : longitude])) { data in
             let signal : SignalProducer<Bike,NSError> = rac_decodeByOne(data)

@@ -187,12 +187,18 @@ class Theme {
     
     class func textField() -> UITextField {
         let tf = UITextField()
+		let spacerView1 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)) //inset for textField
+		tf.leftViewMode = .Always
+		tf.leftView = spacerView1
         tf.backgroundColor = .rekolaGrayTextFieldColor()
         return tf
     }
     
     class func pinkTextField() -> UITextField {
         let tf = UITextField()
+		let spacerView1 = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10)) //inset for textField
+		tf.leftViewMode = .Always
+		tf.leftView = spacerView1
         tf.backgroundColor = .rekolaPinkTextFieldColor()
         return tf
     }
