@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>appName</key>
-	<string>LoS Δ</string>
+	<string>Rekola Δ</string>
 	<key>baseURL</key>
-	<string>https://www.rekola.cz/api</string>
+	<string>http://beta.rekola.cz/api</string>
 	<key>scheme</key>
 	<string>Development</string>
 </dict>

@@ -146,7 +146,7 @@ class SignInViewController: UIViewController, UIApplicationDelegate {
 	
 	func signIn(sender: AnyObject?) {
 		loggingIn.value = true
-		API.login(username: "tomas.krabac@ackee.cz", password: "ackee2015").start(completed: {
+		API.login(username: emailTextField.text, password: passwordTextField.text).start(completed: {
 			self.loggingIn.value = false
 			UIView.performWithoutAnimation{
 				view.endEditing(true)
