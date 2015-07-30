@@ -28,7 +28,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let detailView = UIView()
         view.addSubview(detailView)
         detailView.snp_makeConstraints { make in
-            make.height.equalTo(192)
+            make.height.equalTo(192 - 64)
             make.top.equalTo(view)
             make.left.right.equalTo(view)
         }
@@ -38,7 +38,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         detailView.addSubview(bikeImage)
         bikeImage.setContentHuggingPriority(1000, forAxis: .Horizontal)
         bikeImage.snp_makeConstraints { make in
-            make.top.equalTo(view).offset(70)
+            make.top.equalTo(view).offset(70 - 64)
             make.left.equalTo(view).offset(L.horizontalSpacing)
         }
         self.bikeImage = bikeImage
@@ -46,7 +46,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let nameLabel = Theme.whiteLabel()
         detailView.addSubview(nameLabel)
         nameLabel.snp_makeConstraints { make in
-            make.top.equalTo(view).offset(70)
+            make.top.equalTo(view).offset(70 - 64)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
             
         }
@@ -83,7 +83,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var detailView: UIView!
     weak var container: UIView!
     weak var mapView: MKMapView!
-    weak var navItem: UINavigationItem!
+    weak var navItem: UINavigationItem! //WTF?
     weak var bikeNameLabel: UILabel!
     weak var bikeDescriptionLabel: UILabel!
     weak var bikeDistanceLabel: UILabel!
@@ -95,29 +95,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        checkLocationAuthorizationStatus()
-//        UIApplication.sharedApplication().statusBarStyle = .LightContent
+		navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //        navigationBar settings + tintColor
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         self.navigationItem.title = NSLocalizedString("MAP_title", comment: "")
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         self.navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
         self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
-        
+		navigationController?.navigationBar.barStyle = .Black
+		navigationController?.navigationBar.translucent = false
+		
         let leftBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .directionButton), style:.Plain, target: self, action: "showDirections")
-        let rightBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "showLocations")
-        
+//        let rightBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "showLocations")
+		
         self.navigationItem.leftBarButtonItem = leftBarButton
-        self.navigationItem.rightBarButtonItem = rightBarButton
-        
+//        self.navigationItem.rightBarButtonItem = rightBarButton
+		
 //        mapView settings
         mapView.delegate = self
         mapView.zoomEnabled = true
@@ -127,7 +126,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 //        detailView setting
         self.detailView.backgroundColor = .rekolaPinkColor()
         self.detailView.opaque = true
-        self.detailView.alpha = 0
+		detailView.hidden = true
         
         self.bikeImage.contentMode = .ScaleAspectFit
         
@@ -141,8 +140,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
 //        locationManager settings
         locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        
+		locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
+        locationManager.requestWhenInUseAuthorization()
 ////        API calling
 //        let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(49, longitude: 14))
 //        producer.start(error: { println($0) }, next: { [weak self] (bikes : [Bike]) in
@@ -194,8 +193,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
 //    MARK: MKMapViewDelegate
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-        self.detailView.alpha = 1.0
-        self.navigationController?.navigationBarHidden = false
+
+//		if(view.annotation as? MKUserLocation != nil) {
+//			return
+//		}
+        self.detailView.hidden = false
         
         mapView.setCenterCoordinate(view.annotation.coordinate, animated: true)
         bikeCoordinate = view.annotation.coordinate
@@ -208,18 +210,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {
-        self.detailView.alpha = 0.0
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.detailView.hidden = true
     }
-    
-    func checkLocationAuthorizationStatus() {
-        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
-            mapView.showsUserLocation = true
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-        }
-    }
-    
+
+	func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+		switch status {
+		case .AuthorizedAlways, .AuthorizedWhenInUse:
+			mapView.showsUserLocation = true
+			navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
+		default:
+			mapView.showsUserLocation = false
+			navigationItem.rightBarButtonItem = nil
+		}
+	}
+	
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         let placemark = MKPlacemark(coordinate: view.annotation.coordinate, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)

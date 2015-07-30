@@ -111,11 +111,9 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 		
 		myBikeRequestPending.producer
 			|> skipRepeats { (prev, curr) in
-				logD("0:\(prev), 1:\(curr)")
 			return 	prev == curr
 			}
 			|> start(next: { [weak self] in
-				logD($0)
 			if $0{
 				self?.view.userInteractionEnabled = false
 				SVProgressHUD.show()
