@@ -11,7 +11,18 @@ import SnapKit
 import Foundation
 
 class AddProblemViewController: UIViewController, UITextFieldDelegate, ProblemsViewControllerProtocol {
-    override func loadView() {
+	
+	let bike : Bike
+	init(bike: Bike){
+		self.bike = bike
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init(coder aDecoder: NSCoder) {
+	    fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func loadView() {
         let view = UIView()
         self.view = view
         
@@ -151,7 +162,8 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, ProblemsV
             sender.selected = true
         }
     }
-    
+	
+	//TODO: zjistit co vraci api a doplnit logiku (porad se se mnou), urcite neifovat podle stringu
 //    MARK: ProblemsViewControllerProtocol
     func addProblemToTextField(controller: ProblemsViewController, problem: String) {
         self.textField.placeholder = ""

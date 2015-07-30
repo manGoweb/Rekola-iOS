@@ -43,7 +43,7 @@ public class DefaultErrorHandler : NSObject, ErrorHandlerType, UIAlertViewDelega
 			presentError()
 		case .UserAction:
 			let message = "An error that requires user action was not handled, the app may misbehave."
-			print("message")
+			logE(message)
 			if isAdHoc() {
 				presentError(message)
 			}

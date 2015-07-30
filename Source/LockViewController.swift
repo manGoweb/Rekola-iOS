@@ -6,18 +6,19 @@
 //  Copyright (c) 2015 Ackee s.r.o. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import ReactiveCocoa
 
 
 
-class LockViewController : UIViewController, UITextFieldDelegate {
+class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandlerType*/, CLLocationManagerDelegate {
     
     override func loadView() {
         
         let view  = UIView()
         self.view = view
-        
+		setupKeyboardLayoutGuide()
+		
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)
@@ -65,6 +66,7 @@ class LockViewController : UIViewController, UITextFieldDelegate {
         self.subtitleLabel = subtitleLabel
         
         let textField = Theme.textField()
+		textField.returnKeyType = .Done
         textField.textAlignment = .Center
         container.addSubview(textField)
         textField.snp_makeConstraints { make in
@@ -94,6 +96,7 @@ class LockViewController : UIViewController, UITextFieldDelegate {
     
     
     override func viewDidLoad() {
+		super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.navigationBar.tintColor = .rekolaGreenColor()
         self.view.backgroundColor = .whiteColor()
@@ -103,16 +106,147 @@ class LockViewController : UIViewController, UITextFieldDelegate {
         textField.delegate = self
         textField.placeholder = NSLocalizedString("LOCK_enterCode", comment: "")
         borrowButton!.setTitle(NSLocalizedString("LOCK_borrow", comment: ""), forState: .Normal)
-        borrowButton.addTarget(self, action: "borrowBike", forControlEvents: .TouchUpInside)
+        borrowButton.addTarget(self, action: "borrowBike:", forControlEvents: .TouchUpInside)
+		
+		
+		myBikeRequestPending.producer
+			|> skipRepeats { (prev, curr) in
+				logD("0:\(prev), 1:\(curr)")
+			return 	prev == curr
+			}
+			|> start(next: { [weak self] in
+				logD($0)
+			if $0{
+				self?.view.userInteractionEnabled = false
+				SVProgressHUD.show()
+			} else {
+				self?.view.userInteractionEnabled = true
+				SVProgressHUD.dismiss()
+			}
+		})
+		
+		
+		let tfHas6Digits = merge([textField.rac_textSignal().toSignalProducer(), textField.rac_valuesForKeyPath("text", observer: self).toSignalProducer()])
+			|> ignoreError
+			|> map { $0 as! String }
+			|> map { (text : String) -> Bool in
+				let expr = NSRegularExpression(pattern: "^[0-9]{6}$", options: .allZeros, error: nil)!
+				let matches = expr.matchesInString(text, options: .allZeros, range: NSMakeRange(0, count(text)))
+				return matches.count > 0
+		}
+
+		let hasLocation = location.producer |> map { $0 != nil }
+		canBorrowBike <~ combineLatest([tfHas6Digits, myBikeRequestPending.producer, borrowRequestPending.producer, hasLocation])
+			|> map { $0[0] && !$0[1] && !$0[2] && $0[3] }
+			|> skipRepeats
+
+		borrowButton.rac_enabled <~ canBorrowBike
+		
+		textField.delegate = self
+		
+		locationManager.requestWhenInUseAuthorization()
+		locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+		locationManager.delegate = self
+
+		getMyBike()
+		
     }
-    
-    func borrowBike() {
-//        let vc = ViewController()
-        let vc = BorrowBikeViewController()
-        showViewController(vc, sender: nil)
-//        presentViewController(vc, animated: true, completion: nil)
+	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.setNavigationBarHidden(true, animated: animated)
+		locationManager.startUpdatingLocation()
+	}
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+		locationManager.stopUpdatingLocation()
+	}
+	
+	func textFieldShouldReturn(textField: UITextField) -> Bool {
+//		if(canBorrowBike.value) {
+//			borrowBike(textField)
+//		}
+		textField.resignFirstResponder()
+		return true
+	}
+	
+	func textFieldDidBeginEditing(textField: UITextField) {
+		dispatch_async(dispatch_get_main_queue()) {
+			self.scrollView.scrollToBottom(true)
+		}
+	}
+	
+	let myBikeRequestPending = MutableProperty(false)
+	func getMyBike() {
+		myBikeRequestPending.value = true
+		API.myBike().start(error: { error in
+			self.myBikeRequestPending.value = false
+			self.handleError(error, severity: .UserAction, sender: self, userInfo: nil) //TODO: present alert with retry button?
+//				{ [weak self] (result, handledBy) in
+//				if(handledBy == self){
+//					switch result {
+//					case .AlertAction: //retry
+//						self?.getMyBike()
+//					default: fatalError("unexpected errorhandling result")
+//					}
+//				}
+//			}
+			self.getMyBike()
+			
+			}, completed: {
+				self.myBikeRequestPending.value = false
+			}, next: { bike in
+				if let bike = bike {
+					self.showBorrowedBikeController(bike, sender: self)
+				}else {
+					//do nothing, no borrowed bike
+				}
+			
+		})
+	}
+	
+	var canBorrowBike = MutableProperty(false)
+	var borrowRequestPending = MutableProperty(false)
+	func borrowBike(sender: AnyObject?) {
+		UIView.performWithoutAnimation {
+			textField.resignFirstResponder()
+		}
+		let code = textField.text
+		borrowRequestPending.value = true
+		API.borrowBike(code: code, location: location.value!).start(error: { error in
+			self.borrowRequestPending.value = false
+			self.handleError(error)
+			}, next: { bike in
+				self.borrowRequestPending.value = false
+				logD("compl")
+				self.showBorrowedBikeController(bike, sender: sender)
+		})
+		
     }
 
+	func showBorrowedBikeController(bike: Bike, sender: AnyObject?) {
+		let vc = BorrowedBikeViewController(bike: bike)
+		showViewController(vc, sender: sender)
+	}
+	
+	let location : MutableProperty<CLLocation?> = MutableProperty(nil)
+	let locationManager = CLLocationManager()
+	
+	func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+		//TODO: alert if status is .Restricted or .Denied
+	}
+	
+	func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+		location.value = locationManager.location
+	}
+	
+//	func errorHandlingStep(error: NSError, severity: ErrorSeverity, sender: AnyObject?, userInfo: [NSObject : AnyObject]?, completion: ErrorHandlerCompletion?) -> (hasCompletion: Bool, stop: Bool) {
+//		if let statusCode = (error.userInfo?[APIErrorKeys.response] as? NSHTTPURLResponse)?.statusCode {
+//			
+//			return (false,true)
+//		}
+//		return (false, false)
+//	}
 	
 }
 

@@ -10,12 +10,24 @@ import UIKit
 import SnapKit
 import Foundation
 
-class BorrowBikeViewController: UIViewController {
-    override func loadView() {
+class BorrowedBikeViewController: UIViewController {
+	let bike : Bike
+	init(bike: Bike) {
+		self.bike = bike
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init(coder aDecoder: NSCoder) {
+	    fatalError("init(coder:) has not been implemented")
+	}
+	
+	
+	override func loadView() {
         let view = UIView()
         self.view = view
         
-        let iv = UIImageView(image: UIImage(imageIdentifier: .borrowBike))
+        let iv = UIImageView()
+		iv.contentMode = .ScaleAspectFit
         view.addSubview(iv)
         iv.snp_makeConstraints { make in
             make.top.equalTo(view).offset(23)
@@ -116,11 +128,12 @@ class BorrowBikeViewController: UIViewController {
         self.view.backgroundColor = .whiteColor()
         self.bikeImageView.contentMode = .ScaleAspectFit
 
-        self.bikeNameLabel.text = "Kníže Pupík Ignor"
+        self.bikeNameLabel.text = bike.name
         self.bikeNameLabel.font = UIFont.systemFontOfSize(24)
         self.bikeNameLabel.textAlignment = .Center
 
-        self.bikeBorrowLabel = formatLabel(self.bikeBorrowLabel,date: "25.08", time: "14:53")
+		//TODO:use bike.returnedAt with a date formatters for date and time
+//        self.bikeBorrowLabel = formatLabel(self.bikeBorrowLabel,date: date, time: time)
         self.bikeBorrowLabel.font = UIFont.systemFontOfSize(14)
         self.bikeBorrowLabel.textAlignment = .Center
         
@@ -129,34 +142,36 @@ class BorrowBikeViewController: UIViewController {
         self.bikeDetailButton.layer.cornerRadius = 4
         self.bikeDetailButton.layer.borderWidth = 2
         
-        self.bikeDetailButton.addTarget(self, action: "bikeDetail", forControlEvents: .TouchUpInside)
+        self.bikeDetailButton.addTarget(self, action: "bikeDetail:", forControlEvents: .TouchUpInside)
         
-        self.bikeCodeLabel.text = "11121"
+        self.bikeCodeLabel.text = bike.lockCode
         self.bikeCodeLabel.font = UIFont.boldSystemFontOfSize(70)
         self.bikeCodeLabel.textAlignment = .Center
         
         self.bikeReturnButton.setTitle(NSLocalizedString("BORROWBIKE_return", comment: ""), forState: .Normal)
-        self.bikeReturnButton.addTarget(self, action: "returnBike", forControlEvents: .TouchUpInside)
+        self.bikeReturnButton.addTarget(self, action: "returnBike:", forControlEvents: .TouchUpInside)
+		
+		bikeImageView.sd_setImageWithURL(bike.imageURL)
     }
     
     func formatLabel(label: UILabel, date: String, time: String) -> UILabel! {
         let text = NSLocalizedString("BORROWBIKE_lent", comment: "") + date + "/" + time
         
         let atribute = NSMutableAttributedString(string: text)
-        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 8, length: 5))
-        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 14, length: 5))
+        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 8, length: 6))
+        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 15, length: 5))
         
         label.attributedText = atribute
         return label
     }
     
-    func returnBike() {
-        let vc = ReturnBikeViewController()
-        showViewController(vc, sender: nil)
+	func returnBike(sender: AnyObject?) {
+		let vc = ReturnBikeViewController(bike: bike)
+        showViewController(vc, sender: sender)
     }
     
-    func bikeDetail() {
-        let vc = BikeDetailViewController()
-        showViewController(vc, sender: nil)
+	func bikeDetail(sender: AnyObject?) {
+		let vc = BikeDetailViewController(bike: bike)
+        showViewController(vc, sender: sender)
     }
 }

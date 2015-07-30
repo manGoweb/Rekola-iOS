@@ -73,18 +73,37 @@ public struct Bike {
     let name : String
     let description : String
     let location : Address
-    var issues : [String]
+    var issues : [Int]
     let borrowed : Bool
     let operational : Bool
-    let lastSeen : String?
+    let returnedAt : NSDate?
     
 //    icons
     let iconUrl : String
+	let lockCode : String
+	let imageURLString : String
+}
+
+extension Bike {
+	var imageURL : NSURL {
+		return NSURL(string: imageURLString)!
+	}
 }
 
 extension Bike : Decodable  {
-    static func create(id : Int) (name: String) (description: String) (location: Address) (issues: [String]) (borrowed : Bool) (operational : Bool) (lastSeen: String?) (iconUrl: String) -> Bike {
-        return Bike(id: id, name : name, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen, iconUrl: iconUrl)
+	static var dateFormatter : NSDateFormatter = {
+		let dateFormatter = NSDateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+		return dateFormatter
+		}()
+	
+//	static func parseDate(string: String?) -> Decoded<NSDate?> {
+//		return pure(flatMap(string) {self.dateFormatter.dateFromString($0 ?? "")})
+//	}
+	
+	static func create(id : Int) (name: String) (description: String) (location: Address) (issues: [Int]) (borrowed : Bool) (operational : Bool) (returnedAt: String?) (iconUrl: String) (lockCode : String)(imageUrlString : String) -> Bike {
+		let returnedDate = dateFormatter.dateFromString(returnedAt ?? "")
+		return Bike(id: id, name : name, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
     }
     
     public static func decode(json: JSON) -> Decoded<Bike> {
@@ -96,26 +115,55 @@ extension Bike : Decodable  {
             <*> json <|| "issues"
             <*> json <| "borrowed"
             <*> json <| "operational"
-            <*> json <|? "lastSeen"
+//            <*> json <|? ["location","returnedAt"] >>- parseDate //wont compile
+			<*> json <|? ["location","returnedAt"]
             <*> json <| "iconUrl"
-
+				<*> json <| "lockCode"
+				<*> json <| "imageUrl"
         //  <*> json <| "issues"
         
     }
     
-    static func myBike()->Bike {
-        let id = 123
-        let name = "Kolo kolo mlýnské"
-        let description = "horské kolo s gumama jako salámy"
-        let issues = ["5","8"]
-        let borrowed = false
-        let lastSeen = "30.10. 11:56"
-        let operational = true
-        let adrress = Address.myDumbAddress()
-        let iconUrl = "https://www.rekola.cz/api/images/1.svg"
-        
-        return Bike(id: id, name: name, description: description, location: adrress, issues: issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen, iconUrl: iconUrl)
-    }
+//    static func myBike()->Bike {
+//        let id = 123
+//        let name = "Kolo kolo mlýnské"
+//        let description = "horské kolo s gumama jako salámy"
+//        let issues = ["5","8"]
+//        let borrowed = false
+//        let lastSeen = "30.10. 11:56"
+//        let operational = true
+//        let adrress = Address.myDumbAddress()
+//        let iconUrl = "https://www.rekola.cz/api/images/1.svg"
+//        
+//        return Bike(id: id, name: name, description: description, location: adrress, issues: issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen, iconUrl: iconUrl)
+//    }
+	
 }
 
+
+struct BikeReturnInfo {
+	let lat : Double
+	let lon : Double
+	let note : String?
+	let sensorLat : Double?
+	let sensorLon : Double?
+	let sensorAcc : Double?
+	
+	var jsonRepresentation : [String : AnyObject] {
+		var d : [String : AnyObject] = [ "lat" : lat, "lng" : lon ]
+		if let note = note {
+			d["note"] = note
+		}
+		if let sensorLat = sensorLat {
+			d["sensorLat"] = sensorLat
+		}
+		if let sensorLon = sensorLon {
+			d["sensorLng"] = sensorLon
+		}
+		if let sensorAcc = sensorAcc {
+			d["sensorAccuracy"] = sensorAcc
+		}
+		return d
+	}
+}
 

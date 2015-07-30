@@ -26,6 +26,9 @@
 		6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */; };
 		6D6840951B66823600FFE2B7 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6840941B66823600FFE2B7 /* Logger.swift */; };
 		6D6840971B67829500FFE2B7 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6840961B67829500FFE2B7 /* ResetPasswordViewController.swift */; };
+		6D6BCD771B6A1B22005561BA /* ackee.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 6D6BCD761B6A1B22005561BA /* ackee.gpx */; };
+		6D6BCD791B6A1B85005561BA /* RekolaErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6BCD781B6A1B85005561BA /* RekolaErrorHandler.swift */; };
+		6D6BCD7B1B6A3333005561BA /* UIScrollView+ScrollToBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D6BCD7A1B6A3333005561BA /* UIScrollView+ScrollToBottom.swift */; };
 		6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7861D41B397903009F8865 /* UIResponder+Errors.swift */; };
 		6DE50C7A1B4D19BE007F847A /* KeyboardLayoutGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */; };
 		6DE50C851B4D1E28007F847A /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE50C811B4D1E20007F847A /* CocoaLumberjack.framework */; };
@@ -38,7 +41,7 @@
 		92514D4C1B53DB4500BF0541 /* ProblemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92514D4B1B53DB4500BF0541 /* ProblemCell.swift */; };
 		9254E8261B4D356300D06738 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9254E8251B4D356300D06738 /* InsetLabel.swift */; };
 		928049DB1B41614700535485 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928049DA1B41614700535485 /* MapViewController.swift */; };
-		928F84561B4D0DD60034F5C6 /* BorrowBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */; };
+		928F84561B4D0DD60034F5C6 /* BorrowedBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F84551B4D0DD60034F5C6 /* BorrowedBikeViewController.swift */; };
 		929466511B4E73C400630B7C /* BikeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929466501B4E73C400630B7C /* BikeDetailViewController.swift */; };
 		92AF53381B57CF3E00AFAD1F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AF53371B57CF3E00AFAD1F /* BaseViewController.swift */; };
 		92C6064E1B66581E002188BB /* ModalAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 92C6064D1B66581E002188BB /* ModalAnimation.m */; };
@@ -116,6 +119,9 @@
 		6D1A3AFC1B3AD61800EC8E47 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		6D6840941B66823600FFE2B7 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6D6840961B67829500FFE2B7 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		6D6BCD761B6A1B22005561BA /* ackee.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ackee.gpx; sourceTree = "<group>"; };
+		6D6BCD781B6A1B85005561BA /* RekolaErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RekolaErrorHandler.swift; sourceTree = "<group>"; };
+		6D6BCD7A1B6A3333005561BA /* UIScrollView+ScrollToBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+ScrollToBottom.swift"; sourceTree = "<group>"; };
 		6D7861D41B397903009F8865 /* UIResponder+Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIResponder+Errors.swift"; sourceTree = "<group>"; };
 		6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutGuide.swift; sourceTree = "<group>"; };
 		6DE50C7D1B4D1DF9007F847A /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = "../project-skeleton-swift/Carthage/Build/iOS/CocoaLumberjack.framework"; sourceTree = "<group>"; };
@@ -131,7 +137,7 @@
 		92514D4B1B53DB4500BF0541 /* ProblemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemCell.swift; sourceTree = "<group>"; };
 		9254E8251B4D356300D06738 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
 		928049DA1B41614700535485 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowBikeViewController.swift; sourceTree = "<group>"; };
+		928F84551B4D0DD60034F5C6 /* BorrowedBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowedBikeViewController.swift; sourceTree = "<group>"; };
 		929466501B4E73C400630B7C /* BikeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeDetailViewController.swift; sourceTree = "<group>"; };
 		92AF53371B57CF3E00AFAD1F /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		92C6064C1B66581E002188BB /* ModalAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalAnimation.h; sourceTree = "<group>"; };
@@ -282,7 +288,7 @@
 				9244D2831B43DCE60039B5EC /* ProfileViewController.swift */,
 				92F0DA311B4BD3EC00C42BB4 /* SignInViewController.swift */,
 				B44456F01B3462FA00597A66 /* TabBarController.swift */,
-				928F84551B4D0DD60034F5C6 /* BorrowBikeViewController.swift */,
+				928F84551B4D0DD60034F5C6 /* BorrowedBikeViewController.swift */,
 				92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */,
 				929466501B4E73C400630B7C /* BikeDetailViewController.swift */,
 				923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */,
@@ -297,6 +303,7 @@
 		B47536F71951A88A00DB8D6D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6D6BCD761B6A1B22005561BA /* ackee.gpx */,
 				B4ECD5DA1AD46C300099D516 /* Bridging-Header.h */,
 				B4ABA23B195195F60069FAD4 /* InfoPlist.strings */,
 				B4ABA23E195195F60069FAD4 /* main.m */,
@@ -324,6 +331,7 @@
 				92E6770C1B4293E200819FC5 /* MapPin.swift */,
 				9244D2851B43FA840039B5EC /* TinTingButton.swift */,
 				92514D4B1B53DB4500BF0541 /* ProblemCell.swift */,
+				6D6BCD781B6A1B85005561BA /* RekolaErrorHandler.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -437,6 +445,7 @@
 				6D0BE1691B3AC49F0030E6AC /* ArgoExtensions.swift */,
 				6D6840941B66823600FFE2B7 /* Logger.swift */,
 				6DE50C791B4D19BE007F847A /* KeyboardLayoutGuide.swift */,
+				6D6BCD7A1B6A3333005561BA /* UIScrollView+ScrollToBottom.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -535,6 +544,7 @@
 				B433E4AE19530092006BEBF1 /* environment.plist in Resources */,
 				B4AB848C1AE6E386004BAF1A /* Localizable.strings in Resources */,
 				B4ABA247195195F60069FAD4 /* InfoPlist.strings in Resources */,
+				6D6BCD771B6A1B22005561BA /* ackee.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,6 +667,8 @@
 				B4A0BA8F1AD4972300715A9F /* Theme.swift in Sources */,
 				B4EE77921B28D1AA00ED956B /* APIService.swift in Sources */,
 				92E6770D1B4293E200819FC5 /* MapPin.swift in Sources */,
+				6D6BCD791B6A1B85005561BA /* RekolaErrorHandler.swift in Sources */,
+				6D6BCD7B1B6A3333005561BA /* UIScrollView+ScrollToBottom.swift in Sources */,
 				92AF53381B57CF3E00AFAD1F /* BaseViewController.swift in Sources */,
 				6D7861D51B397903009F8865 /* UIResponder+Errors.swift in Sources */,
 				6D1A3AFD1B3AD61800EC8E47 /* Environment.swift in Sources */,
@@ -666,7 +678,7 @@
 				6DE50C7A1B4D19BE007F847A /* KeyboardLayoutGuide.swift in Sources */,
 				928049DB1B41614700535485 /* MapViewController.swift in Sources */,
 				92E891EC1B4D590C00637FC4 /* ReturnBikeViewController.swift in Sources */,
-				928F84561B4D0DD60034F5C6 /* BorrowBikeViewController.swift in Sources */,
+				928F84561B4D0DD60034F5C6 /* BorrowedBikeViewController.swift in Sources */,
 				92514D4C1B53DB4500BF0541 /* ProblemCell.swift in Sources */,
 				929466511B4E73C400630B7C /* BikeDetailViewController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* LockViewController.swift in Sources */,
@@ -800,7 +812,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "7711c35b-aaca-4c6f-98f9-732fecf25640";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
@@ -933,7 +945,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -946,7 +958,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "76a7e454-4195-4360-8665-586b307d4ae6";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
@@ -974,7 +986,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "43dbbcae-180f-4cb3-ad93-76fd1d00cecf";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};

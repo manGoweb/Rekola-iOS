@@ -11,9 +11,21 @@ import Foundation
 import SnapKit
 import MapKit
 import CoreLocation
+import ReactiveCocoa
 
-class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate {
-    override func loadView() {
+class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate{
+	
+	let bike : Bike
+	init(bike: Bike) {
+		self.bike = bike
+		super.init(nibName:nil, bundle:nil)
+	}
+
+	required init(coder aDecoder: NSCoder) {
+	    fatalError("init(coder:) has not been implemented")
+	}
+ 
+	override func loadView() {
         let view = UIView()
         self.view = view
         
@@ -27,7 +39,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         }
         self.returnButton = returnButton
         
-        let textView = UITextView()
+        let textView = SZTextView()
         textView.layer.borderWidth = 0.5
         textView.layer.cornerRadius = 4
         view.addSubview(textView)
@@ -51,25 +63,34 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         view.addSubview(mapView)
         mapView.snp_makeConstraints { make in
             make.bottom.equalTo(descriptionLabel.snp_top).offset(-L.verticalSpacing)
-            make.left.right.top.equalTo(view)
+            make.left.right.equalTo(view)
+			make.top.equalTo(snp_topLayoutGuideBottom)
         }
         self.mapView = mapView
+		
+		let pinImageView = UIImageView(image: UIImage.placeholderImageWithSize(CGSizeMake(20, 40)))
+		view.addSubview(pinImageView)
+		pinImageView.snp_makeConstraints { make in
+			make.centerX.equalTo(mapView)
+			make.bottom.equalTo(mapView.snp_centerY)
+		}
+		self.pinImageView = pinImageView
     }
     
-    weak var scrollView: UIScrollView!
+    weak var scrollView: UIScrollView! //TODO: dodelat tuhle screenu at pracuje dobre s klavesnici, muzu poradit
     weak var container: UIView!
     weak var mapView: MKMapView!
+	weak var pinImageView : UIImageView!
     weak var returnButton: UIButton!
-    weak var textView: UITextView!
+    weak var textView: SZTextView!
     weak var descriptionLabel: UILabel!
     let locationManager = CLLocationManager()
 
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+		
+        navigationController?.setNavigationBarHidden(false, animated: animated)
         
     }
     
@@ -79,14 +100,15 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.navigationController?.navigationBar.tintColor = .whiteColor()
         self.navigationItem.title = NSLocalizedString("RETURNBIKE_title", comment: "")
         
-        self.view.backgroundColor = .whiteColor()
+        self.view.backgroundColor = .whiteColor() //vsechny barvy, fonty apod nastavovat v loadView!
         
         self.descriptionLabel.text = NSLocalizedString("RETURNBIKE_description", comment: "")
         self.descriptionLabel.textAlignment = .Left
 
         
         self.textView.delegate = self
-        self.textView.text = "Např.: před vstupem do kavárny"
+//        self.textView.text = "Např.: před vstupem do kavárny"
+		textView.placeholder = NSLocalizedString("RETURN_PLACEHOLDER", comment: "")
         self.textView.textColor = .grayColor()
         self.textView.editable = true
 
@@ -97,29 +119,33 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.mapView.scrollEnabled = true
         self.mapView.zoomEnabled = true
         self.mapView.showsUserLocation = true
-        
-        let button = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "showLocation")
-        self.navigationItem.rightBarButtonItem = button
+		
+		navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
+		
+		returnButton.addTarget(self, action: "returnBike:", forControlEvents: .TouchUpInside)
+		returnButton.rac_enabled <~ requestPending.producer |> map { !$0 }
     }
-    
-    func showLocation() {
-        self.mapView.centerCoordinate = self.mapView.userLocation.coordinate
-    }
-    
-//    MARK: UITextViewDelegate
-    func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == "Např.: před vstupem do kavárny" {
-            textView.text = ""
-            textView.textColor = .blackColor()
-        }
-        textView.becomeFirstResponder()
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        if textView.text == "" {
-            textView.text = "Např.: před vstupem do kavárny"
-            textView.textColor = .grayColor()
-        }
-        textView.resignFirstResponder()
-    }
+	
+	var mapLocation : CLLocationCoordinate2D {
+		return mapView.centerCoordinate
+	}
+	
+	var sensorLocation : CLLocation? {
+		return mapView.userLocation.location
+	}
+	
+	
+	var requestPending = MutableProperty(false)
+	func returnBike(sender: AnyObject?) {
+		let info = BikeReturnInfo(lat: mapLocation.latitude, lon: mapLocation.longitude, note: textView.text, sensorLat: sensorLocation?.coordinate.latitude, sensorLon: sensorLocation?.coordinate.longitude, sensorAcc: sensorLocation?.horizontalAccuracy)
+		requestPending.value = true
+		API.returnBike(id: bike.id, info: info).start(error: { error in
+			self.requestPending.value = false
+			self.handleError(error)
+			}, completed: {
+				self.requestPending.value = false
+				self.navigationController?.popToRootViewControllerAnimated(true)
+		})
+	}
+
 }

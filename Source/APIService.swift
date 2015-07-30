@@ -15,13 +15,55 @@ import Argo
 enum Router : URLRequestConvertible {
     
     static let baseURL = Environment.baseURL
-    
-    
+
+//TODO: endpointy co pouziva android, implementovat
+//	@POST("/accounts/mine/login")
+//	public void login(@Body Credentials body, Callback<Login> callback);
+//	
+//	@PUT("/password-recovery")
+//	public void recoverPassword(@Body RecoverPassword body, Callback<Object> callback);
+//	
+//	@GET("/accounts/mine/logout")
+//	public void logout(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Object> callback);
+//	
+//	@GET("/bikes/all")
+//	public void getBikes(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Bike>> callback);
+//	
+//	@GET("/bikes/mine")
+//	public void getBorrowedBike(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<BorrowedBike> callback);
+//	
+//	@GET("/bikes/lock-code")
+//	public void borrowBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("bikeCode") int bikeCode, @Query("lat") String lat, @Query("lng") String lng, Callback<LockCode> callback);
+//	
+//	@PUT("/bikes/{id}/return")
+//	public void returnBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int bikeCode, @Body ReturningBike returningBike, Callback<ReturnedBike> callback);
+//	
+//	@GET("/bikes/{bikeId}/issues?onlyOpen=1")
+//	public void getBikeIssues(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("bikeId") int bikeId, Callback<List<Issue>> callback);
+//	
+//	@GET("/location/pois")
+//	public void getPois(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Poi>> callback);
+//	
+//	@GET("/accounts/mine")
+//	public void getAccount(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Account> callback);
+//	
+//	@GET("/boundaries/")
+//	public void getBoundaries(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Boundaries> callback);
+//	
+//	@GET("/default-values/")
+//	public void getDefaultValues(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<DefaultValues> callback);
+//	
+//	@POST("/bikes/{id}/issues")
+//	public void reportIssue(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int  bikeId,
+//	@Body IssueReport body, Callback<Object> callback);
+	
     case Login(dictionary: [String:AnyObject])
 	case PasswordRecovery(email: String)
     case Bikes(dictionary: [String:Double])
-    
-    
+    case MyBike
+	case BorrowBike(code: String, lat: String, lon: String)
+	case ReturnBike(id: Int, info : BikeReturnInfo)
+	
     var method : Alamofire.Method {
         switch self {
         case .Login:
@@ -30,7 +72,13 @@ enum Router : URLRequestConvertible {
 			return .PUT
         case .Bikes:
             return .GET
-        }
+		case .MyBike:
+			return .GET
+		case .BorrowBike:
+			return .GET //fuj ble
+		case .ReturnBike:
+			return .PUT
+		}
     }
     
     var path : String {
@@ -41,6 +89,12 @@ enum Router : URLRequestConvertible {
 			return "/password-recovery"
         case .Bikes:
             return "/bikes/all"
+		case .MyBike:
+			return "/bikes/mine"
+		case .BorrowBike:
+			return "/bikes/lock-code"
+		case .ReturnBike(let id, _):
+			return "/bikes/\(id)/return"
         }
     }
     
@@ -53,6 +107,9 @@ enum Router : URLRequestConvertible {
         if let key = NSUserDefaults.standardUserDefaults().stringForKey("apiKey") {
             mutableURLRequest.setValue(key, forHTTPHeaderField: "X-Api-Key")
         }
+			mutableURLRequest.setValue("1.0.0", forHTTPHeaderField: "X-Api-Version")
+		
+		//Client-Os nechci at si to vezmou z User-Agent
         
         switch self {
             
@@ -60,6 +117,10 @@ enum Router : URLRequestConvertible {
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: params).0
 		case .PasswordRecovery(email: let email):
 			return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: ["email" : email]).0
+		case .BorrowBike(code: let code, lat: let lat, lon: let lon):
+			return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: ["bikeCode" : code, "lat" : lat, "lng" : lon]).0
+		case .ReturnBike(_, let info):
+			return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: ["location" : info.jsonRepresentation]).0
         default:
             return mutableURLRequest
         }
@@ -97,7 +158,6 @@ class RekolaAPI {
 	
 	private func call<T>(route: Router, var authHandler: AuthHandler? = RekolaAPI.authHandler, action: (AnyObject -> (SignalProducer<T,NSError>))) -> SignalProducer<T,NSError> {
         var signal = SignalProducer<T,NSError> { sink, disposable in
-            log(route.URLRequest)
             Alamofire.request(route)
 					.validate()
 					.response { (request, response, data, error) in
@@ -170,7 +230,36 @@ class RekolaAPI {
 		}
 	}
 	
-    func bikes(latitude: Double, longitude: Double) -> SignalProducer<[Bike],NSError> {
+	func myBike() -> SignalProducer<Bike?, NSError> {
+		return call(.MyBike) { data in
+			logD(data)
+			let parse : SignalProducer<Bike, NSError> = rac_decode(data)
+			return parse |> map { $0 as Bike? }
+			}
+			|> catch { error in
+				let statusCode = (error.userInfo?[APIErrorKeys.response] as? NSHTTPURLResponse)?.statusCode
+				switch statusCode {
+				case let .Some(404):
+					return SignalProducer(value: nil)
+				default:
+					return SignalProducer(error: error)
+				}
+		}
+	}
+	
+	func borrowBike(#code : String, location:  CLLocation) -> SignalProducer<Bike, NSError> {
+		let lat = "\(location.coordinate.latitude)"
+		let lon = "\(location.coordinate.longitude)"
+		return call(.BorrowBike(code: code, lat: lat, lon: lon)) { data in
+			let dataDict = data as! [String : AnyObject]
+			var bike = dataDict["bike"] as! [String : AnyObject]
+			bike["lockCode"] = data["lockCode"]!
+			let parse : SignalProducer<Bike, NSError> = rac_decode(bike)
+			return parse
+		}
+	}
+	
+	func bikes(#latitude: Double, longitude: Double) -> SignalProducer<[Bike],NSError> {
         return call(Router.Bikes(dictionary: ["lat": latitude, "lng" : longitude])) { data in
             let signal : SignalProducer<Bike,NSError> = rac_decodeByOne(data)
             return signal
@@ -180,6 +269,14 @@ class RekolaAPI {
                 |> collect
         }
     }
+	
+	func returnBike(#id : Int , info : BikeReturnInfo) -> SignalProducer<AnyObject?, NSError> {
+		return call(Router.ReturnBike(id: id, info: info)) { data in
+			logD(data)
+			return SignalProducer.empty
+		}
+	}
+	
     
 }
 

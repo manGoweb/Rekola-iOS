@@ -161,13 +161,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 //            mapView.addAnnotation(mapPin)
 //        }
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-//        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-    }
-    
+	
     func showDirections() {
         let placemark = MKPlacemark(coordinate: bikeCoordinate, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
@@ -188,7 +182,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     dequeuedView.annotation = annotation
                     view = dequeuedView
                     let url = NSURL(string: annotation.iconUrl)
-                    let imageData = NSData(contentsOfURL: url!)
+                    let imageData = NSData(contentsOfURL: url!) //TOOD: blocks main queue! move to background
                     view.image = UIImage(data: imageData!)
             } else {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)

@@ -11,7 +11,22 @@ import Foundation
 import SnapKit
 
 class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
-    override func loadView() {
+	
+	
+	//TODO: tady mas bike, mozna nema vsechny potrebny property dyztak mi reknes, dodelej pls tuhle screenu
+	//TODO: spravit navbar pri animaci back
+	let bike : Bike
+	init(bike: Bike) {
+		self.bike = bike
+		super.init(nibName:nil, bundle: nil)
+	}
+
+	required init(coder aDecoder: NSCoder) {
+	    fatalError("init(coder:) has not been implemented")
+	}
+	
+	
+	override func loadView() {
         let view = UIView()
         self.view = view
         
@@ -287,7 +302,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         deleteLineUnderNavBar()
         
-        let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike")
+        let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
         self.navigationItem.rightBarButtonItem = lockButton
         
         self.view.backgroundColor = .whiteColor()
@@ -356,7 +371,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     func addProblemSegue() {
-        let vc = AddProblemViewController()
+		let vc = AddProblemViewController(bike: bike)
         showViewController(vc, sender: nil)
     }
     
@@ -449,4 +464,14 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         }
         return 0
     }
+	
+	func lockBike(sender: AnyObject?) {
+		if let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as? ACKTabBar {
+			if (tabBar.selectedIndex != 0) {
+				tabBar.selectTab(0)
+			}else{
+				navigationController?.popViewControllerAnimated(true)
+			}
+		}
+	}
 }

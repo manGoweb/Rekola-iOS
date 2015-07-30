@@ -90,6 +90,7 @@ private class LogViewController : UIViewController {
 		view.backgroundColor = .whiteColor()
 		view.opaque = true
 		self.view = view
+		setupKeyboardLayoutGuide()
 		let tv = UITextView()
 		view.addSubview(tv)
 		tv.snp_makeConstraints { make in

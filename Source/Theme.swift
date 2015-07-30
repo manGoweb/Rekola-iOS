@@ -85,7 +85,7 @@ extension UIColor {
 }
 
 extension UIImage {
-    enum ImageIdentifier: String {
+    enum ImageIdentifier: String { //enumy maji zacinat velkym pismenem
         case logo = "logo"
         case mapPin = "mapPin"
         case logoutButton = "logoutButton"
@@ -112,6 +112,7 @@ extension UIImage {
         case textFieldButton = "textFieldButton"
         case cancelButton = "cancelButton"
         case detailLock = "detailLock"
+			case Placeholder = "placeholder"
     }
     
     convenience init!(imageIdentifier: ImageIdentifier) {
@@ -137,6 +138,16 @@ extension UIImage {
         let imageOff = UIImage(named: name.rawValue + "Off")
         return (imageOn!, imageOff!)
     }
+	
+	class func placeholderImageWithSize(size : CGSize) -> UIImage {
+		let placeholder = UIImage(imageIdentifier: .Placeholder)
+		UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+		placeholder.drawInRect(CGRectMake(0, 0, size.width, size.height))
+		let res = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		return res
+	}
+
 }
 
 
@@ -160,6 +171,7 @@ class Theme {
     class func pinkButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = UIColor.rekolaPinkColor()
+		button.setTitleColor(UIColor.grayColor(), forState: .Disabled) //TODO: color
         button.layer.cornerRadius = 4
         return button
     }

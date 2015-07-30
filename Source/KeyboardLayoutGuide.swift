@@ -24,18 +24,17 @@ extension UIViewController {
 		return objc_getAssociatedObject(self, &AssociatedKeys.KeyboardLayoutGuide) as! UIView
 	}
 	
-	override public class func initialize() { //TODO: does this break UIViewController class?
-		super.initialize()
-		
-		dispatch_once(&onceToken) {
-			var ok = self.swizzleMethodSelector("setView:", withSelector: "kblg_setView:", forClass: UIViewController.classForCoder())
-			if(!ok) { logA("cant setup keyboard layoutguide") }
-		}
-	}
+//	override public class func initialize() { //TODO: does this break UIViewController class?
+//		super.initialize()
+//		
+//		dispatch_once(&onceToken) {
+//			var ok = self.swizzleMethodSelector("setView:", withSelector: "kblg_setView:", forClass: UIViewController.classForCoder())
+//			if(!ok) { logA("cant setup keyboard layoutguide") }
+//		}
+//	}
 	
-	@objc func kblg_setView(view: UIView) {
-		kblg_setView(view)
-		
+	func setupKeyboardLayoutGuide() {
+		let view = self.view
 		let guide = UIView()
 		view.addSubview(guide)
 		var c : ConstraintDescriptionEditable!

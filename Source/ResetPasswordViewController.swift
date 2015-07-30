@@ -16,7 +16,7 @@ class ResetPasswordViewController : UIViewController, UITextFieldDelegate {
 		view.backgroundColor = .whiteColor()
 		view.opaque = true
 		self.view = view
-
+		setupKeyboardLayoutGuide()
 		
 		
 		
@@ -131,10 +131,7 @@ class ResetPasswordViewController : UIViewController, UITextFieldDelegate {
 	
 	func textFieldDidBeginEditing(textField: UITextField) {
 		dispatch_async(dispatch_get_main_queue()) { //after keyboard has shown
-			let scrollView = self.scrollView
-			if(scrollView.contentSize.height > scrollView.bounds.size.height){
-				scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height), animated: true)
-			}
+			self.scrollView.scrollToBottom(true)
 		}
 	}
 	

@@ -6,7 +6,11 @@
 	<string>Rekola Δ</string>
 	<key>baseURL</key>
 	<string>http://beta.rekola.cz/api</string>
+	<key>password</key>
+	<string>dominik.ackee</string>
 	<key>scheme</key>
 	<string>Development</string>
+	<key>username</key>
+	<string>dominik.vesely@ackee.cz</string>
 </dict>
 </plist>

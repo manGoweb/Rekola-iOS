@@ -14,6 +14,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		let view = UIView()
 		view.backgroundColor = .rekolaPinkColor()
 		self.view = view
+		setupKeyboardLayoutGuide()
 		
 		let iv = UIImageView(image: UIImage(imageIdentifier: .signInBike))
 		iv.contentMode = .ScaleAspectFit
@@ -102,6 +103,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+
+			emailTextField.text = Environment.username
+			passwordTextField.text = Environment.password
+
 		
 		self.emailTextField.attributedPlaceholder = NSAttributedString(string:NSLocalizedString("SIGNIN_email", comment: ""),
 			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])

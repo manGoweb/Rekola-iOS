@@ -14,11 +14,11 @@ pod 'FlurrySDK'
 #pod 'AlamoFire'
 
 #pod 'MagicalRecord', '~> 2.2'
-#pod 'SVProgressHUD', :head
-#pod 'SDWebImage', '~> 3.6'
+pod 'SVProgressHUD', :head
+pod 'SDWebImage'
 pod 'LTNavigationBar', '~> 2.0'
 pod 'Masonry', '~> 0.6'
-
+pod 'SZTextView'
 
 
 
