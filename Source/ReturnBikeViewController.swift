@@ -46,6 +46,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         textView.layer.borderWidth = 0.5
         textView.layer.cornerRadius = 4
         textView.textColor = .grayColor()
+        textView.returnKeyType = .Done
         textView.setContentCompressionResistancePriority(740, forAxis: .Vertical)
         view.addSubview(textView)
         textView.snp_makeConstraints { make in
