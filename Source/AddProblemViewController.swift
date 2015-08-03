@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Foundation
 
-class AddProblemViewController: UIViewController, UITextFieldDelegate, ProblemsViewControllerProtocol {
+class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, ProblemsViewControllerProtocol {
 	
 	let bike : Bike
 	init(bike: Bike){
@@ -25,6 +25,8 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, ProblemsV
 	override func loadView() {
         let view = UIView()
         self.view = view
+        
+        setupKeyboardLayoutGuide()
         
         let typeOfProblemLabel = UILabel()
         view.addSubview(typeOfProblemLabel)
@@ -70,8 +72,8 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, ProblemsV
         textView.snp_makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp_bottom).offset(L.verticalSpacing)
             make.height.equalTo(99)
-            make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
+            make.left.right.equalTo(0).inset(L.contentInsets)
+            make.bottom.lessThanOrEqualTo(keyboardLayoutGuide)
         }
         self.textView = textView
         
@@ -120,36 +122,38 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, ProblemsV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
+        navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
         
-        self.view.backgroundColor = .whiteColor()
-        self.view.tintColor = .whiteColor()
+        view.backgroundColor = .whiteColor()
+        view.tintColor = .whiteColor()
         
-        self.typeOfProblemLabel.text = NSLocalizedString("ADDPROBLEM_typeOfProblem", comment: "")
-        self.typeOfProblemLabel.textAlignment = .Left
+        typeOfProblemLabel.text = NSLocalizedString("ADDPROBLEM_typeOfProblem", comment: "")
+        typeOfProblemLabel.textAlignment = .Left
         
-        self.textField.delegate = self
-        self.textField.placeholder = NSLocalizedString("ADDPROBLEM_chooseProblem", comment: "")
-        self.textField.layer.borderWidth = 2
-        self.textField.layer.cornerRadius = 5
-        self.textField.layer.borderColor = UIColor.rekolaPinkColor().CGColor
+        textField.delegate = self
+        textField.placeholder = NSLocalizedString("ADDPROBLEM_chooseProblem", comment: "")
+        textField.layer.borderWidth = 2
+        textField.layer.cornerRadius = 5
+        textField.layer.borderColor = UIColor.rekolaPinkColor().CGColor
         
-        self.descriptionLabel.text = NSLocalizedString("ADDPROBLEM_description", comment: "")
+        descriptionLabel.text = NSLocalizedString("ADDPROBLEM_description", comment: "")
         
-        self.textView.layer.borderColor = UIColor.rekolaPinkColor().CGColor
-        self.textView.layer.borderWidth = 2
-        self.textView.layer.cornerRadius = 5
-        self.textView.editable = true
+        textView.layer.borderColor = UIColor.rekolaPinkColor().CGColor
+        textView.layer.borderWidth = 2
+        textView.layer.cornerRadius = 5
+        textView.editable = true
+        textView.returnKeyType = .Done
+        textView.delegate = self
         
         let bikeToggleImage = UIImage.toggleImage(.BikeToggle)
-        self.bikeToggleButton.setImage(bikeToggleImage.on, forState: .Normal)
-        self.bikeToggleButton.addTarget(self, action: "changeSelection:", forControlEvents: .TouchUpInside)
+        bikeToggleButton.setImage(bikeToggleImage.on, forState: .Normal)
+        bikeToggleButton.addTarget(self, action: "changeSelection:", forControlEvents: .TouchUpInside)
         
-        self.unmovableBikeLabel.text = NSLocalizedString("ADDPROBLEM_unmovable", comment: "")
-        self.unmovableBikeLabel.textColor = .grayColor()
+        unmovableBikeLabel.text = NSLocalizedString("ADDPROBLEM_unmovable", comment: "")
+        unmovableBikeLabel.textColor = .grayColor()
         
-        self.reportProblemButton.setTitle(NSLocalizedString("ADDPROBLEM_reportProblem", comment: ""), forState: .Normal)
-        self.reportProblemButton.layer.cornerRadius = 5
+        reportProblemButton.setTitle(NSLocalizedString("ADDPROBLEM_reportProblem", comment: ""), forState: .Normal)
+        reportProblemButton.layer.cornerRadius = 5
     }
     
     func changeSelection(sender: UIButton) {
@@ -189,4 +193,12 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, ProblemsV
 
     }
 
+//    MARK: UITextViewDelegate
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
 }

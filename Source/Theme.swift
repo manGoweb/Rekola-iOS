@@ -112,6 +112,9 @@ extension UIImage {
         case textFieldButton = "textFieldButton"
         case cancelButton = "cancelButton"
         case detailLock = "detailLock"
+        case MapPinPink = "mapPinPink"
+        case MapPinGrey = "mapPinGrey"
+        case MapPinGreen = "mapPinGreen"
 			case Placeholder = "placeholder"
     }
     
@@ -186,6 +189,7 @@ class Theme {
         let button = UIButton()
         button.backgroundColor = .rekolaGrayButtonColor()
         button.setTitleColor(.staticGrayTextColor(), forState: .Normal)
+        button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
         button.layer.cornerRadius = 4
         return button
     }

@@ -75,7 +75,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         }
         self.mapView = mapView
 		
-		let pinImageView = UIImageView(image: UIImage.placeholderImageWithSize(CGSizeMake(20, 40)))
+		let pinImageView = UIImageView(image: UIImage(imageIdentifier: .MapPinPink))
 		view.addSubview(pinImageView)
 		pinImageView.snp_makeConstraints { make in
 			make.centerX.equalTo(mapView)

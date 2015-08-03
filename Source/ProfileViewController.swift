@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController {
         }
         self.dateLabel = dateLabel
         
-        let logoutButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: .rekolaGreenColor())
+        let logoutButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: UIColor.whiteColor())
         view.addSubview(logoutButton)
         logoutButton.snp_makeConstraints { make in
             make.width.equalTo(169)
