@@ -171,7 +171,7 @@ class RekolaAPI {
 						sendError(sink, newError)
 						return
 					}
-                if let json = data as? NSData {
+                if let json = data {
 						var jsonError : NSError?
 						let jsonString: AnyObject? = NSJSONSerialization.JSONObjectWithData(json, options: NSJSONReadingOptions(0), error: &jsonError)
 						if let jsonError = jsonError {

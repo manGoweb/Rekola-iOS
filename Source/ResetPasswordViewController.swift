@@ -25,7 +25,7 @@ class ResetPasswordViewController : UIViewController, UITextFieldDelegate {
 		view.addSubview(backButton)
 		backButton.snp_makeConstraints { make in
 			make.bottom.equalTo(keyboardLayoutGuide).offset(-L.contentInsets.bottom)
-			make.right.equalTo(view).insets(L.contentInsets)
+			make.right.equalTo(view).inset(L.contentInsets) //changed
 		}
 		self.backButton = backButton
 		
@@ -43,7 +43,7 @@ class ResetPasswordViewController : UIViewController, UITextFieldDelegate {
 		resetButton.snp_makeConstraints { make in
 			make.bottom.equalTo(scrollView).offset(-L.verticalSpacing)
 			make.bottom.equalTo(backButton.snp_top).offset(-150).priorityLow()
-			make.left.right.equalTo(view).insets(L.contentInsets)
+			make.left.right.equalTo(view).inset(L.contentInsets) //changed
 			make.height.equalTo(43)
 		}
 		self.resetButton = resetButton
@@ -66,7 +66,7 @@ class ResetPasswordViewController : UIViewController, UITextFieldDelegate {
 		scrollView.addSubview(subtitleLabel)
 		subtitleLabel.snp_makeConstraints { make in
 			make.bottom.equalTo(emailTextField.snp_top).offset(-L.verticalSpacing)
-			make.left.right.equalTo(view).insets(UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30))
+			make.left.right.equalTo(view).inset(UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)) //changed
 		}
 		self.subtitleLabel = subtitleLabel
 		
@@ -75,7 +75,7 @@ class ResetPasswordViewController : UIViewController, UITextFieldDelegate {
 		titleLabel.textAlignment = .Center
 		scrollView.addSubview(titleLabel)
 		titleLabel.snp_makeConstraints { make in
-			make.left.right.equalTo(view).insets(L.contentInsets)
+			make.left.right.equalTo(view).inset(L.contentInsets) //changed
 			make.bottom.equalTo(subtitleLabel.snp_top).offset(-L.verticalSpacing)
 			make.top.greaterThanOrEqualTo(scrollView).offset(L.contentInsets.top)
 		}

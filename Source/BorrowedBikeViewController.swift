@@ -70,7 +70,7 @@ class BorrowedBikeViewController: UIViewController {
         rectangle.snp_makeConstraints { make in
             make.top.equalTo(detailButton.snp_bottom).multipliedBy(1.1)
             make.height.equalTo(101).multipliedBy(0.1)
-            make.left.right.equalTo(view).insets(L.contentInsets)
+            make.left.right.equalTo(view).inset(L.contentInsets) //changed
             make.centerX.equalTo(view.snp_centerX)
         }
         

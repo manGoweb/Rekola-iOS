@@ -27,12 +27,15 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
  
 	override func loadView() {
         let view = UIView()
+        view.backgroundColor = .whiteColor()
         self.view = view
+        
+        setupKeyboardLayoutGuide()
         
         let returnButton = Theme.pinkButton()
         view.addSubview(returnButton)
         returnButton.snp_makeConstraints { make in
-            make.bottom.equalTo(view).offset(-L.verticalSpacing)
+            make.bottom.equalTo(view).offset(-L.verticalSpacing).priorityLow()
             make.height.equalTo(44)
             make.left.equalTo(view).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
@@ -42,12 +45,15 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         let textView = SZTextView()
         textView.layer.borderWidth = 0.5
         textView.layer.cornerRadius = 4
+        textView.textColor = .grayColor()
+        textView.setContentCompressionResistancePriority(740, forAxis: .Vertical)
         view.addSubview(textView)
         textView.snp_makeConstraints { make in
             make.bottom.equalTo(returnButton.snp_top).offset(-L.horizontalSpacing)
             make.left.equalTo(view).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
             make.height.equalTo(72)
+            make.bottom.lessThanOrEqualTo(keyboardLayoutGuide)
         }
         self.textView = textView
         
@@ -76,9 +82,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 		}
 		self.pinImageView = pinImageView
     }
-    
-    weak var scrollView: UIScrollView! //TODO: dodelat tuhle screenu at pracuje dobre s klavesnici, muzu poradit
-    weak var container: UIView!
+
     weak var mapView: MKMapView!
 	weak var pinImageView : UIImageView!
     weak var returnButton: UIButton!
@@ -100,18 +104,14 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.navigationController?.navigationBar.tintColor = .whiteColor()
         self.navigationItem.title = NSLocalizedString("RETURNBIKE_title", comment: "")
         
-        self.view.backgroundColor = .whiteColor() //vsechny barvy, fonty apod nastavovat v loadView!
-        
         self.descriptionLabel.text = NSLocalizedString("RETURNBIKE_description", comment: "")
         self.descriptionLabel.textAlignment = .Left
 
         
-        self.textView.delegate = self
-//        self.textView.text = "Např.: před vstupem do kavárny"
+        textView.delegate = self
 		textView.placeholder = NSLocalizedString("RETURN_PLACEHOLDER", comment: "")
-        self.textView.textColor = .grayColor()
-        self.textView.editable = true
-
+        textView.textColor = .grayColor()
+        textView.editable = true
         
         self.returnButton.setTitle(NSLocalizedString("RETURNBIKE_return" , comment: ""), forState: .Normal)
         
@@ -147,5 +147,14 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 				self.navigationController?.popToRootViewControllerAnimated(true)
 		})
 	}
+    
+//    MARK: UITextViewDelegate
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
 
 }

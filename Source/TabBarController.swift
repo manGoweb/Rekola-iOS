@@ -155,7 +155,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         var last:  UIView? = nil
         for item in items {
             tabbar.addSubview(item.view)
-            item.view.snp_makeConstraints({ (make) -> Void in
+            item.view.snp_makeConstraints{ make /*(make) -> Void*/ in
                 make.bottom.top.equalTo(tabbar)
                 if let last = last {
                     make.left.equalTo(last.snp_right)
@@ -164,7 +164,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
                 }
                 make.width.equalTo(tabbar).dividedBy(items.count)
                 
-            })
+            }
             last = item.view
         }
         self.tabBarView = tabbar
