@@ -52,7 +52,7 @@ class BorrowedBikeViewController: UIViewController {
         }
         self.bikeBorrowLabel = borrowLabel
         
-        let detailButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: .rekolaGreenColor())
+        let detailButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: UIColor.whiteColor())
         view.addSubview(detailButton)
         detailButton.snp_makeConstraints { make in
             make.top.equalTo(borrowLabel.snp_bottom).offset(L.verticalSpacing)

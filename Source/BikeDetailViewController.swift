@@ -218,7 +218,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         }
         self.trunkIV = trunkIV
         
-        let moreInfoButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: .rekolaGreenColor())
+        let moreInfoButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: UIColor.whiteColor())
         container.addSubview(moreInfoButton)
         moreInfoButton.snp_makeConstraints { make in
             make.top.equalTo(trunkIV.snp_bottom).offset(L.verticalSpacing)

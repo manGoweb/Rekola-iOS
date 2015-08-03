@@ -94,8 +94,10 @@ class TintingButton : UIButton {
         didSet {
             if selected {
                 tintColor = activeTintColor
+                backgroundColor = .rekolaGreenColor()
             } else {
                 tintColor = normalTintColor
+                backgroundColor = .whiteColor()
             }
             styleBorder()
         }
@@ -105,8 +107,10 @@ class TintingButton : UIButton {
         didSet {
             if highlighted {
                 tintColor = activeTintColor
+                backgroundColor = .rekolaGreenColor()
             } else {
                 tintColor = normalTintColor
+                backgroundColor = .whiteColor()
             }
             styleBorder()
             

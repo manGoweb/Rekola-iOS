@@ -171,7 +171,7 @@ class Theme {
     class func pinkButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = UIColor.rekolaPinkColor()
-		button.setTitleColor(UIColor.grayColor(), forState: .Disabled) //TODO: color
+		button.setTitleColor(UIColor.grayColor(), forState: .Highlighted) //TODO: color
         button.layer.cornerRadius = 4
         return button
     }
