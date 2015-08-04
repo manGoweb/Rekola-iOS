@@ -28,23 +28,40 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         
         setupKeyboardLayoutGuide()
         
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        view.addSubview(scrollView)
+        scrollView.snp_makeConstraints { make in
+            make.left.top.right.equalTo(view)
+            make.bottom.equalTo(keyboardLayoutGuide)
+        }
+        self.scrollView = scrollView
+        
+        let container = UIView()
+        scrollView.addSubview(container)
+        container.snp_makeConstraints { make in
+            make.width.equalTo(scrollView).offset(-(L.contentInsets.left + L.contentInsets.right))
+            make.edges.equalTo(scrollView).inset(L.contentInsets)
+//            make.height.equalTo(scrollView)
+        }
+        self.container = container
+        
         let typeOfProblemLabel = UILabel()
-        view.addSubview(typeOfProblemLabel)
+        container.addSubview(typeOfProblemLabel)
         typeOfProblemLabel.snp_makeConstraints { make in
-            make.top.equalTo(view).offset(86)
-            make.left.right.equalTo(view).offset(L.horizontalSpacing)
+            make.top.equalTo(container).offset(86)
+            make.left.right.equalTo(container).inset(L.contentInsets)
         }
         self.typeOfProblemLabel = typeOfProblemLabel
         
         let textField = UITextField()
-        view.addSubview(textField)
+        container.addSubview(textField)
         var spacerView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
         textField.leftViewMode = .Always
         textField.leftView = spacerView
         textField.snp_makeConstraints { make in
             make.top.equalTo(typeOfProblemLabel.snp_bottom).offset(10)
-            make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
+            make.left.right.equalTo(container).inset(L.contentInsets)
             make.height.equalTo(45)
         }
         self.textField = textField
@@ -60,7 +77,7 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         }
         
         let descriptionLabel = UILabel()
-        view.addSubview(descriptionLabel)
+        container.addSubview(descriptionLabel)
         descriptionLabel.snp_makeConstraints{ make in
             make.top.equalTo(textField.snp_bottom).offset(L.verticalSpacing)
             make.left.equalTo(L.horizontalSpacing)
@@ -68,25 +85,24 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         self.descriptionLabel = descriptionLabel
         
         let textView = UITextView()
-        view.addSubview(textView)
+        container.addSubview(textView)
         textView.snp_makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp_bottom).offset(L.verticalSpacing)
             make.height.equalTo(99)
             make.left.right.equalTo(0).inset(L.contentInsets)
-            make.bottom.lessThanOrEqualTo(keyboardLayoutGuide)
         }
         self.textView = textView
         
         let bikeToggleButton = UIButton()
-        view.addSubview(bikeToggleButton)
+        container.addSubview(bikeToggleButton)
         bikeToggleButton.snp_makeConstraints { make in
             make.top.equalTo(textView.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(view).offset(L.verticalSpacing)
+            make.left.equalTo(container).offset(L.verticalSpacing)
         }
         self.bikeToggleButton = bikeToggleButton
         
         let unmovableBikeLabel = UILabel()
-        view.addSubview(unmovableBikeLabel)
+        container.addSubview(unmovableBikeLabel)
         unmovableBikeLabel.snp_makeConstraints { make in
             make.top.equalTo(textView.snp_bottom).offset(18)
             make.left.equalTo(bikeToggleButton.snp_right).offset(L.horizontalSpacing)
@@ -94,16 +110,18 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         self.unmovableBikeLabel = unmovableBikeLabel
         
         let reportProblemButton = Theme.pinkButton()
-        view.addSubview(reportProblemButton)
+        container.addSubview(reportProblemButton)
         reportProblemButton.snp_makeConstraints{ make in
             make.top.equalTo(unmovableBikeLabel.snp_bottom).offset(20)
-            make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
+            make.left.right.equalTo(container).inset(L.contentInsets)
             make.height.equalTo(44)
+            make.bottom.equalTo(container)
         }
         self.reportProblemButton = reportProblemButton
     }
     
+    weak var scrollView: UIScrollView!
+    weak var container: UIView!
     weak var typeOfProblemLabel: UILabel!
     weak var textField: UITextField!
     weak var descriptionLabel: UILabel!
@@ -126,6 +144,9 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         
         view.backgroundColor = .whiteColor()
         view.tintColor = .whiteColor()
+        
+//        scrollView.scrollEnabled = false
+//        scrollView.scrollToBottom(true)
         
         typeOfProblemLabel.text = NSLocalizedString("ADDPROBLEM_typeOfProblem", comment: "")
         typeOfProblemLabel.textAlignment = .Left
@@ -200,5 +221,13 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
             return false
         }
         return true
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if self.view.bounds.size.height > 480 {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.scrollView.scrollToBottom(true)
+            }
+        }
     }
 }
