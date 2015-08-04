@@ -17,31 +17,31 @@ enum Router : URLRequestConvertible {
     static let baseURL = Environment.baseURL
 
 //TODO: endpointy co pouziva android, implementovat
-//	@POST("/accounts/mine/login")
+///	@POST("/accounts/mine/login")
 //	public void login(@Body Credentials body, Callback<Login> callback);
 //	
-//	@PUT("/password-recovery")
+///	@PUT("/password-recovery")
 //	public void recoverPassword(@Body RecoverPassword body, Callback<Object> callback);
 //	
-//	@GET("/accounts/mine/logout")
+///	@GET("/accounts/mine/logout")
 //	public void logout(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Object> callback);
 //	
-//	@GET("/bikes/all")
+///	@GET("/bikes/all")
 //	public void getBikes(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Bike>> callback);
 //	
-//	@GET("/bikes/mine")
+///	@GET("/bikes/mine")
 //	public void getBorrowedBike(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<BorrowedBike> callback);
 //	
-//	@GET("/bikes/lock-code")
+///	@GET("/bikes/lock-code")
 //	public void borrowBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("bikeCode") int bikeCode, @Query("lat") String lat, @Query("lng") String lng, Callback<LockCode> callback);
 //	
-//	@PUT("/bikes/{id}/return")
+///	@PUT("/bikes/{id}/return")
 //	public void returnBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int bikeCode, @Body ReturningBike returningBike, Callback<ReturnedBike> callback);
 //	
-//	@GET("/bikes/{bikeId}/issues?onlyOpen=1")
+///	@GET("/bikes/{bikeId}/issues?onlyOpen=1")
 //	public void getBikeIssues(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("bikeId") int bikeId, Callback<List<Issue>> callback);
 //	
-//	@GET("/location/pois")
+///	@GET("/location/pois")
 //	public void getPois(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Poi>> callback);
 //	
 //	@GET("/accounts/mine")
@@ -53,7 +53,7 @@ enum Router : URLRequestConvertible {
 //	@GET("/default-values/")
 //	public void getDefaultValues(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<DefaultValues> callback);
 //	
-//	@POST("/bikes/{id}/issues")
+///	@POST("/bikes/{id}/issues")
 //	public void reportIssue(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int  bikeId,
 //	@Body IssueReport body, Callback<Object> callback);
 	
@@ -63,7 +63,11 @@ enum Router : URLRequestConvertible {
     case MyBike
 	case BorrowBike(code: String, lat: String, lon: String)
 	case ReturnBike(id: Int, info : BikeReturnInfo)
-	
+	case Logout
+    case MyBikeIssue(id: Int)
+    case PointOfInterests
+    case BikesIssues(id: Int, issue: [String:AnyObject])
+    
     var method : Alamofire.Method {
         switch self {
         case .Login:
@@ -78,6 +82,14 @@ enum Router : URLRequestConvertible {
 			return .GET //fuj ble
 		case .ReturnBike:
 			return .PUT
+        case .Logout:
+            return .GET
+        case .MyBikeIssue:
+            return .GET
+        case .PointOfInterests:
+            return .GET
+        case .BikesIssues:
+            return .POST
 		}
     }
     
@@ -95,9 +107,17 @@ enum Router : URLRequestConvertible {
 			return "/bikes/lock-code"
 		case .ReturnBike(let id, _):
 			return "/bikes/\(id)/return"
+        case .Logout:
+            return "/accounts/mine/logout"
+        case .MyBikeIssue(let id):
+            return "/bikes/\(id)/issues?onlyOpen=1"
+        case .PointOfInterests:
+            return "/location/pois"
+        case .BikesIssues(let id, _):
+            return "/bikes/\(id)/issues"
         }
     }
-    
+
     var URLRequest : NSURLRequest {
         let URL = NSURL(string: Router.baseURL)!
         
