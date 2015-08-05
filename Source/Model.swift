@@ -72,12 +72,14 @@ extension Address : Decodable {
 public struct Bike {
     let id : Int
     let name : String
+    let type: String
     let description : String
     let location : Address
     var issues : [Int]
     let borrowed : Bool
     let operational : Bool
     let returnedAt : NSDate?
+    let lastSeen: NSDate
     
 //    icons
     let iconUrl : String
@@ -97,31 +99,42 @@ extension Bike : Decodable  {
 		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 		return dateFormatter
 		}()
+    
+    static var timeFormatter : NSDateFormatter = {
+        let timeFormatter = NSDateFormatter()
+        timeFormatter.dateFormat = "dd.MM. HH:mm"
+        return timeFormatter
+    }()
 	
 //	static func parseDate(string: String?) -> Decoded<NSDate?> {
 //		return pure(flatMap(string) {self.dateFormatter.dateFromString($0 ?? "")})
 //	}
 	
-	static func create(id : Int) (name: String) (description: String) (location: Address) (issues: [Int]) (borrowed : Bool) (operational : Bool) (returnedAt: String?) (iconUrl: String) (lockCode : String)(imageUrlString : String) -> Bike {
+    static func create(id : Int) (_ name: String) (_ type: String) (_ description: String) (_ location: Address) (_ issues: [Int]) (_ borrowed : Bool) (_ operational : Bool) (_ returnedAt: String?) (_ lastSeen: String) (_ iconUrl: String) (_ lockCode : String)(_ imageUrlString : String) -> Bike {
 		let returnedDate = dateFormatter.dateFromString(returnedAt ?? "")
-		return Bike(id: id, name : name, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
+        let returnedTime = timeFormatter.dateFromString(lastSeen)
+        return Bike(id: id, name : name, type: type, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, lastSeen: returnedTime!, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
     }
     
     public static func decode(json: JSON) -> Decoded<Bike> {
-        return Bike.create
+        let partOfBike = Bike.create
             <^> json <| "id"
             <*> json <| "name"
+            <*> json <| "bikeType"
             <*> json <| "description"
             <*> json <| "location"
             <*> json <|| "issues"
             <*> json <| "borrowed"
             <*> json <| "operational"
 //            <*> json <|? ["location","returnedAt"] >>- parseDate //wont compile
-			<*> json <|? ["location","returnedAt"]
+        return partOfBike
+            <*> json <|? ["location","returnedAt"]
+            <*> json <| "lastSeen"
             <*> json <| "iconUrl"
-				<*> json <| "lockCode"
-				<*> json <| "imageUrl"
+            <*> json <| "lockCode"
+            <*> json <| "imageUrl"
         //  <*> json <| "issues"
+
         
     }
     

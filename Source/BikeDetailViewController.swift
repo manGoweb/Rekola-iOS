@@ -28,6 +28,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
 	
 	override func loadView() {
         let view = UIView()
+        view.backgroundColor = .whiteColor()
+        view.tintColor = .whiteColor()
         self.view = view
         
         let tableView = UITableView()
@@ -44,12 +46,15 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         bikeIV.contentMode = .ScaleAspectFit
         container.addSubview(bikeIV)
         bikeIV.snp_makeConstraints { make in
-            make.top.equalTo(container).offset(80)
+            make.top.equalTo(container).offset(20)
             make.centerX.equalTo(container)
         }
 
         let bikeTypeLabel = UILabel()
         container.addSubview(bikeTypeLabel)
+        bikeTypeLabel.textAlignment = .Center
+        bikeTypeLabel.textColor = .rekolaPinkColor()
+        bikeTypeLabel.font = UIFont.systemFontOfSize(14)
         bikeTypeLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeIV.snp_bottom).offset(L.verticalSpacing)
             make.left.right.equalTo(container)
@@ -58,6 +63,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let bikeNameLabel = UILabel()
         container.addSubview(bikeNameLabel)
+        bikeNameLabel.textAlignment = .Center
+        bikeNameLabel.font = UIFont.systemFontOfSize(27)
         bikeNameLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeTypeLabel.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -66,6 +73,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let warningLabel = UILabel()
         container.addSubview(warningLabel)
+        warningLabel.textAlignment = .Center
+        warningLabel.textColor = .rekolaWarningYellowColor()
         warningLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeNameLabel.snp_bottom).offset(L.verticalSpacing)
             make.centerX.equalTo(container.snp_centerX)
@@ -83,9 +92,11 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let descriptionLabel = Theme.subTitleLabel()
         container.addSubview(descriptionLabel)
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.textAlignment = .Center
         descriptionLabel.snp_makeConstraints{ make in
             make.top.equalTo(warningLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.right.equalTo(container)
+            make.left.right.equalTo(container).inset(L.contentInsets)
         }
         self.descriptionLabel = descriptionLabel
         
@@ -100,6 +111,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let lastReturnLabel = UILabel()
         container.addSubview(lastReturnLabel)
+        lastReturnLabel.textAlignment = .Center
+        lastReturnLabel.font = UIFont.boldSystemFontOfSize(17)
         lastReturnLabel.snp_makeConstraints { make in
             make.top.equalTo(line1.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -140,6 +153,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let locationLabel = UILabel()
         container.addSubview(locationLabel)
+        locationLabel.textColor = .rekolaGrayTextColor()
+        locationLabel.font = UIFont.systemFontOfSize(15)
+        locationLabel.textAlignment = .Center
         locationLabel.snp_makeConstraints { make in
             make.top.equalTo(dateLabel.snp_bottom).offset(L.verticalSpacing)
             make.left.right.equalTo(container)
@@ -158,6 +174,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
 //        following 6 UIImageView will be downloaded from API
         let equipmentLabel = UILabel()
         container.addSubview(equipmentLabel)
+        equipmentLabel.textAlignment = .Center
+        equipmentLabel.font = UIFont.boldSystemFontOfSize(17)
         equipmentLabel.snp_makeConstraints { make in
             make.top.equalTo(line2.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -220,6 +238,10 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let moreInfoButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: UIColor.whiteColor())
         container.addSubview(moreInfoButton)
+        moreInfoButton.layer.borderWidth = 1
+        moreInfoButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
+        moreInfoButton.layer.cornerRadius = 5
+        moreInfoButton.addTarget(self, action: "viewMoreInfo", forControlEvents: .TouchUpInside)
         moreInfoButton.snp_makeConstraints { make in
             make.top.equalTo(trunkIV.snp_bottom).offset(L.verticalSpacing)
             make.width.equalTo(110)
@@ -239,6 +261,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let problemsLabel = UILabel()
         container.addSubview(problemsLabel)
+        problemsLabel.textAlignment = .Center
+        problemsLabel.font = UIFont.boldSystemFontOfSize(17)
         problemsLabel.snp_makeConstraints { make in
             make.top.equalTo(line3.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -292,67 +316,46 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 800
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 800
         tableView.allowsSelection = false
         tableView.separatorStyle = .None
-        
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ProblemCell")
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ProblemCell")
         
         deleteLineUnderNavBar()
         
         let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
         self.navigationItem.rightBarButtonItem = lockButton
         
-        self.view.backgroundColor = .whiteColor()
-        self.view.tintColor = .whiteColor()
+        bikeTypeLabel.text = bike.type
         
-        self.bikeTypeLabel.text = "Lady Favorit"
-        self.bikeTypeLabel.textAlignment = .Center
-        self.bikeTypeLabel.textColor = .rekolaPinkColor()
-        self.bikeTypeLabel.font = UIFont.systemFontOfSize(14)
+        bikeNameLabel.text = bike.name
         
-        self.bikeNameLabel.text = "Kníže Pupík Ignor"
-        self.bikeNameLabel.textAlignment = .Center
-        self.bikeNameLabel.font = UIFont.systemFontOfSize(27)
-        
-        self.warningLabel.text = "Pozor, nepojizdne!"
-        self.warningLabel.textAlignment = .Center
-        self.warningLabel.textColor = .rekolaWarningYellowColor()
-        
-        self.descriptionLabel.text = "Mestske kolo s nosicem, kosikem, protislapnou brzdou a nabojovou prevodovkou."
-        self.descriptionLabel.numberOfLines = 0
-        self.descriptionLabel.textAlignment = .Center
-        
-        self.lastReturnLabel.text = NSLocalizedString("BIKEDETAIL_lastReturn", comment: "")
-        self.lastReturnLabel.textAlignment = .Center
-        self.lastReturnLabel.font = UIFont.boldSystemFontOfSize(17)
-        
-        self.dateLabel.text = "15.06"
-        self.timeLabel.text = "13:08"
+        let warning = setWarningLabelText()
+        warningLabel.text = warning.0
+        warningIV.image = warning.1
 
-        self.locationLabel.text = "Pred galerii Myslbek na rohu u znacky"
-        self.locationLabel.textColor = .rekolaGrayTextColor()
-        self.locationLabel.font = UIFont.systemFontOfSize(15)
-        self.locationLabel.textAlignment = .Center
         
-        self.bikeEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
-        self.bikeEquipmentLabel.textAlignment = .Center
-        self.bikeEquipmentLabel.font = UIFont.boldSystemFontOfSize(17)
+        descriptionLabel.text = bike.description
         
-        self.moreInfoButton.setTitle(NSLocalizedString("BIKEDETAIL_moreInfo", comment: ""), forState: .Normal)
-        self.moreInfoButton.layer.borderWidth = 1
-        self.moreInfoButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
-        self.moreInfoButton.layer.cornerRadius = 5
-        self.moreInfoButton.addTarget(self, action: "viewMoreInfo", forControlEvents: .TouchUpInside)
+        lastReturnLabel.text = NSLocalizedString("BIKEDETAIL_lastReturn", comment: "")
         
-        self.problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
-        self.problemsLabel.textAlignment = .Center
-        self.problemsLabel.font = UIFont.boldSystemFontOfSize(17)
+        let dateAndTime = formatDateAndTime(bike.lastSeen)
         
-        self.addProblemButton.setTitle(NSLocalizedString("BIKEDETAIL_addProblem", comment: ""), forState: .Normal)
-        self.addProblemButton.addTarget(self, action: "addProblemSegue", forControlEvents: .TouchUpInside)
+        dateLabel.text = dateAndTime.0
+        timeLabel.text = dateAndTime.1
+
+        locationLabel.text = "Pred galerii Myslbek na rohu u znacky"
+        
+        bikeEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
+
+        moreInfoButton.setTitle(NSLocalizedString("BIKEDETAIL_moreInfo", comment: ""), forState: .Normal)
+        
+        problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
+        
+        addProblemButton.setTitle(NSLocalizedString("BIKEDETAIL_addProblem", comment: ""), forState: .Normal)
+        addProblemButton.addTarget(self, action: "addProblemSegue", forControlEvents: .TouchUpInside)
     }
     
     func deleteLineUnderNavBar() {
@@ -360,7 +363,28 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
     }
     
-//    what this button do?
+    func setWarningLabelText() -> (String, UIImage) {
+        if bike.operational && bike.issues.count > 0 {
+            return (NSLocalizedString("BIKEDETAIL_drivableWithProblems", comment: ""),UIImage(imageIdentifier: .yellowWarning))
+        } else if !bike.operational {
+            return (NSLocalizedString("BIKEDETAIL_undrivable", comment: ""),UIImage(imageIdentifier: .redWarning))
+        }
+        return ("", UIImage())
+    }
+    
+    func formatDateAndTime(date: NSDate) -> (String, String) {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd.MM"
+        let stringDate = dateFormatter.stringFromDate(date)
+        
+        let timeFormatter = NSDateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+        let stringTime = timeFormatter.stringFromDate(date)
+        
+        return (stringDate, stringTime)
+    }
+    
+//    TODO: what this button do?
     func lockButton() {
         
     }
@@ -393,7 +417,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar .lt_reset()
     }
@@ -473,5 +497,5 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
 				navigationController?.popViewControllerAnimated(true)
 			}
 		}
-	}
+        }
 }
