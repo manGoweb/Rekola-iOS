@@ -8,14 +8,18 @@
 
 import Foundation
 import SnapKit
+import ReactiveCocoa
 
 class ProfileViewController: UIViewController {
     override func loadView() {
         let view = UIView()
+        view.backgroundColor = .whiteColor()
         self.view = view
         
         let nameLabel = UILabel()
         view.addSubview(nameLabel)
+        nameLabel.font = UIFont.boldSystemFontOfSize(26)
+        nameLabel.textAlignment = .Center
         nameLabel.snp_makeConstraints { make in
             make.left.right.equalTo(view)
             make.top.equalTo(view).offset(100)
@@ -24,6 +28,8 @@ class ProfileViewController: UIViewController {
         
         let dateLabel = UILabel()
         view.addSubview(dateLabel)
+        dateLabel.textColor = .rekolaPinkColor()
+        dateLabel.textAlignment = .Center
         dateLabel.snp_makeConstraints { make in
             make.left.right.equalTo(view)
             make.top.equalTo(nameLabel.snp_bottom).offset(L.verticalSpacing)
@@ -32,6 +38,10 @@ class ProfileViewController: UIViewController {
         
         let logoutButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: UIColor.whiteColor())
         view.addSubview(logoutButton)
+        logoutButton.setImage(UIImage(imageIdentifier: .logoutButton), forState: .Normal)
+        logoutButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
+        logoutButton.layer.borderWidth = 1
+        logoutButton.layer.cornerRadius = 4
         logoutButton.snp_makeConstraints { make in
             make.width.equalTo(169)
             make.height.equalTo(44)
@@ -53,6 +63,7 @@ class ProfileViewController: UIViewController {
         
         let emailLabel = UILabel()
         view.addSubview(emailLabel)
+        emailLabel.textAlignment = .Right
         emailLabel.snp_makeConstraints { make in
             make.left.greaterThanOrEqualTo(staticEmailLabel.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing).priorityLow()
@@ -82,6 +93,7 @@ class ProfileViewController: UIViewController {
         
         let addressLabel = UILabel()
         view.addSubview(addressLabel)
+        addressLabel.textAlignment = .Left
         addressLabel.snp_makeConstraints { make in
             make.right.equalTo(view).offset(-L.horizontalSpacing).priorityLow()
             make.left.greaterThanOrEqualTo(staticAddressLabel.snp_right).offset(L.horizontalSpacing)
@@ -111,6 +123,7 @@ class ProfileViewController: UIViewController {
         
         let phoneLabel = UILabel()
         view.addSubview(phoneLabel)
+        phoneLabel.textAlignment = .Right
         phoneLabel.snp_makeConstraints { make in
             make.left.greaterThanOrEqualTo(staticPhoneLabel.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing).priorityLow()
@@ -120,6 +133,7 @@ class ProfileViewController: UIViewController {
         
         let aboutAppButton = Theme.grayButton()
         view.addSubview(aboutAppButton)
+        aboutAppButton.setTitle(NSLocalizedString("PROFILE_about", comment: ""), forState: .Normal)
         aboutAppButton.snp_makeConstraints { make in
             make.height.equalTo(44)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -137,42 +151,37 @@ class ProfileViewController: UIViewController {
     weak var addressLabel: UILabel!
     weak var phoneLabel: UILabel!
     weak var aboutAppButton: UIButton!
-    
+
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
 
     }
     
     override func viewDidLoad() {
-        self.view.backgroundColor = .whiteColor()
-        
-//        following text will be replace with text from API
-        self.nameLabel.text = "Korben Dallas"
-        self.nameLabel.font = UIFont.boldSystemFontOfSize(26)
-        self.nameLabel.textAlignment = .Center
+        logoutButton.setTitle(NSLocalizedString("PROFILE_logout", comment: ""), forState: .Normal)
 
-        self.dateLabel.text = dateLabelFormat("21.08.2015")
-        self.dateLabel.textColor = .rekolaPinkColor()
-        self.dateLabel.textAlignment = .Center
-
-        self.logoutButton.setTitle("  Odhlásit se", forState: .Normal)
-        self.logoutButton.setTitle(NSLocalizedString("PROFILE_logout", comment: ""), forState: .Normal)
-        self.logoutButton.setImage(UIImage(imageIdentifier: .logoutButton), forState: .Normal)
-        self.logoutButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
-        self.logoutButton.layer.borderWidth = 1
-        self.logoutButton.layer.cornerRadius = 4
+        aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)
         
-        self.emailLabel.text = "korben.dallas@multipass.com"
-        self.emailLabel.textAlignment = .Right
-
-        self.addressLabel.text = "Bechynova 274/8, Praha 6"
-        self.addressLabel.textAlignment = .Left
-        
-        self.phoneLabel.text = "+420 555 555 555"
-        self.phoneLabel.textAlignment = .Right
-        
-        self.aboutAppButton.setTitle(NSLocalizedString("PROFILE_about", comment: ""), forState: .Normal)
-        self.aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)
+        showUser()
+    }
+    
+    func updateLabels(myAccount: MyAccount) {
+        nameLabel.text = myAccount.name
+        emailLabel.text = myAccount.email
+        addressLabel.text = myAccount.address
+        phoneLabel.text = myAccount.phone
+        dateLabel.text = dateLabelFormat(myAccount.membershipEnd)
+    }
+    
+    let issueRequestPending = MutableProperty(false)
+    func showUser() {
+        API.myAccount().start(error: {error in
+            self.handleError(error)
+            }, completed: {
+                self.issueRequestPending.value = false
+            }, next: {myAccount in
+                self.updateLabels(myAccount)
+        })
     }
     
     func aboutAppPressed() {
@@ -181,8 +190,13 @@ class ProfileViewController: UIViewController {
         self.showViewController(aboutAppVC, sender: nil)
     }
     
-    func dateLabelFormat(date: String) -> String! {
-        let str = NSLocalizedString("PROFILE_membership", comment: "") + date
+    func dateLabelFormat(date: NSDate) -> String! {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd.MM.YYYY"
+        
+        let stringDate = dateFormatter.stringFromDate(date)
+        
+        let str = NSLocalizedString("PROFILE_membership", comment: "") + stringDate
         return str
     }
     

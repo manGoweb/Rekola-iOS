@@ -9,6 +9,7 @@
 import Foundation
 import Argo
 import Runes
+import CoreLocation
 
 
 ////MARK: logininfo
@@ -165,5 +166,100 @@ struct BikeReturnInfo {
 		}
 		return d
 	}
+}
+
+extension CLLocationCoordinate2D : Decodable {
+    static func create(latitude: Double) (longitude: Double) -> CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<CLLocationCoordinate2D> {
+        return CLLocationCoordinate2D.create
+            <^> json <| "latitude"
+            <*> json <| "longitude"
+    }
+}
+
+struct Updates {
+    let author: String
+    let description: String
+    let issuedAt: NSDate
+}
+
+extension Updates : Decodable {
+    static var dateFormatter : NSDateFormatter = {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return dateFormatter
+        }()
+    
+    static func create(author: String) ( description: String) (issuedAt: String) -> Updates {
+        let returnedDate = dateFormatter.dateFromString(issuedAt)
+        return Updates(author: author, description: description, issuedAt: returnedDate!)
+    }
+
+    
+    internal static func decode(json: JSON) -> Decoded<Updates> {
+        return Updates.create
+            <^> json <| "author"
+            <*> json <| "description"
+            <*> json <| "issuedAt"
+    }
+    
+}
+
+public struct BikeIssues {
+    let id: Int
+    let title: String
+    let status: String
+    let updates: Updates
+}
+
+extension BikeIssues : Decodable {
+    static func create(id: Int) ( title: String) ( status: String) ( updates: Updates) -> BikeIssues {
+        return BikeIssues(id: id, title: title, status: status, updates: updates)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<BikeIssues> {
+        return BikeIssues.create
+            <^> json <| "id"
+            <*> json <| "title"
+            <*> json <| "status"
+            <*> json <| "updates"
+    }
+}
+
+public struct MyAccount {
+    let name: String
+    let registrationDate: NSDate
+    let membershipEnd: NSDate
+    let email: String
+    let phone: String
+    let address: String
+}
+
+extension MyAccount : Decodable {
+    static var dateFormatter : NSDateFormatter = {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return dateFormatter
+        }()
+    
+    static func create(name: String) ( registrationDate: String) (membershipEnd: String) (email: String) (phone: String) (address: String) -> MyAccount {
+        let registration = dateFormatter.dateFromString(registrationDate)
+        let membership = dateFormatter.dateFromString(membershipEnd)
+        
+        return MyAccount(name: name, registrationDate: registration!, membershipEnd: membership!, email: email, phone: phone, address: address)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<MyAccount> {
+        return MyAccount.create
+            <^> json <| "name"
+            <*> json <| "registrationDate"
+            <*> json <| "membershipEnd"
+            <*> json <| "email"
+            <*> json <| "phone"
+            <*> json <| "address"
+    }
 }
 

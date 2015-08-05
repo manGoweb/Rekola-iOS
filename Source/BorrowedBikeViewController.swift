@@ -9,9 +9,10 @@
 import UIKit
 import SnapKit
 import Foundation
+import ReactiveCocoa
 
 class BorrowedBikeViewController: UIViewController {
-	let bike : Bike
+	let bike : Bike //smazat ! a zmenit na let
 	init(bike: Bike) {
 		self.bike = bike
 		super.init(nibName: nil, bundle: nil)
@@ -20,8 +21,7 @@ class BorrowedBikeViewController: UIViewController {
 	required init(coder aDecoder: NSCoder) {
 	    fatalError("init(coder:) has not been implemented")
 	}
-	
-	
+
 	override func loadView() {
         let view = UIView()
         self.view = view
@@ -152,6 +152,8 @@ class BorrowedBikeViewController: UIViewController {
         self.bikeReturnButton.addTarget(self, action: "returnBike:", forControlEvents: .TouchUpInside)
 		
 		bikeImageView.sd_setImageWithURL(bike.imageURL)
+        
+//        showIssue()
     }
     
     func formatLabel(label: UILabel, date: String, time: String) -> UILabel! {
@@ -164,6 +166,22 @@ class BorrowedBikeViewController: UIViewController {
         label.attributedText = atribute
         return label
     }
+    
+////    tmp
+//    let issueRequestPending = MutableProperty(false)
+//    func showIssue() {
+////        issueRequestPending.value = false
+//        API.myBikeIssue(id: bike.id).start(error: { error in
+////            self.issueRequestPending.value = false
+//            self.handleError(error)
+//    
+////            NSString(data: error.userInfo![APIErrorKeys.responseData]! as! NSData, encoding:4)
+//            }, completed: {
+//                self.issueRequestPending.value = false
+//            },next: {bikeIssue in
+////                println("issue: \n \(bikeIssue)()()")
+//        })
+//    }
     
 	func returnBike(sender: AnyObject?) {
 		let vc = ReturnBikeViewController(bike: bike)

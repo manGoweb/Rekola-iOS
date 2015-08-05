@@ -17,40 +17,40 @@ enum Router : URLRequestConvertible {
     static let baseURL = Environment.baseURL
 
 //TODO: endpointy co pouziva android, implementovat
-///	@POST("/accounts/mine/login")
+//	@POST("/accounts/mine/login")
 //	public void login(@Body Credentials body, Callback<Login> callback);
 //	
-///	@PUT("/password-recovery")
+//	@PUT("/password-recovery")
 //	public void recoverPassword(@Body RecoverPassword body, Callback<Object> callback);
 //	
 ///	@GET("/accounts/mine/logout")
 //	public void logout(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Object> callback);
 //	
-///	@GET("/bikes/all")
+//	@GET("/bikes/all")
 //	public void getBikes(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Bike>> callback);
 //	
-///	@GET("/bikes/mine")
+//	@GET("/bikes/mine")
 //	public void getBorrowedBike(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<BorrowedBike> callback);
 //	
-///	@GET("/bikes/lock-code")
+//	@GET("/bikes/lock-code")
 //	public void borrowBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("bikeCode") int bikeCode, @Query("lat") String lat, @Query("lng") String lng, Callback<LockCode> callback);
 //	
-///	@PUT("/bikes/{id}/return")
+//	@PUT("/bikes/{id}/return")
 //	public void returnBike(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("id") int bikeCode, @Body ReturningBike returningBike, Callback<ReturnedBike> callback);
 //	
-///	@GET("/bikes/{bikeId}/issues?onlyOpen=1")
+//-	@GET("/bikes/{bikeId}/issues?onlyOpen=1")
 //	public void getBikeIssues(@Header(Constants.HEADER_KEY_TOKEN) String token, @Path("bikeId") int bikeId, Callback<List<Issue>> callback);
 //	
 ///	@GET("/location/pois")
 //	public void getPois(@Header(Constants.HEADER_KEY_TOKEN) String token, @Query("lat") String lat, @Query("lng") String lng, Callback<List<Poi>> callback);
 //	
-//	@GET("/accounts/mine")
+//-	@GET("/accounts/mine")
 //	public void getAccount(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Account> callback);
 //	
-//	@GET("/boundaries/")
+///	@GET("/boundaries/")
 //	public void getBoundaries(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<Boundaries> callback);
 //	
-//	@GET("/default-values/")
+///	@GET("/default-values/")
 //	public void getDefaultValues(@Header(Constants.HEADER_KEY_TOKEN) String token, Callback<DefaultValues> callback);
 //	
 ///	@POST("/bikes/{id}/issues")
@@ -66,7 +66,10 @@ enum Router : URLRequestConvertible {
 	case Logout
     case MyBikeIssue(id: Int)
     case PointOfInterests
-    case BikesIssues(id: Int, issue: [String:AnyObject])
+    case BikesIssues(id: Int)
+    case Boundaries
+    case MyAccount
+    case DefaultValues
     
     var method : Alamofire.Method {
         switch self {
@@ -90,6 +93,12 @@ enum Router : URLRequestConvertible {
             return .GET
         case .BikesIssues:
             return .POST
+        case .Boundaries:
+            return .GET
+        case .MyAccount:
+            return .GET
+        case .DefaultValues:
+            return .GET
 		}
     }
     
@@ -110,11 +119,17 @@ enum Router : URLRequestConvertible {
         case .Logout:
             return "/accounts/mine/logout"
         case .MyBikeIssue(let id):
-            return "/bikes/\(id)/issues?onlyOpen=1"
+            return "/bikes/\(id)/issues"
         case .PointOfInterests:
             return "/location/pois"
-        case .BikesIssues(let id, _):
+        case .BikesIssues(let id):
             return "/bikes/\(id)/issues"
+        case .Boundaries:
+            return "/boundaries/"
+        case .MyAccount:
+            return "/accounts/mine"
+        case .DefaultValues:
+            return "/default-values/"
         }
     }
 
@@ -141,13 +156,12 @@ enum Router : URLRequestConvertible {
 			return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: ["bikeCode" : code, "lat" : lat, "lng" : lon]).0
 		case .ReturnBike(_, let info):
 			return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: ["location" : info.jsonRepresentation]).0
+        case .MyBikeIssue:
+            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: ["onlyOpen" : 1]).0
         default:
             return mutableURLRequest
         }
-        
     }
-    
-    
 }
 
 let API = RekolaAPI._instance
@@ -297,12 +311,31 @@ class RekolaAPI {
 		}
 	}
 	
+    func myBikeIssue(#id : Int) -> SignalProducer<[BikeIssues], NSError>{
+        return call(Router.MyBikeIssue(id: id)) { data in
+            let signal : SignalProducer<BikeIssues, NSError> = rac_decodeByOne(data)
+            return signal
+                |> on(next : { item in
+                    println(item)
+                })
+                |> collect
+        }
+    }
     
+    func myAccount() -> SignalProducer<MyAccount, NSError> {
+        return call(Router.MyAccount) { data in
+            logD(data)
+            let parse : SignalProducer<MyAccount, NSError> = rac_decode(data)
+            return parse |> map { $0 as MyAccount }
+        }
+//        |> catch { error in
+//            let statusCode = (error.userInfo?[APIErrorKeys.response] as? NSHTTPURLResponse)?.statusCode
+//            switch statusCode {
+//            case let .Some(404):
+//                return SignalProducer(value: nil)
+//            default:
+//                return SignalProducer(error: error)
+//            }
+//        }
+    }
 }
-
-
-
-
-
-
-

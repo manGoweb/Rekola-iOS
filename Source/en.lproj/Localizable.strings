@@ -31,7 +31,7 @@
 "BORROWBIKE_lent" = "Půjčeno ";
 "MAP_title" = "Mapa";
 "PROFILE_membership"= "Členství do ";
-"PROFILE_logout" = "Odhlásit se";
+"PROFILE_logout" = "  Odhlásit se";
 "PROFILE_email" = "Email";
 "PROFILE_address" = "Adresa";
 "PROFILE_phone" = "Telefon";

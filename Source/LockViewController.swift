@@ -32,7 +32,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         scrollView.addSubview(container)
         container.snp_makeConstraints { make in
             make.width.equalTo(scrollView).offset(-(L.contentInsets.left + L.contentInsets.right))
-            make.edges.equalTo(scrollView).inset(L.contentInsets) //changed
+            make.edges.equalTo(scrollView).inset(L.contentInsets) 
         }
         self.container = container
         
