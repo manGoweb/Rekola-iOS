@@ -170,6 +170,7 @@ class ProfileViewController: UIViewController {
         emailLabel.text = myAccount.email
         addressLabel.text = myAccount.address
         phoneLabel.text = myAccount.phone
+        
         dateLabel.text = dateLabelFormat(myAccount.membershipEnd)
     }
     
