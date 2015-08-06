@@ -27,24 +27,30 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let detailView = UIView()
         view.addSubview(detailView)
+        detailView.backgroundColor = .rekolaPinkColor()
+        detailView.opaque = true
         detailView.snp_makeConstraints { make in
-            make.height.equalTo(192 - 64)
+//            make.height.equalTo(192 - 64)
             make.top.equalTo(view)
             make.left.right.equalTo(view)
         }
         self.detailView = detailView
         
-        let bikeImage = UIImageView(image: UIImage(imageIdentifier: .bike))
+        let bikeImage = UIImageView(/*image: UIImage(imageIdentifier: .bike)*/)
         detailView.addSubview(bikeImage)
+        bikeImage.contentMode = .ScaleAspectFit
         bikeImage.setContentHuggingPriority(1000, forAxis: .Horizontal)
         bikeImage.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70 - 64)
             make.left.equalTo(view).offset(L.horizontalSpacing)
+            make.width.equalTo(44)
+            make.height.equalTo(33)
         }
         self.bikeImage = bikeImage
         
         let nameLabel = Theme.whiteLabel()
         detailView.addSubview(nameLabel)
+        nameLabel.font = UIFont.boldSystemFontOfSize(17)
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70 - 64)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
@@ -54,30 +60,36 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let distanceLabel = Theme.whiteLabel()
         detailView.addSubview(distanceLabel)
+        distanceLabel.font = UIFont.italicSystemFontOfSize(16)
         distanceLabel.snp_makeConstraints { make in
             make.top.equalTo(nameLabel.snp_bottom)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
         }
         self.bikeDistanceLabel = distanceLabel
         
-        let descriptionLabel = Theme.whiteLabel()
-        detailView.addSubview(descriptionLabel)
-        descriptionLabel.snp_makeConstraints { make in
-            make.top.equalTo(distanceLabel.snp_bottom).offset(10)
-            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
-        }
-        self.bikeDescriptionLabel = descriptionLabel
-        
         let noteLabel = Theme.whiteLabel()
         detailView.addSubview(noteLabel)
+        noteLabel.font = UIFont.boldSystemFontOfSize(15)
+        noteLabel.numberOfLines = 0
         noteLabel.snp_makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp_bottom).offset(10)
+            make.top.equalTo(distanceLabel.snp_bottom).offset(10)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
         }
         self.bikeNoteLabel = noteLabel
         
+        let descriptionLabel = Theme.whiteLabel()
+        detailView.addSubview(descriptionLabel)
+        descriptionLabel.font = UIFont.systemFontOfSize(15)
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.textColor = .rekolaLightPinkColor()
+        descriptionLabel.adjustsFontSizeToFitWidth = true
+        descriptionLabel.snp_makeConstraints { make in
+            make.top.equalTo(noteLabel.snp_bottom).offset(10)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+            make.right.bottom.equalTo(detailView).inset(L.contentInsets)
+        }
+        self.bikeDescriptionLabel = descriptionLabel
     }
     
     weak var detailView: UIView!
@@ -89,9 +101,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var bikeDistanceLabel: UILabel!
     weak var bikeNoteLabel: UILabel!
     weak var bikeImage: UIImageView!
-    var bikes: [Bike]?
+    var bikes: [Bike] = [] {
+        didSet {
+            var bikesMapPin: [MapPin] = []
+            for bike in bikes {
+                let bikeMapPin = MapPin(bike: bike)
+                bikesMapPin.append(bikeMapPin)
+            }
+            mapView.addAnnotations(bikesMapPin)
+        }
+    }
     let locationManager = CLLocationManager()
     var bikeCoordinate = CLLocationCoordinate2D()
+    var usersCoordinate = CLLocationCoordinate2D(latitude: 50.079167, longitude: 14.428414) //default coordinate
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -102,21 +124,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewDidLoad()
         
 //        navigationBar settings + tintColor
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        self.navigationItem.title = NSLocalizedString("MAP_title", comment: "")
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        navigationItem.title = NSLocalizedString("MAP_title", comment: "")
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        self.navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
-        self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
+        navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
+        navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
 		navigationController?.navigationBar.barStyle = .Black
 		navigationController?.navigationBar.translucent = false
 		
         let leftBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .directionButton), style:.Plain, target: self, action: "showDirections")
-//        let rightBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .locationButton), style: .Plain, target: self, action: "showLocations")
-		
-        self.navigationItem.leftBarButtonItem = leftBarButton
-//        self.navigationItem.rightBarButtonItem = rightBarButton
-		
+        navigationItem.leftBarButtonItem = leftBarButton
+        
 //        mapView settings
         mapView.delegate = self
         mapView.zoomEnabled = true
@@ -124,43 +143,33 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.showsUserLocation = true
         
 //        detailView setting
-        self.detailView.backgroundColor = .rekolaPinkColor()
-        self.detailView.opaque = true
 		detailView.hidden = true
-        
-        self.bikeImage.contentMode = .ScaleAspectFit
-        
-        self.bikeNameLabel.font = UIFont.boldSystemFontOfSize(17)
-        self.bikeDistanceLabel.font = UIFont.italicSystemFontOfSize(16)
-        self.bikeDescriptionLabel.font = UIFont.boldSystemFontOfSize(15)
-        self.bikeDescriptionLabel.numberOfLines = 0
-        self.bikeNoteLabel.font = UIFont.systemFontOfSize(15)
-        self.bikeNoteLabel.numberOfLines = 0
-
         
 //        locationManager settings
         locationManager.delegate = self
 		locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
         locationManager.requestWhenInUseAuthorization()
-////        API calling
-//        let producer = API.login("josef.gattermayer@ackee.cz", password: "AckeeTest") |> then(API.bikes(49, longitude: 14))
-//        producer.start(error: { println($0) }, next: { [weak self] (bikes : [Bike]) in
-//            self?.bikes = bikes
-//            //            asynchronni volani bude
-//            })
-//        
-//        if let nearBikes = bikes {
-//            for bike in nearBikes {
-//                let mapPin = MapPin(bike: bike)
-//                mapView.addAnnotation(mapPin)
-//            }
-//        } else { //dumbBike for testing when API is not working
-//            let myBike = Bike.myBike()
-//            let mapPin = MapPin(bike: myBike)
-//            mapView.addAnnotation(mapPin)
-//        }
+        
+//        set users coordinate and calling API
+        
+        if locationManager.location != nil {
+            usersCoordinate = locationManager.location.coordinate
+            loadBikes(usersCoordinate) //calling API with usersCoordinate
+        } else {
+            loadBikes(usersCoordinate) //calling API with default coordinate
+        }
     }
-	
+    
+    let bikesRequestPending = MutableProperty(false)
+    func loadBikes(coordinate: CLLocationCoordinate2D) {
+        bikesRequestPending.value = false
+        API.bikes(latitude: coordinate.latitude, longitude: coordinate.longitude).start(error: { error in
+                self.handleError(error)
+            },next: {
+            self.bikes = $0
+        })
+    }
+    
     func showDirections() {
         let placemark = MKPlacemark(coordinate: bikeCoordinate, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
@@ -172,19 +181,44 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setCenterCoordinate(mapView.userLocation.location.coordinate, animated: true)
     }
     
+    func createAnnotationImage() {
+
+    }
+    
 //    this needs to be repaired with API
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if let annotation = annotation as? MapPin {
             let identifier = "pin"
+            
+            let url = NSURL(string: annotation.iconUrl)
+            var bikeAnnotationFrame = UIImageView(image: UIImage(imageIdentifier: .MapPinGreen))
+            let bikeAnnotationImage = UIImageView()
+            bikeAnnotationImage.sd_setImageWithURL(url)
+            bikeAnnotationFrame.image = bikeAnnotationImage.image
+
+            
+            
+            
+            
+            
+//            let bikeAnnotation = UIImageView()
+//            bikeAnnotation.sd_setImageWithURL(url)
+//            let imageData = NSData(contentsOfURL: url!) //TOOD: blocks main queue! move to background
+//            let bikeImage = UIImage(data: imageData!)
+//            bikeImageView.image = bikeImage
+//            bikeImageView.sd_setImageWithURL(url)
             var view: MKPinAnnotationView
+            var deqView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView
             if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
                     dequeuedView.annotation = annotation
                     view = dequeuedView
-                    let url = NSURL(string: annotation.iconUrl)
-                    let imageData = NSData(contentsOfURL: url!) //TOOD: blocks main queue! move to background
-                    view.image = UIImage(data: imageData!)
+                    view.image = bikeAnnotationFrame.image
+//                    view.image = UIImage(data: imageData!)
             } else {
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                let url = NSURL(string: annotation.iconUrl)
+//                let imageData = NSData(contentsOfURL: url!)
+                view.image = bikeAnnotationFrame.image
             }
             return view
         }
@@ -202,11 +236,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setCenterCoordinate(view.annotation.coordinate, animated: true)
         bikeCoordinate = view.annotation.coordinate
         
-//        following text will be replaced with text from API
-        self.bikeNameLabel.text = "Pivoňka"
-        self.bikeDistanceLabel.text = "850 m"
-        self.bikeDescriptionLabel.text = "Pod železničním mostem na dohled od Tesca"
-        self.bikeNoteLabel.text = "Koloběžka bez zbytečností"
+        let bikeAnnotation = view.annotation as! MapPin
+        let url = NSURL(string: bikeAnnotation.iconUrl)
+        
+        self.bikeImage.sd_setImageWithURL(url)
+        self.bikeNameLabel.text = bikeAnnotation.title
+        self.bikeDistanceLabel.text = bikeAnnotation.distance
+        self.bikeDescriptionLabel.text = bikeAnnotation.bikeDescription
+        self.bikeNoteLabel.text = bikeAnnotation.bikeLocationNote
     }
     
     func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {

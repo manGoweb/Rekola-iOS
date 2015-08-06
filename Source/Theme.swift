@@ -82,6 +82,10 @@ extension UIColor {
     class func rekolaBackgroundColor() -> UIColor! {
         return UIColor(hex: 0x666666)
     }
+    
+    class func rekolaLightPinkColor() -> UIColor! {
+        return UIColor(hex: 0xfecfe3)
+    }
 }
 
 extension UIImage {

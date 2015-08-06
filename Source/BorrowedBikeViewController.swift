@@ -137,7 +137,7 @@ class BorrowedBikeViewController: UIViewController {
         
         bikeNameLabel.text = bike.name
         
-        bikeBorrowLabel.attributedText = formatLabel(bike.returnedAt!)
+        bikeBorrowLabel.attributedText = formatDateLabel(bike.returnedAt!)
         
         bikeDetailButton.setTitle(NSLocalizedString("BORROWBIKE_detail", comment: ""), forState: .Normal)
         bikeDetailButton.addTarget(self, action: "bikeDetail:", forControlEvents: .TouchUpInside)
@@ -152,7 +152,7 @@ class BorrowedBikeViewController: UIViewController {
 //        showIssue()
     }
     
-    func formatLabel(date: NSDate) -> NSAttributedString! {
+    func formatDateLabel(date: NSDate) -> NSAttributedString! {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd.MM"
         let dateString = dateFormatter.stringFromDate(date)

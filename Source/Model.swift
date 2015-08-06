@@ -83,7 +83,7 @@ public struct Bike {
     
 //    icons
     let iconUrl : String
-	let lockCode : String
+	let lockCode : String?
 	let imageURLString : String
 }
 
@@ -110,7 +110,7 @@ extension Bike : Decodable  {
 //		return pure(flatMap(string) {self.dateFormatter.dateFromString($0 ?? "")})
 //	}
 	
-    static func create(id : Int) (_ name: String) (_ type: String) (_ description: String) (_ location: Address) (_ issues: [Int]) (_ borrowed : Bool) (_ operational : Bool) (_ returnedAt: String?) (_ lastSeen: String) (_ iconUrl: String) (_ lockCode : String)(_ imageUrlString : String) -> Bike {
+    static func create(id : Int) (_ name: String) (_ type: String) (_ description: String) (_ location: Address) (_ issues: [Int]) (_ borrowed : Bool) (_ operational : Bool) (_ returnedAt: String?) (_ lastSeen: String) (_ iconUrl: String) (_ lockCode : String?)(_ imageUrlString : String) -> Bike {
 		let returnedDate = dateFormatter.dateFromString(returnedAt ?? "")
         let returnedTime = timeFormatter.dateFromString(lastSeen)
         return Bike(id: id, name : name, type: type, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, lastSeen: returnedTime!, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
@@ -131,7 +131,7 @@ extension Bike : Decodable  {
             <*> json <|? ["location","returnedAt"]
             <*> json <| "lastSeen"
             <*> json <| "iconUrl"
-            <*> json <| "lockCode"
+            <*> json <|? "lockCode"
             <*> json <| "imageUrl"
         //  <*> json <| "issues"
 

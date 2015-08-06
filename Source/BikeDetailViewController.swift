@@ -34,6 +34,10 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let tableView = UITableView()
         view.addSubview(tableView)
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 800
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .None
         tableView.snp_makeConstraints { make in
             make.left.top.right.bottom.equalTo(view)
         }
@@ -42,13 +46,16 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let container = UIView()
         self.container = container
         
-        let bikeIV = UIImageView(image: UIImage(imageIdentifier: .biggerBorrowBike))
+        let bikeIV = UIImageView(/*image: UIImage(imageIdentifier: .biggerBorrowBike)*/)
         bikeIV.contentMode = .ScaleAspectFit
         container.addSubview(bikeIV)
         bikeIV.snp_makeConstraints { make in
             make.top.equalTo(container).offset(20)
             make.centerX.equalTo(container)
+            make.left.right.equalTo(container).inset(L.contentInsets)
+            make.height.equalTo(111)
         }
+        self.bikeIV = bikeIV
 
         let bikeTypeLabel = UILabel()
         container.addSubview(bikeTypeLabel)
@@ -314,19 +321,19 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 800
-        tableView.allowsSelection = false
-        tableView.separatorStyle = .None
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ProblemCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ProblemCell")
         
         deleteLineUnderNavBar()
         
         let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
         self.navigationItem.rightBarButtonItem = lockButton
+
+        let bikeImageData = NSData(contentsOfURL: bike.imageURL)
+        bikeIV.image = UIImage(data: bikeImageData!)
         
         bikeTypeLabel.text = bike.type
         

@@ -11,16 +11,20 @@ import MapKit
 
 class MapPin: NSObject, MKAnnotation {
     let title: String
-    let subtitle: String
+    let bikeDescription: String
+    let bikeLocationNote: String?
     let coordinate: CLLocationCoordinate2D
     let iconUrl: String
+    let distance: String
     
     init(bike: Bike) {
         self.title = bike.name
-        self.subtitle = bike.description
+        self.bikeDescription = bike.description
+        self.bikeLocationNote = bike.location.note
         let coord = CLLocationCoordinate2DMake(bike.location.lat, bike.location.lng)
         self.iconUrl = bike.iconUrl
         self.coordinate = coord
+        self.distance = bike.location.distance
         
         super.init()
     }
