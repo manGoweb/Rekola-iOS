@@ -191,35 +191,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let identifier = "pin"
             
             let url = NSURL(string: annotation.iconUrl)
-            var bikeAnnotationFrame = UIImageView(image: UIImage(imageIdentifier: .MapPinGreen))
-            let bikeAnnotationImage = UIImageView()
-            bikeAnnotationImage.sd_setImageWithURL(url)
-            bikeAnnotationFrame.image = bikeAnnotationImage.image
 
-            
-            
-            
-            
-            
-//            let bikeAnnotation = UIImageView()
-//            bikeAnnotation.sd_setImageWithURL(url)
-//            let imageData = NSData(contentsOfURL: url!) //TOOD: blocks main queue! move to background
-//            let bikeImage = UIImage(data: imageData!)
-//            bikeImageView.image = bikeImage
-//            bikeImageView.sd_setImageWithURL(url)
-            var view: MKPinAnnotationView
-            var deqView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView
-            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
+//            var view: BikeAnnotationView!
+            var view = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? BikeAnnotationView
+            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? BikeAnnotationView {
                     dequeuedView.annotation = annotation
                     view = dequeuedView
-                    view.image = bikeAnnotationFrame.image
-//                    view.image = UIImage(data: imageData!)
             } else {
-                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                let url = NSURL(string: annotation.iconUrl)
-//                let imageData = NSData(contentsOfURL: url!)
-                view.image = bikeAnnotationFrame.image
+                view = BikeAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             }
+            
+            view?.bikeImageView.sd_setImageWithURL(url)
             return view
         }
         return nil

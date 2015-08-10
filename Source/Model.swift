@@ -193,27 +193,27 @@ extension CLLocationCoordinate2D : Decodable {
     }
 }
 
-struct Updates {
+struct Update {
     let author: String
     let description: String
     let issuedAt: NSDate
 }
 
-extension Updates : Decodable {
+extension Update : Decodable {
     static var dateFormatter : NSDateFormatter = {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
         return dateFormatter
         }()
     
-    static func create(author: String) ( description: String) (issuedAt: String) -> Updates {
+    static func create(author: String) ( description: String) (issuedAt: String) -> Update {
         let returnedDate = dateFormatter.dateFromString(issuedAt)
-        return Updates(author: author, description: description, issuedAt: returnedDate!)
+        return Update(author: author, description: description, issuedAt: returnedDate!)
     }
 
     
-    internal static func decode(json: JSON) -> Decoded<Updates> {
-        return Updates.create
+    internal static func decode(json: JSON) -> Decoded<Update> {
+        return Update.create
             <^> json <| "author"
             <*> json <| "description"
             <*> json <| "issuedAt"
@@ -221,24 +221,24 @@ extension Updates : Decodable {
     
 }
 
-public struct BikeIssues {
+public struct BikeIssue {
     let id: Int
     let title: String
     let status: String
-    let updates: Updates
+    let updates: [Update]
 }
 
-extension BikeIssues : Decodable {
-    static func create(id: Int) ( title: String) ( status: String) ( updates: Updates) -> BikeIssues {
-        return BikeIssues(id: id, title: title, status: status, updates: updates)
+extension BikeIssue : Decodable {
+    static func create(id: Int) ( title: String) ( status: String) ( updates: [Update]) -> BikeIssue {
+        return BikeIssue(id: id, title: title, status: status, updates: updates)
     }
     
-    public static func decode(json: JSON) -> Decoded<BikeIssues> {
-        return BikeIssues.create
+    public static func decode(json: JSON) -> Decoded<BikeIssue> {
+        return BikeIssue.create
             <^> json <| "id"
             <*> json <| "title"
             <*> json <| "status"
-            <*> json <| "updates"
+            <*> json <|| "updates"
     }
 }
 

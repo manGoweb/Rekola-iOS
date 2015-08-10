@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import SnapKit
+import ReactiveCocoa
 
 class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
 	
@@ -311,6 +312,12 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     var addProblemButton: UIButton!
     var infoEquipmentLabel: UILabel!
     
+    var bikeIssues: [BikeIssue] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -363,6 +370,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         addProblemButton.setTitle(NSLocalizedString("BIKEDETAIL_addProblem", comment: ""), forState: .Normal)
         addProblemButton.addTarget(self, action: "addProblemSegue", forControlEvents: .TouchUpInside)
+        
+        loadIssues()
     }
     
     func deleteLineUnderNavBar() {
@@ -389,6 +398,24 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let stringTime = timeFormatter.stringFromDate(date)
         
         return (stringDate, stringTime)
+    }
+    
+//    API calling
+    let issuesRequestPending = MutableProperty(false)
+    func loadIssues() {
+        issuesRequestPending.value = true
+        let test = API.myBikeIssue(id: bike.id).start(error: { error in
+                self.issuesRequestPending.value = false
+                self.handleError(error)
+            }, next: {
+                self.bikeIssues = $0
+            }
+    )
+    }
+    
+//    update problem cells
+    func updateCells() {
+        
     }
     
 //    TODO: what this button do?
@@ -434,7 +461,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         if section == 0 {
             return 1
         } else if section == 1 {
-            return 1
+            return bikeIssues.count
         }
         
         return 0
@@ -443,6 +470,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         let problemCell = UITableViewCell(style: .Subtitle, reuseIdentifier: "ProblemCell")
+        problemCell.detailTextLabel?.numberOfLines = 0
+        problemCell.detailTextLabel?.textColor = .grayColor()
         
         if indexPath.section == 0 {
             cell.contentView.addSubview(container)
@@ -452,11 +481,25 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             return cell
         } else {
             problemCell.textLabel?.font = UIFont.boldSystemFontOfSize(14)
-            problemCell.textLabel!.text = "Jmeno, Prijmeni / Datum"
+            let date = bikeIssues[indexPath.row].updates[0].issuedAt
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = " / dd.MM.YYYY / HH:mm"
+            let dateString = dateFormatter.stringFromDate(date)
             
-            problemCell.detailTextLabel!.text = "Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text Dlouhej text "
-            problemCell.detailTextLabel?.numberOfLines = 0
-            problemCell.detailTextLabel?.textColor = .grayColor()
+            let numberOfUpdates = bikeIssues[indexPath.row].updates.count
+            if numberOfUpdates > 1 {
+                for update in bikeIssues[indexPath.row].updates {
+                    problemCell.textLabel?.text = update.author + dateString
+                    problemCell.detailTextLabel?.text = update.description
+                }
+            } else {
+                problemCell.textLabel!.text = bikeIssues[indexPath.row].updates[0].author + dateString
+                problemCell.detailTextLabel!.text = bikeIssues[indexPath.row].updates[0].description
+            }
+            
+            
+//            problemCell.detailTextLabel?.numberOfLines = 0
+//            problemCell.detailTextLabel?.textColor = .grayColor()
             
             return problemCell
         }

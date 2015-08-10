@@ -311,9 +311,9 @@ class RekolaAPI {
 		}
 	}
 	
-    func myBikeIssue(#id : Int) -> SignalProducer<[BikeIssues], NSError>{
+    func myBikeIssue(#id : Int) -> SignalProducer<[BikeIssue], NSError>{
         return call(Router.MyBikeIssue(id: id)) { data in
-            let signal : SignalProducer<BikeIssues, NSError> = rac_decodeByOne(data)
+            let signal : SignalProducer<BikeIssue, NSError> = rac_decodeByOne(data)
             return signal
                 |> on(next : { item in
                     println(item)
@@ -328,14 +328,5 @@ class RekolaAPI {
             let parse : SignalProducer<MyAccount, NSError> = rac_decode(data)
             return parse |> map { $0 as MyAccount }
         }
-//        |> catch { error in
-//            let statusCode = (error.userInfo?[APIErrorKeys.response] as? NSHTTPURLResponse)?.statusCode
-//            switch statusCode {
-//            case let .Some(404):
-//                return SignalProducer(value: nil)
-//            default:
-//                return SignalProducer(error: error)
-//            }
-//        }
     }
 }
