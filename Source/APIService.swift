@@ -329,4 +329,15 @@ class RekolaAPI {
             return parse |> map { $0 as MyAccount }
         }
     }
+    
+    func defaultProblems() -> SignalProducer<Issues, NSError> {
+        return call(Router.DefaultValues) { data in
+            let signal : SignalProducer<Issues, NSError> = rac_decode(data)
+            return signal
+                |> on(next: { item in
+                    logD(data)
+                })
+                |> map { $0 as Issues }
+        }
+    }
 }

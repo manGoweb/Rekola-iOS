@@ -191,13 +191,14 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
 	//TODO: zjistit co vraci api a doplnit logiku (porad se se mnou), urcite neifovat podle stringu
 //    MARK: ProblemsViewControllerProtocol
     func addProblemToTextField(controller: ProblemsViewController, problem: String) {
-        self.textField.placeholder = ""
-        if problem != "Jiny problem" { //will be change with API
-            self.textField.text = problem
-        } else {
-            self.textField.text = "Jiny problem"
-            self.textField.becomeFirstResponder()
-        }
+        self.textField.placeholder = "" //mozna tohle smazat
+        self.textField.text = problem
+//        if problem != "Jiny problem" { //will be change with API
+//            self.textField.text = problem
+//        } else {
+//            self.textField.text = "Jiny problem"
+//            self.textField.becomeFirstResponder()
+//        }
     }
     
 //    MARK: UITextFieldDelegate

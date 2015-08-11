@@ -276,3 +276,34 @@ extension MyAccount : Decodable {
     }
 }
 
+public struct DefaultProblem {
+    let id: Int
+    let title: String
+}
+
+extension DefaultProblem : Decodable {
+    static func create(id: Int) ( title: String) -> DefaultProblem {
+        return DefaultProblem(id: id, title: title)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<DefaultProblem> {
+        return DefaultProblem.create
+            <^> json <| "id"
+            <*> json <| "title"
+    }
+}
+
+public struct Issues {
+    let issues: [DefaultProblem]
+}
+
+extension Issues : Decodable {
+    static func create(issues: [DefaultProblem]) -> Issues {
+        return Issues(issues: issues)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<Issues> {
+        return Issues.create
+            <^> json <|| "issues"
+    }
+}

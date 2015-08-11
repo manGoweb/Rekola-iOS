@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import SnapKit
+import ReactiveCocoa
 
 protocol ProblemsViewControllerProtocol: class {
     func addProblemToTextField(controller: ProblemsViewController, problem: String)
@@ -42,7 +43,11 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
     weak var cancelButton: UIButton!
     weak var tableView: UITableView!
     weak var delegate: ProblemsViewControllerProtocol?
-    let problems = ["Kolo tu neni", "Kod zamku nefunguje", "Pichla duse", "Problem s retezem", "Neco je s ramem", "Neco chybi", "Tohle maji byt brzdy?", "Bal bych se na tom jet", "Jiny problem"] //for testing without API
+    var problems: Issues? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,27 +64,49 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.cancelButton.setImage(UIImage(imageIdentifier: .cancelButton), forState: .Normal)
         self.cancelButton.addTarget(self, action: "cancelView", forControlEvents: .TouchUpInside)
+        
+        loadProblems()
     }
     
     func cancelView() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+//    API calling
+    let problemRequestPending = MutableProperty(false)
+    func loadProblems() {
+        problemRequestPending.value = true
+        let test = API.defaultProblems().start( error: { error in
+                self.problemRequestPending.value = false
+                self.handleError(error)
+            }, next: {
+                self.problems = $0
+        })
+    }
+    
 //    MARK: UITabelViewDelegate + UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return problems.count
+        if let issues = problems{
+            return issues.issues.count
+        } else {
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        cell.textLabel!.text = problems[indexPath.row]
-        cell.textLabel?.textColor = .whiteColor()
-        cell.backgroundColor = .rekolaPinkColor()
+        if let issue = problems {
+            cell.textLabel!.text = issue.issues[indexPath.row].title
+            cell.textLabel?.textColor = .whiteColor()
+            cell.backgroundColor = .rekolaPinkColor()
+        }
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.addProblemToTextField(self, problem: problems[indexPath.row])
+        if let issue = problems {
+            delegate?.addProblemToTextField(self, problem: issue.issues[indexPath.row].title)
+        }
         dismissViewControllerAnimated(true, completion: nil)
     }
 

@@ -164,6 +164,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         locationLabel.textColor = .rekolaGrayTextColor()
         locationLabel.font = UIFont.systemFontOfSize(15)
         locationLabel.textAlignment = .Center
+        locationLabel.numberOfLines = 0
         locationLabel.snp_makeConstraints { make in
             make.top.equalTo(dateLabel.snp_bottom).offset(L.verticalSpacing)
             make.left.right.equalTo(container)
@@ -317,6 +318,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             tableView.reloadData()
         }
     }
+    let cellIdentifier = "cell"
+    let problemCellIdentifier = "ProblemCell"
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -331,8 +334,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         tableView.delegate = self
         tableView.dataSource = self
 
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "ProblemCell")
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.registerClass(ProblemCell.self, forCellReuseIdentifier: problemCellIdentifier)
         
         deleteLineUnderNavBar()
         
@@ -359,8 +362,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         dateLabel.text = dateAndTime.0
         timeLabel.text = dateAndTime.1
-
-        locationLabel.text = "Pred galerii Myslbek na rohu u znacky"
+        
+        locationLabel.text = bike.location.note
         
         bikeEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
 
@@ -413,11 +416,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     )
     }
     
-//    update problem cells
-    func updateCells() {
-        
-    }
-    
 //    TODO: what this button do?
     func lockButton() {
         
@@ -468,10 +466,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
-        let problemCell = UITableViewCell(style: .Subtitle, reuseIdentifier: "ProblemCell")
-        problemCell.detailTextLabel?.numberOfLines = 0
-        problemCell.detailTextLabel?.textColor = .grayColor()
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! UITableViewCell //for section 0
+        let problemCell = tableView.dequeueReusableCellWithIdentifier(problemCellIdentifier) as! ProblemCell //for section 1
+        
         
         if indexPath.section == 0 {
             cell.contentView.addSubview(container)
@@ -480,51 +477,46 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             }
             return cell
         } else {
+//            format
+            problemCell.descriptionLabel.numberOfLines = 0
+            problemCell.descriptionLabel.textColor = .grayColor()
             problemCell.textLabel?.font = UIFont.boldSystemFontOfSize(14)
+            
+//            dateFormat
             let date = bikeIssues[indexPath.row].updates[0].issuedAt
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = " / dd.MM.YYYY / HH:mm"
             let dateString = dateFormatter.stringFromDate(date)
             
-            let numberOfUpdates = bikeIssues[indexPath.row].updates.count
-            if numberOfUpdates > 1 {
-                for update in bikeIssues[indexPath.row].updates {
-                    problemCell.textLabel?.text = update.author + dateString
-                    problemCell.detailTextLabel?.text = update.description
-                }
-            } else {
-                problemCell.textLabel!.text = bikeIssues[indexPath.row].updates[0].author + dateString
-                problemCell.detailTextLabel!.text = bikeIssues[indexPath.row].updates[0].description
-            }
-            
-            
-//            problemCell.detailTextLabel?.numberOfLines = 0
-//            problemCell.detailTextLabel?.textColor = .grayColor()
+//            setting text
+            let issue = bikeIssues[indexPath.row]
+        
+            problemCell.typeLabel.text = issue.title
+            problemCell.nameLabel.text = issue.updates[0].author + dateString
+            problemCell.descriptionLabel.text = issue.updates[0].description
             
             return problemCell
         }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 2 //one section is required for the upper part of screen, rest is for bike issues
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 800
+            return 770
         }
         return 100
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
-            return "Neco jineho"
-        }
-        return ""
-    }
+//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return ""
+//    }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        if section == 1 {
+        
+        if section >= 1 {
             let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
             header.contentView.backgroundColor = .whiteColor()
             header.textLabel.textColor = .rekolaGreenColor()
@@ -533,9 +525,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section != 0 {
-            return 18
-        }
+//        if section != 0 {
+//            return 18
+//        }
         return 0
     }
 	
