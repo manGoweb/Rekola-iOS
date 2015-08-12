@@ -253,5 +253,12 @@ class Theme {
         l.font = UIFont.systemFontOfSize(16)
         return l
     }
+    
+    enum SFFont: String {
+        case Regular = "SanFranciscoDisplay-Regular"
+        case Medium = "SanFranciscoDisplay-Medium"
+        case Bold = "SanFranciscoDisplay-Bold"
+        case Italic = "SanFranciscoText-Italic"
+    }
 }
     

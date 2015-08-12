@@ -12,10 +12,7 @@ import SnapKit
 import ReactiveCocoa
 
 class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource  {
-    
-    
-    //TODO: tady mas bike, mozna nema vsechny potrebny property dyztak mi reknes, dodelej pls tuhle screenu
-    //TODO: spravit navbar pri animaci back
+
     let bike : Bike
     init(bike: Bike) {
         self.bike = bike
@@ -202,59 +199,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             make.height.equalTo(30) //26
         }
         self.equipmentCollectionView = equipmentCollectionView
-        //        let mudguardIV = UIImageView(image: UIImage(imageIdentifier: .mudguard))
-        //        mudguardIV.contentMode = .ScaleAspectFit
-        //        container.addSubview(mudguardIV)
-        //        mudguardIV.snp_makeConstraints { make in
-        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-        //            make.left.equalTo(container).offset(25)
-        //        }
-        //        self.mudguardIV = mudguardIV
-        //
-        //        let basketIV = UIImageView(image: UIImage(imageIdentifier: .basket))
-        //        basketIV.contentMode = .ScaleAspectFit
-        //        container.addSubview(basketIV)
-        //        basketIV.snp_makeConstraints { make in
-        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-        //            make.left.equalTo(mudguardIV.snp_right).offset(15)
-        //        }
-        //        self.basketIV = basketIV
-        //
-        //        let buzzerIV = UIImageView(image: UIImage(imageIdentifier: .buzzer))
-        //        basketIV.contentMode = .ScaleAspectFit
-        //        container.addSubview(buzzerIV)
-        //        buzzerIV.snp_makeConstraints { make in
-        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-        //            make.left.equalTo(basketIV.snp_right).offset(15)
-        //        }
-        //        self.buzzerIV = buzzerIV
-        //
-        //        let backlightIV = UIImageView(image: UIImage(imageIdentifier: .backlight))
-        //        backlightIV.contentMode = .ScaleAspectFit
-        //        container.addSubview(backlightIV)
-        //        backlightIV.snp_makeConstraints { make in
-        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-        //            make.left.equalTo(buzzerIV.snp_right).offset(15)
-        //        }
-        //        self.backlightIV = backlightIV
-        //
-        //        let frontlightIV = UIImageView(image: UIImage(imageIdentifier: .frontlight))
-        //        frontlightIV.contentMode = .ScaleAspectFit
-        //        container.addSubview(frontlightIV)
-        //        frontlightIV.snp_makeConstraints { make in
-        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-        //            make.left.equalTo(backlightIV.snp_right).offset(15)
-        //        }
-        //        self.frontlightIV = frontlightIV
-        //
-        //        let trunkIV = UIImageView(image: UIImage(imageIdentifier: .trunk))
-        //        trunkIV.contentMode = .ScaleAspectFit
-        //        container.addSubview(trunkIV)
-        //        trunkIV.snp_makeConstraints { make in
-        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-        //            make.left.equalTo(frontlightIV.snp_right).offset(15)
-        //        }
-        //        self.trunkIV = trunkIV
         
         let moreInfoButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: UIColor.whiteColor())
         container.addSubview(moreInfoButton)
@@ -314,12 +258,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     var locationLabel: UILabel!
     var bikeEquipmentLabel: UILabel!
     var equipmentCollectionView: UICollectionView!
-//    var mudguardIV: UIImageView!
-//    var basketIV: UIImageView!
-//    var buzzerIV: UIImageView!
-//    var backlightIV: UIImageView!
-//    var frontlightIV: UIImageView!
-//    var trunkIV: UIImageView!
     var moreInfoButton: TintingButton!
     var problemsLabel: UILabel!
     var addProblemButton: UIButton!

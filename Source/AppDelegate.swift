@@ -31,8 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         #endif
         
      //   Flurry.startSession("")
-        
-                       
+                               
         let vc = UINavigationController(rootViewController: LockViewController())
         let vc2 = UINavigationController(rootViewController: MapViewController())
         let vc3 = UINavigationController(rootViewController: ProfileViewController())
