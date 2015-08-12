@@ -51,10 +51,10 @@ extension Address : Decodable {
             <*> json <| "address"
             <*> json <| "distance"
             <*> json <|? "note"
-
+        
     }
     
-//    only for testing!
+    //    only for testing!
     static func myDumbAddress() -> Address {
         let lat = 50.0825967
         let lng = 14.4260456
@@ -81,37 +81,37 @@ public struct Bike {
     let returnedAt : NSDate?
     let lastSeen: NSDate
     
-//    icons
+    //    icons
     let iconUrl : String
-	let lockCode : String?
-	let imageURLString : String
+    let lockCode : String?
+    let imageURLString : String
 }
 
 extension Bike {
-	var imageURL : NSURL {
-		return NSURL(string: imageURLString)!
-	}
+    var imageURL : NSURL {
+        return NSURL(string: imageURLString)!
+    }
 }
 
 extension Bike : Decodable  {
-	static var dateFormatter : NSDateFormatter = {
-		let dateFormatter = NSDateFormatter()
-		dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-		return dateFormatter
-		}()
+    static var dateFormatter : NSDateFormatter = {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return dateFormatter
+        }()
     
     static var timeFormatter : NSDateFormatter = {
         let timeFormatter = NSDateFormatter()
         timeFormatter.dateFormat = "dd.MM. HH:mm"
         return timeFormatter
-    }()
-	
-//	static func parseDate(string: String?) -> Decoded<NSDate?> {
-//		return pure(flatMap(string) {self.dateFormatter.dateFromString($0 ?? "")})
-//	}
-	
+        }()
+    
+    //	static func parseDate(string: String?) -> Decoded<NSDate?> {
+    //		return pure(flatMap(string) {self.dateFormatter.dateFromString($0 ?? "")})
+    //	}
+    
     static func create(id : Int) (_ name: String) (_ type: String) (_ description: String) (_ location: Address) (_ issues: [Int]) (_ borrowed : Bool) (_ operational : Bool) (_ returnedAt: String?) (_ lastSeen: String) (_ iconUrl: String) (_ lockCode : String?)(_ imageUrlString : String) -> Bike {
-		let returnedDate = dateFormatter.dateFromString(returnedAt ?? "")
+        let returnedDate = dateFormatter.dateFromString(returnedAt ?? "")
         let returnedTime = timeFormatter.dateFromString(lastSeen)
         return Bike(id: id, name : name, type: type, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, lastSeen: returnedTime!, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
     }
@@ -126,7 +126,7 @@ extension Bike : Decodable  {
             <*> json <|| "issues"
             <*> json <| "borrowed"
             <*> json <| "operational"
-//            <*> json <|? ["location","returnedAt"] >>- parseDate //wont compile
+        //            <*> json <|? ["location","returnedAt"] >>- parseDate //wont compile
         return partOfBike
             <*> json <|? ["location","returnedAt"]
             <*> json <| "lastSeen"
@@ -134,24 +134,24 @@ extension Bike : Decodable  {
             <*> json <|? "lockCode"
             <*> json <| "imageUrl"
         //  <*> json <| "issues"
-
+        
         
     }
     
-//    static func myBike()->Bike {
-//        let id = 123
-//        let name = "Kolo kolo mlýnské"
-//        let description = "horské kolo s gumama jako salámy"
-//        let issues = ["5","8"]
-//        let borrowed = false
-//        let lastSeen = "30.10. 11:56"
-//        let operational = true
-//        let adrress = Address.myDumbAddress()
-//        let iconUrl = "https://www.rekola.cz/api/images/1.svg"
-//        
-//        return Bike(id: id, name: name, description: description, location: adrress, issues: issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen, iconUrl: iconUrl)
-//    }
-	
+    //    static func myBike()->Bike {
+    //        let id = 123
+    //        let name = "Kolo kolo mlýnské"
+    //        let description = "horské kolo s gumama jako salámy"
+    //        let issues = ["5","8"]
+    //        let borrowed = false
+    //        let lastSeen = "30.10. 11:56"
+    //        let operational = true
+    //        let adrress = Address.myDumbAddress()
+    //        let iconUrl = "https://www.rekola.cz/api/images/1.svg"
+    //
+    //        return Bike(id: id, name: name, description: description, location: adrress, issues: issues, borrowed: borrowed, operational: operational, lastSeen: lastSeen, iconUrl: iconUrl)
+    //    }
+    
 }
 
 //TODO: report problem
@@ -171,29 +171,29 @@ struct BikeReportProblem {
 }
 
 struct BikeReturnInfo {
-	let lat : Double
-	let lon : Double
-	let note : String?
-	let sensorLat : Double?
-	let sensorLon : Double?
-	let sensorAcc : Double?
-	
-	var jsonRepresentation : [String : AnyObject] {
-		var d : [String : AnyObject] = [ "lat" : lat, "lng" : lon ]
-		if let note = note {
-			d["note"] = note
-		}
-		if let sensorLat = sensorLat {
-			d["sensorLat"] = sensorLat
-		}
-		if let sensorLon = sensorLon {
-			d["sensorLng"] = sensorLon
-		}
-		if let sensorAcc = sensorAcc {
-			d["sensorAccuracy"] = sensorAcc
-		}
-		return d
-	}
+    let lat : Double
+    let lon : Double
+    let note : String?
+    let sensorLat : Double?
+    let sensorLon : Double?
+    let sensorAcc : Double?
+    
+    var jsonRepresentation : [String : AnyObject] {
+        var d : [String : AnyObject] = [ "lat" : lat, "lng" : lon ]
+        if let note = note {
+            d["note"] = note
+        }
+        if let sensorLat = sensorLat {
+            d["sensorLat"] = sensorLat
+        }
+        if let sensorLon = sensorLon {
+            d["sensorLng"] = sensorLon
+        }
+        if let sensorAcc = sensorAcc {
+            d["sensorAccuracy"] = sensorAcc
+        }
+        return d
+    }
 }
 
 extension CLLocationCoordinate2D : Decodable {
@@ -225,7 +225,7 @@ extension Update : Decodable {
         let returnedDate = dateFormatter.dateFromString(issuedAt)
         return Update(author: author, description: description, issuedAt: returnedDate!)
     }
-
+    
     
     internal static func decode(json: JSON) -> Decoded<Update> {
         return Update.create
@@ -326,4 +326,59 @@ extension Issues : Decodable {
 public struct AddIssue {
     let id : Int
     let title : String
+}
+
+public struct Regions {
+    let id: Int
+    let name: String
+    let boundingBox: String
+}
+
+extension Regions : Decodable {
+    static func create(id: Int) (name: String) (boundingBox: String) -> Regions {
+        return Regions(id: id, name: name, boundingBox: boundingBox)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<Regions> {
+        return Regions.create
+            <^> json <| "id"
+            <*> json <| "name"
+            <*> json <| "boundingBox"
+    }
+}
+
+public struct Zones{
+    let regionId: Int
+    let name: String
+    let coords: String
+}
+
+extension Zones : Decodable {
+    static func create(regionId: Int) (name: String) (coords: String) -> Zones {
+        return Zones(regionId: regionId, name: name, coords: coords)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<Zones> {
+        return Zones.create
+            <^> json <| "regionId"
+            <*> json <| "name"
+            <*> json <| "coords"
+    }
+}
+
+public struct Boundaries {
+    let regions: [Regions]
+    let zones : [Zones]
+}
+
+extension Boundaries : Decodable {
+    static func create(regions: [Regions]) (zones: [Zones]) -> Boundaries {
+        return Boundaries(regions: regions, zones: zones)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<Boundaries> {
+        return Boundaries.create
+            <^> json <|| "regions"
+            <*> json <|| "zones"
+    }
 }

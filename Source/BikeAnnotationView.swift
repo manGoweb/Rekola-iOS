@@ -18,10 +18,10 @@ class BikeAnnotationView: MKAnnotationView {
         
         self.frame = CGRectMake(0, 0, 44, 42)
         
-        let backgroundImageView = UIImageView(image: UIImage(imageIdentifier: .MapPinGreen))
+        let backgroundImageView = UIImageView(/*image: UIImage(imageIdentifier: .MapPinGreen)*/)
         addSubview(backgroundImageView)
         backgroundImageView.snp_makeConstraints { make in
-         make.edges.equalTo(self)
+            make.edges.equalTo(self)
         }
         self.backgroundImageView = backgroundImageView
         
@@ -30,14 +30,13 @@ class BikeAnnotationView: MKAnnotationView {
         backgroundImageView.addSubview(bikeImageView)
         bikeImageView.contentMode = .ScaleAspectFit
         bikeImageView.snp_makeConstraints { make in
-//            make.edges.equalTo(backgroundImageView)
             make.top.equalTo(backgroundImageView).offset(4)
             make.left.equalTo(backgroundImageView).offset(4)
             make.right.equalTo(backgroundImageView).offset(-4)
             make.bottom.equalTo(backgroundImageView).offset(-15)
         }
         self.bikeImageView = bikeImageView
-
+        
     }
     
     override init(frame: CGRect) {
@@ -52,7 +51,7 @@ class BikeAnnotationView: MKAnnotationView {
         super.layoutSubviews()
         
     }
-
+    
 }
 
 

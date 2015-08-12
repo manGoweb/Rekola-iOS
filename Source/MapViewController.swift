@@ -30,7 +30,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         detailView.backgroundColor = .rekolaPinkColor()
         detailView.opaque = true
         detailView.snp_makeConstraints { make in
-//            make.height.equalTo(192 - 64)
+            //            make.height.equalTo(192 - 64)
             make.top.equalTo(view)
             make.left.right.equalTo(view)
         }
@@ -114,43 +114,45 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     let locationManager = CLLocationManager()
     var bikeCoordinate = CLLocationCoordinate2D()
     var usersCoordinate = CLLocationCoordinate2D(latitude: 50.079167, longitude: 14.428414) //default coordinate
+    var boundaries = Boundaries(regions: [], zones: [])
+    var coordForBoundaries: [[CLLocationCoordinate2D]] = []
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-		navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        navigationBar settings + tintColor
+        //        navigationBar settings + tintColor
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         navigationItem.title = NSLocalizedString("MAP_title", comment: "")
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
         navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
-		navigationController?.navigationBar.barStyle = .Black
-		navigationController?.navigationBar.translucent = false
-		
+        navigationController?.navigationBar.barStyle = .Black
+        navigationController?.navigationBar.translucent = false
+        
         let leftBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .directionButton), style:.Plain, target: self, action: "showDirections")
         navigationItem.leftBarButtonItem = leftBarButton
         
-//        mapView settings
+        //        mapView settings
         mapView.delegate = self
         mapView.zoomEnabled = true
         mapView.scrollEnabled = true
         mapView.showsUserLocation = true
         
-//        detailView setting
-		detailView.hidden = true
+        //        detailView setting
+        detailView.hidden = true
         
-//        locationManager settings
+        //        locationManager settings
         locationManager.delegate = self
-		locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
+        locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
         locationManager.requestWhenInUseAuthorization()
         
-//        set users coordinate and calling API
+        //        set users coordinate and calling API
         
         if locationManager.location != nil {
             usersCoordinate = locationManager.location.coordinate
@@ -158,15 +160,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         } else {
             loadBikes(usersCoordinate) //calling API with default coordinate
         }
+        loadBoundaries()
+        //        parseBoundaries(boundaries)
     }
     
     let bikesRequestPending = MutableProperty(false)
     func loadBikes(coordinate: CLLocationCoordinate2D) {
         bikesRequestPending.value = false
         API.bikes(latitude: coordinate.latitude, longitude: coordinate.longitude).start(error: { error in
-                self.handleError(error)
+            self.handleError(error)
             },next: {
-            self.bikes = $0
+                self.bikes = $0
+        })
+    }
+    
+    let boundariesRequestPending = MutableProperty(false)
+    func loadBoundaries() {
+        boundariesRequestPending.value = false
+        API.getBoundaries().start(error: { error in
+            self.handleError(error)
+            }, next: {
+                self.boundaries = $0
+                self.parseBoundaries(self.boundaries)
         })
     }
     
@@ -181,38 +196,66 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setCenterCoordinate(mapView.userLocation.location.coordinate, animated: true)
     }
     
-    func createAnnotationImage() {
-
+    func drawPolygon(var coords: [[CLLocationCoordinate2D]]) {
+        for zones in coords {
+            var tmpArray = zones
+            var polyline = MKPolyline(coordinates: &tmpArray, count: zones.count)
+            mapView.addOverlay(polyline, level: MKOverlayLevel.AboveLabels)
+            //            mapView.addOverlay(polyline)
+        }
     }
     
-//    this needs to be repaired with API
+    func parseBoundaries(boundaries: Boundaries) {
+        for zones in boundaries.zones {
+            let myString = zones.coords
+            let myCoordsString = split(myString, maxSplit: Int.max, allowEmptySlices: false, isSeparator: {$0 == ";"})
+            let doublesCoord = myCoordsString.map({ doubles -> CLLocationCoordinate2D in
+                let lanAndLon = split(doubles, maxSplit: Int.max, allowEmptySlices: false, isSeparator: {$0 == ","})
+                let lan = (lanAndLon[1] as NSString).doubleValue
+                let lot = (lanAndLon[0] as NSString).doubleValue
+                return CLLocationCoordinate2D(latitude: lan, longitude: lot)
+            })
+            self.coordForBoundaries.append(doublesCoord)
+            
+        }
+        
+        self.drawPolygon(self.coordForBoundaries)
+    }
+    
+    //    MARK: MKMapViewDelegate
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if let annotation = annotation as? MapPin {
             let identifier = "pin"
             
             let url = NSURL(string: annotation.iconUrl)
-
-//            var view: BikeAnnotationView!
+            
             var view = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? BikeAnnotationView
             if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? BikeAnnotationView {
-                    dequeuedView.annotation = annotation
-                    view = dequeuedView
+                dequeuedView.annotation = annotation
+                view = dequeuedView
             } else {
                 view = BikeAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             }
             
+            view?.backgroundImageView.image = UIImage(imageIdentifier: .MapPinPink)
             view?.bikeImageView.sd_setImageWithURL(url)
             return view
         }
         return nil
     }
     
-//    MARK: MKMapViewDelegate
+    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+        if overlay is MKPolyline {
+            var polylineRenderer = MKPolylineRenderer(overlay: overlay)
+            polylineRenderer.strokeColor = .rekolaPinkColor()
+            polylineRenderer.fillColor = UIColor(red: 253, green: 52, blue: 156, alpha: 1.0)
+            polylineRenderer.lineWidth = 6
+            return polylineRenderer
+        }
+        return nil
+    }
+    
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-
-//		if(view.annotation as? MKUserLocation != nil) {
-//			return
-//		}
         self.detailView.hidden = false
         
         mapView.setCenterCoordinate(view.annotation.coordinate, animated: true)
@@ -231,18 +274,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {
         self.detailView.hidden = true
     }
-
-	func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-		switch status {
-		case .AuthorizedAlways, .AuthorizedWhenInUse:
-			mapView.showsUserLocation = true
-			navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
-		default:
-			mapView.showsUserLocation = false
-			navigationItem.rightBarButtonItem = nil
-		}
-	}
-	
+    
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        switch status {
+        case .AuthorizedAlways, .AuthorizedWhenInUse:
+            mapView.showsUserLocation = true
+            navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
+        default:
+            mapView.showsUserLocation = false
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         let placemark = MKPlacemark(coordinate: view.annotation.coordinate, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
