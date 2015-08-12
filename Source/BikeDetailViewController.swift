@@ -11,23 +11,23 @@ import Foundation
 import SnapKit
 import ReactiveCocoa
 
-class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
-	
-	
-	//TODO: tady mas bike, mozna nema vsechny potrebny property dyztak mi reknes, dodelej pls tuhle screenu
-	//TODO: spravit navbar pri animaci back
-	let bike : Bike
-	init(bike: Bike) {
-		self.bike = bike
-		super.init(nibName:nil, bundle: nil)
-	}
-
-	required init(coder aDecoder: NSCoder) {
-	    fatalError("init(coder:) has not been implemented")
-	}
-	
-	
-	override func loadView() {
+class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource  {
+    
+    
+    //TODO: tady mas bike, mozna nema vsechny potrebny property dyztak mi reknes, dodelej pls tuhle screenu
+    //TODO: spravit navbar pri animaci back
+    let bike : Bike
+    init(bike: Bike) {
+        self.bike = bike
+        super.init(nibName:nil, bundle: nil)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func loadView() {
         let view = UIView()
         view.backgroundColor = .whiteColor()
         view.tintColor = .whiteColor()
@@ -57,7 +57,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             make.height.equalTo(111)
         }
         self.bikeIV = bikeIV
-
+        
         let bikeTypeLabel = UILabel()
         container.addSubview(bikeTypeLabel)
         bikeTypeLabel.textAlignment = .Center
@@ -170,7 +170,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             make.left.right.equalTo(container)
         }
         self.locationLabel = locationLabel
-
+        
         let line2 = Theme.lineView()
         container.addSubview(line2)
         line2.snp_makeConstraints { make in
@@ -179,8 +179,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             make.right.equalTo(container).offset(-L.horizontalSpacing)
             make.height.equalTo(1)
         }
- 
-//        following 6 UIImageView will be downloaded from API
+        
+        //        following 6 UIImageView will be downloaded from API
         let equipmentLabel = UILabel()
         container.addSubview(equipmentLabel)
         equipmentLabel.textAlignment = .Center
@@ -191,59 +191,70 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         }
         self.bikeEquipmentLabel = equipmentLabel
         
-        let mudguardIV = UIImageView(image: UIImage(imageIdentifier: .mudguard))
-        mudguardIV.contentMode = .ScaleAspectFit
-        container.addSubview(mudguardIV)
-        mudguardIV.snp_makeConstraints { make in
-            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(container).offset(25)
-        }
-        self.mudguardIV = mudguardIV
+        let layoutForCollectionView = UICollectionViewFlowLayout()
         
-        let basketIV = UIImageView(image: UIImage(imageIdentifier: .basket))
-        basketIV.contentMode = .ScaleAspectFit
-        container.addSubview(basketIV)
-        basketIV.snp_makeConstraints { make in
-            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(mudguardIV.snp_right).offset(15)
+        let equipmentCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layoutForCollectionView)
+        container.addSubview(equipmentCollectionView)
+        equipmentCollectionView.backgroundColor = .whiteColor()
+        equipmentCollectionView.snp_makeConstraints { make in
+            make.top.equalTo(equipmentLabel.snp_bottom).offset(15)
+            make.left.right.equalTo(0)
+            make.height.equalTo(30) //26
         }
-        self.basketIV = basketIV
-        
-        let buzzerIV = UIImageView(image: UIImage(imageIdentifier: .buzzer))
-        basketIV.contentMode = .ScaleAspectFit
-        container.addSubview(buzzerIV)
-        buzzerIV.snp_makeConstraints { make in
-            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(basketIV.snp_right).offset(15)
-        }
-        self.buzzerIV = buzzerIV
-        
-        let backlightIV = UIImageView(image: UIImage(imageIdentifier: .backlight))
-        backlightIV.contentMode = .ScaleAspectFit
-        container.addSubview(backlightIV)
-        backlightIV.snp_makeConstraints { make in
-            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(buzzerIV.snp_right).offset(15)
-        }
-        self.backlightIV = backlightIV
-        
-        let frontlightIV = UIImageView(image: UIImage(imageIdentifier: .frontlight))
-        frontlightIV.contentMode = .ScaleAspectFit
-        container.addSubview(frontlightIV)
-        frontlightIV.snp_makeConstraints { make in
-            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(backlightIV.snp_right).offset(15)
-        }
-        self.frontlightIV = frontlightIV
-        
-        let trunkIV = UIImageView(image: UIImage(imageIdentifier: .trunk))
-        trunkIV.contentMode = .ScaleAspectFit
-        container.addSubview(trunkIV)
-        trunkIV.snp_makeConstraints { make in
-            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(frontlightIV.snp_right).offset(15)
-        }
-        self.trunkIV = trunkIV
+        self.equipmentCollectionView = equipmentCollectionView
+        //        let mudguardIV = UIImageView(image: UIImage(imageIdentifier: .mudguard))
+        //        mudguardIV.contentMode = .ScaleAspectFit
+        //        container.addSubview(mudguardIV)
+        //        mudguardIV.snp_makeConstraints { make in
+        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
+        //            make.left.equalTo(container).offset(25)
+        //        }
+        //        self.mudguardIV = mudguardIV
+        //
+        //        let basketIV = UIImageView(image: UIImage(imageIdentifier: .basket))
+        //        basketIV.contentMode = .ScaleAspectFit
+        //        container.addSubview(basketIV)
+        //        basketIV.snp_makeConstraints { make in
+        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
+        //            make.left.equalTo(mudguardIV.snp_right).offset(15)
+        //        }
+        //        self.basketIV = basketIV
+        //
+        //        let buzzerIV = UIImageView(image: UIImage(imageIdentifier: .buzzer))
+        //        basketIV.contentMode = .ScaleAspectFit
+        //        container.addSubview(buzzerIV)
+        //        buzzerIV.snp_makeConstraints { make in
+        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
+        //            make.left.equalTo(basketIV.snp_right).offset(15)
+        //        }
+        //        self.buzzerIV = buzzerIV
+        //
+        //        let backlightIV = UIImageView(image: UIImage(imageIdentifier: .backlight))
+        //        backlightIV.contentMode = .ScaleAspectFit
+        //        container.addSubview(backlightIV)
+        //        backlightIV.snp_makeConstraints { make in
+        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
+        //            make.left.equalTo(buzzerIV.snp_right).offset(15)
+        //        }
+        //        self.backlightIV = backlightIV
+        //
+        //        let frontlightIV = UIImageView(image: UIImage(imageIdentifier: .frontlight))
+        //        frontlightIV.contentMode = .ScaleAspectFit
+        //        container.addSubview(frontlightIV)
+        //        frontlightIV.snp_makeConstraints { make in
+        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
+        //            make.left.equalTo(backlightIV.snp_right).offset(15)
+        //        }
+        //        self.frontlightIV = frontlightIV
+        //
+        //        let trunkIV = UIImageView(image: UIImage(imageIdentifier: .trunk))
+        //        trunkIV.contentMode = .ScaleAspectFit
+        //        container.addSubview(trunkIV)
+        //        trunkIV.snp_makeConstraints { make in
+        //            make.top.equalTo(equipmentLabel.snp_bottom).offset(L.verticalSpacing)
+        //            make.left.equalTo(frontlightIV.snp_right).offset(15)
+        //        }
+        //        self.trunkIV = trunkIV
         
         let moreInfoButton = TintingButton(titleAndImageTintedWith: .rekolaGreenColor(), activeTintColor: UIColor.whiteColor())
         container.addSubview(moreInfoButton)
@@ -252,7 +263,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         moreInfoButton.layer.cornerRadius = 5
         moreInfoButton.addTarget(self, action: "viewMoreInfo", forControlEvents: .TouchUpInside)
         moreInfoButton.snp_makeConstraints { make in
-            make.top.equalTo(trunkIV.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(equipmentCollectionView.snp_bottom).offset(L.verticalSpacing)
             make.width.equalTo(110)
             make.height.equalTo(44)
             make.centerX.equalTo(container.snp_centerX)
@@ -302,12 +313,13 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     var dateLabel: UILabel!
     var locationLabel: UILabel!
     var bikeEquipmentLabel: UILabel!
-    var mudguardIV: UIImageView!
-    var basketIV: UIImageView!
-    var buzzerIV: UIImageView!
-    var backlightIV: UIImageView!
-    var frontlightIV: UIImageView!
-    var trunkIV: UIImageView!
+    var equipmentCollectionView: UICollectionView!
+//    var mudguardIV: UIImageView!
+//    var basketIV: UIImageView!
+//    var buzzerIV: UIImageView!
+//    var backlightIV: UIImageView!
+//    var frontlightIV: UIImageView!
+//    var trunkIV: UIImageView!
     var moreInfoButton: TintingButton!
     var problemsLabel: UILabel!
     var addProblemButton: UIButton!
@@ -320,6 +332,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     let cellIdentifier = "cell"
     let problemCellIdentifier = "ProblemCell"
+    let collectionIdentifier = "CollectionIdentifier"
     var isUnmovable = false
     
     override func viewWillAppear(animated: Bool) {
@@ -334,15 +347,20 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-
+        
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         tableView.registerClass(ProblemCell.self, forCellReuseIdentifier: problemCellIdentifier)
+        
+        equipmentCollectionView.delegate = self
+        equipmentCollectionView.dataSource = self
+        
+        equipmentCollectionView.registerClass(EquipmentCollectionViewCell.self, forCellWithReuseIdentifier: collectionIdentifier)
         
         deleteLineUnderNavBar()
         
         let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
         self.navigationItem.rightBarButtonItem = lockButton
-
+        
         let bikeImageData = NSData(contentsOfURL: bike.imageURL)
         bikeIV.image = UIImage(data: bikeImageData!)
         
@@ -369,7 +387,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         locationLabel.text = bike.location.note
         
         bikeEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
-
+        
         moreInfoButton.setTitle(NSLocalizedString("BIKEDETAIL_moreInfo", comment: ""), forState: .Normal)
         
         problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
@@ -407,20 +425,20 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         return (stringDate, stringTime)
     }
     
-//    API calling
+    //    API calling
     let issuesRequestPending = MutableProperty(false)
     func loadIssues() {
         issuesRequestPending.value = true
         let test = API.myBikeIssue(id: bike.id).start(error: { error in
-                self.issuesRequestPending.value = false
-                self.handleError(error)
+            self.issuesRequestPending.value = false
+            self.handleError(error)
             }, next: {
                 self.bikeIssues = $0
             }
-    )
+        )
     }
     
-//    TODO: what this button do?
+    //    TODO: what this button do?
     func lockButton() {
         
     }
@@ -431,11 +449,11 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     func addProblemSegue() {
-		let vc = AddProblemViewController(bike: bike)
+        let vc = AddProblemViewController(bike: bike)
         showViewController(vc, sender: nil)
     }
     
-//    navigationBar settings (when scrolling)
+    //    navigationBar settings (when scrolling)
     func scrollViewDidScroll(scrollview: UIScrollView) {
         let color = UIColor.rekolaGreenColor()
         let changePoint = 50 as CGFloat
@@ -453,12 +471,12 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         }
     }
     
-     override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBar .lt_reset()
     }
     
-//    MARK: UITableViewDelegate + UITableViewDataSource
+    //    MARK: UITableViewDelegate + UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
@@ -481,20 +499,20 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             }
             return cell
         } else {
-//            format
+            //            format
             problemCell.descriptionLabel.numberOfLines = 0
             problemCell.descriptionLabel.textColor = .grayColor()
             problemCell.textLabel?.font = UIFont.boldSystemFontOfSize(14)
             
-//            dateFormat
+            //            dateFormat
             let date = bikeIssues[indexPath.row].updates[0].issuedAt
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = " / dd.MM.YYYY / HH:mm"
             let dateString = dateFormatter.stringFromDate(date)
             
-//            setting text
+            //            setting text
             let issue = bikeIssues[indexPath.row]
-        
+            
             problemCell.typeLabel.text = issue.title
             problemCell.nameLabel.text = issue.updates[0].author + dateString
             problemCell.descriptionLabel.text = issue.updates[0].description
@@ -514,9 +532,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         return 100
     }
     
-//    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return ""
-//    }
+    //    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    //        return ""
+    //    }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
@@ -529,19 +547,41 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        if section != 0 {
-//            return 18
-//        }
+        //        if section != 0 {
+        //            return 18
+        //        }
         return 0
     }
-	
-	func lockBike(sender: AnyObject?) {
-		if let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as? ACKTabBar {
-			if (tabBar.selectedIndex != 0) {
-				tabBar.selectTab(0)
-			}else{
-				navigationController?.popViewControllerAnimated(true)
-			}
-		}
+    
+    func lockBike(sender: AnyObject?) {
+        if let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as? ACKTabBar {
+            if (tabBar.selectedIndex != 0) {
+                tabBar.selectTab(0)
+            }else{
+                navigationController?.popViewControllerAnimated(true)
+            }
         }
+    }
+    
+//    MARK: UICollectionViewDelegate
+//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+//        return sectionInsets
+//    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSize(width: 31, height: 31)
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(collectionIdentifier, forIndexPath: indexPath) as! EquipmentCollectionViewCell
+        
+        let url = NSURL(string: bike.equipment[indexPath.row].iconUrl)
+        
+        cell.equipmentImage.sd_setImageWithURL(url)
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.bike.equipment.count
+    }
 }

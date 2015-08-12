@@ -66,7 +66,22 @@ extension Address : Decodable {
     }
 }
 
+public struct Equipment {
+    let description: String
+    let iconUrl: String
+}
 
+extension Equipment : Decodable {
+    static func create(description: String) (iconUrl: String) ->Equipment {
+        return Equipment(description: description, iconUrl: iconUrl)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<Equipment> {
+        return Equipment.create
+            <^> json <| "description"
+            <*> json <| "iconUrl"
+    }
+}
 
 //MARK: Bike
 public struct Bike {
@@ -74,6 +89,7 @@ public struct Bike {
     let name : String
     let type: String
     let description : String
+    let equipment : [Equipment]
     let location : Address
     var issues : [Int]
     let borrowed : Bool
@@ -110,10 +126,10 @@ extension Bike : Decodable  {
     //		return pure(flatMap(string) {self.dateFormatter.dateFromString($0 ?? "")})
     //	}
     
-    static func create(id : Int) (_ name: String) (_ type: String) (_ description: String) (_ location: Address) (_ issues: [Int]) (_ borrowed : Bool) (_ operational : Bool) (_ returnedAt: String?) (_ lastSeen: String) (_ iconUrl: String) (_ lockCode : String?)(_ imageUrlString : String) -> Bike {
+    static func create(id : Int) (_ name: String) (_ type: String) (_ description: String) (_ equipment: [Equipment]) (_ location: Address) (_ issues: [Int]) (_ borrowed : Bool) (_ operational : Bool) (_ returnedAt: String?) (_ lastSeen: String) (_ iconUrl: String) (_ lockCode : String?)(_ imageUrlString : String) -> Bike {
         let returnedDate = dateFormatter.dateFromString(returnedAt ?? "")
         let returnedTime = timeFormatter.dateFromString(lastSeen)
-        return Bike(id: id, name : name, type: type, description: description, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, lastSeen: returnedTime!, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
+        return Bike(id: id, name : name, type: type, description: description, equipment: equipment, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, lastSeen: returnedTime!, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
     }
     
     public static func decode(json: JSON) -> Decoded<Bike> {
@@ -122,6 +138,7 @@ extension Bike : Decodable  {
             <*> json <| "name"
             <*> json <| "bikeType"
             <*> json <| "description"
+            <*> json <|| "equipment"
             <*> json <| "location"
             <*> json <|| "issues"
             <*> json <| "borrowed"

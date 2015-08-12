@@ -41,6 +41,7 @@
 		92514D4A1B539D4300BF0541 /* ProblemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92514D491B539D4300BF0541 /* ProblemsViewController.swift */; };
 		92514D4C1B53DB4500BF0541 /* ProblemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92514D4B1B53DB4500BF0541 /* ProblemCell.swift */; };
 		9254E8261B4D356300D06738 /* InsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9254E8251B4D356300D06738 /* InsetLabel.swift */; };
+		925B81731B7B781A00044014 /* EquipmentCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925B81721B7B781A00044014 /* EquipmentCollectionViewCell.swift */; };
 		928049DB1B41614700535485 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928049DA1B41614700535485 /* MapViewController.swift */; };
 		928F84561B4D0DD60034F5C6 /* BorrowedBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F84551B4D0DD60034F5C6 /* BorrowedBikeViewController.swift */; };
 		929466511B4E73C400630B7C /* BikeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929466501B4E73C400630B7C /* BikeDetailViewController.swift */; };
@@ -138,6 +139,7 @@
 		92514D491B539D4300BF0541 /* ProblemsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemsViewController.swift; sourceTree = "<group>"; };
 		92514D4B1B53DB4500BF0541 /* ProblemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProblemCell.swift; sourceTree = "<group>"; };
 		9254E8251B4D356300D06738 /* InsetLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InsetLabel.swift; sourceTree = "<group>"; };
+		925B81721B7B781A00044014 /* EquipmentCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentCollectionViewCell.swift; sourceTree = "<group>"; };
 		928049DA1B41614700535485 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		928F84551B4D0DD60034F5C6 /* BorrowedBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorrowedBikeViewController.swift; sourceTree = "<group>"; };
 		929466501B4E73C400630B7C /* BikeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BikeDetailViewController.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				92514D4B1B53DB4500BF0541 /* ProblemCell.swift */,
 				6D6BCD781B6A1B85005561BA /* RekolaErrorHandler.swift */,
 				92D42CCF1B738ED2007E73DE /* BikeAnnotationView.swift */,
+				925B81721B7B781A00044014 /* EquipmentCollectionViewCell.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				92514D4C1B53DB4500BF0541 /* ProblemCell.swift in Sources */,
 				929466511B4E73C400630B7C /* BikeDetailViewController.swift in Sources */,
 				B4F14CA61B20502000DDBE9B /* LockViewController.swift in Sources */,
+				925B81731B7B781A00044014 /* EquipmentCollectionViewCell.swift in Sources */,
 				92514D4A1B539D4300BF0541 /* ProblemsViewController.swift in Sources */,
 				6D6BCD7D1B6A7206005561BA /* EmptyFunction.swift in Sources */,
 				6D6840971B67829500FFE2B7 /* ResetPasswordViewController.swift in Sources */,
