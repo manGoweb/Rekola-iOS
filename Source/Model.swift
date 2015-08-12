@@ -257,12 +257,13 @@ public struct BikeIssue {
     let id: Int
     let title: String
     let status: String
+    let type: Int
     let updates: [Update]
 }
 
 extension BikeIssue : Decodable {
-    static func create(id: Int) ( title: String) ( status: String) ( updates: [Update]) -> BikeIssue {
-        return BikeIssue(id: id, title: title, status: status, updates: updates)
+    static func create(id: Int) ( title: String) ( status: String) ( type: Int) ( updates: [Update]) -> BikeIssue {
+        return BikeIssue(id: id, title: title, status: status, type: type, updates: updates)
     }
     
     public static func decode(json: JSON) -> Decoded<BikeIssue> {
@@ -270,6 +271,7 @@ extension BikeIssue : Decodable {
             <^> json <| "id"
             <*> json <| "title"
             <*> json <| "status"
+            <*> json <| "type"
             <*> json <|| "updates"
     }
 }

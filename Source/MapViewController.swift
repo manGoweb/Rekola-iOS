@@ -50,7 +50,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let nameLabel = Theme.whiteLabel()
         detailView.addSubview(nameLabel)
-        nameLabel.font = UIFont.boldSystemFontOfSize(17)
+        nameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 18)
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70 - 64)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
@@ -60,7 +60,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let distanceLabel = Theme.whiteLabel()
         detailView.addSubview(distanceLabel)
-        distanceLabel.font = UIFont.italicSystemFontOfSize(16)
+        distanceLabel.font = UIFont(name: Theme.SFFont.Italic.rawValue, size: 16)
         distanceLabel.snp_makeConstraints { make in
             make.top.equalTo(nameLabel.snp_bottom)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
@@ -69,7 +69,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let noteLabel = Theme.whiteLabel()
         detailView.addSubview(noteLabel)
-        noteLabel.font = UIFont.boldSystemFontOfSize(15)
+        noteLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
         noteLabel.numberOfLines = 0
         noteLabel.snp_makeConstraints { make in
             make.top.equalTo(distanceLabel.snp_bottom).offset(10)
@@ -80,7 +80,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         let descriptionLabel = Theme.whiteLabel()
         detailView.addSubview(descriptionLabel)
-        descriptionLabel.font = UIFont.systemFontOfSize(15)
+        descriptionLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 15)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = .rekolaLightPinkColor()
         descriptionLabel.adjustsFontSizeToFitWidth = true
@@ -162,6 +162,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         loadBoundaries()
         //        parseBoundaries(boundaries)
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
     
     let bikesRequestPending = MutableProperty(false)

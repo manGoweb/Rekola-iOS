@@ -23,12 +23,10 @@ class ProblemCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        
-        
         let newTypeLabel = UILabel()
         newTypeLabel.textColor = .rekolaGreenColor()
         newTypeLabel.textAlignment = .Left
-        newTypeLabel.font = UIFont.boldSystemFontOfSize(16)
+        newTypeLabel.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 16)
         contentView.addSubview(newTypeLabel)
         newTypeLabel.snp_makeConstraints{ make in
             make.left.top.right.equalTo(self.contentView).inset(L.contentInsets)
@@ -38,10 +36,10 @@ class ProblemCell: UITableViewCell {
         let newNameLabel = UILabel()
         newNameLabel.textColor = .blackColor()
         newNameLabel.textAlignment = .Left
-        newNameLabel.font = UIFont.boldSystemFontOfSize(16)
+        newNameLabel.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 15)
         contentView.addSubview(newNameLabel)
         newNameLabel.snp_makeConstraints { make in
-            make.top.equalTo(newTypeLabel.snp_bottom).offset(10)
+            make.top.equalTo(newTypeLabel.snp_bottom).offset(15)
             make.left.right.equalTo(self.contentView).inset(L.contentInsets)
         }
         
@@ -51,9 +49,10 @@ class ProblemCell: UITableViewCell {
         newDescriptionLabel.textColor = .grayColor()
         newDescriptionLabel.numberOfLines = 0
         newDescriptionLabel.textAlignment = .Left
+        newDescriptionLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 14)
         contentView.addSubview(newDescriptionLabel)
         newDescriptionLabel.snp_makeConstraints { make in
-            make.top.equalTo(newNameLabel.snp_bottom).offset(10)
+            make.top.equalTo(newNameLabel.snp_bottom).offset(5)
             make.left.right.equalTo(contentView).inset(L.contentInsets)
         }
         

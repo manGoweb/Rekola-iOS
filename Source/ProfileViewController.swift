@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController {
         
         let nameLabel = UILabel()
         view.addSubview(nameLabel)
-        nameLabel.font = UIFont.boldSystemFontOfSize(26)
+        nameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 26)
         nameLabel.textAlignment = .Center
         nameLabel.snp_makeConstraints { make in
             make.left.right.equalTo(view)
@@ -30,9 +30,10 @@ class ProfileViewController: UIViewController {
         view.addSubview(dateLabel)
         dateLabel.textColor = .rekolaPinkColor()
         dateLabel.textAlignment = .Center
+        dateLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
         dateLabel.snp_makeConstraints { make in
             make.left.right.equalTo(view)
-            make.top.equalTo(nameLabel.snp_bottom).offset(8)
+            make.top.equalTo(nameLabel.snp_bottom).offset(5)
         }
         self.dateLabel = dateLabel
         
@@ -42,6 +43,7 @@ class ProfileViewController: UIViewController {
         logoutButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
         logoutButton.layer.borderWidth = 1
         logoutButton.layer.cornerRadius = 4
+        logoutButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         logoutButton.snp_makeConstraints { make in
             make.width.equalTo(169)
             make.height.equalTo(44)
@@ -55,6 +57,7 @@ class ProfileViewController: UIViewController {
         staticEmailLabel.text = NSLocalizedString("PROFILE_email", comment: "")
         staticEmailLabel.textColor = .staticGrayTextColor()
         staticEmailLabel.textAlignment = .Left
+        staticEmailLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
         view.addSubview(staticEmailLabel)
         staticEmailLabel.snp_makeConstraints { make in
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -64,6 +67,7 @@ class ProfileViewController: UIViewController {
         let emailLabel = UILabel()
         view.addSubview(emailLabel)
         emailLabel.textAlignment = .Right
+        emailLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
         emailLabel.snp_makeConstraints { make in
             make.left.greaterThanOrEqualTo(staticEmailLabel.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing).priorityLow()
@@ -85,6 +89,7 @@ class ProfileViewController: UIViewController {
         staticAddressLabel.text = NSLocalizedString("PROFILE_address", comment: "")
         staticAddressLabel.textColor = .staticGrayTextColor()
         staticAddressLabel.textAlignment = .Left
+        staticAddressLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
         view.addSubview(staticAddressLabel)
         staticAddressLabel.snp_makeConstraints { make in
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -94,6 +99,7 @@ class ProfileViewController: UIViewController {
         let addressLabel = UILabel()
         view.addSubview(addressLabel)
         addressLabel.textAlignment = .Left
+        addressLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
         addressLabel.snp_makeConstraints { make in
             make.right.equalTo(view).offset(-L.horizontalSpacing).priorityLow()
             make.left.greaterThanOrEqualTo(staticAddressLabel.snp_right).offset(L.horizontalSpacing)
@@ -115,6 +121,7 @@ class ProfileViewController: UIViewController {
         staticPhoneLabel.text = NSLocalizedString("PROFILE_phone", comment: "")
         staticPhoneLabel.textColor = .staticGrayTextColor()
         staticPhoneLabel.textAlignment = .Left
+        staticPhoneLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
         view.addSubview(staticPhoneLabel)
         staticPhoneLabel.snp_makeConstraints { make in
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -123,6 +130,7 @@ class ProfileViewController: UIViewController {
         
         let phoneLabel = UILabel()
         view.addSubview(phoneLabel)
+        phoneLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
         phoneLabel.textAlignment = .Right
         phoneLabel.snp_makeConstraints { make in
             make.left.greaterThanOrEqualTo(staticPhoneLabel.snp_right).offset(L.horizontalSpacing)

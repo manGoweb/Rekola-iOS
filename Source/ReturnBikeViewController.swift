@@ -60,6 +60,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         
         let descriptionLabel = UILabel()
         view.addSubview(descriptionLabel)
+        descriptionLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         descriptionLabel.snp_makeConstraints { make in
             make.bottom.equalTo(textView.snp_top).offset(-L.verticalSpacing)
             make.right.left.equalTo(view).offset(L.horizontalSpacing)
@@ -75,7 +76,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         }
         self.mapView = mapView
 		
-		let pinImageView = UIImageView(image: UIImage(imageIdentifier: .MapPinPink))
+		let pinImageView = UIImageView(image: UIImage(imageIdentifier: .BikeMapPinPink))
 		view.addSubview(pinImageView)
 		pinImageView.snp_makeConstraints { make in
 			make.centerX.equalTo(mapView)
@@ -127,6 +128,11 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 		returnButton.rac_enabled <~ requestPending.producer |> map { !$0 }
     }
 	
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
+    
 	var mapLocation : CLLocationCoordinate2D {
 		return mapView.centerCoordinate
 	}

@@ -35,6 +35,14 @@ extension UIColor {
         return UIColor(hex: 0x0000000)
     }
     
+    class func rekolaBlackColor() -> UIColor! {
+        return UIColor(hex: 0x404040)
+    }
+    
+    class func rekolaSubtitleBlackColor() -> UIColor! {
+        return UIColor(hex: 0x5c5c5c)
+    }
+    
     class func rekolaGreenColor() -> UIColor! {
         return UIColor(hex: 0x7d8d38)
     }
@@ -119,6 +127,7 @@ extension UIImage {
         case MapPinPink = "mapPinPink"
         case MapPinGrey = "mapPinGrey"
         case MapPinGreen = "mapPinGreen"
+        case BikeMapPinPink = "bikeMapPinPink"
 			case Placeholder = "placeholder"
     }
     
@@ -161,7 +170,7 @@ extension UIImage {
 enum L {
     static let contentInsets = UIEdgeInsetsMake(10, 10, 10, 10)
     static let verticalSpacing = 15.0
-    static let horizontalSpacing = 15.0
+    static let horizontalSpacing = 22.0
 }
 
 /**
@@ -180,17 +189,20 @@ class Theme {
         button.backgroundColor = UIColor.rekolaPinkColor()
 		button.setTitleColor(UIColor.grayColor(), forState: .Highlighted) //TODO: color
         button.layer.cornerRadius = 4
+        button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         return button
     }
     
     class func greenButton() -> UIButton {
         let button = UIButton()
+        button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         button.backgroundColor = UIColor.rekolaGreenColor()
         return button
     }
     
     class func grayButton() -> UIButton {
         let button = UIButton()
+        button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         button.backgroundColor = .rekolaGrayButtonColor()
         button.setTitleColor(.staticGrayTextColor(), forState: .Normal)
         button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
@@ -200,6 +212,7 @@ class Theme {
     
     class func whiteButton() -> UIButton {
         let button = UIButton()
+        button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
 			button.setTitleColor(UIColor.rekolaGrayTextColor(), forState: .Disabled)
         return button
@@ -250,7 +263,7 @@ class Theme {
     class func pinkLabel() -> UILabel {
         let l = UILabel()
         l.textColor = .rekolaPinkColor()
-        l.font = UIFont.systemFontOfSize(16)
+        l.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 16)
         return l
     }
     

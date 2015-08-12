@@ -12,7 +12,7 @@ import Foundation
 import ReactiveCocoa
 
 class BorrowedBikeViewController: UIViewController {
-	let bike : Bike //smazat ! a zmenit na let
+	let bike : Bike
 	init(bike: Bike) {
 		self.bike = bike
 		super.init(nibName: nil, bundle: nil)
@@ -31,15 +31,16 @@ class BorrowedBikeViewController: UIViewController {
 		iv.contentMode = .ScaleAspectFit
         view.addSubview(iv)
         iv.snp_makeConstraints { make in
-            make.top.equalTo(view).offset(23)
+            make.top.equalTo(view).offset(52)
             make.right.left.equalTo(view)
-            make.height.equalTo(self.view).multipliedBy(0.2)
+            make.height.equalTo(60)//multipliedBy(0.2)
         }
         self.bikeImageView = iv
 
         let nameLabel = UILabel()
         view.addSubview(nameLabel)
-        nameLabel.font = UIFont.systemFontOfSize(24)
+        nameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 30)
+        nameLabel.textColor = .rekolaBlackColor()
         nameLabel.textAlignment = .Center
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(iv.snp_bottom).offset(L.verticalSpacing)
@@ -49,10 +50,11 @@ class BorrowedBikeViewController: UIViewController {
         
         let borrowLabel = UILabel()
         view.addSubview(borrowLabel)
-        borrowLabel.font = UIFont.systemFontOfSize(14)
+        borrowLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 14)
         borrowLabel.textAlignment = .Center
+        borrowLabel.textColor = .rekolaSubtitleBlackColor()
         borrowLabel.snp_makeConstraints { make in
-            make.top.equalTo(nameLabel.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(nameLabel.snp_bottom).offset(5)
             make.left.right.equalTo(view)
         }
         self.bikeBorrowLabel = borrowLabel
@@ -62,8 +64,9 @@ class BorrowedBikeViewController: UIViewController {
         detailButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
         detailButton.layer.cornerRadius = 4
         detailButton.layer.borderWidth = 2
+        detailButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         detailButton.snp_makeConstraints { make in
-            make.top.equalTo(borrowLabel.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(borrowLabel.snp_bottom).offset(20)
             make.width.equalTo(119)
             make.height.equalTo(45)
             make.centerX.equalTo(view.snp_centerX)
@@ -87,6 +90,7 @@ class BorrowedBikeViewController: UIViewController {
         lockCodeLabel.text = NSLocalizedString("BORROWBIKE_code", comment: "")
         lockCodeLabel.inset.left = 5
         lockCodeLabel.inset.right = 5
+        lockCodeLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 15)
         lockCodeLabel.textAlignment = .Center
         lockCodeLabel.backgroundColor = .whiteColor()
         view.addSubview(lockCodeLabel)
@@ -109,6 +113,7 @@ class BorrowedBikeViewController: UIViewController {
         
         let returnButton = Theme.pinkButton()
         view.addSubview(returnButton)
+        returnButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         returnButton.snp_makeConstraints { make in
             make.bottom.equalTo(view).offset(-L.verticalSpacing)
             make.left.equalTo(view).offset(L.horizontalSpacing)
@@ -161,7 +166,7 @@ class BorrowedBikeViewController: UIViewController {
         timeFormatter.dateFormat = "HH:mm"
         let timeString = timeFormatter.stringFromDate(date)
         
-        let text = NSLocalizedString("BORROWBIKE_lent", comment: "") + dateString + "/" + timeString
+        let text = NSLocalizedString("BORROWBIKE_lent", comment: "") + dateString + " / " + timeString
 
         let atribute = NSMutableAttributedString(string: text)
         atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 8, length: 5))

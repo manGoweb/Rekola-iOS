@@ -40,7 +40,9 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 		iv.contentMode = UIViewContentMode.ScaleAspectFit
         container.addSubview(iv)
         iv.snp_makeConstraints { make in
-            make.top.left.right.equalTo(container)
+            make.top.equalTo(container).inset(L.contentInsets)
+            make.left.equalTo(container).offset(20)
+            make.right.equalTo(container).offset(-20)
             make.height.equalTo(150)
         }
         self.logoImageView = iv
@@ -48,9 +50,10 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         let titleLabel = Theme.titleLabel()
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .Center
+        titleLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         container.addSubview(titleLabel)
         titleLabel.snp_makeConstraints { make in
-            make.left.right.equalTo(container)
+            make.left.right.equalTo(container).inset(L.contentInsets)
             make.top.equalTo(iv.snp_bottom).offset(L.verticalSpacing)
         }
         self.titleLabel = titleLabel
@@ -58,9 +61,10 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         let subtitleLabel = Theme.subTitleLabel()
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textAlignment = .Center
+        subtitleLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 13)
         container.addSubview(subtitleLabel)
         subtitleLabel.snp_makeConstraints { make in
-            make.left.right.equalTo(container)
+            make.left.right.equalTo(container).inset(L.contentInsets)
             make.top.equalTo(titleLabel.snp_bottom).offset(L.verticalSpacing)
         }
         self.subtitleLabel = subtitleLabel
@@ -71,8 +75,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         container.addSubview(textField)
         textField.snp_makeConstraints { make in
             make.height.equalTo(55)
-            make.left.right.equalTo(container)
-            make.top.equalTo(subtitleLabel.snp_bottom).offset(L.verticalSpacing)
+            make.left.right.equalTo(container).inset(L.contentInsets)
+            make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
         }
         self.textField = textField
         
@@ -80,7 +84,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         container.addSubview(borrowButton)
         borrowButton.snp_makeConstraints { make in
             make.top.equalTo(textField.snp_bottom).offset(L.verticalSpacing)
-            make.left.right.bottom.equalTo(container)
+            make.left.right.bottom.equalTo(container).inset(L.contentInsets)
             make.height.equalTo(60)
         }
         self.borrowButton = borrowButton

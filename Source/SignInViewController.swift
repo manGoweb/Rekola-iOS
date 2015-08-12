@@ -141,22 +141,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		passwordTextField.delegate = self
 	}
 	
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
-		switch textField {
-		case emailTextField:
-			passwordTextField.becomeFirstResponder()
-			return false
-		case passwordTextField:
-			if(signInButton.enabled) { //app logic shouldnt be dependent on view state, but im lazy
-				self.signIn(textField)
-				return true
-			}else{
-				return true
-			}
 
-		default: return true
-		}
-	}
 	
 	override func preferredStatusBarStyle() -> UIStatusBarStyle {
 		return .LightContent
@@ -190,6 +175,9 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 			}, error: { error in
 				self.loggingIn.value = false
 				self.handleError(error)
+                
+                let alertView = UIAlertView(title: NSLocalizedString("SIGNIN_failedSingIn", comment: ""), message: "", delegate: self, cancelButtonTitle: "OK")
+                alertView.show()
 				//TODO: k erroru neni grafika a api zatim error nikdy nevrati
 		})
 	}
@@ -199,4 +187,30 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		let vc = ResetPasswordViewController()
 		presentViewController(vc, animated: true, completion: nil)
 	}
+    
+//    MARK: UITextFieldDelegate
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.backgroundColor = .whiteColor()
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.backgroundColor = .rekolaPinkTextFieldColor()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        switch textField {
+        case emailTextField:
+            passwordTextField.becomeFirstResponder()
+            return false
+        case passwordTextField:
+            if(signInButton.enabled) { //app logic shouldnt be dependent on view state, but im lazy
+                self.signIn(textField)
+                return true
+            }else{
+                return true
+            }
+            
+        default: return true
+        }
+    }
 }

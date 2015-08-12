@@ -59,6 +59,10 @@ class AboutAppViewController: UIViewController {
         self.button.addTarget(self, action: "openUrl", forControlEvents: .TouchUpInside)
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     func openUrl() {
         if let url = NSURL(string: "http://ackee.cz") {
             UIApplication.sharedApplication().openURL(url)

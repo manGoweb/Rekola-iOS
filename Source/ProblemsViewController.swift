@@ -48,7 +48,7 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
             tableView.reloadData()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .rekolaPinkColor()
@@ -66,6 +66,10 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
         self.cancelButton.addTarget(self, action: "cancelView", forControlEvents: .TouchUpInside)
         
         loadProblems()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
     
     func cancelView() {

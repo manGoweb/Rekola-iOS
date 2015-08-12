@@ -59,7 +59,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         container.addSubview(bikeTypeLabel)
         bikeTypeLabel.textAlignment = .Center
         bikeTypeLabel.textColor = .rekolaPinkColor()
-        bikeTypeLabel.font = UIFont.systemFontOfSize(14)
+        bikeTypeLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 14)
         bikeTypeLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeIV.snp_bottom).offset(L.verticalSpacing)
             make.left.right.equalTo(container)
@@ -69,7 +69,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let bikeNameLabel = UILabel()
         container.addSubview(bikeNameLabel)
         bikeNameLabel.textAlignment = .Center
-        bikeNameLabel.font = UIFont.systemFontOfSize(27)
+        bikeNameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 27)
         bikeNameLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeTypeLabel.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -80,6 +80,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         container.addSubview(warningLabel)
         warningLabel.textAlignment = .Right
         warningLabel.textColor = .rekolaWarningYellowColor()
+        warningLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         warningLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeNameLabel.snp_bottom).offset(L.verticalSpacing)
             make.centerX.equalTo(container.snp_centerX).offset(10)
@@ -99,6 +100,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         container.addSubview(descriptionLabel)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .Center
+        descriptionLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 13)
         descriptionLabel.snp_makeConstraints{ make in
             make.top.equalTo(warningLabel.snp_bottom).offset(L.verticalSpacing)
             make.left.right.equalTo(container).inset(L.contentInsets)
@@ -117,7 +119,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let lastReturnLabel = UILabel()
         container.addSubview(lastReturnLabel)
         lastReturnLabel.textAlignment = .Center
-        lastReturnLabel.font = UIFont.boldSystemFontOfSize(17)
+        lastReturnLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         lastReturnLabel.snp_makeConstraints { make in
             make.top.equalTo(line1.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -159,7 +161,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let locationLabel = UILabel()
         container.addSubview(locationLabel)
         locationLabel.textColor = .rekolaGrayTextColor()
-        locationLabel.font = UIFont.systemFontOfSize(15)
+        locationLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 15)
         locationLabel.textAlignment = .Center
         locationLabel.numberOfLines = 0
         locationLabel.snp_makeConstraints { make in
@@ -177,11 +179,10 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             make.height.equalTo(1)
         }
         
-        //        following 6 UIImageView will be downloaded from API
         let equipmentLabel = UILabel()
         container.addSubview(equipmentLabel)
         equipmentLabel.textAlignment = .Center
-        equipmentLabel.font = UIFont.boldSystemFontOfSize(17)
+        equipmentLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         equipmentLabel.snp_makeConstraints { make in
             make.top.equalTo(line2.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -205,6 +206,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         moreInfoButton.layer.borderWidth = 1
         moreInfoButton.layer.borderColor = UIColor.rekolaGreenColor().CGColor
         moreInfoButton.layer.cornerRadius = 5
+        moreInfoButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         moreInfoButton.addTarget(self, action: "viewMoreInfo", forControlEvents: .TouchUpInside)
         moreInfoButton.snp_makeConstraints { make in
             make.top.equalTo(equipmentCollectionView.snp_bottom).offset(L.verticalSpacing)
@@ -226,7 +228,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let problemsLabel = UILabel()
         container.addSubview(problemsLabel)
         problemsLabel.textAlignment = .Center
-        problemsLabel.font = UIFont.boldSystemFontOfSize(17)
+        problemsLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         problemsLabel.snp_makeConstraints { make in
             make.top.equalTo(line3.snp_bottom).offset(20)
             make.left.right.equalTo(container)
@@ -264,6 +266,18 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     var infoEquipmentLabel: UILabel!
     
     var bikeIssues: [BikeIssue] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    var sortedBikeIssues: [[BikeIssue]] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
+    var typeOfProblem: Issues? {
         didSet {
             tableView.reloadData()
         }
@@ -334,6 +348,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         addProblemButton.addTarget(self, action: "addProblemSegue", forControlEvents: .TouchUpInside)
         
         loadIssues()
+        loadProblems()
     }
     
     func deleteLineUnderNavBar() {
@@ -363,6 +378,17 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         return (stringDate, stringTime)
     }
     
+    //    sortingProblems TODO!!!!!!!!!!
+    func sortProblems() {
+        var sortedIssues = bike.issues
+        sortedIssues.sort({$0 < $1})
+        
+        var prevElem = bike.issues[0]
+        for index in 1..<sortedIssues.count {
+            if prevElem
+        }
+    }
+    
     //    API calling
     let issuesRequestPending = MutableProperty(false)
     func loadIssues() {
@@ -372,14 +398,23 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             self.handleError(error)
             }, next: {
                 self.bikeIssues = $0
+                self.sortProblems()
             }
         )
     }
     
-    //    TODO: what this button do?
-    func lockButton() {
-        
+    let problemRequestPending = MutableProperty(false)
+    func loadProblems() {
+        problemRequestPending.value = true
+        let test = API.defaultProblems().start( error: { error in
+            self.problemRequestPending.value = false
+            self.handleError(error)
+            }, next: {
+                self.typeOfProblem = $0
+        })
     }
+    
+
     
     func viewMoreInfo() {
         let vc = EquipmentViewController()

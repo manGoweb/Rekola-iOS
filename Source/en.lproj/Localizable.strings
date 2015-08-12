@@ -15,6 +15,7 @@
 "SIGNIN_signin" = "Přihlásit se";
 "SIGNIN_register" = "Registrovat se";
 "SIGNIN_lostPasswd" = "Zapomenuté heslo";
+"SIGNIN_failedSingIn" = "Přihlášení se nezdařilo";
 "PASSWORD_RESET_TITLE" = "Reset hesla";
 "PASSWORD_RESET_SUBTITLE" = "Po zadání e-mailu Vám budou zaslány informace pro obnovu hesla.";
 "PASSWORD_RESET_BUTTON" = "Reset";
@@ -26,7 +27,7 @@
 //<string name="reset_recall">I remembered, go back</string>
 //TODO: udelat poradek v lokalizaci, smazat stare resourcy z Tradic, domluvit se s @tomas.krabac, asi ma byt appka lokalizovana do cs a en
 "BORROWBIKE_detail" = "Detail kola";
-"BORROWBIKE_code" = "Kód zámku";
+"BORROWBIKE_code" = "KÓD ZÁMKU";
 "BORROWBIKE_return" = "Vrátit kolo";
 "BORROWBIKE_lent" = "Půjčeno ";
 "MAP_title" = "Mapa";

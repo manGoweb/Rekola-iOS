@@ -51,6 +51,7 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         let typeOfProblemLabel = UILabel()
         container.addSubview(typeOfProblemLabel)
         typeOfProblemLabel.textAlignment = .Left
+        typeOfProblemLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         typeOfProblemLabel.snp_makeConstraints { make in
             make.top.equalTo(container).offset(86)
             make.left.right.equalTo(container).inset(L.contentInsets)
@@ -84,9 +85,10 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         
         let descriptionLabel = UILabel()
         container.addSubview(descriptionLabel)
+        descriptionLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         descriptionLabel.snp_makeConstraints{ make in
-            make.top.equalTo(textField.snp_bottom).offset(L.verticalSpacing)
-            make.left.equalTo(L.horizontalSpacing)
+            make.top.equalTo(textField.snp_bottom).offset(30)
+            make.left.right.equalTo(L.horizontalSpacing).inset(L.contentInsets)
         }
         self.descriptionLabel = descriptionLabel
         
@@ -98,7 +100,7 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         textView.editable = true
         textView.returnKeyType = .Done
         textView.snp_makeConstraints { make in
-            make.top.equalTo(descriptionLabel.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(descriptionLabel.snp_bottom).offset(10)
             make.height.equalTo(99)
             make.left.right.equalTo(0).inset(L.contentInsets)
         }
@@ -115,9 +117,10 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         let unmovableBikeLabel = UILabel()
         container.addSubview(unmovableBikeLabel)
         unmovableBikeLabel.textColor = .grayColor()
+        unmovableBikeLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         unmovableBikeLabel.snp_makeConstraints { make in
             make.top.equalTo(textView.snp_bottom).offset(18)
-            make.left.equalTo(bikeToggleButton.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeToggleButton.snp_right).offset(15)
         }
         self.unmovableBikeLabel = unmovableBikeLabel
         
@@ -146,7 +149,6 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
     let locationManager = CLLocationManager()
     var issueID = -1 //default wrong value
     
-
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -184,6 +186,10 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
 //        locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
 //        locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
         locationManager.requestWhenInUseAuthorization()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
     
     let problemPendingPost = MutableProperty(false)
