@@ -66,7 +66,7 @@ enum Router : URLRequestConvertible {
 	case Logout
     case MyBikeIssue(id: Int)
     case PointOfInterests
-    case BikesIssues(id: Int)
+    case BikesIssues(id: Int, info : BikeReportProblem)
     case Boundaries
     case MyAccount
     case DefaultValues
@@ -122,7 +122,7 @@ enum Router : URLRequestConvertible {
             return "/bikes/\(id)/issues"
         case .PointOfInterests:
             return "/location/pois"
-        case .BikesIssues(let id):
+        case .BikesIssues(let id, _):
             return "/bikes/\(id)/issues"
         case .Boundaries:
             return "/boundaries/"
@@ -156,6 +156,8 @@ enum Router : URLRequestConvertible {
 			return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: ["bikeCode" : code, "lat" : lat, "lng" : lon]).0
 		case .ReturnBike(_, let info):
 			return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: ["location" : info.jsonRepresentation]).0
+        case .BikesIssues(_, let info):
+            return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: info.jsonRepresentation).0
         case .MyBikeIssue:
             return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: ["onlyOpen" : 1]).0
         default:
@@ -330,6 +332,13 @@ class RekolaAPI {
         }
     }
     
+    func sendIssue(#id: Int, issue : BikeReportProblem) -> SignalProducer<AnyObject?, NSError> {
+        return call(Router.BikesIssues(id: id, info: issue)) { data in
+            logD(data)
+            return SignalProducer.empty
+        }
+    }
+    
     func defaultProblems() -> SignalProducer<Issues, NSError> {
         return call(Router.DefaultValues) { data in
             let signal : SignalProducer<Issues, NSError> = rac_decode(data)
@@ -338,6 +347,13 @@ class RekolaAPI {
                     logD(data)
                 })
                 |> map { $0 as Issues }
+        }
+    }
+    
+    func logout() -> SignalProducer<AnyObject?, NSError> {
+        return call(Router.Logout) { data in
+            logD(data)
+            return SignalProducer.empty
         }
     }
 }

@@ -81,11 +81,11 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let warningLabel = UILabel()
         container.addSubview(warningLabel)
-        warningLabel.textAlignment = .Center
+        warningLabel.textAlignment = .Right
         warningLabel.textColor = .rekolaWarningYellowColor()
         warningLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeNameLabel.snp_bottom).offset(L.verticalSpacing)
-            make.centerX.equalTo(container.snp_centerX)
+            make.centerX.equalTo(container.snp_centerX).offset(10)
         }
         self.warningLabel = warningLabel
         
@@ -139,7 +139,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         container.addSubview(dateLabel)
         dateLabel.snp_makeConstraints { make in
             make.top.equalTo(lastReturnLabel.snp_bottom).offset(20)
-            make.left.equalTo(calendarIV.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(calendarIV.snp_right).offset(10)
         }
         self.dateLabel = dateLabel
         
@@ -155,7 +155,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         container.addSubview(timeLabel)
         timeLabel.snp_makeConstraints { make in
             make.top.equalTo(lastReturnLabel.snp_bottom).offset(20)
-            make.left.equalTo(clockIV.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(clockIV.snp_right).offset(10)
         }
         self.timeLabel = timeLabel
         
@@ -320,6 +320,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     let cellIdentifier = "cell"
     let problemCellIdentifier = "ProblemCell"
+    var isUnmovable = false
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -345,14 +346,16 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let bikeImageData = NSData(contentsOfURL: bike.imageURL)
         bikeIV.image = UIImage(data: bikeImageData!)
         
-        bikeTypeLabel.text = bike.type
+        bikeTypeLabel.text = bike.type.uppercaseString
         
         bikeNameLabel.text = bike.name
         
         let warning = setWarningLabelText()
         warningLabel.text = warning.0
         warningIV.image = warning.1
-
+        if isUnmovable {
+            warningLabel.textColor = .rekolaWarningRedColor()
+        }
         
         descriptionLabel.text = bike.description
         
@@ -386,6 +389,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         if bike.operational && bike.issues.count > 0 {
             return (NSLocalizedString("BIKEDETAIL_drivableWithProblems", comment: ""),UIImage(imageIdentifier: .yellowWarning))
         } else if !bike.operational {
+            self.isUnmovable = true
             return (NSLocalizedString("BIKEDETAIL_undrivable", comment: ""),UIImage(imageIdentifier: .redWarning))
         }
         return ("", UIImage())

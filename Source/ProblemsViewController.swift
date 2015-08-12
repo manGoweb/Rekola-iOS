@@ -12,7 +12,7 @@ import SnapKit
 import ReactiveCocoa
 
 protocol ProblemsViewControllerProtocol: class {
-    func addProblemToTextField(controller: ProblemsViewController, problem: String)
+    func addProblemToTextField(controller: ProblemsViewController, problem: AddIssue)
 }
 
 class ProblemsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -105,7 +105,9 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if let issue = problems {
-            delegate?.addProblemToTextField(self, problem: issue.issues[indexPath.row].title)
+            let newIssue = AddIssue(id: issue.issues[indexPath.row].id, title: issue.issues[indexPath.row].title)
+            
+            delegate?.addProblemToTextField(self, problem: newIssue)
         }
         dismissViewControllerAnimated(true, completion: nil)
     }

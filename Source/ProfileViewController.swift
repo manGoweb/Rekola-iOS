@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController {
         nameLabel.textAlignment = .Center
         nameLabel.snp_makeConstraints { make in
             make.left.right.equalTo(view)
-            make.top.equalTo(view).offset(100)
+            make.top.equalTo(view).offset(70)
             }
         self.nameLabel = nameLabel
         
@@ -32,7 +32,7 @@ class ProfileViewController: UIViewController {
         dateLabel.textAlignment = .Center
         dateLabel.snp_makeConstraints { make in
             make.left.right.equalTo(view)
-            make.top.equalTo(nameLabel.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(nameLabel.snp_bottom).offset(8)
         }
         self.dateLabel = dateLabel
         
@@ -45,7 +45,7 @@ class ProfileViewController: UIViewController {
         logoutButton.snp_makeConstraints { make in
             make.width.equalTo(169)
             make.height.equalTo(44)
-            make.top.equalTo(dateLabel.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(dateLabel.snp_bottom).offset(20)
 //                    make.left.right.equalTo(view)
             make.centerX.equalTo(view.snp_centerX)
         }
@@ -58,7 +58,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(staticEmailLabel)
         staticEmailLabel.snp_makeConstraints { make in
             make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.top.equalTo(logoutButton.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(logoutButton.snp_bottom).offset(30)
         }
         
         let emailLabel = UILabel()
@@ -67,7 +67,7 @@ class ProfileViewController: UIViewController {
         emailLabel.snp_makeConstraints { make in
             make.left.greaterThanOrEqualTo(staticEmailLabel.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing).priorityLow()
-            make.top.equalTo(logoutButton.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(logoutButton.snp_bottom).offset(30)
         }
         self.emailLabel = emailLabel
         
@@ -138,7 +138,7 @@ class ProfileViewController: UIViewController {
             make.height.equalTo(44)
             make.left.equalTo(view).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
-            make.bottom.equalTo(view).offset(-50)
+            make.bottom.equalTo(view).offset(-30)
         }
         self.aboutAppButton = aboutAppButton
         
@@ -159,10 +159,27 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         logoutButton.setTitle(NSLocalizedString("PROFILE_logout", comment: ""), forState: .Normal)
-
+        logoutButton.addTarget(self, action: "logout:", forControlEvents: .TouchUpInside)
         aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)
         
         showUser()
+    }
+    
+    let logoutRequestPending = MutableProperty(false)
+    func logout(sender: AnyObject?) {
+        logoutRequestPending.value = true
+        API.logout().start(error: { error in
+            self.logoutRequestPending.value = false
+            self.handleError(error)
+            }, completed: {
+                self.logoutRequestPending.value = false
+                
+                let signIn = SignInViewController()
+                let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                
+                delegate.window?.rootViewController = signIn
+                delegate.window!.makeKeyAndVisible()
+        })
     }
     
     func updateLabels(myAccount: MyAccount) {

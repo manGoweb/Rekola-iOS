@@ -19,7 +19,7 @@ class AboutAppViewController: UIViewController {
         view.addSubview(iv)
         iv.contentMode = .ScaleAspectFit
         iv.snp_makeConstraints { make in
-            make.bottom.equalTo(view)
+            make.bottom.equalTo(view).offset(7)
             make.centerX.equalTo(view.snp_centerX)
             make.left.right.equalTo(view)
         }

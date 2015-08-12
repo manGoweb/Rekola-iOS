@@ -31,7 +31,7 @@
 "BORROWBIKE_lent" = "Půjčeno ";
 "MAP_title" = "Mapa";
 "PROFILE_membership"= "Členství do ";
-"PROFILE_logout" = "Odhlásit se";
+"PROFILE_logout" = "  Odhlásit se";
 "PROFILE_email" = "Email";
 "PROFILE_address" = "Adresa";
 "PROFILE_phone" = "Telefon";
@@ -46,8 +46,8 @@
 "BIKEDETAIL_moreInfo" = "Více info";
 "BIKEDETAIL_problems" = "Problémy";
 "BIKEDETAIL_addProblem" = "Přidat problém";
-"BIKEDETAIL_drivableWithProblems" = "Pojízdné s problémy";
-"BIKEDETAIL_undrivable" = "Nepojízdné";
+"BIKEDETAIL_drivableWithProblems" = "POJÍZDNÉ S PROBLÉMY";
+"BIKEDETAIL_undrivable" = "NEPOJÍZDNÉ";
 "ADDPROBLEM_typeOfProblem" = "Typ problému";
 "ADDPROBLEM_chooseProblem" = "Vyberte typ";
 "ADDPROBLEM_description" = "Detailní popis závady";

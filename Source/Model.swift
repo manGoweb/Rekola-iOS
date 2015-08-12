@@ -154,6 +154,21 @@ extension Bike : Decodable  {
 	
 }
 
+//TODO: report problem
+
+struct BikeReportProblem {
+    let type : Int
+    let title : String
+    let description : String
+    let disabling : Bool
+    let location : CLLocationCoordinate2D
+    
+    var jsonRepresentation : [String : AnyObject] {
+        var locationDict : [String : AnyObject] = ["lat" : location.latitude, "lng" : location.longitude]
+        var dict : [String : AnyObject ] = ["location" : locationDict,"type": type, "title": title, "description": description, "disabling" : disabling]
+        return dict
+    }
+}
 
 struct BikeReturnInfo {
 	let lat : Double
@@ -306,4 +321,9 @@ extension Issues : Decodable {
         return Issues.create
             <^> json <|| "issues"
     }
+}
+
+public struct AddIssue {
+    let id : Int
+    let title : String
 }
