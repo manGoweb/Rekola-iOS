@@ -128,6 +128,7 @@ extension UIImage {
         case MapPinGrey = "mapPinGrey"
         case MapPinGreen = "mapPinGreen"
         case BikeMapPinPink = "bikeMapPinPink"
+        case DetailLockScroll = "detailLockScroll"
 			case Placeholder = "placeholder"
     }
     

@@ -92,6 +92,8 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
     weak var textView: SZTextView!
     weak var descriptionLabel: UILabel!
     let locationManager = CLLocationManager()
+    var boundaries = Boundaries(regions: [], zones: [])
+    var coordForBoundaries: [[CLLocationCoordinate2D]] = []
 
     
     override func viewWillAppear(animated: Bool) {
@@ -106,12 +108,12 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
-        self.navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
-        self.navigationController?.navigationBar.tintColor = .whiteColor()
-        self.navigationItem.title = NSLocalizedString("RETURNBIKE_title", comment: "")
+        navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
+        navigationController?.navigationBar.tintColor = .whiteColor()
+        navigationItem.title = NSLocalizedString("RETURNBIKE_title", comment: "")
         
-        self.descriptionLabel.text = NSLocalizedString("RETURNBIKE_description", comment: "")
-        self.descriptionLabel.textAlignment = .Left
+        descriptionLabel.text = NSLocalizedString("RETURNBIKE_description", comment: "")
+        descriptionLabel.textAlignment = .Left
 
         
         textView.delegate = self
@@ -121,15 +123,17 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         
         self.returnButton.setTitle(NSLocalizedString("RETURNBIKE_return" , comment: ""), forState: .Normal)
         
-        self.mapView.delegate = self
-        self.mapView.scrollEnabled = true
-        self.mapView.zoomEnabled = true
-        self.mapView.showsUserLocation = true
+        mapView.delegate = self
+        mapView.scrollEnabled = true
+        mapView.zoomEnabled = true
+        mapView.showsUserLocation = true
 		
 		navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
 		
 		returnButton.addTarget(self, action: "returnBike:", forControlEvents: .TouchUpInside)
 		returnButton.rac_enabled <~ requestPending.producer |> map { !$0 }
+        
+        loadBoundaries()
     }
 	
     override func viewWillDisappear(animated: Bool) {
@@ -150,6 +154,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 	}
 	
 	
+//    API calling
 	var requestPending = MutableProperty(false)
 	func returnBike(sender: AnyObject?) {
 		let info = BikeReturnInfo(lat: mapLocation.latitude, lon: mapLocation.longitude, note: textView.text, sensorLat: sensorLocation?.coordinate.latitude, sensorLon: sensorLocation?.coordinate.longitude, sensorAcc: sensorLocation?.horizontalAccuracy)
@@ -162,6 +167,56 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 				self.navigationController?.popToRootViewControllerAnimated(true)
 		})
 	}
+    
+    let boundariesRequestPending = MutableProperty(false)
+    func loadBoundaries() {
+        boundariesRequestPending.value = false
+        API.getBoundaries().start(error: { error in
+            self.handleError(error)
+            }, next: {
+                self.boundaries = $0
+                self.parseBoundaries(self.boundaries)
+        })
+    }
+    
+//    parsing Boundaries
+    func drawPolygon(var coords: [[CLLocationCoordinate2D]]) {
+        for zones in coords {
+            var tmpArray = zones
+            var polygon = MKPolygon(coordinates: &tmpArray, count: zones.count)
+            mapView.addOverlay(polygon, level: MKOverlayLevel.AboveLabels)
+        }
+    }
+    
+    func parseBoundaries(boundaries: Boundaries) {
+        for zones in boundaries.zones {
+            let myString = zones.coords
+            let myCoordsString = split(myString, maxSplit: Int.max, allowEmptySlices: false, isSeparator: {$0 == ";"})
+            let doublesCoord = myCoordsString.map({ doubles -> CLLocationCoordinate2D in
+                let lanAndLon = split(doubles, maxSplit: Int.max, allowEmptySlices: false, isSeparator: {$0 == ","})
+                let lan = (lanAndLon[1] as NSString).doubleValue
+                let lot = (lanAndLon[0] as NSString).doubleValue
+                return CLLocationCoordinate2D(latitude: lan, longitude: lot)
+            })
+            self.coordForBoundaries.append(doublesCoord)
+            
+        }
+        
+        self.drawPolygon(self.coordForBoundaries)
+    }
+    
+//    MARK: MKMapViewDelegate
+    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+        
+        if overlay is MKPolygon {
+            var polygonRenderer = MKPolygonRenderer(overlay: overlay)
+            polygonRenderer.strokeColor = .rekolaPinkColor()
+            polygonRenderer.fillColor = UIColor.rekolaPinkColor().colorWithAlphaComponent(0.1)
+            polygonRenderer.lineWidth = 6
+            return polygonRenderer
+        }
+        return nil
+    }
     
 //    MARK: UITextViewDelegate
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {

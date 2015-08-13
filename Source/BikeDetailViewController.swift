@@ -70,6 +70,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         container.addSubview(bikeNameLabel)
         bikeNameLabel.textAlignment = .Center
         bikeNameLabel.textColor = .rekolaBlackColor()
+        bikeNameLabel.numberOfLines = 0
         bikeNameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 27)
         bikeNameLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeTypeLabel.snp_bottom).offset(20)
@@ -193,6 +194,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         self.bikeEquipmentLabel = equipmentLabel
         
         let layoutForCollectionView = UICollectionViewFlowLayout()
+        layoutForCollectionView.scrollDirection = UICollectionViewScrollDirection.Horizontal
         
         let equipmentCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layoutForCollectionView)
         container.addSubview(equipmentCollectionView)
@@ -295,7 +297,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
+//        self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
         deleteLineUnderNavBar()
 
     }
@@ -469,11 +471,18 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             let alpha = min(1, 1-((changePoint + 64 - offsetY)/64))
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(alpha))
             self.navigationController?.navigationBar.tintColor = .whiteColor()
+            
+            let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .DetailLockScroll), style: .Plain, target: self, action: "lockBike:")
+            self.navigationItem.rightBarButtonItem = lockButton
+            
             UIApplication.sharedApplication().statusBarStyle = .LightContent
         } else {
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(0))
             self.navigationController?.navigationBar.tintColor = .rekolaPinkColor()
             UIApplication.sharedApplication().statusBarStyle = .Default
+            let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
+            self.navigationItem.rightBarButtonItem = lockButton
+            
             deleteLineUnderNavBar()
         }
     }

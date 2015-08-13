@@ -191,6 +191,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 //        return .LightContent
 //    }
     
+//    API calling
     let bikesRequestPending = MutableProperty(false)
     func loadBikes(coordinate: CLLocationCoordinate2D) {
         bikesRequestPending.value = false
@@ -291,15 +292,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let bikeAnnotation = view.annotation as! MapPin
         let url = NSURL(string: bikeAnnotation.iconUrl)
         
-        self.bikeImage.sd_setImageWithURL(url)
-        self.bikeNameLabel.text = bikeAnnotation.title
-        self.bikeDistanceLabel.text = bikeAnnotation.distance
-        self.bikeDescriptionLabel.text = bikeAnnotation.bikeDescription
-        self.bikeNoteLabel.text = bikeAnnotation.bikeLocationNote
+        bikeImage.sd_setImageWithURL(url)
+        bikeNameLabel.text = bikeAnnotation.title
+        bikeDistanceLabel.text = bikeAnnotation.distance
+        
+        if bikeAnnotation.bikeDescription.isEmpty {
+            bikeDescriptionLabel.hidden = true
+        } else {
+            bikeDescriptionLabel.text = bikeAnnotation.bikeDescription
+        }
+        bikeNoteLabel.text = bikeAnnotation.bikeLocationNote
     }
     
     func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {
-        self.detailView.hidden = true
+        detailView.hidden = true
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
