@@ -172,6 +172,20 @@ class ProfileViewController: UIViewController {
         logoutButton.addTarget(self, action: "logout:", forControlEvents: .TouchUpInside)
         aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)
         
+        logoutRequestPending.producer
+            |> skipRepeats { (prev, curr) in
+                return 	prev == curr
+            }
+            |> start(next: { [weak self] in
+                if $0{
+                    self?.view.userInteractionEnabled = false
+                    SVProgressHUD.show()
+                } else {
+                    self?.view.userInteractionEnabled = true
+                    SVProgressHUD.dismiss()
+                }
+                })
+        
         showUser()
     }
     

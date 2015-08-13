@@ -156,6 +156,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         //        set users coordinate and calling API
         
+        bikesRequestPending.producer
+            |> skipRepeats { (prev, curr) in
+                return 	prev == curr
+            }
+            |> start(next: { [weak self] in
+                if $0{
+                    self?.view.userInteractionEnabled = false
+                    SVProgressHUD.show()
+                } else {
+                    self?.view.userInteractionEnabled = true
+                    SVProgressHUD.dismiss()
+                }
+                })
+        
         if locationManager.location != nil {
             usersCoordinate = locationManager.location.coordinate
             loadBikes(usersCoordinate) //calling API with usersCoordinate
@@ -163,7 +177,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             loadBikes(usersCoordinate) //calling API with default coordinate
         }
         loadBoundaries()
-        //        parseBoundaries(boundaries)
+        
+
     }
     
     override func viewWillDisappear(animated: Bool) {

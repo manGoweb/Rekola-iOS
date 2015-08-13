@@ -315,6 +315,20 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         deleteLineUnderNavBar()
         
+//        problemRequestPending.producer
+//            |> skipRepeats { (prev, curr) in
+//                return 	prev == curr
+//            }
+//            |> start(next: { [weak self] in
+//                if $0{
+//                    self?.view.userInteractionEnabled = false
+//                    SVProgressHUD.show()
+//                } else {
+//                    self?.view.userInteractionEnabled = true
+//                    SVProgressHUD.dismiss()
+//                }
+//                })
+        
         let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
         self.navigationItem.rightBarButtonItem = lockButton
         

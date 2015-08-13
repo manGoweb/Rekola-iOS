@@ -60,6 +60,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         
         let descriptionLabel = UILabel()
         view.addSubview(descriptionLabel)
+        descriptionLabel.textColor = UIColor.rekolaBlackColor()
         descriptionLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         descriptionLabel.snp_makeConstraints { make in
             make.bottom.equalTo(textView.snp_top).offset(-L.verticalSpacing)

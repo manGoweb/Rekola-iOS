@@ -42,6 +42,7 @@ class BorrowedBikeViewController: UIViewController {
         nameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 30)
         nameLabel.textColor = .rekolaBlackColor()
         nameLabel.textAlignment = .Center
+        nameLabel.numberOfLines = 0
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(iv.snp_bottom).offset(L.verticalSpacing)
             make.left.right.equalTo(view)
@@ -81,8 +82,10 @@ class BorrowedBikeViewController: UIViewController {
         rectangle.snp_makeConstraints { make in
             make.top.equalTo(detailButton.snp_bottom).multipliedBy(1.1)
             make.height.equalTo(101).multipliedBy(0.1)
-            make.left.right.equalTo(view).inset(L.contentInsets) //changed
+//            make.left.right.equalTo(view).inset(L.contentInsets) //changed
             make.centerX.equalTo(view.snp_centerX)
+            make.left.equalTo(35)
+            make.right.equalTo(-35)
         }
         
         let lockCodeLabel = InsetLabel()
@@ -101,7 +104,7 @@ class BorrowedBikeViewController: UIViewController {
         
         let codeLabel = UILabel()
         view.addSubview(codeLabel)
-        codeLabel.font = UIFont.boldSystemFontOfSize(70)
+        codeLabel.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 70)
         codeLabel.textAlignment = .Center
         codeLabel.snp_makeConstraints { make in
             make.top.equalTo(rectangle.snp_top).offset(5)
@@ -140,6 +143,8 @@ class BorrowedBikeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UIApplication.sharedApplication().statusBarStyle = .Default
+        
         bikeNameLabel.text = bike.name
         
         bikeBorrowLabel.attributedText = formatDateLabel(bike.returnedAt!)
@@ -147,7 +152,9 @@ class BorrowedBikeViewController: UIViewController {
         bikeDetailButton.setTitle(NSLocalizedString("BORROWBIKE_detail", comment: ""), forState: .Normal)
         bikeDetailButton.addTarget(self, action: "bikeDetail:", forControlEvents: .TouchUpInside)
         
-        bikeCodeLabel.text = bike.lockCode
+        let atribute = NSAttributedString(string: bike.lockCode!, attributes: [NSKernAttributeName: (7)])
+        
+        bikeCodeLabel.attributedText = atribute
         
         bikeReturnButton.setTitle(NSLocalizedString("BORROWBIKE_return", comment: ""), forState: .Normal)
         bikeReturnButton.addTarget(self, action: "returnBike:", forControlEvents: .TouchUpInside)
