@@ -69,6 +69,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let bikeNameLabel = UILabel()
         container.addSubview(bikeNameLabel)
         bikeNameLabel.textAlignment = .Center
+        bikeNameLabel.textColor = .rekolaBlackColor()
         bikeNameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 27)
         bikeNameLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeTypeLabel.snp_bottom).offset(20)
@@ -119,6 +120,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let lastReturnLabel = UILabel()
         container.addSubview(lastReturnLabel)
         lastReturnLabel.textAlignment = .Center
+        lastReturnLabel.textColor = .rekolaBlackColor()
         lastReturnLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         lastReturnLabel.snp_makeConstraints { make in
             make.top.equalTo(line1.snp_bottom).offset(20)
@@ -131,7 +133,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         container.addSubview(calendarIV)
         calendarIV.snp_makeConstraints { make in
             make.top.equalTo(lastReturnLabel.snp_bottom).offset(20)
-            make.left.equalTo(container).offset(55)
+            make.left.equalTo(container).offset(70)
         }
         
         let dateLabel = Theme.pinkLabel()
@@ -182,6 +184,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let equipmentLabel = UILabel()
         container.addSubview(equipmentLabel)
         equipmentLabel.textAlignment = .Center
+        equipmentLabel.textColor = .rekolaBlackColor()
         equipmentLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         equipmentLabel.snp_makeConstraints { make in
             make.top.equalTo(line2.snp_bottom).offset(20)
@@ -228,6 +231,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let problemsLabel = UILabel()
         container.addSubview(problemsLabel)
         problemsLabel.textAlignment = .Center
+        problemsLabel.textColor = .rekolaBlackColor()
         problemsLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         problemsLabel.snp_makeConstraints { make in
             make.top.equalTo(line3.snp_bottom).offset(20)
@@ -292,7 +296,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
-        
+        deleteLineUnderNavBar()
+
     }
     
     override func viewDidLoad() {
@@ -450,10 +455,11 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             let alpha = min(1, 1-((changePoint + 64 - offsetY)/64))
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(alpha))
             self.navigationController?.navigationBar.tintColor = .whiteColor()
-            
+            UIApplication.sharedApplication().statusBarStyle = .LightContent
         } else {
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(0))
             self.navigationController?.navigationBar.tintColor = .rekolaPinkColor()
+            UIApplication.sharedApplication().statusBarStyle = .Default
             deleteLineUnderNavBar()
         }
     }
@@ -478,6 +484,22 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         return 0
     }
     
+    func problemDateFormat(date: NSDate, name: String) -> NSAttributedString {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = " / dd.MM.YYYY / HH:mm"
+        let dateString = dateFormatter.stringFromDate(date)
+        
+        let text = name + dateString
+        let firstSlashIndex = count(name) + 1
+        let secondSlashIndex = count(name) + 14
+        
+        let atribute = NSMutableAttributedString(string: text)
+        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: firstSlashIndex, length: 1))
+        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: secondSlashIndex, length: 1))
+        
+        return atribute
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! UITableViewCell //for section 0
         let problemCell = tableView.dequeueReusableCellWithIdentifier(problemCellIdentifier) as! ProblemCell//for section 1
@@ -490,16 +512,13 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             }
             return cell
         } else {
-
+            let issue = sortedBikeIssues[indexPath.section - 1][indexPath.row]
             //            dateFormat
             let date = sortedBikeIssues[indexPath.section - 1][indexPath.row].updates[0].issuedAt
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = " / dd.MM.YYYY / HH:mm"
-            let dateString = dateFormatter.stringFromDate(date)
+            let name = issue.updates[0].author
 
             //            setting text
-            let issue = sortedBikeIssues[indexPath.section - 1][indexPath.row]
-            problemCell.nameLabel.text = issue.updates[0].author + dateString
+            problemCell.nameLabel.attributedText = problemDateFormat(date, name: name)
             problemCell.descriptionLabel.text = issue.updates[0].description
             
             return problemCell
@@ -514,7 +533,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         if indexPath.section == 0 {
             return 770
         }
-        return 100
+        return 70
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -558,6 +577,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
 //    MARK: UICollectionViewDelegate
+    
 //    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
 //        return sectionInsets
 //    }

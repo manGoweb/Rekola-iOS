@@ -51,6 +51,7 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         let typeOfProblemLabel = UILabel()
         container.addSubview(typeOfProblemLabel)
         typeOfProblemLabel.textAlignment = .Left
+        typeOfProblemLabel.textColor = .rekolaBlackColor()
         typeOfProblemLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         typeOfProblemLabel.snp_makeConstraints { make in
             make.top.equalTo(container).offset(86)
@@ -85,6 +86,7 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         
         let descriptionLabel = UILabel()
         container.addSubview(descriptionLabel)
+        descriptionLabel.textColor = .rekolaBlackColor()
         descriptionLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         descriptionLabel.snp_makeConstraints{ make in
             make.top.equalTo(textField.snp_bottom).offset(30)

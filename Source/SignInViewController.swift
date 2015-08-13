@@ -103,10 +103,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
 
-
-			emailTextField.text = Environment.username
-			passwordTextField.text = Environment.password
+        emailTextField.text = Environment.username
+        passwordTextField.text = Environment.password
 
 		
 		self.emailTextField.attributedPlaceholder = NSAttributedString(string:NSLocalizedString("SIGNIN_email", comment: ""),
@@ -182,6 +183,12 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		})
 	}
 	
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.sharedApplication().statusBarStyle = .Default
+    }
+    
 	func forgotButtonTapped(sender: UIButton) {
 		view.endEditing(true)
 		let vc = ResetPasswordViewController()

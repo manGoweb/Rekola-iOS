@@ -41,7 +41,7 @@ class AboutAppViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
         
 		
     }
@@ -59,9 +59,9 @@ class AboutAppViewController: UIViewController {
         self.button.addTarget(self, action: "openUrl", forControlEvents: .TouchUpInside)
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
+//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return .LightContent
+//    }
     
     func openUrl() {
         if let url = NSURL(string: "http://ackee.cz") {
@@ -72,6 +72,6 @@ class AboutAppViewController: UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-//        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
     }
 }

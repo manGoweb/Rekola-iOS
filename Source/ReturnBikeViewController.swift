@@ -102,6 +102,9 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
         self.navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
         self.navigationController?.navigationBar.tintColor = .whiteColor()
         self.navigationItem.title = NSLocalizedString("RETURNBIKE_title", comment: "")
@@ -128,9 +131,13 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 		returnButton.rac_enabled <~ requestPending.producer |> map { !$0 }
     }
 	
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override func viewWillDisappear(animated: Bool) {
+        UIApplication.sharedApplication().statusBarStyle = .Default
     }
+    
+//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return .LightContent
+//    }
     
     
 	var mapLocation : CLLocationCoordinate2D {

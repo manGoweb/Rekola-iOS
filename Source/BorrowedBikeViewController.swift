@@ -169,8 +169,10 @@ class BorrowedBikeViewController: UIViewController {
         let text = NSLocalizedString("BORROWBIKE_lent", comment: "") + dateString + " / " + timeString
 
         let atribute = NSMutableAttributedString(string: text)
-        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 8, length: 5))
-        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 14, length: 5))
+        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 8, length: 6))
+        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 15, length: 6))
+        
+        println("Text: \(atribute.string) \n pocet: \(atribute.length)")
         
         return atribute
     }

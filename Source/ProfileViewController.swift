@@ -166,6 +166,8 @@ class ProfileViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        UIApplication.sharedApplication().statusBarStyle = .Default
+        
         logoutButton.setTitle(NSLocalizedString("PROFILE_logout", comment: ""), forState: .Normal)
         logoutButton.addTarget(self, action: "logout:", forControlEvents: .TouchUpInside)
         aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)

@@ -25,6 +25,7 @@ class EquipmentViewController: UIViewController {
         let infoEquipmentLabel = UILabel()
         container.addSubview(infoEquipmentLabel)
         infoEquipmentLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
+        infoEquipmentLabel.textColor = .rekolaBlackColor()
         infoEquipmentLabel.snp_makeConstraints { make in
             make.top.equalTo(container).offset(L.verticalSpacing)
             make.left.equalTo(container).offset(L.horizontalSpacing)
@@ -97,10 +98,11 @@ class EquipmentViewController: UIViewController {
         container.addSubview(infoMudguardLabel)
         infoMudguardLabel.textAlignment = .Left
         infoMudguardLabel.text = "Blatniky"
+        infoMudguardLabel.textColor = .rekolaBlackColor()
         infoMudguardLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         infoMudguardLabel.snp_makeConstraints { make in
             make.top.equalTo(infoEquipmentLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoMudguardIV.snp_right).offset(20)
+            make.left.equalTo(container).offset(80)
             make.right.equalTo(-L.horizontalSpacing)
         }
         
@@ -108,10 +110,11 @@ class EquipmentViewController: UIViewController {
         container.addSubview(infoBasketLabel)
         infoBasketLabel.textAlignment = .Left
         infoBasketLabel.text = "Kosik"
+        infoBasketLabel.textColor = .rekolaBlackColor()
         infoBasketLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         infoBasketLabel.snp_makeConstraints { make in
             make.top.equalTo(infoMudguardLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoBasketIV.snp_right).offset(20)
+            make.left.equalTo(container).offset(80)
             make.right.equalTo(container).offset(-L.horizontalSpacing)
         }
         
@@ -119,10 +122,11 @@ class EquipmentViewController: UIViewController {
         container.addSubview(infoBuzzerLabel)
         infoBuzzerLabel.textAlignment = .Left
         infoBuzzerLabel.text = "Zvonek"
+        infoBuzzerLabel.textColor = .rekolaBlackColor()
         infoBuzzerLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         infoBuzzerLabel.snp_makeConstraints { make in
             make.top.equalTo(infoBasketLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoBuzzerIV.snp_right).offset(20)
+            make.left.equalTo(container).offset(80)
             make.right.equalTo(container).offset(-L.horizontalSpacing)
         }
         
@@ -130,10 +134,11 @@ class EquipmentViewController: UIViewController {
         container.addSubview(infoBacklightLabel)
         infoBacklightLabel.textAlignment = .Left
         infoBacklightLabel.text = "Zadni svetla"
+        infoBacklightLabel.textColor = .rekolaBlackColor()
         infoBacklightLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         infoBacklightLabel.snp_makeConstraints { make in
             make.top.equalTo(infoBuzzerLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoBacklightIV.snp_right).offset(20)
+            make.left.equalTo(container).offset(80)
             make.right.equalTo(container).offset(-L.horizontalSpacing)
         }
         
@@ -141,10 +146,11 @@ class EquipmentViewController: UIViewController {
         container.addSubview(infoFrontlightLabel)
         infoFrontlightLabel.textAlignment = .Left
         infoFrontlightLabel.text = "Predni svetla"
+        infoFrontlightLabel.textColor = .rekolaBlackColor()
         infoFrontlightLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         infoFrontlightLabel.snp_makeConstraints { make in
             make.top.equalTo(infoBacklightLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoFrontlightIV.snp_right).offset(20)
+            make.left.equalTo(container).offset(80)
             make.right.equalTo(container).offset(-L.horizontalSpacing)
         }
         
@@ -152,10 +158,11 @@ class EquipmentViewController: UIViewController {
         container.addSubview(infoTrunkLabel)
         infoTrunkLabel.textAlignment = .Left
         infoTrunkLabel.text = "Nosic"
+        infoTrunkLabel.textColor = .rekolaBlackColor()
         infoTrunkLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         infoTrunkLabel.snp_makeConstraints { make in
             make.top.equalTo(infoFrontlightLabel.snp_bottom).offset(25)
-            make.left.equalTo(infoTrunkIV.snp_right).offset(20)
+            make.left.equalTo(container).offset(80)
             make.right.equalTo(container).offset(-L.horizontalSpacing)
             make.bottom.equalTo(container).offset(-25)
         }

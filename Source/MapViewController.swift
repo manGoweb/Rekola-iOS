@@ -125,6 +125,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
         //        navigationBar settings + tintColor
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
@@ -164,9 +166,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //        parseBoundaries(boundaries)
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.sharedApplication().statusBarStyle = .Default
     }
+    
+//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+//        return .LightContent
+//    }
     
     let bikesRequestPending = MutableProperty(false)
     func loadBikes(coordinate: CLLocationCoordinate2D) {
@@ -203,9 +211,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func drawPolygon(var coords: [[CLLocationCoordinate2D]]) {
         for zones in coords {
             var tmpArray = zones
-            var polyline = MKPolyline(coordinates: &tmpArray, count: zones.count)
-            mapView.addOverlay(polyline, level: MKOverlayLevel.AboveLabels)
-            //            mapView.addOverlay(polyline)
+            var polygon = MKPolygon(coordinates: &tmpArray, count: zones.count)
+            mapView.addOverlay(polygon, level: MKOverlayLevel.AboveLabels)
         }
     }
     
@@ -249,12 +256,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
-        if overlay is MKPolyline {
-            var polylineRenderer = MKPolylineRenderer(overlay: overlay)
-            polylineRenderer.strokeColor = .rekolaPinkColor()
-            polylineRenderer.fillColor = UIColor(red: 253, green: 52, blue: 156, alpha: 1.0)
-            polylineRenderer.lineWidth = 6
-            return polylineRenderer
+
+        if overlay is MKPolygon {
+            var polygonRenderer = MKPolygonRenderer(overlay: overlay)
+            polygonRenderer.strokeColor = .rekolaPinkColor()
+            polygonRenderer.fillColor = UIColor.rekolaPinkColor().colorWithAlphaComponent(0.1)
+            polygonRenderer.lineWidth = 6
+            return polygonRenderer
         }
         return nil
     }

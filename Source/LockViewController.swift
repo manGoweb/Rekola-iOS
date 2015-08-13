@@ -50,6 +50,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         let titleLabel = Theme.titleLabel()
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .Center
+        titleLabel.textColor = .rekolaBlackColor()
         titleLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         container.addSubview(titleLabel)
         titleLabel.snp_makeConstraints { make in
