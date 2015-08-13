@@ -110,6 +110,8 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         
         navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
         navigationController?.navigationBar.tintColor = .whiteColor()
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
         navigationItem.title = NSLocalizedString("RETURNBIKE_title", comment: "")
         
         descriptionLabel.text = NSLocalizedString("RETURNBIKE_description", comment: "")
@@ -225,6 +227,17 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
             return false
         }
         return true
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        textView.layer.borderColor = UIColor.rekolaPinkColor().CGColor
+        textView.layer.borderWidth = 1
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.layer.borderColor = UIColor.grayColor().CGColor
+        }
     }
 
 }

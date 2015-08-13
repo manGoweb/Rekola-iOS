@@ -48,7 +48,7 @@
 "BIKEDETAIL_problems" = "Problémy";
 "BIKEDETAIL_addProblem" = "Přidat problém";
 "BIKEDETAIL_drivableWithProblems" = "POJÍZDNÉ S PROBLÉMY";
-"BIKEDETAIL_undrivable" = "NEPOJÍZDNÉ";
+"BIKEDETAIL_undrivable" = "POZOR, NEPOJÍZDNÉ";
 "ADDPROBLEM_typeOfProblem" = "Typ problému";
 "ADDPROBLEM_chooseProblem" = "Vyberte typ";
 "ADDPROBLEM_description" = "Detailní popis závady";

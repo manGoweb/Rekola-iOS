@@ -62,7 +62,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         bikeTypeLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 14)
         bikeTypeLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeIV.snp_bottom).offset(L.verticalSpacing)
-            make.left.right.equalTo(container)
+            make.left.equalTo(L.horizontalSpacing)
+            make.right.equalTo(-L.horizontalSpacing)
         }
         self.bikeTypeLabel = bikeTypeLabel
         
@@ -74,7 +75,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         bikeNameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 27)
         bikeNameLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeTypeLabel.snp_bottom).offset(20)
-            make.left.right.equalTo(container)
+            make.left.equalTo(L.horizontalSpacing)
+            make.right.equalTo(-L.horizontalSpacing)
         }
         self.bikeNameLabel = bikeNameLabel
         
@@ -86,6 +88,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         warningLabel.snp_makeConstraints { make in
             make.top.equalTo(bikeNameLabel.snp_bottom).offset(L.verticalSpacing)
             make.centerX.equalTo(container.snp_centerX).offset(10)
+            
         }
         self.warningLabel = warningLabel
         
@@ -304,6 +307,10 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        self.navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -474,7 +481,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             
             let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .DetailLockScroll), style: .Plain, target: self, action: "lockBike:")
             self.navigationItem.rightBarButtonItem = lockButton
-            
+            self.navigationItem.title = bike.type.uppercaseString
             UIApplication.sharedApplication().statusBarStyle = .LightContent
         } else {
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(0))
@@ -482,6 +489,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             UIApplication.sharedApplication().statusBarStyle = .Default
             let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
             self.navigationItem.rightBarButtonItem = lockButton
+            self.navigationItem.title = ""
             
             deleteLineUnderNavBar()
         }
@@ -578,7 +586,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
             header.contentView.backgroundColor = .whiteColor()
             header.textLabel.textColor = .rekolaGreenColor()
-            header.textLabel.font = UIFont.boldSystemFontOfSize(16)
+            header.textLabel.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 17)
         }
     }
     

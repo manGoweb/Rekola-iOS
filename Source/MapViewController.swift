@@ -264,7 +264,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 view = BikeAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             }
             
-            view?.backgroundImageView.image = UIImage(imageIdentifier: .MapPinPink)
+            view?.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGreen)
             view?.bikeImageView.sd_setImageWithURL(url)
             return view
         }
@@ -285,6 +285,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         self.detailView.hidden = false
+        
+        let mapPin = view.annotation as! BikeAnnotationView
+        mapPin.backgroundImageView.image = UIImage(imageIdentifier: .MapPinPink)
+        
         
         mapView.setCenterCoordinate(view.annotation.coordinate, animated: true)
         bikeCoordinate = view.annotation.coordinate

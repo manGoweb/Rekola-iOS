@@ -104,7 +104,7 @@ class BorrowedBikeViewController: UIViewController {
         
         let codeLabel = UILabel()
         view.addSubview(codeLabel)
-        codeLabel.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 70)
+        codeLabel.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 67)
         codeLabel.textAlignment = .Center
         codeLabel.snp_makeConstraints { make in
             make.top.equalTo(rectangle.snp_top).offset(5)

@@ -24,7 +24,7 @@ class EquipmentViewController: UIViewController {
         
         let infoEquipmentLabel = UILabel()
         container.addSubview(infoEquipmentLabel)
-        infoEquipmentLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
+        infoEquipmentLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 19)
         infoEquipmentLabel.textColor = .rekolaBlackColor()
         infoEquipmentLabel.snp_makeConstraints { make in
             make.top.equalTo(container).offset(L.verticalSpacing)
