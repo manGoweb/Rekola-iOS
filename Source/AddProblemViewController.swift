@@ -183,8 +183,6 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         reportProblemButton.addTarget(self, action: "reportProblem:", forControlEvents: .TouchUpInside)
         
         locationManager.delegate = self
-//        locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
-//        locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
         locationManager.requestWhenInUseAuthorization()
     }
     
@@ -208,8 +206,6 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
             let location = self.locationManager.location.coordinate
         
             let reportLog = BikeReportProblem(type: bikeID, title: title, description: description, disabling: disabling, location: location)
-            
-//            println("Title: \(reportLog.title)\n description: \(reportLog.description) \n disabling: \(reportLog.disabling), \n location: \(reportLog.location.latitude)== \(reportLog.location.longitude)")
             
             API.sendIssue(id: bike.id, issue: reportLog).start(error: { error in
                 self.problemPendingPost.value = false
@@ -247,6 +243,9 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         self.textField.placeholder = "" //mozna tohle smazat
         self.textField.text = problem.title
         self.issueID = problem.id
+        if textField.text == "" {
+            textField.layer.borderColor = UIColor.grayColor().CGColor
+        }
     }
     
 //    MARK: UITextFieldDelegate
@@ -256,6 +255,12 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
         vc.delegate = self
         presentViewController(vc, animated: true, completion: nil)
         return false
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField.text.isEmpty {
+            textField.layer.borderColor = UIColor.grayColor().CGColor
+        }
     }
 
 //    MARK: UITextViewDelegate
@@ -273,6 +278,12 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
             dispatch_async(dispatch_get_main_queue()) {
                 self.scrollView.scrollToBottom(true)
             }
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.layer.borderColor = UIColor.grayColor().CGColor
         }
     }
 }

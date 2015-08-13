@@ -11,7 +11,6 @@ import Foundation
 import SnapKit
 
 class ProblemCell: UITableViewCell {
-    weak var typeLabel: UILabel!
     weak var nameLabel: UILabel!
     weak var descriptionLabel: UILabel!
     weak var line: UIView!
@@ -23,26 +22,14 @@ class ProblemCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        let newTypeLabel = UILabel()
-        newTypeLabel.textColor = .rekolaGreenColor()
-        newTypeLabel.textAlignment = .Left
-        newTypeLabel.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 16)
-        contentView.addSubview(newTypeLabel)
-        newTypeLabel.snp_makeConstraints{ make in
-            make.left.top.right.equalTo(self.contentView).inset(L.contentInsets)
-        }
-        self.typeLabel = newTypeLabel
-        
         let newNameLabel = UILabel()
         newNameLabel.textColor = .blackColor()
         newNameLabel.textAlignment = .Left
         newNameLabel.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 15)
         contentView.addSubview(newNameLabel)
         newNameLabel.snp_makeConstraints { make in
-            make.top.equalTo(newTypeLabel.snp_bottom).offset(15)
-            make.left.right.equalTo(self.contentView).inset(L.contentInsets)
+            make.left.top.right.equalTo(self.contentView).inset(L.contentInsets)
         }
-        
         self.nameLabel = newNameLabel
         
         let newDescriptionLabel = UILabel()
@@ -57,16 +44,6 @@ class ProblemCell: UITableViewCell {
         }
         
         self.descriptionLabel = newDescriptionLabel
-        
-        let newLine = UIView()
-        newLine.backgroundColor = .rekolaGrayLineColor()
-        contentView.addSubview(newLine)
-        newLine.snp_makeConstraints { make in
-            make.top.equalTo(newDescriptionLabel.snp_bottom).offset(5)
-            make.left.right.equalTo(contentView).inset(L.contentInsets)
-            make.height.equalTo(1)
-        }
-        self.line = newLine
     }
     
     override func prepareForReuse() {

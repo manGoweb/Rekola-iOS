@@ -378,14 +378,28 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         return (stringDate, stringTime)
     }
     
-    //    sortingProblems TODO!!!!!!!!!!
     func sortProblems() {
-        var sortedIssues = bike.issues
-        sortedIssues.sort({$0 < $1})
+        var sortedIssues = bikeIssues
+        sortedIssues.sort({$0.type < $1.type})
         
-        var prevElem = bike.issues[0]
-        for index in 1..<sortedIssues.count {
-            if prevElem
+        println("Sorted: \(sortedIssues)")
+        
+//        creating sortedBikeIssues
+        let unrealBike = BikeIssue(id: 0, title: "", status: "", type: -1, updates: [])
+        var prevElem = unrealBike //unrealBike nemuze nastat (type -1)
+        var indexOuterArray = -1 //index for outer array
+        for index in 0..<sortedIssues.count {
+            if sortedIssues[index].type == prevElem.type {
+                sortedBikeIssues[indexOuterArray].append(sortedIssues[index])
+            } else if sortedIssues[index].type > prevElem.type {
+                prevElem = sortedIssues[index]
+                sortedBikeIssues.append([])
+                println("Pocet: \(sortedBikeIssues.count)")
+                indexOuterArray++ //posun do dalsiho pole
+                sortedBikeIssues[indexOuterArray].append(sortedIssues[index])
+            } else {
+//                nenastane (mame setridene pole od nejmensiho prvku
+            }
         }
     }
     
@@ -453,8 +467,12 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
-        } else if section == 1 {
-            return bikeIssues.count
+        } else {
+            for index in 0..<sortedBikeIssues.count {
+                if section-1 == index {
+                    return sortedBikeIssues[index].count
+                }
+            }
         }
         
         return 0
@@ -462,7 +480,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! UITableViewCell //for section 0
-        let problemCell = tableView.dequeueReusableCellWithIdentifier(problemCellIdentifier) as! ProblemCell //for section 1
+        let problemCell = tableView.dequeueReusableCellWithIdentifier(problemCellIdentifier) as! ProblemCell//for section 1
         
         
         if indexPath.section == 0 {
@@ -472,21 +490,15 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             }
             return cell
         } else {
-            //            format
-            problemCell.descriptionLabel.numberOfLines = 0
-            problemCell.descriptionLabel.textColor = .grayColor()
-            problemCell.textLabel?.font = UIFont.boldSystemFontOfSize(14)
-            
+
             //            dateFormat
-            let date = bikeIssues[indexPath.row].updates[0].issuedAt
+            let date = sortedBikeIssues[indexPath.section - 1][indexPath.row].updates[0].issuedAt
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = " / dd.MM.YYYY / HH:mm"
             let dateString = dateFormatter.stringFromDate(date)
-            
+
             //            setting text
-            let issue = bikeIssues[indexPath.row]
-            
-            problemCell.typeLabel.text = issue.title
+            let issue = sortedBikeIssues[indexPath.section - 1][indexPath.row]
             problemCell.nameLabel.text = issue.updates[0].author + dateString
             problemCell.descriptionLabel.text = issue.updates[0].description
             
@@ -495,7 +507,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2 //one section is required for the upper part of screen, rest is for bike issues
+        return sortedBikeIssues.count + 1 //one section is required for the upper part of screen, rest is for bike issues
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -505,9 +517,18 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         return 100
     }
     
-    //    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //        return ""
-    //    }
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return ""
+        } else {
+            for index in 0..<sortedBikeIssues.count {
+                if section-1 == index {
+                    return sortedBikeIssues[index][0].title
+                }
+            }
+        }
+        return ""
+    }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         
@@ -520,9 +541,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        //        if section != 0 {
-        //            return 18
-        //        }
+        if section != 0 {
+            return 18
+        }
         return 0
     }
     
