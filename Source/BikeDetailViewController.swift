@@ -296,14 +296,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     let collectionIdentifier = "CollectionIdentifier"
     var isUnmovable = false
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
-        deleteLineUnderNavBar()
 
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -377,6 +370,15 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         loadIssues()
         loadProblems()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        //        self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
+        deleteLineUnderNavBar()
+        
     }
     
     func deleteLineUnderNavBar() {

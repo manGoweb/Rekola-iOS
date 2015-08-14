@@ -72,6 +72,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let textField = Theme.textField()
 		textField.returnKeyType = .Done
+        textField.keyboardType = UIKeyboardType.NumberPad
         textField.textAlignment = .Center
         container.addSubview(textField)
         textField.snp_makeConstraints { make in
@@ -109,6 +110,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         titleLabel.text = NSLocalizedString("LOCK_codeInfo", comment: "")
         subtitleLabel.text = NSLocalizedString("LOCK_codeDescription", comment: "")
         textField.delegate = self
+        textField.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 20)
+        
         textField.placeholder = NSLocalizedString("LOCK_enterCode", comment: "")
         borrowButton!.setTitle(NSLocalizedString("LOCK_borrow", comment: ""), forState: .Normal)
         borrowButton.addTarget(self, action: "borrowBike:", forControlEvents: .TouchUpInside)

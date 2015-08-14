@@ -284,32 +284,55 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-        self.detailView.hidden = false
-        
-        let mapPin = view.annotation as! BikeAnnotationView
-        mapPin.backgroundImageView.image = UIImage(imageIdentifier: .MapPinPink)
-        
-        
-        mapView.setCenterCoordinate(view.annotation.coordinate, animated: true)
-        bikeCoordinate = view.annotation.coordinate
-        
-        let bikeAnnotation = view.annotation as! MapPin
-        let url = NSURL(string: bikeAnnotation.iconUrl)
-        
-        bikeImage.sd_setImageWithURL(url)
-        bikeNameLabel.text = bikeAnnotation.title
-        bikeDistanceLabel.text = bikeAnnotation.distance
-        
-        if bikeAnnotation.bikeDescription.isEmpty {
-            bikeDescriptionLabel.hidden = true
-        } else {
+        if view.annotation is MapPin {
+            self.detailView.hidden = false
+            
+            let mapPin = view as! BikeAnnotationView
+            mapPin.backgroundImageView.image = UIImage(imageIdentifier: .MapPinPink)
+            
+            
+            mapView.setCenterCoordinate(view.annotation.coordinate, animated: true)
+            bikeCoordinate = view.annotation.coordinate
+            
+            let bikeAnnotation = view.annotation as! MapPin
+            let url = NSURL(string: bikeAnnotation.iconUrl)
+            
+            bikeImage.sd_setImageWithURL(url)
+            bikeNameLabel.text = bikeAnnotation.title
+            bikeDistanceLabel.text = bikeAnnotation.distance
+            
+            if bikeAnnotation.bikeLocationNote!.isEmpty {
+                bikeDescriptionLabel.snp_remakeConstraints{ make in //zkusit jestli to pak nemusi vratit zpatky
+                    make.top.equalTo(bikeDistanceLabel.snp_bottom).offset(10)
+                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+                    make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
+                }
+                detailView.setNeedsLayout()
+            } else {
+                bikeNoteLabel.text = bikeAnnotation.bikeLocationNote
+            }
             bikeDescriptionLabel.text = bikeAnnotation.bikeDescription
         }
-        bikeNoteLabel.text = bikeAnnotation.bikeLocationNote
     }
     
     func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {
-        detailView.hidden = true
+        if view.annotation is MapPin {
+            let mapPinView = view as! BikeAnnotationView
+            mapPinView.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGreen)
+            
+            let bikeAnnotation = view.annotation as! MapPin
+            
+            if bikeAnnotation.bikeLocationNote!.isEmpty {
+                bikeDescriptionLabel.snp_remakeConstraints{ make in //zkusit jestli to pak nemusi vratit zpatky
+                    make.top.equalTo(bikeNoteLabel.snp_bottom).offset(10)
+                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+                    make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
+                }
+                detailView.setNeedsLayout()
+            }
+            
+            detailView.hidden = true
+        }
     }
     
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {

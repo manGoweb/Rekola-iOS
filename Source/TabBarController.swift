@@ -45,7 +45,8 @@ class TabItem : UIButton, ACKTabBarItem {
     required init(controller: UIViewController, images: (UIImage!, UIImage!) ) {
         self.viewController = controller
         super.init(frame: CGRectZero)
-        self.setBackgroundImage(UIImage(color:selectedBackgroundColor), forState: UIControlState.Selected | UIControlState.Highlighted)
+        self.setBackgroundImage(UIImage(color:selectedBackgroundColor), forState: UIControlState.Highlighted)
+        self.setBackgroundImage(UIImage(color:selectedBackgroundColor), forState: UIControlState.Selected)
         self.setBackgroundImage(UIImage(color:deselectedBackgroundColor), forState: UIControlState.Normal)
         self.setImage(images.0, forState: UIControlState.Selected)
         self.setImage(images.1, forState: UIControlState.Normal)
@@ -55,12 +56,13 @@ class TabItem : UIButton, ACKTabBarItem {
         self.addEventHandler({[weak self] (item) -> Void in
             self?.select(true)
             }, forControlEvents: UIControlEvents.TouchUpInside)
-        
     }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     //MARK: TabBar
     
@@ -97,6 +99,7 @@ class TabItem : UIButton, ACKTabBarItem {
     
     
     func playAnimation() {
+        
         let bounceAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
         bounceAnimation.values = [1.0 ,1.4, 0.9, 1.15, 0.95, 1.02, 1.0]
         bounceAnimation.duration = NSTimeInterval(0.5)
@@ -140,7 +143,6 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
     }
     
     
-    
     override func loadView() {
         self.view = UIView()
         
@@ -155,7 +157,7 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         var last:  UIView? = nil
         for item in items {
             tabbar.addSubview(item.view)
-            item.view.snp_makeConstraints{ make /*(make) -> Void*/ in
+            item.view.snp_makeConstraints { make in
                 make.bottom.top.equalTo(tabbar)
                 if let last = last {
                     make.left.equalTo(last.snp_right)
@@ -163,7 +165,6 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
                     make.left.equalTo(tabbar)
                 }
                 make.width.equalTo(tabbar).dividedBy(items.count)
-                
             }
             last = item.view
         }
@@ -210,17 +211,22 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         addChildViewController(newC)
         self.items[index].didSelect(true)
         self.items[self.selectedIndex].deselect()
-        self.transitionFromViewController(selectedController, toViewController: newC, duration: 0.25, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-            newC.view.snp_makeConstraints { make in
-                make.center.width.height.equalTo(containerView)
+        view.userInteractionEnabled = false
+        //this way without animation it works ok, if duration is greater than 0.0, theres a graphical glitch with navigationBar if newC is a nav controller + it crashes on multitouch (2 simultaneous transitions)
+        self.transitionFromViewController(selectedController, toViewController: newC, duration: 0.0, options: UIViewAnimationOptions.TransitionNone, animations: { () -> Void in
+            UIView.performWithoutAnimation {
+                newC.view.snp_makeConstraints { make in
+                    make.center.width.height.equalTo(containerView)
+                }
+                self.containerView.layoutIfNeeded()
             }
-            
             }) { (finished) in
+                
                 self.selectedController.removeFromParentViewController()
                 newC.didMoveToParentViewController(self)
                 self.selectedController = newC
                 self.selectedIndex = index
-                
+                self.view.userInteractionEnabled = true
         }
         
         
@@ -228,13 +234,9 @@ class ACKTabBarController :UIViewController, ACKTabBar  {
         
     }
     
-    // func itemForIndex(index: Int) -> ACKTabBarItem {
-    
-    // }
-    
-    
     
     
     
 }
+
 

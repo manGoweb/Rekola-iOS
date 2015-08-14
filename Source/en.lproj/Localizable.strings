@@ -9,7 +9,7 @@
 "LOCK_codeInfo" = "Vlož 6 místný kód a obdržíš kód zámku a můžeš začít používat kolo.";
 "LOCK_codeDescription" = "Kód najdeš na zadním blatníku nebo na zadní části rámu.";
 "LOCK_enterCode" = "Vlož 6 místný kód";
-"LOCK_borrow" = "Půjčit";
+"LOCK_borrow" = "PŮJČIT";
 "SIGNIN_email" = "Email";
 "SIGNIN_passwd" = "Heslo";
 "SIGNIN_signin" = "Přihlásit se";
