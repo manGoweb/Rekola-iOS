@@ -113,11 +113,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 
 		
 		self.emailTextField.attributedPlaceholder = NSAttributedString(string:NSLocalizedString("SIGNIN_email", comment: ""),
-			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(0.6)])
 		emailTextField.returnKeyType = .Next
 		
 		self.passwordTextField.attributedPlaceholder = NSAttributedString(string:NSLocalizedString("SIGNIN_passwd", comment: ""),
-			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+			attributes:[NSForegroundColorAttributeName: UIColor.whiteColor().colorWithAlphaComponent(0.6)])
         self.passwordTextField.secureTextEntry = true
 		passwordTextField.returnKeyType = .Go
 		
@@ -199,11 +199,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     
 //    MARK: UITextFieldDelegate
     func textFieldDidBeginEditing(textField: UITextField) {
-        textField.backgroundColor = .whiteColor()
+			textField.textColor = .darkTextColor()
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        textField.backgroundColor = .rekolaPinkTextFieldColor()
+        textField.textColor = .whiteColor()
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
