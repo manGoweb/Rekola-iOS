@@ -101,6 +101,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "AdHoc"
+      customArchiveName = "AdHoc"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
