@@ -11,6 +11,8 @@ import UIKit
 class EquipmentCollectionViewCell: UICollectionViewCell {
     weak var equipmentImage: UIImageView!
     
+    static let imageWidth = 31
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -19,7 +21,7 @@ class EquipmentCollectionViewCell: UICollectionViewCell {
         newImageView.snp_makeConstraints { make in
             make.top.equalTo(contentView)
             make.height.equalTo(31)
-            make.width.equalTo(31)
+            make.width.equalTo(EquipmentCollectionViewCell.imageWidth)
         }
         equipmentImage = newImageView
     }

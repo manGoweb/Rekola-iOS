@@ -198,6 +198,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
         let layoutForCollectionView = UICollectionViewFlowLayout()
         layoutForCollectionView.scrollDirection = UICollectionViewScrollDirection.Horizontal
+//        layoutForCollectionView.minimumInteritemSpacing = CGFloat(collectionViewSpacing)
+        layoutForCollectionView.minimumLineSpacing = CGFloat(collectionViewSpacing)
         
         let equipmentCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layoutForCollectionView)
         container.addSubview(equipmentCollectionView)
@@ -205,7 +207,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         equipmentCollectionView.snp_makeConstraints { make in
             make.top.equalTo(equipmentLabel.snp_bottom).offset(15)
             make.left.right.equalTo(0)
-            make.height.equalTo(30) //26
+            make.height.equalTo(32)
         }
         self.equipmentCollectionView = equipmentCollectionView
         
@@ -294,8 +296,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     let cellIdentifier = "cell"
     let problemCellIdentifier = "ProblemCell"
     let collectionIdentifier = "CollectionIdentifier"
+    let collectionViewSpacing = 20
     var isUnmovable = false
-    
 
     
     override func viewDidLoad() {
@@ -379,6 +381,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         //        self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
         deleteLineUnderNavBar()
         
+//        UICollectionView layout
+
+        //        equipmentCollectionView.collectionViewLayout.
     }
     
     func deleteLineUnderNavBar() {
@@ -502,6 +507,19 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         self.navigationController?.navigationBar .lt_reset()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+//        settings fot collectionView layout
+        let padding = equipmentCollectionView.bounds.size.width - CGFloat(bike.equipment.count * (EquipmentCollectionViewCell.imageWidth) + (bike.equipment.count - 1)*collectionViewSpacing)
+        
+        println(equipmentCollectionView)
+        
+        if let layout = equipmentCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.sectionInset = UIEdgeInsetsMake(0, padding/2, 0, 0)
+        }
+    }
+    
     //    MARK: UITableViewDelegate + UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
@@ -515,6 +533,10 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         }
         
         return 0
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+
     }
     
     func problemDateFormat(date: NSDate, name: String) -> NSAttributedString {
@@ -611,9 +633,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     
 //    MARK: UICollectionViewDelegate
     
-//    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-//        return sectionInsets
-//    }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         return CGSize(width: 31, height: 31)
