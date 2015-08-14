@@ -250,6 +250,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     //    MARK: MKMapViewDelegate
+    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+        let zoomLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        
+        let visible: CLLocationDistance = 1000
+        
+        let region = MKCoordinateRegionMakeWithDistance(zoomLocation, visible, visible)
+        mapView.setRegion(region, animated: true)
+        
+    }
+    
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if let annotation = annotation as? MapPin {
             let identifier = "pin"
