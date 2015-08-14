@@ -28,6 +28,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		self.bikeImageView = iv
 		
 		let emailTF = Theme.pinkTextField()
+		emailTF.textColor = .whiteColor()
 		view.addSubview(emailTF)
 		emailTF.snp_makeConstraints { make in
 			make.top.equalTo(iv.snp_bottom).offset(L.verticalSpacing)//.priority(250)
@@ -39,6 +40,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		self.emailTextField = emailTF
 		
 		let passwdTF = Theme.pinkTextField()
+		passwdTF.textColor = .whiteColor()
 		view.addSubview(passwdTF)
 		passwdTF.snp_makeConstraints { make in
 			make.top.equalTo(emailTF.snp_bottom).offset(L.verticalSpacing)
