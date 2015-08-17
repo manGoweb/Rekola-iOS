@@ -8,8 +8,6 @@
 # Icon must end with two \r
 Icon
 
-Carthage/Checkouts
-
 # Thumbnails
 ._*
 
@@ -54,22 +52,8 @@ DerivedData
 Pods/
 Podfile.lock
 
-### Xcode ###
-build/
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-xcuserdata
-*.xccheckout
-*.moved-aside
-DerivedData
-*.xcuserstate
-
+Carthage/Checkouts
+!Carthage/Build
 
 enviroment.plist
 environment_preprocess.h
