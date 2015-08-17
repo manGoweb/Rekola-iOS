@@ -1060,7 +1060,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "54f9eee0-c4c1-428b-995d-aa950194d993";
+				PROVISIONING_PROFILE = "b3769c7f-bb66-4ade-928c-9ed39c659560";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
@@ -1088,7 +1088,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "23582192-8b06-4698-9c3f-23b4206ed2e8";
+				PROVISIONING_PROFILE = "8eb23d06-09dc-42b2-a49e-b1c9d774aff9";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
