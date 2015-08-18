@@ -378,12 +378,12 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        //        self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
-        deleteLineUnderNavBar()
+//        self.navigationController!.navigationBar.tintColor = .rekolaPinkColor()
+////        self.navigationController!.navigationBar.backgroundColor = .whiteColor()
+////        self.navigationController!.navigationBar.barTintColor = .whiteColor()
         
-//        UICollectionView layout
+        deleteLineUnderNavBar()
 
-        //        equipmentCollectionView.collectionViewLayout.
     }
     
     func deleteLineUnderNavBar() {
@@ -484,6 +484,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         if offsetY > changePoint {
             let alpha = min(1, 1-((changePoint + 64 - offsetY)/64))
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(alpha))
+            self.navigationController!.navigationBar.barTintColor = .rekolaGreenColor()
             self.navigationController?.navigationBar.tintColor = .whiteColor()
             
             let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .DetailLockScroll), style: .Plain, target: self, action: "lockBike:")
@@ -493,6 +494,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         } else {
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(0))
             self.navigationController?.navigationBar.tintColor = .rekolaPinkColor()
+            self.navigationController?.navigationBar.barTintColor = .whiteColor()
             UIApplication.sharedApplication().statusBarStyle = .Default
             let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
             self.navigationItem.rightBarButtonItem = lockButton

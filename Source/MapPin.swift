@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 
 class MapPin: NSObject, MKAnnotation {
+    let bike: Bike
     let title: String
     let bikeDescription: String
     let bikeLocationNote: String?
@@ -18,6 +19,7 @@ class MapPin: NSObject, MKAnnotation {
     let distance: String
     
     init(bike: Bike) {
+        self.bike = bike
         self.title = bike.name
         self.bikeDescription = bike.description
         self.bikeLocationNote = bike.location.note
