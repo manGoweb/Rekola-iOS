@@ -36,24 +36,36 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         self.detailView = detailView
         
-        let bikeImage = UIImageView(/*image: UIImage(imageIdentifier: .bike)*/)
-        detailView.addSubview(bikeImage)
-        bikeImage.contentMode = .ScaleAspectFit
-        bikeImage.setContentHuggingPriority(1000, forAxis: .Horizontal)
-        bikeImage.snp_makeConstraints { make in
-            make.top.equalTo(view).offset(70 - 64)
+//        let bikeImage = UIImageView(/*image: UIImage(imageIdentifier: .bike)*/)
+//        detailView.addSubview(bikeImage)
+//        bikeImage.contentMode = .ScaleAspectFit
+//        bikeImage.setContentHuggingPriority(1000, forAxis: .Horizontal)
+//        bikeImage.snp_makeConstraints { make in
+//            make.top.equalTo(view).offset(70 - 64)
+//            make.left.equalTo(view).offset(L.horizontalSpacing)
+//            make.width.equalTo(44)
+//            make.height.equalTo(33)
+//        }
+//        self.bikeImage = bikeImage
+        
+        let bikeButton = UIButton()
+        detailView.addSubview(bikeButton)
+        bikeButton.imageView?.contentMode = .ScaleAspectFit
+        bikeButton.setContentHuggingPriority(1000, forAxis: .Horizontal)
+        bikeButton.snp_makeConstraints { make in
+            make.top.equalTo(view).offset(70-64)
             make.left.equalTo(view).offset(L.horizontalSpacing)
             make.width.equalTo(44)
             make.height.equalTo(33)
         }
-        self.bikeImage = bikeImage
+        self.bikeButton = bikeButton
         
         let nameLabel = Theme.whiteLabel()
         detailView.addSubview(nameLabel)
         nameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 18)
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70 - 64)
-            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
             
         }
         self.bikeNameLabel = nameLabel
@@ -63,7 +75,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         distanceLabel.font = UIFont(name: Theme.SFFont.Italic.rawValue, size: 16)
         distanceLabel.snp_makeConstraints { make in
             make.top.equalTo(nameLabel.snp_bottom)
-            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
         }
         self.bikeDistanceLabel = distanceLabel
         
@@ -73,7 +85,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         noteLabel.numberOfLines = 0
         noteLabel.snp_makeConstraints { make in
             make.top.equalTo(distanceLabel.snp_bottom).offset(10)
-            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
         }
         self.bikeNoteLabel = noteLabel
@@ -86,7 +98,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.snp_makeConstraints { make in
             make.top.equalTo(noteLabel.snp_bottom).offset(10)
-            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
             make.right.bottom.equalTo(detailView).inset(L.contentInsets)
         }
         self.bikeDescriptionLabel = descriptionLabel
@@ -101,6 +113,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var bikeDistanceLabel: UILabel!
     weak var bikeNoteLabel: UILabel!
     weak var bikeImage: UIImageView!
+    weak var bikeButton: UIButton!
     var bikes: [Bike] = [] {
         didSet {
             var bikesMapPin: [MapPin] = []
@@ -187,10 +200,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         UIApplication.sharedApplication().statusBarStyle = .Default
     }
     
-//    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-//        return .LightContent
-//    }
-    
 //    API calling
     let bikesRequestPending = MutableProperty(false)
     func loadBikes(coordinate: CLLocationCoordinate2D) {
@@ -224,6 +233,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.setCenterCoordinate(mapView.userLocation.location.coordinate, animated: true)
     }
     
+    func showBikeDetail(sender: AnyObject?) {
+        let button = sender as! UIButton
+//        let vc = BikeDetailViewController(bike: button.bike)
+//        showViewController(vc, sender: sender)
+    }
+    
     func drawPolygon(var coords: [[CLLocationCoordinate2D]]) {
         for zones in coords {
             var tmpArray = zones
@@ -250,15 +265,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     //    MARK: MKMapViewDelegate
-    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
-        let zoomLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        
-        let visible: CLLocationDistance = 1000
-        
-        let region = MKCoordinateRegionMakeWithDistance(zoomLocation, visible, visible)
-        mapView.setRegion(region, animated: true)
-        
-    }
+//    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+//        let zoomLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+//        
+//        let visible: CLLocationDistance = 1000
+//        
+//        let region = MKCoordinateRegionMakeWithDistance(zoomLocation, visible, visible)
+//        mapView.setRegion(region, animated: true)
+//        
+//    }
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if let annotation = annotation as? MapPin {
@@ -307,14 +322,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let bikeAnnotation = view.annotation as! MapPin
             let url = NSURL(string: bikeAnnotation.iconUrl)
             
-            bikeImage.sd_setImageWithURL(url)
+            let imageView = UIImageView()
+            imageView.sd_setImageWithURL(url)
+            bikeButton.setBackgroundImage(imageView.image, forState: .Normal)
+//            bikeButton.bike(myBike: bikeAnnotation.bike)
+//            bikeImage.image = imageView.image
+            
             bikeNameLabel.text = bikeAnnotation.title
             bikeDistanceLabel.text = bikeAnnotation.distance
             
             if bikeAnnotation.bikeLocationNote!.isEmpty {
-                bikeDescriptionLabel.snp_remakeConstraints{ make in //zkusit jestli to pak nemusi vratit zpatky
+                bikeNoteLabel.hidden = true
+                bikeDescriptionLabel.snp_remakeConstraints{ make in
                     make.top.equalTo(bikeDistanceLabel.snp_bottom).offset(10)
-                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+                    make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
                     make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
                 }
                 detailView.setNeedsLayout()
@@ -333,9 +354,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let bikeAnnotation = view.annotation as! MapPin
             
             if bikeAnnotation.bikeLocationNote!.isEmpty {
-                bikeDescriptionLabel.snp_remakeConstraints{ make in //zkusit jestli to pak nemusi vratit zpatky
+                bikeNoteLabel.hidden = false
+                bikeDescriptionLabel.snp_remakeConstraints{ make in
                     make.top.equalTo(bikeNoteLabel.snp_bottom).offset(10)
-                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+                    make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
                     make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
                 }
                 detailView.setNeedsLayout()
