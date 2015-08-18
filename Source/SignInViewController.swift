@@ -124,6 +124,20 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
         self.signInButton.setTitle(NSLocalizedString("SIGNIN_signin", comment: ""), forState: .Normal)
 		self.signInButton.addTarget(self, action: "signIn:", forControlEvents: .TouchUpInside)
 		
+        loggingIn.producer
+            |> skipRepeats { (prev, curr) in
+                return 	prev == curr
+            }
+            |> start(next: { [weak self] in
+                if $0{
+                    self?.view.userInteractionEnabled = false
+                    SVProgressHUD.show()
+                } else {
+                    self?.view.userInteractionEnabled = true
+                    SVProgressHUD.dismiss()
+                }
+                })
+        
 		self.registerButton.setTitle(NSLocalizedString("SIGNIN_register", comment: ""), forState: .Normal)
 		
 		self.forgotPasswd.setTitle(NSLocalizedString("SIGNIN_lostPasswd", comment: ""), forState: .Normal)
