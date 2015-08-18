@@ -28,9 +28,7 @@ extension UIFont {
 
 
 extension UIButton {
-    class func bike(myBike: Bike) -> Bike {
-        return myBike
-    }
+
 }
 
 extension UIColor {

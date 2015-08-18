@@ -152,7 +152,9 @@ enum Router : URLRequestConvertible {
             return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: params).0
 		case .PasswordRecovery(email: let email):
 			return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: ["email" : email]).0
-		case .BorrowBike(code: let code, lat: let lat, lon: let lon):
+        case .Bikes(dictionary: let dictionary):
+            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: dictionary).0
+        case .BorrowBike(code: let code, lat: let lat, lon: let lon):
 			return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: ["bikeCode" : code, "lat" : lat, "lng" : lon]).0
 		case .ReturnBike(_, let info):
 			return Alamofire.ParameterEncoding.JSON.encode(mutableURLRequest, parameters: ["location" : info.jsonRepresentation]).0
@@ -197,6 +199,8 @@ class RekolaAPI {
             Alamofire.request(route)
 					.validate()
 					.response { (request, response, data, error) in
+//                        logD(request)
+//                        logD(response)
 					if let error = error {
 						var newInfo = NSMutableDictionary(object: response ?? NSNull(), forKey: APIErrorKeys.response)
 						newInfo.addEntriesFromDictionary([APIErrorKeys.responseData : data ?? NSNull()])

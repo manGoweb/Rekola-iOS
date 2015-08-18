@@ -107,7 +107,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var detailView: UIView!
     weak var container: UIView!
     weak var mapView: MKMapView!
-    weak var navItem: UINavigationItem! //WTF?
     weak var bikeNameLabel: UILabel!
     weak var bikeDescriptionLabel: UILabel!
     weak var bikeDistanceLabel: UILabel!
@@ -129,24 +128,20 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var usersCoordinate = CLLocationCoordinate2D(latitude: 50.079167, longitude: 14.428414) //default coordinate
     var boundaries = Boundaries(regions: [], zones: [])
     var coordForBoundaries: [[CLLocationCoordinate2D]] = []
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
+    var sendingBike = Bike?()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
         
-        //        navigationBar settings + tintColor
+//        navigationBar settings + tintColor
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         navigationItem.title = NSLocalizedString("MAP_title", comment: "")
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
-        navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
+//        navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
         navigationController?.navigationBar.barStyle = .Black
         navigationController?.navigationBar.translucent = false
         
@@ -167,21 +162,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
         locationManager.requestWhenInUseAuthorization()
         
-        //        set users coordinate and calling API
+//        set users coordinate and calling API
         
-        bikesRequestPending.producer
-            |> skipRepeats { (prev, curr) in
-                return 	prev == curr
-            }
-            |> start(next: { [weak self] in
-                if $0{
-                    self?.view.userInteractionEnabled = false
-                    SVProgressHUD.show()
-                } else {
-                    self?.view.userInteractionEnabled = true
-                    SVProgressHUD.dismiss()
-                }
-                })
+//        bikesRequestPending.producer
+//            |> skipRepeats { (prev, curr) in
+//                return 	prev == curr
+//            }
+//            |> start(next: { [weak self] in
+//                if $0{
+//                    self?.view.userInteractionEnabled = false
+//                    SVProgressHUD.show()
+//                } else {
+//                    self?.view.userInteractionEnabled = true
+//                    SVProgressHUD.dismiss()
+//                }
+//                })
         
         if locationManager.location != nil {
             usersCoordinate = locationManager.location.coordinate
@@ -194,10 +189,26 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
+        self.navigationController?.navigationBar.tintColor = .whiteColor()
+        deleteLineUnderNavBar()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
+        self.navigationController?.navigationBar.barTintColor = .whiteColor()
+        self.navigationController?.navigationBar.tintColor = .rekolaPinkColor()
+        
         UIApplication.sharedApplication().statusBarStyle = .Default
+    }
+    
+    func deleteLineUnderNavBar() {
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
     }
     
 //    API calling
@@ -234,9 +245,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func showBikeDetail(sender: AnyObject?) {
-        let button = sender as! UIButton
-//        let vc = BikeDetailViewController(bike: button.bike)
-//        showViewController(vc, sender: sender)
+        if sender is UIButton {
+            if let bikeDetail = sendingBike {
+                let vc = BikeDetailViewController(bike: bikeDetail)
+                showViewController(vc, sender: sender)
+            }
+        }
     }
     
     func drawPolygon(var coords: [[CLLocationCoordinate2D]]) {
@@ -325,8 +339,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let imageView = UIImageView()
             imageView.sd_setImageWithURL(url)
             bikeButton.setBackgroundImage(imageView.image, forState: .Normal)
-//            bikeButton.bike(myBike: bikeAnnotation.bike)
-//            bikeImage.image = imageView.image
+            sendingBike = bikeAnnotation.bike
+            bikeButton.addTarget(self, action: "showBikeDetail:", forControlEvents: .TouchUpInside)
             
             bikeNameLabel.text = bikeAnnotation.title
             bikeDistanceLabel.text = bikeAnnotation.distance
