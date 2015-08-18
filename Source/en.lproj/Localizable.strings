@@ -6,6 +6,7 @@
   Copyright (c) 2015 Ackee s.r.o. All rights reserved.
 */
 
+"ERROR" = "Chyba";
 "LOCK_codeInfo" = "Vlož 6 místný kód a obdržíš kód zámku a můžeš začít používat kolo.";
 "LOCK_codeDescription" = "Kód najdeš na zadním blatníku nebo na zadní části rámu.";
 "LOCK_enterCode" = "Vlož 6 místný kód";
@@ -54,6 +55,8 @@
 "ADDPROBLEM_description" = "Detailní popis závady";
 "ADDPROBLEM_unmovable" = "Kolo je nepojízdné";
 "ADDPROBLEM_reportProblem" = "Nahlásit problém";
+"ADDPROBLEM_problemSent" = "Problém odeslán";
+"ADDPROBLEM_fillEverything" = "Vyplň všechna pole";
 
 "Person" = "Person";
 "Done" = "Done";

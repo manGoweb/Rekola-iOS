@@ -12,9 +12,13 @@ class RekolaErrorHandler : ErrorHandlerType {
 	func errorHandlingStep(error: NSError, severity: ErrorSeverity, sender: AnyObject?, userInfo: [NSObject : AnyObject]?, completion: ErrorHandlerCompletion?) -> (hasCompletion: Bool, stop: Bool) {
 		
 		if let responseData = error.userInfo?[APIErrorKeys.responseData] as? NSData {
-			let msg = NSString(data: responseData, encoding: NSUTF8StringEncoding) as String?
-				let a = UIAlertView(title: NSLocalizedString("ERROR", comment: ""), message: msg, delegate: nil, cancelButtonTitle: NSLocalizedString("OK", comment: ""))
-			return (false, true)
+            if let json = NSJSONSerialization.JSONObjectWithData(responseData, options: .AllowFragments, error: nil) as? [String : AnyObject] {
+                if let msg = json["message"] as? String {
+                    let a = UIAlertView(title: NSLocalizedString("ERROR", comment: ""), message: msg, delegate: nil, cancelButtonTitle: NSLocalizedString("OK", comment: ""))
+                    a.show()
+                }
+            }
+            return (false, false)
 		}
 		
 		return (false, false)

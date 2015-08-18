@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 import UIKit
 import ReactiveCocoa
+import CoreLocation
 
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -36,36 +37,36 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         self.detailView = detailView
         
-//        let bikeImage = UIImageView(/*image: UIImage(imageIdentifier: .bike)*/)
-//        detailView.addSubview(bikeImage)
-//        bikeImage.contentMode = .ScaleAspectFit
-//        bikeImage.setContentHuggingPriority(1000, forAxis: .Horizontal)
-//        bikeImage.snp_makeConstraints { make in
-//            make.top.equalTo(view).offset(70 - 64)
-//            make.left.equalTo(view).offset(L.horizontalSpacing)
-//            make.width.equalTo(44)
-//            make.height.equalTo(33)
-//        }
-//        self.bikeImage = bikeImage
-        
-        let bikeButton = UIButton()
-        detailView.addSubview(bikeButton)
-        bikeButton.imageView?.contentMode = .ScaleAspectFit
-        bikeButton.setContentHuggingPriority(1000, forAxis: .Horizontal)
-        bikeButton.snp_makeConstraints { make in
-            make.top.equalTo(view).offset(70-64)
+        let bikeImage = UIImageView(/*image: UIImage(imageIdentifier: .bike)*/)
+        detailView.addSubview(bikeImage)
+        bikeImage.contentMode = .ScaleAspectFit
+        bikeImage.setContentHuggingPriority(1000, forAxis: .Horizontal)
+        bikeImage.snp_makeConstraints { make in
+            make.top.equalTo(view).offset(70 - 64)
             make.left.equalTo(view).offset(L.horizontalSpacing)
             make.width.equalTo(44)
             make.height.equalTo(33)
         }
-        self.bikeButton = bikeButton
+        self.bikeImage = bikeImage
+        
+//        let bikeButton = UIButton()
+//        detailView.addSubview(bikeButton)
+//        bikeButton.imageView?.contentMode = .ScaleAspectFit
+//        bikeButton.setContentHuggingPriority(1000, forAxis: .Horizontal)
+//        bikeButton.snp_makeConstraints { make in
+//            make.top.equalTo(view).offset(70-64)
+//            make.left.equalTo(view).offset(L.horizontalSpacing)
+//            make.width.equalTo(44)
+//            make.height.equalTo(33)
+//        }
+//        self.bikeButton = bikeButton
         
         let nameLabel = Theme.whiteLabel()
         detailView.addSubview(nameLabel)
         nameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 18)
         nameLabel.snp_makeConstraints { make in
             make.top.equalTo(view).offset(70 - 64)
-            make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
             
         }
         self.bikeNameLabel = nameLabel
@@ -75,7 +76,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         distanceLabel.font = UIFont(name: Theme.SFFont.Italic.rawValue, size: 16)
         distanceLabel.snp_makeConstraints { make in
             make.top.equalTo(nameLabel.snp_bottom)
-            make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
         }
         self.bikeDistanceLabel = distanceLabel
         
@@ -85,7 +86,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         noteLabel.numberOfLines = 0
         noteLabel.snp_makeConstraints { make in
             make.top.equalTo(distanceLabel.snp_bottom).offset(10)
-            make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
         }
         self.bikeNoteLabel = noteLabel
@@ -98,7 +99,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.snp_makeConstraints { make in
             make.top.equalTo(noteLabel.snp_bottom).offset(10)
-            make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
             make.right.bottom.equalTo(detailView).inset(L.contentInsets)
         }
         self.bikeDescriptionLabel = descriptionLabel
@@ -124,6 +125,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     let locationManager = CLLocationManager()
+    var isFirstTimeAuthorization = true
     var bikeCoordinate = CLLocationCoordinate2D()
     var usersCoordinate = CLLocationCoordinate2D(latitude: 50.079167, longitude: 14.428414) //default coordinate
     var boundaries = Boundaries(regions: [], zones: [])
@@ -161,32 +163,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.delegate = self
         locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
         locationManager.requestWhenInUseAuthorization()
-        
-//        set users coordinate and calling API
-        
-//        bikesRequestPending.producer
-//            |> skipRepeats { (prev, curr) in
-//                return 	prev == curr
-//            }
-//            |> start(next: { [weak self] in
-//                if $0{
-//                    self?.view.userInteractionEnabled = false
-//                    SVProgressHUD.show()
-//                } else {
-//                    self?.view.userInteractionEnabled = true
-//                    SVProgressHUD.dismiss()
-//                }
-//                })
-        
-        if locationManager.location != nil {
-            usersCoordinate = locationManager.location.coordinate
-            loadBikes(usersCoordinate) //calling API with usersCoordinate
-        } else {
-            loadBikes(usersCoordinate) //calling API with default coordinate
-        }
-        loadBoundaries()
-        
 
+        
+// calling API
+        loadBoundaries()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -278,6 +258,37 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.drawPolygon(self.coordForBoundaries)
     }
     
+//    MARK: CLlocationManagerDelegate
+    
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if isFirstTimeAuthorization {
+            switch status {
+            case .AuthorizedAlways, .AuthorizedWhenInUse:
+                mapView.showsUserLocation = true
+                navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
+                usersCoordinate = locationManager.location.coordinate
+                loadBikes(usersCoordinate) //calling API with usersCoordinate
+                
+            default:
+                mapView.showsUserLocation = false
+                navigationItem.rightBarButtonItem = nil
+                loadBikes(usersCoordinate) //calling API with default coordinate
+            }
+        }
+        isFirstTimeAuthorization = false
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        let userLocation = manager.location
+        let zoomLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+
+        let visible: CLLocationDistance = 1000
+
+        let region = MKCoordinateRegionMakeWithDistance(zoomLocation, visible, visible)
+        mapView.setRegion(region, animated: true)
+        manager.stopUpdatingLocation()
+    }
+    
     //    MARK: MKMapViewDelegate
 //    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
 //        let zoomLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
@@ -336,20 +347,24 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let bikeAnnotation = view.annotation as! MapPin
             let url = NSURL(string: bikeAnnotation.iconUrl)
             
-            let imageView = UIImageView()
-            imageView.sd_setImageWithURL(url)
-            bikeButton.setBackgroundImage(imageView.image, forState: .Normal)
+            bikeImage.sd_setImageWithURL(url)
             sendingBike = bikeAnnotation.bike
-            bikeButton.addTarget(self, action: "showBikeDetail:", forControlEvents: .TouchUpInside)
             
             bikeNameLabel.text = bikeAnnotation.title
             bikeDistanceLabel.text = bikeAnnotation.distance
+            
+            detailView.onTap{[weak self] (sender: AnyObject!) in
+                if let bikeDetail = self?.sendingBike {
+                    let vc = BikeDetailViewController(bike: bikeDetail)
+                    self?.showViewController(vc, sender: sender)
+                }
+            }
             
             if bikeAnnotation.bikeLocationNote!.isEmpty {
                 bikeNoteLabel.hidden = true
                 bikeDescriptionLabel.snp_remakeConstraints{ make in
                     make.top.equalTo(bikeDistanceLabel.snp_bottom).offset(10)
-                    make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
+                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
                     make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
                 }
                 detailView.setNeedsLayout()
@@ -371,7 +386,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 bikeNoteLabel.hidden = false
                 bikeDescriptionLabel.snp_remakeConstraints{ make in
                     make.top.equalTo(bikeNoteLabel.snp_bottom).offset(10)
-                    make.left.equalTo(bikeButton.snp_right).offset(L.horizontalSpacing)
+                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
                     make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
                 }
                 detailView.setNeedsLayout()
@@ -380,17 +395,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             detailView.hidden = true
         }
     }
-    
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        switch status {
-        case .AuthorizedAlways, .AuthorizedWhenInUse:
-            mapView.showsUserLocation = true
-            navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
-        default:
-            mapView.showsUserLocation = false
-            navigationItem.rightBarButtonItem = nil
-        }
-    }
+
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         let placemark = MKPlacemark(coordinate: view.annotation.coordinate, addressDictionary: nil)

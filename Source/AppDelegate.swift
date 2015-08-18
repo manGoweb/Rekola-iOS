@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 	
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
-
+        UIResponder.globalErrorHandlers.insert(RekolaErrorHandler(), atIndex: 0)
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		
         #if !DEBUG

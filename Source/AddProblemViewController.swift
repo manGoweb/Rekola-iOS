@@ -216,13 +216,13 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
                     self.problemPendingPost.value = false
                     
 //            TODO: Handle error
-                    let alertView = UIAlertView(title: "Problem odeslan", message: "Problem byl odeslan", delegate: self, cancelButtonTitle: "OK")
+                    let alertView = UIAlertView(title: NSLocalizedString("ADDPROBLEM_problemSent", comment: ""), message: "", delegate: self, cancelButtonTitle: "OK")
                     alertView.show()
             })
             
         } else {
 //            TODO: Handle error
-            let alertView = UIAlertView(title: "Neni vse vyplneno", message: "Vypln vsechno", delegate: self, cancelButtonTitle: "OK")
+            let alertView = UIAlertView(title: NSLocalizedString("ADDPROBLEM_fillEverything", comment: ""), message: "", delegate: self, cancelButtonTitle: "OK")
             alertView.show()
         }
     }
