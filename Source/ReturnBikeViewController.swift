@@ -13,7 +13,7 @@ import MapKit
 import CoreLocation
 import ReactiveCocoa
 
-class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate{
+class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate, CLLocationManagerDelegate{
 	
 	let bike : Bike
 	init(bike: Bike) {
@@ -129,6 +129,9 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         mapView.scrollEnabled = true
         mapView.zoomEnabled = true
         mapView.showsUserLocation = true
+        
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
 		
 		navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
 		
@@ -207,17 +210,18 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         self.drawPolygon(self.coordForBoundaries)
     }
     
+//    MARK: CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        let userLocation = manager.location
+        let zoomLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        
+        let visible: CLLocationDistance = 1000
+        
+        let region = MKCoordinateRegionMakeWithDistance(zoomLocation, visible, visible)
+        mapView.setRegion(region, animated: true)
+        manager.stopUpdatingLocation()
+    }
 //    MARK: MKMapViewDelegate
-//    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
-//        let zoomLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-//        
-//        let visible: CLLocationDistance = 1000
-//        
-//        let region = MKCoordinateRegionMakeWithDistance(zoomLocation, visible, visible)
-//        mapView.setRegion(region, animated: true)
-//        
-//    }
-    
     func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
         
         if overlay is MKPolygon {

@@ -49,18 +49,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         self.bikeImage = bikeImage
         
-//        let bikeButton = UIButton()
-//        detailView.addSubview(bikeButton)
-//        bikeButton.imageView?.contentMode = .ScaleAspectFit
-//        bikeButton.setContentHuggingPriority(1000, forAxis: .Horizontal)
-//        bikeButton.snp_makeConstraints { make in
-//            make.top.equalTo(view).offset(70-64)
-//            make.left.equalTo(view).offset(L.horizontalSpacing)
-//            make.width.equalTo(44)
-//            make.height.equalTo(33)
-//        }
-//        self.bikeButton = bikeButton
-        
         let nameLabel = Theme.whiteLabel()
         detailView.addSubview(nameLabel)
         nameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 18)
@@ -163,6 +151,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.delegate = self
         locationManager(locationManager, didChangeAuthorizationStatus: CLLocationManager.authorizationStatus())
         locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
 
         
 // calling API
@@ -290,16 +279,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     //    MARK: MKMapViewDelegate
-//    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
-//        let zoomLocation = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-//        
-//        let visible: CLLocationDistance = 1000
-//        
-//        let region = MKCoordinateRegionMakeWithDistance(zoomLocation, visible, visible)
-//        mapView.setRegion(region, animated: true)
-//        
-//    }
-    
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         if let annotation = annotation as? MapPin {
             let identifier = "pin"
