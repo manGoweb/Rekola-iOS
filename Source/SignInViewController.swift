@@ -214,10 +214,12 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 //    MARK: UITextFieldDelegate
     func textFieldDidBeginEditing(textField: UITextField) {
 			textField.textColor = .darkTextColor()
+            textField.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
         textField.textColor = .whiteColor()
+        textField.backgroundColor = .rekolaPinkTextFieldColor()
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

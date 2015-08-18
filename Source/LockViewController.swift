@@ -173,12 +173,14 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 //			borrowBike(textField)
 //		}
 		textField.resignFirstResponder()
+        self.logoImageView.alpha = 1
 		return true
 	}
 	
 	func textFieldDidBeginEditing(textField: UITextField) {
 		dispatch_async(dispatch_get_main_queue()) {
 			self.scrollView.scrollToBottom(true)
+            self.logoImageView.alpha = 0
 		}
 	}
 	
@@ -205,7 +207,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 				if let bike = bike {
 					self.showBorrowedBikeController(bike, sender: self)
 				}else {
-					//do nothing, no borrowed bike
+                    self.logoImageView.alpha = 1
 				}
 			
 		})
