@@ -275,19 +275,16 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     var problemsLabel: UILabel!
     var addProblemButton: UIButton!
     var infoEquipmentLabel: UILabel!
-    
     var bikeIssues: [BikeIssue] = [] {
         didSet {
             tableView.reloadData()
         }
     }
-    
     var sortedBikeIssues: [[BikeIssue]] = [] {
         didSet {
             tableView.reloadData()
         }
     }
-    
     var typeOfProblem: Issues? {
         didSet {
             tableView.reloadData()
@@ -466,7 +463,8 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
 
     
     func viewMoreInfo() {
-        let vc = EquipmentViewController()
+        let arrayOfEquipment = bike.equipment
+        let vc = EquipmentViewController(equipment: arrayOfEquipment)
         presentPopupViewController(vc, completion: nil)
     }
     
@@ -484,7 +482,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         if offsetY > changePoint {
             let alpha = min(1, 1-((changePoint + 64 - offsetY)/64))
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(alpha))
-            self.navigationController!.navigationBar.barTintColor = .rekolaGreenColor()
+            self.navigationController?.navigationBar.barTintColor = .rekolaGreenColor()
             self.navigationController?.navigationBar.tintColor = .whiteColor()
             
             let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .DetailLockScroll), style: .Plain, target: self, action: "lockBike:")
