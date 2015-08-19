@@ -82,9 +82,10 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
         infoEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
         
         exitButton.setBackgroundImage(UIImage(imageIdentifier: .cancelButton), forState: .Normal)
-        exitButton.imageView?.contentMode = .ScaleAspectFit
+        //exitButton.imageView?.contentMode = .ScaleAspectFit
         exitButton.addTarget(self, action: "cancelView", forControlEvents: .TouchUpInside)
         exitButton.adjustsImageWhenHighlighted = true
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -92,10 +93,18 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func cancelView() {
-        UIView.animateWithDuration(0.5) {
+        
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.1, initialSpringVelocity: 2.0, options: UIViewAnimationOptions.TransitionNone, animations: ({
+
             self.exitButton.transform = CGAffineTransformMakeScale(1.1, 1.1)
-        }
-        dismissViewControllerAnimated(true, completion: nil)
+
+            
+        }), completion: { bool -> Void in
+            self.dismissViewControllerAnimated(true, completion: nil)
+        })
+        
+       
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
