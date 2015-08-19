@@ -7,6 +7,7 @@
 */
 
 "ERROR" = "Chyba";
+"ERROR_coomunication" = "Chyba komunikace";
 "LOCK_codeInfo" = "Vlož 6 místný kód a obdržíš kód zámku a můžeš začít používat kolo.";
 "LOCK_codeDescription" = "Kód najdeš na zadním blatníku nebo na zadní části rámu.";
 "LOCK_enterCode" = "Vlož 6 místný kód";

@@ -181,9 +181,17 @@ enum L {
 
 */
 class Theme {
+    class func digitTextField() -> UITextField {
+        let tf = UITextField()
+        tf.keyboardType = UIKeyboardType.NumberPad
+        tf.textAlignment = .Center
+        tf.layer.borderWidth = 1
+        return tf
+    }
+    
     class func blueButton() -> UIButton {
         let button = UIButton()
-        button.backgroundColor = UIColor.blueColor()
+        button.setBackgroundImage(UIImage(color: UIColor.blueColor()), forState: .Normal)
         return button
     }
     
@@ -199,14 +207,15 @@ class Theme {
     class func greenButton() -> UIButton {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
-        button.backgroundColor = UIColor.rekolaGreenColor()
+        button.setBackgroundImage(UIImage(color: UIColor.rekolaGreenColor()), forState: .Normal)
+
         return button
     }
     
     class func grayButton() -> UIButton {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
-        button.backgroundColor = .rekolaGrayButtonColor()
+        button.setBackgroundImage(UIImage(color: UIColor.rekolaGrayBorderColor()), forState: .Normal)
         button.setTitleColor(.staticGrayTextColor(), forState: .Normal)
         button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
         button.layer.cornerRadius = 4
@@ -215,6 +224,7 @@ class Theme {
     
     class func whiteButton() -> UIButton {
         let button = UIButton()
+        button.setBackgroundImage(UIImage(color: UIColor.whiteColor()), forState: .Normal)
         button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
 			button.setTitleColor(UIColor.rekolaGrayTextColor(), forState: .Disabled)
