@@ -103,6 +103,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     
     override func viewDidLoad() {
 		super.viewDidLoad()
+        
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.navigationBar.tintColor = .rekolaGreenColor()
         self.view.backgroundColor = .whiteColor()
@@ -162,6 +163,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(true, animated: animated)
 		locationManager.startUpdatingLocation()
+        self.logoImageView.alpha = 1
+
 	}
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
