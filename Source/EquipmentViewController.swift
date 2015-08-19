@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import SnapKit
 
 class EquipmentViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let equipmentArray: [Equipment]
+    
+    
     init(equipment: [Equipment]) {
         self.equipmentArray = equipment
         super.init(nibName:nil, bundle: nil)
@@ -23,6 +26,7 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
     override func loadView() {
         let view = UIView()
         self.view = view
+        
         
         let container = UIView()
         view.addSubview(container)
@@ -54,9 +58,12 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
         let tableView = UITableView()
         container.addSubview(tableView)
         tableView.snp_makeConstraints { make in
+           // make.edges.equalTo(container).inset(UIEdgeInsetsMake(15, 0, 15, 0))
             make.top.equalTo(infoEquipmentLabel.snp_bottom).offset(15)
             make.left.right.equalTo(container)
-            make.bottom.equalTo(container).offset(15)
+            //TODO: fujky
+            make.height.equalTo(40).constraint
+            make.bottom.equalTo(container).offset(-15)
         }
         self.tableView = tableView
     }
@@ -93,7 +100,8 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
     
 //    MARK: UITableViewDelegate + DataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return equipmentArray.count
+      //  return equipmentArray.count
+        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
