@@ -135,8 +135,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         navigationController?.navigationBar.barStyle = .Black
         navigationController?.navigationBar.translucent = false
         
-        let leftBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .directionButton), style:.Plain, target: self, action: "showDirections")
-        navigationItem.leftBarButtonItem = leftBarButton
         
         //        mapView settings
         mapView.delegate = self
@@ -255,8 +253,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             case .AuthorizedAlways, .AuthorizedWhenInUse:
                 mapView.showsUserLocation = true
                 navigationItem.rightBarButtonItem = MKUserTrackingBarButtonItem(mapView: mapView)
-                usersCoordinate = locationManager.location.coordinate
-                loadBikes(usersCoordinate) //calling API with usersCoordinate
+
+                if locationManager.location != nil {
+                    usersCoordinate = locationManager.location.coordinate
+                    loadBikes(usersCoordinate) //calling API with usersCoordinate
+                } else {
+                    loadBikes(usersCoordinate) //calling API with default coordinate
+                }
                 
             default:
                 mapView.showsUserLocation = false
@@ -315,6 +318,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         if view.annotation is MapPin {
             self.detailView.hidden = false
+            let leftBarButton = UIBarButtonItem(image: UIImage(imageIdentifier: .directionButton), style:.Plain, target: self, action: "showDirections")
+            navigationItem.leftBarButtonItem = leftBarButton
             
             let mapPin = view as! BikeAnnotationView
             mapPin.backgroundImageView.image = UIImage(imageIdentifier: .MapPinPink)
@@ -356,6 +361,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func mapView(mapView: MKMapView!, didDeselectAnnotationView view: MKAnnotationView!) {
         if view.annotation is MapPin {
+            navigationItem.leftBarButtonItem = nil
+            
             let mapPinView = view as! BikeAnnotationView
             mapPinView.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGreen)
             
