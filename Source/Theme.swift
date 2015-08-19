@@ -189,7 +189,7 @@ class Theme {
     
     class func pinkButton() -> UIButton {
         let button = UIButton()
-        button.backgroundColor = UIColor.rekolaPinkColor()
+        button.setBackgroundImage(UIImage(color: UIColor.rekolaPinkColor()), forState: .Normal)
 		button.setTitleColor(UIColor.grayColor(), forState: .Highlighted) //TODO: color
         button.layer.cornerRadius = 4
         button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
