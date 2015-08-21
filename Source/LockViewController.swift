@@ -84,6 +84,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let tf1 = Theme.digitTextField()
         tf1.tag = 1
+        tf1.text = " "
+        tf1.hidden = true
         container.addSubview(tf1)
         tf1.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
@@ -95,6 +97,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let tf2 = Theme.digitTextField()
         tf2.tag = 2
+        tf2.hidden = true
         container.addSubview(tf2)
         tf2.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
@@ -106,6 +109,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let tf3 = Theme.digitTextField()
         tf3.tag = 3
+        tf3.hidden = true
         container.addSubview(tf3)
         tf3.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
@@ -117,6 +121,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let tf4 = Theme.digitTextField()
         tf4.tag = 4
+        tf4.hidden = true
         container.addSubview(tf4)
         tf4.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
@@ -128,6 +133,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let tf5 = Theme.digitTextField()
         tf5.tag = 5
+        tf5.hidden = true
         container.addSubview(tf5)
         tf5.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
@@ -140,6 +146,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         let tf6 = Theme.digitTextField()
         tf6.tag = 6
         container.addSubview(tf6)
+        tf6.hidden = true
         tf6.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf5.snp_right)
@@ -148,6 +155,19 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.width.equalTo(45)
         }
         self.textField6 = tf6
+        
+        let textFieldButton = UIButton()
+        container.addSubview(textFieldButton)
+        textFieldButton.setBackgroundImage(UIImage(color: .rekolaGrayTextFieldColor()), forState: UIControlState.Normal)
+        textFieldButton.setTitle(NSLocalizedString("LOCK_enterCode", comment: ""), forState: UIControlState.Normal)
+        textFieldButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
+        textFieldButton.titleLabel?.textColor = UIColor.blackColor() //ZEPTAT SE: Proc to nemeni barvy?
+        textFieldButton.snp_makeConstraints { make in
+            make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
+            make.left.right.equalTo(view).inset(L.contentInsets)
+            make.height.equalTo(65)
+        }
+        self.textFieldButton = textFieldButton
         
         let borrowButton = Theme.pinkButton()
         container.addSubview(borrowButton)
@@ -173,6 +193,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     weak var textField4: UITextField!
     weak var textField5: UITextField!
     weak var textField6: UITextField!
+    weak var textFieldButton: UIButton!
     
     
 //    weak var textField: UITextField!
@@ -194,24 +215,27 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         textField5.delegate = self
         textField6.delegate = self
         
+        textFieldButton.addTarget(self, action: "enterCode:", forControlEvents: UIControlEvents.TouchUpInside)
+        
         textField1.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
         textField2.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
         textField3.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
         textField4.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
         textField5.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
         textField6.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
-
+        
         var swipe: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
-//        swipe.direction = UISwipeGestureRecognizerDirection.Down
         swipe.numberOfTouchesRequired = 1
         self.view.addGestureRecognizer(swipe)
-//        textField.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 20)
         
+//        textField.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 20)
 //        textField.placeholder = NSLocalizedString("LOCK_enterCode", comment: "")
+        
         borrowButton!.setTitle(NSLocalizedString("LOCK_borrow", comment: ""), forState: .Normal)
         borrowButton.addTarget(self, action: "borrowBike:", forControlEvents: .TouchUpInside)
 		
 		
+//        progressHud
 		myBikeRequestPending.producer
 			|> skipRepeats { (prev, curr) in
 			return 	prev == curr
@@ -261,9 +285,25 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 		locationManager.stopUpdatingLocation()
 	}
     
+    
+    func enterCode(sender: UIButton) {
+        sender.hidden = true
+        textField1.hidden = false
+        textField2.hidden = false
+        textField3.hidden = false
+        textField4.hidden = false
+        textField5.hidden = false
+        textField6.hidden = false
+        
+        textField1.becomeFirstResponder()
+    }
+/**
+    forward navigation in textfields; in the following textfield put whitespace for better navigation backwards
+*/
     func changeTextField(sender: AnyObject?) {
         let textField = sender as! UITextField
         let nextTag = textField.tag + 1
+        println("TAG prev: \(textField.tag) \n next: \(nextTag)")
         if let nextResponder = textField.superview!.viewWithTag(nextTag) {
             nextResponder.becomeFirstResponder()
             let tf = nextResponder as! UITextField
@@ -282,6 +322,78 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         self.logoImageView.alpha = 1
     }
     
+    func createPasscode() -> String{
+        let hundredThousand = textField1.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let tensThousand = textField2.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let thousands = textField3.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let hundreds = textField4.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let tens = textField5.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let ones = textField6.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        
+        let passcode = hundredThousand + tensThousand + thousands + hundreds + tens + ones
+        println(passcode)
+        
+        return passcode
+    }
+    
+//    API calling + segue to BikeDetailViewController
+    let myBikeRequestPending = MutableProperty(false)
+    func getMyBike() {
+        myBikeRequestPending.value = true
+        API.myBike().start(error: { error in
+            self.myBikeRequestPending.value = false
+            self.handleError(error, severity: .UserAction, sender: self, userInfo: nil) //TODO: present alert with retry button?
+            //				{ [weak self] (result, handledBy) in
+            //				if(handledBy == self){
+            //					switch result {
+            //					case .AlertAction: //retry
+            //						self?.getMyBike()
+            //					default: fatalError("unexpected errorhandling result")
+            //					}
+            //				}
+            //			}
+            //self.getMyBike()
+            
+            }, completed: {
+                self.myBikeRequestPending.value = false
+            }, next: { bike in
+                if let bike = bike {
+                    self.showBorrowedBikeController(bike, sender: self)
+                }else {
+                    self.logoImageView.alpha = 1
+                }
+                
+        })
+    }
+    
+    var canBorrowBike = MutableProperty(false)
+    var borrowRequestPending = MutableProperty(false)
+    func borrowBike(sender: AnyObject?) {
+        UIView.performWithoutAnimation {
+            //			textField.resignFirstResponder()
+        }
+        let code = createPasscode() //textField.text
+        borrowRequestPending.value = true
+        API.borrowBike(code: code, location: location.value!).start(error: { error in
+            self.borrowRequestPending.value = false
+            self.handleError(error)
+            }, next: { bike in
+                self.borrowRequestPending.value = false
+                logD("compl")
+                self.showBorrowedBikeController(bike, sender: sender)
+        })
+        
+    }
+    
+    func showBorrowedBikeController(bike: Bike, sender: AnyObject?) {
+        let vc = BorrowedBikeViewController(bike: bike)
+        showViewController(vc, sender: sender)
+    }
+
+
+    
+//    MARK: UITextFieldDelegate
+    
 //	func textFieldShouldReturn(textField: UITextField) -> Bool {
 ////		if(canBorrowBike.value) {
 ////			borrowBike(textField)
@@ -297,60 +409,49 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             self.logoImageView.alpha = 0
 		}
 	}
-	
-	let myBikeRequestPending = MutableProperty(false)
-	func getMyBike() {
-		myBikeRequestPending.value = true
-		API.myBike().start(error: { error in
-			self.myBikeRequestPending.value = false
-			self.handleError(error, severity: .UserAction, sender: self, userInfo: nil) //TODO: present alert with retry button?
-//				{ [weak self] (result, handledBy) in
-//				if(handledBy == self){
-//					switch result {
-//					case .AlertAction: //retry
-//						self?.getMyBike()
-//					default: fatalError("unexpected errorhandling result")
-//					}
-//				}
-//			}
-			//self.getMyBike()
-			
-			}, completed: {
-				self.myBikeRequestPending.value = false
-			}, next: { bike in
-				if let bike = bike {
-					self.showBorrowedBikeController(bike, sender: self)
-				}else {
-                    self.logoImageView.alpha = 1
-				}
-			
-		})
-	}
-	
-	var canBorrowBike = MutableProperty(false)
-	var borrowRequestPending = MutableProperty(false)
-	func borrowBike(sender: AnyObject?) {
-		UIView.performWithoutAnimation {
-//			textField.resignFirstResponder()
-		}
-		let code = textField1.text
-		borrowRequestPending.value = true
-		API.borrowBike(code: code, location: location.value!).start(error: { error in
-			self.borrowRequestPending.value = false
-			self.handleError(error)
-			}, next: { bike in
-				self.borrowRequestPending.value = false
-				logD("compl")
-				self.showBorrowedBikeController(bike, sender: sender)
-		})
 		
+/*    backward navigation in textFields; first if handles situation, when user clicked to the one of the middle textfields and want to go backwards
+      "else if" handles situation, when user want to delete last digit he wrotes, and else handle situation when user wants to delete whole passcode*/
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if textField.text == " " && string == "" {
+            let previousTag = textField.tag - 1
+            if let previousResponder = textField.superview!.viewWithTag(previousTag) {
+                if previousTag > 0 {
+                    previousResponder.becomeFirstResponder()
+                    let tf = previousResponder as! UITextField
+                    tf.text = " "
+                } else {
+                    textField.resignFirstResponder()
+                }
+            } else {
+                textField.resignFirstResponder()
+            }
+            return false
+        } else if textField.text != " " && string != "" {
+            changeTextField(textField)
+        } else if textField.text != " " && textField.text != "" {
+            textField.text = ""
+            let previousTag = textField.tag - 1
+            if let previousResponder = textField.superview!.viewWithTag(previousTag) {
+                if previousTag > 0 {
+                    previousResponder.becomeFirstResponder()
+                } else {
+                    textField.resignFirstResponder()
+                }
+            } else {
+                textField.resignFirstResponder()
+            }
+            
+            return false
+        }
+        else {
+            textField.text = ""
+        }
+        return true
     }
-
-	func showBorrowedBikeController(bike: Bike, sender: AnyObject?) {
-		let vc = BorrowedBikeViewController(bike: bike)
-		showViewController(vc, sender: sender)
-	}
-	
+    
+//    MARK: CLLocationManagerDelegate
+    
 	let location : MutableProperty<CLLocation?> = MutableProperty(nil)
 	let locationManager = CLLocationManager()
 	
@@ -370,30 +471,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 //		return (false, false)
 //	}
 
-//    MARK: UITextFieldDelegate
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-        if textField.text == " " && string == "" {
-            let previousTag = textField.tag - 1
-            if let previousResponder = textField.superview!.viewWithTag(previousTag) {
-                if previousTag > 0 {
-                    previousResponder.becomeFirstResponder()
-                    let tf = previousResponder as! UITextField
-                    tf.text = " "
-                } else {
-                    textField.resignFirstResponder()
-                }
-            } else {
-                textField.resignFirstResponder()
-            }
-            return false
-        } else if textField.text != " " && textField.text != "" {
-            println("MAZU")
-        }
-        else {
-            textField.text = ""
-        }
-        return true
-    }
+
 }
 
