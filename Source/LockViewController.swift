@@ -224,9 +224,9 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         textField5.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
         textField6.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
         
-        var swipe: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
-        swipe.numberOfTouchesRequired = 1
-        self.view.addGestureRecognizer(swipe)
+        var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
+        tap.numberOfTouchesRequired = 1
+        self.view.addGestureRecognizer(tap)
         
 //        textField.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 20)
 //        textField.placeholder = NSLocalizedString("LOCK_enterCode", comment: "")
