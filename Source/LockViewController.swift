@@ -89,7 +89,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         container.addSubview(tf1)
         tf1.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
-            make.left.equalTo(container)//.offset(L.horizontalSpacing)
+            make.left.equalTo(container).offset(16)
             make.height.equalTo(55)
             make.width.equalTo(45)
         }
@@ -374,14 +374,21 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         }
         let code = createPasscode() //textField.text
         borrowRequestPending.value = true
-        API.borrowBike(code: code, location: location.value!).start(error: { error in
-            self.borrowRequestPending.value = false
-            self.handleError(error)
-            }, next: { bike in
+        if let coords = location.value {
+            API.borrowBike(code: code, location: coords).start(error: { error in
                 self.borrowRequestPending.value = false
-                logD("compl")
-                self.showBorrowedBikeController(bike, sender: sender)
-        })
+                self.handleError(error)
+                }, next: { bike in
+                    self.borrowRequestPending.value = false
+                    logD("compl")
+                    self.showBorrowedBikeController(bike, sender: sender)
+            })
+        } else {
+            let alertView = UIAlertView(title: NSLocalizedString("LOCK_coordinate", comment: ""), message: "", delegate: nil, cancelButtonTitle: "OK")
+            alertView.show()
+        }
+        
+
         
     }
     

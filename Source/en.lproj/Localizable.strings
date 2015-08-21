@@ -12,6 +12,7 @@
 "LOCK_codeDescription" = "Kód najdeš na zadním blatníku nebo na zadní části rámu.";
 "LOCK_enterCode" = "Vlož 6 místný kód";
 "LOCK_borrow" = "PŮJČIT";
+"LOCK_coordinate" = "Poloha nenalezena";
 "SIGNIN_email" = "Email";
 "SIGNIN_passwd" = "Heslo";
 "SIGNIN_signin" = "Přihlásit se";
