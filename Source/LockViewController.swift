@@ -89,9 +89,9 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         container.addSubview(tf1)
         tf1.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
-            make.left.equalTo(container).offset(16)
-            make.height.equalTo(55)
-            make.width.equalTo(45)
+            make.left.equalTo(container).offset(8)
+            make.height.equalTo(65)
+            make.width.equalTo(48)
         }
         self.textField1 = tf1
         
@@ -102,8 +102,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         tf2.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf1.snp_right)
-            make.height.equalTo(55)
-            make.width.equalTo(45)
+            make.height.equalTo(65)
+            make.width.equalTo(48)
         }
         self.textField2 = tf2
         
@@ -114,8 +114,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         tf3.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf2.snp_right)
-            make.height.equalTo(55)
-            make.width.equalTo(45)
+            make.height.equalTo(65)
+            make.width.equalTo(48)
         }
         self.textField3 = tf3
         
@@ -126,8 +126,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         tf4.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf3.snp_right)
-            make.height.equalTo(55)
-            make.width.equalTo(45)
+            make.height.equalTo(65)
+            make.width.equalTo(48)
         }
         self.textField4 = tf4
         
@@ -138,8 +138,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         tf5.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf4.snp_right)
-            make.height.equalTo(55)
-            make.width.equalTo(45)
+            make.height.equalTo(65)
+            make.width.equalTo(48)
         }
         self.textField5 = tf5
         
@@ -151,8 +151,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf5.snp_right)
 //            make.right.equalTo(container).offset(-L.horizontalSpacing)
-            make.height.equalTo(55)
-            make.width.equalTo(45)
+            make.height.equalTo(65)
+            make.width.equalTo(48)
         }
         self.textField6 = tf6
         
@@ -429,7 +429,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 	func textFieldDidBeginEditing(textField: UITextField) {
 		dispatch_async(dispatch_get_main_queue()) {
 			self.scrollView.scrollToBottom(true)
-            self.logoImageView.alpha = 0
+//            self.logoImageView.alpha = 0
 		}
 	}
 		

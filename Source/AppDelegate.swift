@@ -49,9 +49,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         let apiKey: AnyObject? = NSUserDefaults.standardUserDefaults().valueForKey("apiKey")
         if let  existingApiKey: AnyObject = apiKey {
             
-            window?.rootViewController = tabbar
-            window?.makeKeyAndVisible()
-            window?.tintColor = UIColor.whiteColor()
+            let issueRequestPending = MutableProperty(false)
+                API.myAccount().start(error: {error in
+//                    self.handleError(error)
+                        self.window?.rootViewController = signIn
+                        self.window?.makeKeyAndVisible()
+                        self.window?.tintColor = UIColor.whiteColor()
+                    }, completed: {
+                        issueRequestPending.value = false
+                        self.window?.rootViewController = tabbar
+                        self.window?.makeKeyAndVisible()
+                        self.window?.tintColor = UIColor.whiteColor()
+                    })
         } else {
             window?.rootViewController = signIn
             window?.makeKeyAndVisible()
