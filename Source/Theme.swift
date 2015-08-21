@@ -185,7 +185,7 @@ class Theme {
         let tf = UITextField()
         tf.keyboardType = UIKeyboardType.NumberPad
         tf.textAlignment = .Center
-        tf.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 25)
+        tf.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 30)
         tf.layer.borderWidth = 0
         tf.backgroundColor = .rekolaGrayTextFieldColor()
         return tf

@@ -172,7 +172,8 @@ class ProfileViewController: UIViewController {
         logoutButton.addTarget(self, action: "logout:", forControlEvents: .TouchUpInside)
         aboutAppButton.addTarget(self, action: "aboutAppPressed", forControlEvents: .TouchUpInside)
         
-        logoutRequestPending.producer
+        showUser()
+        issueRequestPending.producer
             |> skipRepeats { (prev, curr) in
                 return 	prev == curr
             }
@@ -185,8 +186,6 @@ class ProfileViewController: UIViewController {
                     SVProgressHUD.dismiss()
                 }
                 })
-        
-        showUser()
     }
     
     let logoutRequestPending = MutableProperty(false)
@@ -197,6 +196,8 @@ class ProfileViewController: UIViewController {
             self.handleError(error)
             }, completed: {
                 self.logoutRequestPending.value = false
+                
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("apiKey")
                 
                 let signIn = SignInViewController()
                 let delegate = UIApplication.sharedApplication().delegate as! AppDelegate

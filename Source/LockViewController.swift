@@ -161,7 +161,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         textFieldButton.setBackgroundImage(UIImage(color: .rekolaGrayTextFieldColor()), forState: UIControlState.Normal)
         textFieldButton.setTitle(NSLocalizedString("LOCK_enterCode", comment: ""), forState: UIControlState.Normal)
         textFieldButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
-        textFieldButton.titleLabel?.textColor = UIColor.blackColor() //ZEPTAT SE: Proc to nemeni barvy?
+        textFieldButton.setTitleColor(.rekolaGrayTextColor(), forState: .Normal)
         textFieldButton.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.right.equalTo(view).inset(L.contentInsets)
@@ -173,7 +173,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         container.addSubview(borrowButton)
         borrowButton.titleLabel?.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         borrowButton.snp_makeConstraints { make in
-            make.top.equalTo(tf1.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(textFieldButton.snp_bottom).offset(L.verticalSpacing)
             make.left.right.bottom.equalTo(container).inset(L.contentInsets)
             make.height.equalTo(60)
         }
@@ -331,7 +331,23 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         let ones = textField6.text.stringByReplacingOccurrencesOfString(" ", withString: "")
         
         let passcode = hundredThousand + tensThousand + thousands + hundreds + tens + ones
-        println(passcode)
+        
+//        delete textfields
+        textField1.text = ""
+        textField2.text = ""
+        textField3.text = ""
+        textField4.text = ""
+        textField5.text = ""
+        textField6.text = ""
+        
+        textField1.hidden = true
+        textField2.hidden = true
+        textField3.hidden = true
+        textField4.hidden = true
+        textField5.hidden = true
+        textField6.hidden = true
+        
+        textFieldButton.hidden = false
         
         return passcode
     }
