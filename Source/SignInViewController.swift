@@ -191,7 +191,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 			delegate.window!.makeKeyAndVisible()
 			}, error: { error in
 				self.loggingIn.value = false
-				self.handleError(error)
+//				self.handleError(error)
                 
                 let alertView = UIAlertView(title: NSLocalizedString("SIGNIN_failedSingIn", comment: ""), message: "", delegate: self, cancelButtonTitle: "OK")
                 alertView.show()
