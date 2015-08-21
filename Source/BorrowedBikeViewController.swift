@@ -80,7 +80,7 @@ class BorrowedBikeViewController: UIViewController {
         rectangle.layer.cornerRadius = 7
         view.addSubview(rectangle)
         rectangle.snp_makeConstraints { make in
-            make.top.equalTo(detailButton.snp_bottom).multipliedBy(1.1)
+            make.top.equalTo(detailButton.snp_bottom).offset(10)//.multipliedBy(1.1)
             make.height.equalTo(101).multipliedBy(0.1)
 //            make.left.right.equalTo(view).inset(L.contentInsets) //changed
             make.centerX.equalTo(view.snp_centerX)

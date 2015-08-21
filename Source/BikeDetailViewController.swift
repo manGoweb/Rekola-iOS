@@ -333,9 +333,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
         self.navigationItem.rightBarButtonItem = lockButton
         
-        let bikeImageData = NSData(contentsOfURL: bike.imageURL)
-        bikeIV.image = UIImage(data: bikeImageData!)
-        
+        if let bikeImageData = NSData(contentsOfURL: bike.imageURL) {
+            bikeIV.image = UIImage(data: bikeImageData)
+        }
         bikeTypeLabel.text = bike.type.uppercaseString
         
         bikeNameLabel.text = bike.name

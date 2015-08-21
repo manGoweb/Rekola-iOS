@@ -57,13 +57,16 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
         
         let tableView = UITableView()
         container.addSubview(tableView)
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView.scrollEnabled = false
+        tableView.allowsSelection = false
         tableView.snp_makeConstraints { make in
            // make.edges.equalTo(container).inset(UIEdgeInsetsMake(15, 0, 15, 0))
             make.top.equalTo(infoEquipmentLabel.snp_bottom).offset(15)
             make.left.right.equalTo(container)
             //TODO: fujky
-            make.height.equalTo(40).constraint
-            make.bottom.equalTo(container).offset(-15)
+            make.height.equalTo(equipmentArray.count * 50).constraint
+            make.bottom.equalTo(container)//.offset(-5)
         }
         self.tableView = tableView
     }
@@ -90,6 +93,10 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(EquipmentCell.self, forCellReuseIdentifier: cellIdentifier)
+        
+        let tap = UITapGestureRecognizer(target: self, action: "cancelView") //TODO: nezavirat po kliku na container
+        tap.numberOfTapsRequired = 1
+        view.addGestureRecognizer(tap)
     }
     
     func cancelView() {
@@ -113,8 +120,8 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
     
 //    MARK: UITableViewDelegate + DataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      //  return equipmentArray.count
-        return 0
+        return equipmentArray.count
+//        return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -123,9 +130,9 @@ class EquipmentViewController: UIViewController, UITableViewDelegate, UITableVie
         let currentEquipment = equipmentArray[indexPath.row]
         
         let url = NSURL(string: currentEquipment.iconUrl)
-        let iv = UIImageView()
-        iv.sd_setImageWithURL(url)
-        cell.equipmentImageView = iv
+//        let iv = UIImageView()
+//        iv.sd_setImageWithURL(url)
+        cell.equipmentImageView.sd_setImageWithURL(url)
         
         cell.descriptionLabel.text = currentEquipment.description
         

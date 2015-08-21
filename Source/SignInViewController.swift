@@ -139,6 +139,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
                 })
         
 		self.registerButton.setTitle(NSLocalizedString("SIGNIN_register", comment: ""), forState: .Normal)
+        registerButton.addTarget(self, action: "register:", forControlEvents: .TouchUpInside)
 		
 		self.forgotPasswd.setTitle(NSLocalizedString("SIGNIN_lostPasswd", comment: ""), forState: .Normal)
 		forgotPasswd.addTarget(self, action: "forgotButtonTapped:", forControlEvents: .TouchUpInside)
@@ -191,7 +192,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 			delegate.window!.makeKeyAndVisible()
 			}, error: { error in
 				self.loggingIn.value = false
-				self.handleError(error)
+//				self.handleError(error)
                 
                 let alertView = UIAlertView(title: NSLocalizedString("SIGNIN_failedSingIn", comment: ""), message: "", delegate: self, cancelButtonTitle: "OK")
                 alertView.show()
@@ -205,7 +206,12 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
         UIApplication.sharedApplication().statusBarStyle = .Default
     }
     
-	func forgotButtonTapped(sender: UIButton) {
+    func register(sender: UIButton) {
+        let url = NSURL(string: "https://www.rekola.cz/registrace/udaje")
+        UIApplication.sharedApplication().openURL(url!)
+    }
+    
+    func forgotButtonTapped(sender: UIButton) {
 		view.endEditing(true)
 		let vc = ResetPasswordViewController()
 		presentViewController(vc, animated: true, completion: nil)

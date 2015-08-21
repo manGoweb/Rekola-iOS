@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         UIResponder.globalErrorHandlers.insert(RekolaErrorHandler(), atIndex: 0)
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
 		
+        
+        
         #if !DEBUG
         //BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)
        // BITHockeyManager.sharedHockeyManager().startManager()
@@ -43,10 +45,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
         let tabbar = ACKTabBarController(items: [item1,item2,item3])
         let signIn = SignInViewController()
-        window?.rootViewController = signIn
-        window?.makeKeyAndVisible()
-        window?.tintColor = UIColor.whiteColor()
         
+        let apiKey: AnyObject? = NSUserDefaults.standardUserDefaults().valueForKey("apiKey")
+        if let  existingApiKey: AnyObject = apiKey {
+            
+            let issueRequestPending = MutableProperty(false)
+                API.myAccount().start(error: {error in
+//                    self.handleError(error)
+                        self.window?.rootViewController = signIn
+                        self.window?.makeKeyAndVisible()
+                        self.window?.tintColor = UIColor.whiteColor()
+                    }, completed: {
+                        issueRequestPending.value = false
+                        self.window?.rootViewController = tabbar
+                        self.window?.makeKeyAndVisible()
+                        self.window?.tintColor = UIColor.whiteColor()
+                    })
+        } else {
+            window?.rootViewController = signIn
+            window?.makeKeyAndVisible()
+            window?.tintColor = UIColor.whiteColor()
+        }
 //        UINavigationBar.appearance().shadowImage = UIImage()
 //        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         

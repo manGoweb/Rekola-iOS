@@ -154,6 +154,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
 // calling API
         loadBoundaries()
+        boundariesRequestPending.producer
+            |> skipRepeats { (prev, curr) in
+                return 	prev == curr
+            }
+            |> start(next: { [weak self] in
+                if $0{
+                    self?.view.userInteractionEnabled = false
+                    SVProgressHUD.show()
+                } else {
+                    self?.view.userInteractionEnabled = true
+                    SVProgressHUD.dismiss()
+                }
+                })
     }
     
     override func viewWillAppear(animated: Bool) {

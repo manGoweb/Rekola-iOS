@@ -19,9 +19,11 @@ class EquipmentCell: UITableViewCell {
         let imageView = UIImageView()
         contentView.addSubview(imageView)
         imageView.contentMode = .ScaleAspectFit
+        imageView.setContentHuggingPriority(1000, forAxis: .Horizontal)
         imageView.snp_makeConstraints { make in
             make.top.bottom.equalTo(self.contentView).inset(L.contentInsets)
             make.left.equalTo(self.contentView).offset(L.horizontalSpacing)
+            make.width.equalTo(30)
         }
         self.equipmentImageView = imageView
         
