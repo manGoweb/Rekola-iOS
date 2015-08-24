@@ -413,6 +413,6 @@ extension SuccesUrl : Decodable {
     
     public static func decode(json: JSON) -> Decoded<SuccesUrl> {
         return SuccesUrl.create
-            <^> json <| "succesUrl"
+            <^> json <| "successUrl"
     }
 }

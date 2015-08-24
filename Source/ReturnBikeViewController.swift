@@ -13,7 +13,7 @@ import MapKit
 import CoreLocation
 import ReactiveCocoa
 
-class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate, CLLocationManagerDelegate{
+class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIWebViewDelegate{
 	
 	let bike : Bike
 	init(bike: Bike) {
@@ -244,12 +244,23 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         
         let bikeId = bike.id
         let urlString = self.succesUrl?.succesUrl
-        //let urlString = "http://beta.rekola.cz/api/bikes/\(bikeId)/return-success-webview?length=0&duration=12&position=14.388444%2C50.106471&apikey=vv74scxx5d92ro6bn9o9st58u31mvj7j454d0jhc" //tohle nahradit volanim z API
         let url = NSURL(string: urlString!)
         let request = NSURLRequest(URL: url!)
-        
+        webView.delegate = self
         webView.loadRequest(request)
     }
+    
+    
+    //MARK: webview
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if request.URLString != self.succesUrl?.succesUrl {
+           	self.navigationController?.popToRootViewControllerAnimated(true)
+            return false
+        }
+        return true
+    }
+    
+    
     
 //    MARK: CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {

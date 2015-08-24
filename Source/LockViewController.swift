@@ -325,6 +325,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 		super.viewWillAppear(animated)
 		navigationController?.setNavigationBarHidden(true, animated: animated)
 		locationManager.startUpdatingLocation()
+        hideTextfields()
 	}
 	override func viewDidDisappear(animated: Bool) {
 		super.viewDidDisappear(animated)
@@ -417,7 +418,6 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let passcode = hundredThousand + tensThousand + thousands + hundreds + tens + ones
         
-//
         textField1.hidden = true
         textField2.hidden = true
         textField3.hidden = true
@@ -437,16 +437,6 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         API.myBike().start(error: { error in
             self.myBikeRequestPending.value = false
             self.handleError(error, severity: .UserAction, sender: self, userInfo: nil) //TODO: present alert with retry button?
-            //				{ [weak self] (result, handledBy) in
-            //				if(handledBy == self){
-            //					switch result {
-            //					case .AlertAction: //retry
-            //						self?.getMyBike()
-            //					default: fatalError("unexpected errorhandling result")
-            //					}
-            //				}
-            //			}
-            //self.getMyBike()
             
             }, completed: {
                 self.myBikeRequestPending.value = false
