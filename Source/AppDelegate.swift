@@ -17,7 +17,25 @@ import ReactiveCocoa
 class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate {
     var window: UIWindow?
 	
-	
+    let logoutRequestPending = MutableProperty(false)
+    func logout() {
+        logoutRequestPending.value = true
+        API.logout().start(error: { error in
+            self.logoutRequestPending.value = false
+            self.handleError(error)
+            }, completed: {
+                self.logoutRequestPending.value = false
+                NSUserDefaults.standardUserDefaults().removeObjectForKey("apiKey")
+                
+                let signIn = SignInViewController()
+                let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                
+                delegate.window?.rootViewController = signIn
+                delegate.window?.makeKeyAndVisible()
+        })
+    }
+    
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
         UIResponder.globalErrorHandlers.insert(RekolaErrorHandler(), atIndex: 0)
@@ -46,26 +64,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         let tabbar = ACKTabBarController(items: [item1,item2,item3])
         let signIn = SignInViewController()
         
-        let apiKey: AnyObject? = NSUserDefaults.standardUserDefaults().valueForKey("apiKey")
-        if let  existingApiKey: AnyObject = apiKey {
-            
-            let issueRequestPending = MutableProperty(false)
-                API.myAccount().start(error: {error in
-//                    self.handleError(error)
-                        self.window?.rootViewController = signIn
-                        self.window?.makeKeyAndVisible()
-                        self.window?.tintColor = UIColor.whiteColor()
-                    }, completed: {
-                        issueRequestPending.value = false
-                        self.window?.rootViewController = tabbar
-                        self.window?.makeKeyAndVisible()
-                        self.window?.tintColor = UIColor.whiteColor()
-                    })
-        } else {
+//        let apiKey: AnyObject? = NSUserDefaults.standardUserDefaults().valueForKey("apiKey")
+//        if let  existingApiKey: AnyObject = apiKey {
+//            
+//            let issueRequestPending = MutableProperty(false)
+//                API.myAccount().start(error: {error in
+//                        self.logout()
+//                    }, completed: {
+//                        issueRequestPending.value = false
+//                        self.window?.rootViewController = tabbar
+//                        self.window?.makeKeyAndVisible()
+//                        self.window?.tintColor = UIColor.whiteColor()
+//                    })
+//        } else {
             window?.rootViewController = signIn
             window?.makeKeyAndVisible()
             window?.tintColor = UIColor.whiteColor()
-        }
+//        }
 //        UINavigationBar.appearance().shadowImage = UIImage()
 //        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         

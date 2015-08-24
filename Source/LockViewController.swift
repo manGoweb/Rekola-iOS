@@ -89,9 +89,9 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         container.addSubview(tf1)
         tf1.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
-            make.left.equalTo(container).offset(8)
+            make.left.equalTo(container).offset(1)
             make.height.equalTo(65)
-            make.width.equalTo(48)
+            make.width.equalTo(50)
         }
         self.textField1 = tf1
         
@@ -103,7 +103,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf1.snp_right)
             make.height.equalTo(65)
-            make.width.equalTo(48)
+            make.width.equalTo(50)
         }
         self.textField2 = tf2
         
@@ -115,7 +115,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf2.snp_right)
             make.height.equalTo(65)
-            make.width.equalTo(48)
+            make.width.equalTo(50)
         }
         self.textField3 = tf3
         
@@ -127,7 +127,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf3.snp_right)
             make.height.equalTo(65)
-            make.width.equalTo(48)
+            make.width.equalTo(50)
         }
         self.textField4 = tf4
         
@@ -139,7 +139,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
             make.left.equalTo(tf4.snp_right)
             make.height.equalTo(65)
-            make.width.equalTo(48)
+            make.width.equalTo(50)
         }
         self.textField5 = tf5
         
@@ -152,7 +152,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.left.equalTo(tf5.snp_right)
 //            make.right.equalTo(container).offset(-L.horizontalSpacing)
             make.height.equalTo(65)
-            make.width.equalTo(48)
+            make.width.equalTo(50)
         }
         self.textField6 = tf6
         
@@ -295,16 +295,19 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         textField5.hidden = false
         textField6.hidden = false
         
+        textField1.userInteractionEnabled = true
         textField1.becomeFirstResponder()
     }
 /**
-    forward navigation in textfields; in the following textfield put whitespace for better navigation backwards
+    forward navigation in textfields; in the following textfield puts whitespace for better navigation backwards
 */
     func changeTextField(sender: AnyObject?) {
         let textField = sender as! UITextField
         let nextTag = textField.tag + 1
         println("TAG prev: \(textField.tag) \n next: \(nextTag)")
         if let nextResponder = textField.superview!.viewWithTag(nextTag) {
+            nextResponder.userInteractionEnabled = true
+            textField.userInteractionEnabled = false
             nextResponder.becomeFirstResponder()
             let tf = nextResponder as! UITextField
             if tf.text == "" {
@@ -313,13 +316,40 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             
         } else {
             textField.resignFirstResponder()
-            self.logoImageView.alpha = 1
+            hideTextfields()
         }
+    }
+    
+    func hideTextfields() {
+        textField1.hidden = true
+        textField2.hidden = true
+        textField3.hidden = true
+        textField4.hidden = true
+        textField5.hidden = true
+        textField6.hidden = true
+        textField6.userInteractionEnabled = false
+        textFieldButton.hidden = false
+        
+        let passcode = createPasscode()
+        if count(passcode) == 6 {
+            textFieldButton.setTitle(passcode, forState: UIControlState.Normal)
+            textFieldButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 40)
+            
+            let atributes = NSAttributedString(string: passcode, attributes: [NSKernAttributeName: (10)])
+            textFieldButton.titleLabel?.attributedText = atributes
+        } else {
+            textFieldButton.setTitle(NSLocalizedString("LOCK_enterCode", comment: ""), forState: UIControlState.Normal)
+            textFieldButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
+        }
+        
+        self.logoImageView.alpha = 1
     }
     
     func dismissKeyboard(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
-        self.logoImageView.alpha = 1
+        hideTextfields()
+        
+        
     }
     
     func createPasscode() -> String{
@@ -396,7 +426,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
                 self.handleError(error)
                 }, next: { bike in
                     self.borrowRequestPending.value = false
-                    logD("compl")
+//                    logD("compl")
                     self.showBorrowedBikeController(bike, sender: sender)
             })
         } else {
@@ -440,6 +470,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             let previousTag = textField.tag - 1
             if let previousResponder = textField.superview!.viewWithTag(previousTag) {
                 if previousTag > 0 {
+                    previousResponder.userInteractionEnabled = true
                     previousResponder.becomeFirstResponder()
                     let tf = previousResponder as! UITextField
                     tf.text = " "
@@ -450,7 +481,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
                 textField.resignFirstResponder()
             }
             return false
-        } else if textField.text != " " && string != "" {
+        } /*else if textField.text != " " && string != "" {
             changeTextField(textField)
         } else if textField.text != " " && textField.text != "" {
             textField.text = ""
@@ -466,7 +497,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             }
             
             return false
-        }
+        }*/
         else {
             textField.text = ""
         }

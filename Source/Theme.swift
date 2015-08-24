@@ -183,6 +183,7 @@ enum L {
 class Theme {
     class func digitTextField() -> UITextField {
         let tf = UITextField()
+        tf.userInteractionEnabled = false
         tf.keyboardType = UIKeyboardType.NumberPad
         tf.textAlignment = .Center
         tf.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 35)

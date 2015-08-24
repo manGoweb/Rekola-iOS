@@ -218,7 +218,7 @@ class RekolaAPI {
 							sendError(sink, jsonError)
 							return
 						}
-						logD(jsonString)
+//						logD(jsonString)
 						let str =  action(jsonString!)
 						str |> start(sink)
 						return
@@ -272,7 +272,7 @@ class RekolaAPI {
 	
 	func myBike() -> SignalProducer<Bike?, NSError> {
 		return call(.MyBike) { data in
-			logD(data)
+//			logD(data)
 			let parse : SignalProducer<Bike, NSError> = rac_decode(data)
 			return parse |> map { $0 as Bike? }
 			}
@@ -312,7 +312,7 @@ class RekolaAPI {
 	
 	func returnBike(#id : Int , info : BikeReturnInfo) -> SignalProducer<AnyObject?, NSError> {
 		return call(Router.ReturnBike(id: id, info: info)) { data in
-			logD(data)
+//			logD(data)
 			return SignalProducer.empty
 		}
 	}
@@ -330,7 +330,7 @@ class RekolaAPI {
     
     func myAccount() -> SignalProducer<MyAccount, NSError> {
         return call(Router.MyAccount) { data in
-            logD(data)
+//            logD(data)
             let parse : SignalProducer<MyAccount, NSError> = rac_decode(data)
             return parse |> map { $0 as MyAccount }
         }
@@ -338,7 +338,7 @@ class RekolaAPI {
     
     func sendIssue(#id: Int, issue : BikeReportProblem) -> SignalProducer<AnyObject?, NSError> {
         return call(Router.BikesIssues(id: id, info: issue)) { data in
-            logD(data)
+//            logD(data)
             return SignalProducer.empty
         }
     }
@@ -346,7 +346,7 @@ class RekolaAPI {
     
     func getBoundaries() -> SignalProducer<Boundaries, NSError> {
         return call(Router.Boundaries) { (data : AnyObject) in
-            logD(data)
+//            logD(data)
             let signal : SignalProducer<Boundaries, NSError> = rac_decode(data)
             return signal |> map { $0 as Boundaries}
         }
@@ -357,7 +357,7 @@ class RekolaAPI {
             let signal : SignalProducer<Issues, NSError> = rac_decode(data)
             return signal
                 |> on(next: { item in
-                    logD(data)
+//                    logD(data)
                 })
                 |> map { $0 as Issues }
         }
@@ -365,7 +365,7 @@ class RekolaAPI {
     
     func logout() -> SignalProducer<AnyObject?, NSError> {
         return call(Router.Logout) { data in
-            logD(data)
+//            logD(data)
             return SignalProducer.empty
         }
     }

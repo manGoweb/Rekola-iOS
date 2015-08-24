@@ -84,6 +84,14 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 			make.bottom.equalTo(mapView.snp_centerY)
 		}
 		self.pinImageView = pinImageView
+        
+        let webView = UIWebView()
+        view.addSubview(webView)
+        webView.alpha = 0
+        webView.snp_makeConstraints { make in
+            make.edges.equalTo(view)//.inset(L.contentInsets)
+        }
+        self.webView = webView
     }
 
     weak var mapView: MKMapView!
@@ -91,9 +99,11 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
     weak var returnButton: UIButton!
     weak var textView: SZTextView!
     weak var descriptionLabel: UILabel!
+    weak var webView: UIWebView!
     let locationManager = CLLocationManager()
     var boundaries = Boundaries(regions: [], zones: [])
     var coordForBoundaries: [[CLLocationCoordinate2D]] = []
+    var succesUrl = SuccesUrl?()
 
     
     override func viewWillAppear(animated: Bool) {
@@ -167,9 +177,10 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 		API.returnBike(id: bike.id, info: info).start(error: { error in
 			self.requestPending.value = false
 			self.handleError(error)
-			}, completed: {
+            }, completed: {
 				self.requestPending.value = false
-				self.navigationController?.popToRootViewControllerAnimated(true)
+                self.showWebView()
+//				self.navigationController?.popToRootViewControllerAnimated(true)
 		})
 	}
     
@@ -208,6 +219,22 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         }
         
         self.drawPolygon(self.coordForBoundaries)
+    }
+    
+    func showWebView() {
+        UIView.animateWithDuration(0.2, animations: {
+            self.webView.alpha = 1
+            self.navigationController?.navigationBar.hidden = true
+        })
+        
+        
+        
+        let bikeId = bike.id
+        let urlString = "http://beta.rekola.cz/api/bikes/\(bikeId)/return-success-webview?length=0&duration=12&position=14.388444%2C50.106471&apikey=vv74scxx5d92ro6bn9o9st58u31mvj7j454d0jhc" //tohle nahradit volanim z API
+        let url = NSURL(string: urlString)
+        let request = NSURLRequest(URL: url!)
+        
+        webView.loadRequest(request)
     }
     
 //    MARK: CLLocationManagerDelegate

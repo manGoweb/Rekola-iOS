@@ -401,3 +401,18 @@ extension Boundaries : Decodable {
             <*> json <|| "zones"
     }
 }
+
+public struct SuccesUrl {
+    let succesUrl: String
+}
+
+extension SuccesUrl : Decodable {
+    static func create(succesUrl: String) -> SuccesUrl {
+        return SuccesUrl(succesUrl: succesUrl)
+    }
+    
+    public static func decode(json: JSON) -> Decoded<SuccesUrl> {
+        return SuccesUrl.create
+            <^> json <| "succesUrl"
+    }
+}
