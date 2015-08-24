@@ -17,7 +17,8 @@ import ReactiveCocoa
 class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate {
     var window: UIWindow?
 	
-	
+  
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 		
         UIResponder.globalErrorHandlers.insert(RekolaErrorHandler(), atIndex: 0)
@@ -27,18 +28,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
         #if !DEBUG
         //BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)
-       // BITHockeyManager.sharedHockeyManager().startManager()
-      //  BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
-      //  BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = BITCrashManagerStatus.AutoSend
+        // BITHockeyManager.sharedHockeyManager().startManager()
+        //  BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
+        //  BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = BITCrashManagerStatus.AutoSend
         #endif
+        //   Flurry.startSession("")
         
-     //   Flurry.startSession("")
+        let font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 22)
+        println(font)
                                
         let vc = UINavigationController(rootViewController: LockViewController())
         let vc2 = UINavigationController(rootViewController: MapViewController())
         let vc3 = UINavigationController(rootViewController: ProfileViewController())
         
-//        let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
         let item1 = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
         let item2 = TabItem(controller: vc2, images: UIImage.toggleImage(UIImage.ImagesForToggle.Map))
         let item3 = TabItem(controller: vc3, images: UIImage.toggleImage(UIImage.ImagesForToggle.Profile))
@@ -48,14 +50,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
         let apiKey: AnyObject? = NSUserDefaults.standardUserDefaults().valueForKey("apiKey")
         if let  existingApiKey: AnyObject = apiKey {
-            
+        
             let issueRequestPending = MutableProperty(false)
                 API.myAccount().start(error: {error in
-//                    self.handleError(error)
-                        self.window?.rootViewController = signIn
-                        self.window?.makeKeyAndVisible()
-                        self.window?.tintColor = UIColor.whiteColor()
+                        self.logout()
                     }, completed: {
+                        println("logika zatím")
                         issueRequestPending.value = false
                         self.window?.rootViewController = tabbar
                         self.window?.makeKeyAndVisible()
@@ -66,12 +66,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
             window?.makeKeyAndVisible()
             window?.tintColor = UIColor.whiteColor()
         }
-//        UINavigationBar.appearance().shadowImage = UIImage()
-//        UINavigationBar.appearance().setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
-        
-//        UINavigationBar.appearance().barTintColor = 
+
         return true
     }
+    
+    func logout() {
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("apiKey")
+        let signIn = SignInViewController()
+        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        delegate.window?.rootViewController = signIn
+        delegate.window?.makeKeyAndVisible()
+    }
+    
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

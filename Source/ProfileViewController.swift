@@ -48,7 +48,6 @@ class ProfileViewController: UIViewController {
             make.width.equalTo(169)
             make.height.equalTo(44)
             make.top.equalTo(dateLabel.snp_bottom).offset(20)
-//                    make.left.right.equalTo(view)
             make.centerX.equalTo(view.snp_centerX)
         }
         self.logoutButton = logoutButton
@@ -235,7 +234,7 @@ class ProfileViewController: UIViewController {
     
     func dateLabelFormat(date: NSDate) -> String! {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YYYY"
+        dateFormatter.dateFormat = "dd. MM. YYYY"
         
         let stringDate = dateFormatter.stringFromDate(date)
         

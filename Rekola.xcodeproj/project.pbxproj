@@ -1064,7 +1064,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "b3769c7f-bb66-4ade-928c-9ed39c659560";
+				PROVISIONING_PROFILE = "e063cd5f-b19b-4245-a3a2-a05002b04559";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;

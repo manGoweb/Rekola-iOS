@@ -74,16 +74,36 @@ class BorrowedBikeViewController: UIViewController {
         }
         self.bikeDetailButton = detailButton
         
+        let returnButton = Theme.pinkButton()
+        view.addSubview(returnButton)
+        returnButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
+        returnButton.snp_makeConstraints { make in
+            make.bottom.equalTo(view).offset(-L.verticalSpacing)
+            make.left.equalTo(view).offset(L.horizontalSpacing)
+            make.right.equalTo(view).offset(-L.horizontalSpacing)
+            make.height.equalTo(45)
+        }
+        self.bikeReturnButton = returnButton
+        
+        
+        let placeHolder = UIView()
+        view.addSubview(placeHolder)
+        placeHolder.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(detailButton.snp_bottom)
+            make.left.right.equalTo(view)
+            make.bottom.equalTo(returnButton.snp_top)
+        }
+        
+        
         let rectangle = UIView()
         rectangle.layer.borderWidth = 2
         rectangle.layer.borderColor = UIColor.rekolaGrayBorderColor().CGColor
         rectangle.layer.cornerRadius = 7
-        view.addSubview(rectangle)
+        placeHolder.addSubview(rectangle)
         rectangle.snp_makeConstraints { make in
-            make.top.equalTo(detailButton.snp_bottom).offset(10)//.multipliedBy(1.1)
             make.height.equalTo(101).multipliedBy(0.1)
-//            make.left.right.equalTo(view).inset(L.contentInsets) //changed
-            make.centerX.equalTo(view.snp_centerX)
+            make.centerX.equalTo(placeHolder)
+            make.centerY.equalTo(placeHolder)
             make.left.equalTo(35)
             make.right.equalTo(-35)
         }
@@ -113,17 +133,9 @@ class BorrowedBikeViewController: UIViewController {
             make.bottom.equalTo(rectangle.snp_bottom)
         }
         self.bikeCodeLabel = codeLabel
+
         
-        let returnButton = Theme.pinkButton()
-        view.addSubview(returnButton)
-        returnButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
-        returnButton.snp_makeConstraints { make in
-            make.bottom.equalTo(view).offset(-L.verticalSpacing)
-            make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
-            make.height.equalTo(45)
-        }
-        self.bikeReturnButton = returnButton
+        
     }
     
     weak var bikeImageView: UIImageView!

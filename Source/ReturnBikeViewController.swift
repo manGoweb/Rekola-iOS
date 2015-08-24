@@ -13,7 +13,7 @@ import MapKit
 import CoreLocation
 import ReactiveCocoa
 
-class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate, CLLocationManagerDelegate{
+class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate, CLLocationManagerDelegate, UIWebViewDelegate{
 	
 	let bike : Bike
 	init(bike: Bike) {
@@ -84,6 +84,14 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 			make.bottom.equalTo(mapView.snp_centerY)
 		}
 		self.pinImageView = pinImageView
+        
+        let webView = UIWebView()
+        view.addSubview(webView)
+        webView.alpha = 0
+        webView.snp_makeConstraints { make in
+            make.edges.equalTo(view)//.inset(L.contentInsets)
+        }
+        self.webView = webView
     }
 
     weak var mapView: MKMapView!
@@ -91,9 +99,11 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
     weak var returnButton: UIButton!
     weak var textView: SZTextView!
     weak var descriptionLabel: UILabel!
+    weak var webView: UIWebView!
     let locationManager = CLLocationManager()
     var boundaries = Boundaries(regions: [], zones: [])
     var coordForBoundaries: [[CLLocationCoordinate2D]] = []
+    var succesUrl = SuccesUrl?()
 
     
     override func viewWillAppear(animated: Bool) {
@@ -164,13 +174,27 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 	func returnBike(sender: AnyObject?) {
 		let info = BikeReturnInfo(lat: mapLocation.latitude, lon: mapLocation.longitude, note: textView.text, sensorLat: sensorLocation?.coordinate.latitude, sensorLon: sensorLocation?.coordinate.longitude, sensorAcc: sensorLocation?.horizontalAccuracy)
 		requestPending.value = true
-		API.returnBike(id: bike.id, info: info).start(error: { error in
+
+     /*   API.returnBike(id: bike.id, info: info).start(error: { error in
+            }, completed: {
+            
+        }, interrupted: {
+            
+        }, next: { success in
+                
+        })*/
+
+        
+        API.returnBike(id: bike.id, info: info).start(error: { error in
 			self.requestPending.value = false
 			self.handleError(error)
-			}, completed: {
+            },completed: {
 				self.requestPending.value = false
-				self.navigationController?.popToRootViewControllerAnimated(true)
-		})
+                self.showWebView()
+//				self.navigationController?.popToRootViewControllerAnimated(true)
+            }, next: {
+                self.succesUrl = $0
+        })
 	}
     
     let boundariesRequestPending = MutableProperty(false)
@@ -209,6 +233,34 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         
         self.drawPolygon(self.coordForBoundaries)
     }
+    
+    func showWebView() {
+        UIView.animateWithDuration(0.2, animations: {
+            self.webView.alpha = 1
+            self.navigationController?.navigationBar.hidden = true
+        })
+        
+        
+        
+        let bikeId = bike.id
+        let urlString = self.succesUrl?.succesUrl
+        let url = NSURL(string: urlString!)
+        let request = NSURLRequest(URL: url!)
+        webView.delegate = self
+        webView.loadRequest(request)
+    }
+    
+    
+    //MARK: webview
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if request.URLString != self.succesUrl?.succesUrl {
+           	self.navigationController?.popToRootViewControllerAnimated(true)
+            return false
+        }
+        return true
+    }
+    
+    
     
 //    MARK: CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {

@@ -45,6 +45,10 @@ extension UIColor {
         return UIColor(hex: 0x5c5c5c)
     }
     
+    class func rekolaGrayCircleColor() -> UIColor! {
+        return UIColor(hex: 0x888989)
+    }
+    
     class func rekolaGreenColor() -> UIColor! {
         return UIColor(hex: 0x7d8d38)
     }
@@ -181,11 +185,19 @@ enum L {
 
 */
 class Theme {
+    class func circle() -> UIView {
+        let circle = UIView(frame: CGRectMake(0, 0, 10, 10))
+        circle.layer.cornerRadius = 5
+        circle.backgroundColor = UIColor.rekolaGrayCircleColor()
+        return circle
+    }
+    
     class func digitTextField() -> UITextField {
         let tf = UITextField()
+        tf.userInteractionEnabled = false
         tf.keyboardType = UIKeyboardType.NumberPad
         tf.textAlignment = .Center
-        tf.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 35)
+        tf.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 35)
         tf.layer.borderWidth = 0
         tf.backgroundColor = .rekolaGrayTextFieldColor()
         return tf
@@ -201,7 +213,8 @@ class Theme {
         let button = UIButton()
         button.setBackgroundImage(UIImage(color: UIColor.rekolaPinkColor()), forState: .Normal)
 		button.setTitleColor(UIColor.grayColor(), forState: .Highlighted) //TODO: color
-        button.layer.cornerRadius = 4
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
         button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         return button
     }
@@ -210,7 +223,8 @@ class Theme {
         let button = UIButton()
         button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         button.setBackgroundImage(UIImage(color: UIColor.rekolaGreenColor()), forState: .Normal)
-
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
         return button
     }
     
@@ -220,7 +234,8 @@ class Theme {
         button.setBackgroundImage(UIImage(color: UIColor.rekolaGrayBorderColor()), forState: .Normal)
         button.setTitleColor(.staticGrayTextColor(), forState: .Normal)
         button.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
-        button.layer.cornerRadius = 4
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
         return button
     }
     
@@ -230,6 +245,8 @@ class Theme {
         button.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         button.setTitleColor(UIColor.rekolaGreenColor(), forState: .Normal)
 			button.setTitleColor(UIColor.rekolaGrayTextColor(), forState: .Disabled)
+        button.layer.cornerRadius = 3
+        button.clipsToBounds = true
         return button
     }
     
