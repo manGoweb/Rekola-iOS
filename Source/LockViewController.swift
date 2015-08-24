@@ -210,18 +210,18 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         textFieldButton.setTitleColor(.rekolaGrayTextColor(), forState: .Normal)
         textFieldButton.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
-            make.left.right.equalTo(view).inset(L.contentInsets)
+            make.left.right.equalTo(container)
             make.height.equalTo(65)
         }
         self.textFieldButton = textFieldButton
         
         let borrowButton = Theme.pinkButton()
         container.addSubview(borrowButton)
-        borrowButton.titleLabel?.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
+        borrowButton.titleLabel?.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 22)
         borrowButton.snp_makeConstraints { make in
             make.top.equalTo(textFieldButton.snp_bottom).offset(L.verticalSpacing)
-            make.left.right.bottom.equalTo(container).inset(L.contentInsets)
-            make.height.equalTo(60)
+            make.left.right.bottom.equalTo(container)
+            make.height.equalTo(59)
         }
         self.borrowButton = borrowButton
         
@@ -340,8 +340,18 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         textField5.hidden = false
         textField6.hidden = false
         
+        textField1.text = ""
+        textField2.text = ""
+        textField3.text = ""
+        textField4.text = ""
+        textField5.text = ""
+        textField6.text = ""
+
+        
         textField1.userInteractionEnabled = true
         textField1.becomeFirstResponder()
+        self.scrollView.scrollToBottom(true)
+
     }
 /**
     forward navigation in textfields; in the following textfield puts whitespace for better navigation backwards
@@ -398,7 +408,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     }
     
     func createPasscode() -> String{
-        let hundredThousand = textField1.text.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let hundredThousand = self.textField1.text.stringByReplacingOccurrencesOfString(" ", withString: "")
         let tensThousand = textField2.text.stringByReplacingOccurrencesOfString(" ", withString: "")
         let thousands = textField3.text.stringByReplacingOccurrencesOfString(" ", withString: "")
         let hundreds = textField4.text.stringByReplacingOccurrencesOfString(" ", withString: "")
@@ -407,14 +417,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let passcode = hundredThousand + tensThousand + thousands + hundreds + tens + ones
         
-//        delete textfields
-        textField1.text = ""
-        textField2.text = ""
-        textField3.text = ""
-        textField4.text = ""
-        textField5.text = ""
-        textField6.text = ""
-        
+//
         textField1.hidden = true
         textField2.hidden = true
         textField3.hidden = true
@@ -503,7 +506,6 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 	
 	func textFieldDidBeginEditing(textField: UITextField) {
 		dispatch_async(dispatch_get_main_queue()) {
-			self.scrollView.scrollToBottom(true)
 //            self.logoImageView.alpha = 0
 		}
 	}

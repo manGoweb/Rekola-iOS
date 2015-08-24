@@ -33,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         //  BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = BITCrashManagerStatus.AutoSend
         #endif
         //   Flurry.startSession("")
+        
+        let font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 22)
+        println(font)
                                
         let vc = UINavigationController(rootViewController: LockViewController())
         let vc2 = UINavigationController(rootViewController: MapViewController())

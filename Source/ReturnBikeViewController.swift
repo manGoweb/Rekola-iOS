@@ -174,14 +174,27 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 	func returnBike(sender: AnyObject?) {
 		let info = BikeReturnInfo(lat: mapLocation.latitude, lon: mapLocation.longitude, note: textView.text, sensorLat: sensorLocation?.coordinate.latitude, sensorLon: sensorLocation?.coordinate.longitude, sensorAcc: sensorLocation?.horizontalAccuracy)
 		requestPending.value = true
-		API.returnBike(id: bike.id, info: info).start(error: { error in
+
+     /*   API.returnBike(id: bike.id, info: info).start(error: { error in
+            }, completed: {
+            
+        }, interrupted: {
+            
+        }, next: { success in
+                
+        })*/
+
+        
+        API.returnBike(id: bike.id, info: info).start(error: { error in
 			self.requestPending.value = false
 			self.handleError(error)
-            }, completed: {
+            },completed: {
 				self.requestPending.value = false
                 self.showWebView()
 //				self.navigationController?.popToRootViewControllerAnimated(true)
-		})
+            }, next: {
+                self.succesUrl = $0
+        })
 	}
     
     let boundariesRequestPending = MutableProperty(false)
@@ -230,8 +243,9 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         
         
         let bikeId = bike.id
-        let urlString = "http://beta.rekola.cz/api/bikes/\(bikeId)/return-success-webview?length=0&duration=12&position=14.388444%2C50.106471&apikey=vv74scxx5d92ro6bn9o9st58u31mvj7j454d0jhc" //tohle nahradit volanim z API
-        let url = NSURL(string: urlString)
+        let urlString = self.succesUrl?.succesUrl
+        //let urlString = "http://beta.rekola.cz/api/bikes/\(bikeId)/return-success-webview?length=0&duration=12&position=14.388444%2C50.106471&apikey=vv74scxx5d92ro6bn9o9st58u31mvj7j454d0jhc" //tohle nahradit volanim z API
+        let url = NSURL(string: urlString!)
         let request = NSURLRequest(URL: url!)
         
         webView.loadRequest(request)

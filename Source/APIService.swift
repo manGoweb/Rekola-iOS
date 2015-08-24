@@ -310,10 +310,12 @@ class RekolaAPI {
         }
     }
 	
-	func returnBike(#id : Int , info : BikeReturnInfo) -> SignalProducer<AnyObject?, NSError> {
+	func returnBike(#id : Int , info : BikeReturnInfo) -> SignalProducer<SuccesUrl, NSError> {
 		return call(Router.ReturnBike(id: id, info: info)) { data in
-//			logD(data)
-			return SignalProducer.empty
+            
+            let parse : SignalProducer<SuccesUrl, NSError> = rac_decode(data)
+            return parse |> map { $0 as SuccesUrl }
+
 		}
 	}
 	
