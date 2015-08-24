@@ -402,6 +402,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
         mapItem.openInMapsWithLaunchOptions(launchOptions)
     }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
 }
 
 

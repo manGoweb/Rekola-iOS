@@ -69,18 +69,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.top.equalTo(titleLabel.snp_bottom).offset(L.verticalSpacing)
         }
         self.subtitleLabel = subtitleLabel
-        
-//        let textField = Theme.textField()
-//		textField.returnKeyType = .Done
-//        textField.keyboardType = UIKeyboardType.NumberPad
-//        textField.textAlignment = .Center
-//        container.addSubview(textField)
-//        textField.snp_makeConstraints { make in
-//            make.height.equalTo(55)
-//            make.left.right.equalTo(container).inset(L.contentInsets)
-//            make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
-//        }
-//        self.textField = textField
+    
         
         let tf1 = Theme.digitTextField()
         tf1.tag = 1
@@ -206,7 +195,11 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         container.addSubview(textFieldButton)
         textFieldButton.setBackgroundImage(UIImage(color: .rekolaGrayTextFieldColor()), forState: UIControlState.Normal)
         textFieldButton.setTitle(NSLocalizedString("LOCK_enterCode", comment: ""), forState: UIControlState.Normal)
-        textFieldButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
+        textFieldButton.titleLabel?.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
+        textFieldButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        textFieldButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center;
+        
+
         textFieldButton.setTitleColor(.rekolaGrayTextColor(), forState: .Normal)
         textFieldButton.snp_makeConstraints { make in
             make.top.equalTo(subtitleLabel.snp_bottom).offset(20)
@@ -218,7 +211,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         let borrowButton = Theme.pinkButton()
         container.addSubview(borrowButton)
         borrowButton.titleLabel?.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 22)
-        borrowButton.snp_makeConstraints { make in
+            borrowButton.snp_makeConstraints { make in
             make.top.equalTo(textFieldButton.snp_bottom).offset(L.verticalSpacing)
             make.left.right.bottom.equalTo(container)
             make.height.equalTo(59)
@@ -241,6 +234,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     weak var textField6: UITextField!
     weak var textFieldButton: UIButton!
     
+    var textFields : [UITextField]!
+    
     
 //    weak var textField: UITextField!
     weak var borrowButton : UIButton!
@@ -251,37 +246,26 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.navigationBar.tintColor = .rekolaGreenColor()
         self.view.backgroundColor = .whiteColor()
+        
+        textFields = [textField1,textField2,textField3,textField4,textField5,textField6,]
 		
         titleLabel.text = NSLocalizedString("LOCK_codeInfo", comment: "")
         subtitleLabel.text = NSLocalizedString("LOCK_codeDescription", comment: "")
-        textField1.delegate = self
-        textField2.delegate = self
-        textField3.delegate = self
-        textField4.delegate = self
-        textField5.delegate = self
-        textField6.delegate = self
-        
+        textFields.map { $0.delegate = self }
         textFieldButton.addTarget(self, action: "enterCode:", forControlEvents: UIControlEvents.TouchUpInside)
+        textFields.map { $0.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged) }
         
-        textField1.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
-        textField2.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
-        textField3.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
-        textField4.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
-        textField5.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
-        textField6.addTarget(self, action: "changeTextField:", forControlEvents: UIControlEvents.EditingChanged)
         
         var tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
         tap.numberOfTouchesRequired = 1
         self.view.addGestureRecognizer(tap)
         
-//        textField.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 20)
-//        textField.placeholder = NSLocalizedString("LOCK_enterCode", comment: "")
         
         borrowButton!.setTitle(NSLocalizedString("LOCK_borrow", comment: ""), forState: .Normal)
         borrowButton.addTarget(self, action: "borrowBike:", forControlEvents: .TouchUpInside)
 		
 		
-//        progressHud
+        scrollView.scrollEnabled = false
 		myBikeRequestPending.producer
 			|> skipRepeats { (prev, curr) in
 			return 	prev == curr
@@ -296,23 +280,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 			}
 		})
 		
-		
-//		let tfHas6Digits = merge([textField.rac_textSignal().toSignalProducer(), textField.rac_valuesForKeyPath("text", observer: self).toSignalProducer()])
-//			|> ignoreError
-//			|> map { $0 as! String }
-//			|> map { (text : String) -> Bool in
-//				let expr = NSRegularExpression(pattern: "^[0-9]{6}$", options: .allZeros, error: nil)!
-//				let matches = expr.matchesInString(text, options: .allZeros, range: NSMakeRange(0, count(text)))
-//				return matches.count > 0
-//		}
-
-//		let hasLocation = location.producer |> map { $0 != nil }
-//		canBorrowBike <~ combineLatest([tfHas6Digits, myBikeRequestPending.producer, borrowRequestPending.producer, hasLocation])
-//			|> map { $0[0] && !$0[1] && !$0[2] && $0[3] }
-//			|> skipRepeats
-//
-//		borrowButton.rac_enabled <~ canBorrowBike
-				
+						
 		locationManager.requestWhenInUseAuthorization()
 		locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
 		locationManager.delegate = self
@@ -334,26 +302,16 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     
     func enterCode(sender: UIButton) {
         sender.hidden = true
-        textField1.hidden = false
-        textField2.hidden = false
-        textField3.hidden = false
-        textField4.hidden = false
-        textField5.hidden = false
-        textField6.hidden = false
-        
-        textField1.text = ""
-        textField2.text = ""
-        textField3.text = ""
-        textField4.text = ""
-        textField5.text = ""
-        textField6.text = ""
-
-        
+        UIView.animateWithDuration(0.5) { self.logoImageView.alpha = 0 }
+        textFields.map { $0.hidden = false}
+        textFields.map { $0.text = ""}
         textField1.userInteractionEnabled = true
         textField1.becomeFirstResponder()
+        
         self.scrollView.scrollToBottom(true)
 
     }
+    
 /**
     forward navigation in textfields; in the following textfield puts whitespace for better navigation backwards
 */
@@ -363,8 +321,16 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         println("TAG prev: \(textField.tag) \n next: \(nextTag)")
         if let nextResponder = textField.superview!.viewWithTag(nextTag) {
             nextResponder.userInteractionEnabled = true
-            textField.userInteractionEnabled = false
+           // nextResponder.becomeFirstResponder()
+            
+            UIView.beginAnimations(nil, context: nil)
+            UIView.setAnimationDuration(0.0)
+            UIView.setAnimationDelay(0)
+            UIView.setAnimationCurve(UIViewAnimationCurve.Linear)
             nextResponder.becomeFirstResponder()
+            textField.userInteractionEnabled = false
+            UIView.commitAnimations();
+            
             let tf = nextResponder as! UITextField
             if tf.text == "" {
                 tf.text = " "
@@ -377,15 +343,11 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     }
     
     func hideTextfields() {
-        textField1.hidden = true
-        textField2.hidden = true
-        textField3.hidden = true
-        textField4.hidden = true
-        textField5.hidden = true
-        textField6.hidden = true
-        textField6.userInteractionEnabled = false
-        textFieldButton.hidden = false
         
+        textFields.map { $0.hidden = true}
+        textFieldButton.hidden = false
+        UIView.animateWithDuration(0.5) { self.logoImageView.alpha = 1 }
+
         let passcode = createPasscode()
         if count(passcode) == 6 {
             textFieldButton.setTitle(passcode, forState: UIControlState.Normal)
@@ -398,13 +360,11 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             textFieldButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         }
         
-        self.logoImageView.alpha = 1
     }
     
     func dismissKeyboard(sender: UITapGestureRecognizer) {
         self.view.endEditing(true)
         hideTextfields()
-        
         
     }
     
@@ -418,13 +378,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         let passcode = hundredThousand + tensThousand + thousands + hundreds + tens + ones
         
-        textField1.hidden = true
-        textField2.hidden = true
-        textField3.hidden = true
-        textField4.hidden = true
-        textField5.hidden = true
-        textField6.hidden = true
-        
+        textFields.map { $0.hidden = true}
         textFieldButton.hidden = false
         
         return passcode
@@ -452,6 +406,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     
     var canBorrowBike = MutableProperty(false)
     var borrowRequestPending = MutableProperty(false)
+    
     func borrowBike(sender: AnyObject?) {
         UIView.performWithoutAnimation {
             //			textField.resignFirstResponder()
@@ -459,17 +414,21 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         let code = createPasscode() //textField.text
         borrowRequestPending.value = true
         if let coords = location.value {
-            API.borrowBike(code: code, location: coords).start(error: { error in
-                self.borrowRequestPending.value = false
-                self.handleError(error)
-                }, next: { bike in
+            API.borrowBike(code: code, location: coords).start(
+                error: { error in
                     self.borrowRequestPending.value = false
-//                    logD("compl")
+                    self.handleError(error)
+                },
+                completed: {  textFields.map { $0.text = ""} } ,
+                next: { bike in
+                    self.borrowRequestPending.value = false
                     self.showBorrowedBikeController(bike, sender: sender)
             })
         } else {
             let alertView = UIAlertView(title: NSLocalizedString("LOCK_coordinate", comment: ""), message: "", delegate: nil, cancelButtonTitle: "OK")
             alertView.show()
+            textFields.map { $0.text = ""}
+
         }
         
 
@@ -482,24 +441,6 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     }
 
 
-    
-//    MARK: UITextFieldDelegate
-    
-//	func textFieldShouldReturn(textField: UITextField) -> Bool {
-////		if(canBorrowBike.value) {
-////			borrowBike(textField)
-////		}
-//		textField.resignFirstResponder()
-//
-//		return true
-//	}
-	
-	func textFieldDidBeginEditing(textField: UITextField) {
-		dispatch_async(dispatch_get_main_queue()) {
-//            self.logoImageView.alpha = 0
-		}
-	}
-		
 /*    backward navigation in textFields; first if handles situation, when user clicked to the one of the middle textfields and want to go backwards
       "else if" handles situation, when user want to delete last digit he wrotes, and else handle situation when user wants to delete whole passcode*/
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -508,6 +449,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             if let previousResponder = textField.superview!.viewWithTag(previousTag) {
                 if previousTag > 0 {
                     previousResponder.userInteractionEnabled = true
+                    
                     previousResponder.becomeFirstResponder()
                     let tf = previousResponder as! UITextField
                     tf.text = " "
@@ -518,24 +460,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
                 textField.resignFirstResponder()
             }
             return false
-        } /*else if textField.text != " " && string != "" {
-            changeTextField(textField)
-        } else if textField.text != " " && textField.text != "" {
-            textField.text = ""
-            let previousTag = textField.tag - 1
-            if let previousResponder = textField.superview!.viewWithTag(previousTag) {
-                if previousTag > 0 {
-                    previousResponder.becomeFirstResponder()
-                } else {
-                    textField.resignFirstResponder()
-                }
-            } else {
-                textField.resignFirstResponder()
-            }
-            
-            return false
-        }*/
-        else {
+        } else {
             textField.text = ""
         }
         return true
