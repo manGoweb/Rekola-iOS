@@ -45,6 +45,10 @@ extension UIColor {
         return UIColor(hex: 0x5c5c5c)
     }
     
+    class func rekolaGrayCircleColor() -> UIColor! {
+        return UIColor(hex: 0x888989)
+    }
+    
     class func rekolaGreenColor() -> UIColor! {
         return UIColor(hex: 0x7d8d38)
     }
@@ -181,6 +185,13 @@ enum L {
 
 */
 class Theme {
+    class func circle() -> UIView {
+        let circle = UIView(frame: CGRectMake(0, 0, 10, 10))
+        circle.layer.cornerRadius = 5
+        circle.backgroundColor = UIColor.rekolaGrayCircleColor()
+        return circle
+    }
+    
     class func digitTextField() -> UITextField {
         let tf = UITextField()
         tf.userInteractionEnabled = false

@@ -95,6 +95,15 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         }
         self.textField1 = tf1
         
+        let dot1 = Theme.circle()
+        textField1.addSubview(dot1)
+        dot1.snp_makeConstraints { make in
+            make.bottom.equalTo(tf1.snp_bottom).offset(-18)
+            make.left.equalTo(container).offset(45)
+            make.height.equalTo(5)
+            make.width.equalTo(5)
+        }
+        
         let tf2 = Theme.digitTextField()
         tf2.tag = 2
         tf2.hidden = true
@@ -106,6 +115,16 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.width.equalTo(50)
         }
         self.textField2 = tf2
+        
+        let dot2 = Theme.circle()
+        textField2.addSubview(dot2)
+        dot2.snp_makeConstraints { make in
+            make.bottom.equalTo(tf2.snp_bottom).offset(-18)
+            make.left.equalTo(dot1.snp_right).offset(45)
+            make.height.equalTo(5)
+            make.width.equalTo(5)
+        }
+        
         
         let tf3 = Theme.digitTextField()
         tf3.tag = 3
@@ -119,6 +138,15 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         }
         self.textField3 = tf3
         
+        let dot3 = Theme.circle()
+        textField3.addSubview(dot3)
+        dot3.snp_makeConstraints { make in
+            make.bottom.equalTo(textField3.snp_bottom).offset(-18)
+            make.left.equalTo(dot2.snp_right).offset(45)
+            make.height.equalTo(5)
+            make.width.equalTo(5)
+        }
+        
         let tf4 = Theme.digitTextField()
         tf4.tag = 4
         tf4.hidden = true
@@ -131,6 +159,15 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         }
         self.textField4 = tf4
         
+        let dot4 = Theme.circle()
+        textField4.addSubview(dot4)
+        dot4.snp_makeConstraints {make in
+            make.bottom.equalTo(textField4.snp_bottom).offset(-18)
+            make.left.equalTo(dot3.snp_right).offset(45)
+            make.width.equalTo(5)
+            make.height.equalTo(5)
+        }
+        
         let tf5 = Theme.digitTextField()
         tf5.tag = 5
         tf5.hidden = true
@@ -142,6 +179,15 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
             make.width.equalTo(50)
         }
         self.textField5 = tf5
+        
+        let dot5 = Theme.circle()
+        textField5.addSubview(dot5)
+        dot5.snp_makeConstraints { make in
+            make.bottom.equalTo(textField5.snp_bottom).offset(-18)
+            make.left.equalTo(dot4.snp_right).offset(45)
+            make.height.equalTo(5)
+            make.width.equalTo(5)
+        }
         
         let tf6 = Theme.digitTextField()
         tf6.tag = 6
@@ -284,7 +330,6 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 		super.viewDidDisappear(animated)
 		locationManager.stopUpdatingLocation()
 	}
-    
     
     func enterCode(sender: UIButton) {
         sender.hidden = true
