@@ -121,77 +121,13 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             make.height.equalTo(1)
         }
         
-        let lastReturnLabel = UILabel()
-        container.addSubview(lastReturnLabel)
-        lastReturnLabel.textAlignment = .Center
-        lastReturnLabel.textColor = .rekolaBlackColor()
-        lastReturnLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
-        lastReturnLabel.snp_makeConstraints { make in
-            make.top.equalTo(line1.snp_bottom).offset(20)
-            make.left.right.equalTo(container)
-        }
-        self.lastReturnLabel = lastReturnLabel
-        
-        let calendarIV = UIImageView(image: UIImage(imageIdentifier: .calendar))
-        calendarIV.contentMode = .ScaleAspectFit
-        container.addSubview(calendarIV)
-        calendarIV.snp_makeConstraints { make in
-            make.top.equalTo(lastReturnLabel.snp_bottom).offset(20)
-            make.left.equalTo(container).offset(70)
-        }
-        
-        let dateLabel = Theme.pinkLabel()
-        container.addSubview(dateLabel)
-        dateLabel.snp_makeConstraints { make in
-            make.top.equalTo(lastReturnLabel.snp_bottom).offset(20)
-            make.left.equalTo(calendarIV.snp_right).offset(10)
-        }
-        self.dateLabel = dateLabel
-        
-        let clockIV = UIImageView(image: UIImage(imageIdentifier: .clock))
-        container.addSubview(clockIV)
-        clockIV.contentMode = .ScaleAspectFit
-        clockIV.snp_makeConstraints { make in
-            make.top.equalTo(lastReturnLabel.snp_bottom).offset(20)
-            make.left.equalTo(dateLabel.snp_right).offset(40)
-        }
-        
-        let timeLabel = Theme.pinkLabel()
-        container.addSubview(timeLabel)
-        timeLabel.snp_makeConstraints { make in
-            make.top.equalTo(lastReturnLabel.snp_bottom).offset(20)
-            make.left.equalTo(clockIV.snp_right).offset(10)
-        }
-        self.timeLabel = timeLabel
-        
-        let locationLabel = UILabel()
-        container.addSubview(locationLabel)
-        locationLabel.textColor = .rekolaGrayTextColor()
-        locationLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 15)
-        locationLabel.textAlignment = .Center
-        locationLabel.numberOfLines = 0
-        locationLabel.snp_makeConstraints { make in
-            make.top.equalTo(dateLabel.snp_bottom).offset(L.verticalSpacing)
-            make.left.right.equalTo(container)
-        }
-        self.locationLabel = locationLabel
-        
-        let line2 = Theme.lineView()
-        container.addSubview(line2)
-        line2.snp_makeConstraints { make in
-            make.top.equalTo(locationLabel.snp_bottom).offset(20)
-            make.left.equalTo(container).offset(L.horizontalSpacing)
-            make.right.equalTo(container).offset(-L.horizontalSpacing)
-            make.height.equalTo(1)
-        }
-        
         let equipmentLabel = UILabel()
         container.addSubview(equipmentLabel)
         equipmentLabel.textAlignment = .Center
         equipmentLabel.textColor = .rekolaBlackColor()
         equipmentLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 17)
         equipmentLabel.snp_makeConstraints { make in
-            make.top.equalTo(line2.snp_bottom).offset(20)
+            make.top.equalTo(line1.snp_bottom).offset(20)
             make.left.right.equalTo(container)
         }
         self.bikeEquipmentLabel = equipmentLabel
@@ -348,15 +284,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         }
         
         descriptionLabel.text = bike.description
-        
-        lastReturnLabel.text = NSLocalizedString("BIKEDETAIL_lastReturn", comment: "")
-        
-        let dateAndTime = formatDateAndTime(bike.lastSeen)
-        
-        dateLabel.text = dateAndTime.0
-        timeLabel.text = dateAndTime.1
-        
-        locationLabel.text = bike.location.note
         
         bikeEquipmentLabel.text = NSLocalizedString("BIKEDETAIL_equipment", comment: "")
         

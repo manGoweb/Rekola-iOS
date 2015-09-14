@@ -8,8 +8,8 @@
 
 "ERROR" = "Chyba";
 "ERROR_coomunication" = "Chyba komunikace";
-"LOCK_codeInfo" = "Vlož 6 místný kód a obdržíš kód zámku a můžeš začít používat kolo.";
-"LOCK_codeDescription" = "Kód najdeš na zadním blatníku nebo na zadní části rámu.";
+"LOCK_codeInfo" = "Vložte šestimístné číslo a získáte kód zámku.";
+"LOCK_codeDescription" = "Číslo najdete na kole či koloběžce.";
 "LOCK_enterCode" = "Vlož 6 místný kód";
 "LOCK_borrow" = "PŮJČIT";
 "LOCK_coordinate" = "Poloha nenalezena";
@@ -29,7 +29,7 @@
 //<string name="reset_info">Enter your email to get instructions on how to reset your password.</string>
 //<string name="reset_recall">I remembered, go back</string>
 //TODO: udelat poradek v lokalizaci, smazat stare resourcy z Tradic, domluvit se s @tomas.krabac, asi ma byt appka lokalizovana do cs a en
-"BORROWBIKE_detail" = "Detail kola";
+"BORROWBIKE_detail" = "Detail";
 "BORROWBIKE_code" = "KÓD ZÁMKU";
 "BORROWBIKE_return" = "Vrátit kolo";
 "BORROWBIKE_lent" = "Půjčeno ";
