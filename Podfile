@@ -11,7 +11,7 @@ pod 'FlurrySDK'
 
 #pod 'SVProgressHUD'
 #pod 'SnapKit'
-#pod 'AlamoFire'
+#pod 'AlamoFire' '~> 1.2'
 
 #pod 'MagicalRecord', '~> 2.2'
 pod 'SVProgressHUD', :head
@@ -19,7 +19,7 @@ pod 'SDWebImage'
 pod 'LTNavigationBar', '~> 2.0'
 pod 'Masonry', '~> 0.6'
 pod 'SZTextView'
-
+#pod 'CocoaLumberjack', '2.0.1'
 
 
 target :Tests, :exclusive => true do
