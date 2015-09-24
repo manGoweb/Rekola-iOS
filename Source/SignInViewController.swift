@@ -169,14 +169,14 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 	
 	func signIn(sender: AnyObject?) {
 		loggingIn.value = true
-		API.login(username: emailTextField.text, password: passwordTextField.text).start(completed: {
+		API.login(username: emailTextField.text, password: passwordTextField.text).start(next: { (apiKey, isServis) in
 			self.loggingIn.value = false
 			UIView.performWithoutAnimation{
 				view.endEditing(true)
 			}
 			let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
 			
-			let vc = UINavigationController(rootViewController: LockViewController())
+			let vc = UINavigationController(rootViewController: LockViewController(isServis: isServis))
 			let vc2 = UINavigationController(rootViewController: MapViewController())
 			let vc3 = UINavigationController(rootViewController: ProfileViewController())
 			
@@ -192,11 +192,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 			delegate.window!.makeKeyAndVisible()
 			}, error: { error in
 				self.loggingIn.value = false
-//				self.handleError(error)
-                
-                let alertView = UIAlertView(title: NSLocalizedString("SIGNIN_failedSingIn", comment: ""), message: "", delegate: self, cancelButtonTitle: "OK")
-                alertView.show()
-				//TODO: k erroru neni grafika a api zatim error nikdy nevrati
+				self.handleError(error)
 		})
 	}
 	

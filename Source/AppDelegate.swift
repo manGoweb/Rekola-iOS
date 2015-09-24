@@ -36,8 +36,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
         let font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 22)
         println(font)
-                               
-        let vc = UINavigationController(rootViewController: LockViewController())
+        
+        let servisBool : Bool?
+        if let isServis = NSUserDefaults.standardUserDefaults().valueForKey("showWebviewForBikedetail") as? Bool {
+            servisBool = isServis
+        } else {
+            servisBool = false
+        }
+                
+        let vc = UINavigationController(rootViewController: LockViewController(isServis: servisBool!))
         let vc2 = UINavigationController(rootViewController: MapViewController())
         let vc3 = UINavigationController(rootViewController: ProfileViewController())
         
@@ -55,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
                 API.myAccount().start(error: {error in
                         self.logout()
                     }, completed: {
-                        println("logika zatím")
                         issueRequestPending.value = false
                         self.window?.rootViewController = tabbar
                         self.window?.makeKeyAndVisible()
@@ -72,6 +78,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
     
     func logout() {
         NSUserDefaults.standardUserDefaults().removeObjectForKey("apiKey")
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("showWebviewForBikedetail")
         let signIn = SignInViewController()
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         delegate.window?.rootViewController = signIn

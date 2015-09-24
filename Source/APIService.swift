@@ -62,6 +62,7 @@ enum Router : URLRequestConvertible {
     case Bikes(dictionary: [String:Double])
     case MyBike
 	case BorrowBike(code: String, lat: String, lon: String)
+    case BorrowServisBike(id: Int)
 	case ReturnBike(id: Int, info : BikeReturnInfo)
 	case Logout
     case MyBikeIssue(id: Int)
@@ -83,6 +84,8 @@ enum Router : URLRequestConvertible {
 			return .GET
 		case .BorrowBike:
 			return .GET //fuj ble
+        case .BorrowServisBike:
+            return .GET
 		case .ReturnBike:
 			return .PUT
         case .Logout:
@@ -114,6 +117,8 @@ enum Router : URLRequestConvertible {
 			return "/bikes/mine"
 		case .BorrowBike:
 			return "/bikes/lock-code"
+        case .BorrowServisBike(let id):
+            return "/bikes/\(id)/info-webview"
 		case .ReturnBike(let id, _):
 			return "/bikes/\(id)/return"
         case .Logout:
@@ -243,18 +248,19 @@ class RekolaAPI {
 
     
     
-	func login(#username: String, password: String) -> SignalProducer<String,NSError>  {
+	func login(#username: String, password: String) -> SignalProducer<(String, Bool),NSError>  {
 		return  call(.Login(dictionary:["password" : password, "username" : username]), authHandler: nil) { data in
             //namapuju resp zgrootuju
             return rac_decode(data)
                 //side-effect jednotlivych requestů
                 |> map({ (info: LoginInfo)  in
-                    return info.apiKey
+                    return (info.apiKey, info.showWebviewForBikedetail!)
                 })
                 |> on(next: {
                     //provedu save do databaze napriklad
                     println($0)
-                    NSUserDefaults.standardUserDefaults().setValue($0, forKey: "apiKey")
+                    NSUserDefaults.standardUserDefaults().setValue($0.0, forKey: "apiKey")
+                    NSUserDefaults.standardUserDefaults().setBool($0.1, forKey: "showWebviewForBikedetail")
                 })
                 //chytne error a specific request error codes handling
                 // side effect po tom co skoncim
@@ -298,6 +304,14 @@ class RekolaAPI {
 			return parse
 		}
 	}
+    
+    func borrowServisBike(#id : Int) -> SignalProducer<String, NSError> {
+        return call(.BorrowServisBike(id: id)) { data in
+            let url = data as! String
+            let parse : SignalProducer<String, NSError> = rac_decode(url)
+            return parse
+        }
+    }
 	
 	func bikes(#latitude: Double, longitude: Double) -> SignalProducer<[Bike],NSError> {
         return call(Router.Bikes(dictionary: ["lat": latitude, "lng" : longitude])) { data in

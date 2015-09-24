@@ -11,10 +11,12 @@ import SnapKit
 import Foundation
 import ReactiveCocoa
 
-class BorrowedBikeViewController: UIViewController {
+class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
 	let bike : Bike
-	init(bike: Bike) {
+    let isServis: Bool
+    init(bike: Bike, isServis: Bool) {
 		self.bike = bike
+        self.isServis = isServis
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -133,7 +135,26 @@ class BorrowedBikeViewController: UIViewController {
         }
         self.bikeCodeLabel = codeLabel
 
+        let webView = UIWebView()
+        view.addSubview(webView)
+        webView.alpha = 0
+        webView.snp_makeConstraints { make in
+            make.edges.equalTo(view)//.inset(L.contentInsets)
+        }
+        self.webView = webView
         
+        let closeButton = UIButton()
+        webView.addSubview(closeButton)
+        closeButton.alpha = 0
+        closeButton.titleLabel?.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 15)
+        closeButton.setTitleColor(.rekolaBlackColor(), forState: .Normal)
+        closeButton.setTitle(NSLocalizedString("BORROWBIKE_close", comment: ""), forState: .Normal)
+        closeButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(0).offset(15)
+            make.right.equalTo(0).offset(-L.horizontalSpacing)
+            make.height.equalTo(20)
+        }
+        self.closeButton = closeButton
         
     }
     
@@ -144,6 +165,8 @@ class BorrowedBikeViewController: UIViewController {
     weak var bikeCodeImage: UIImageView!
     weak var bikeCodeLabel: UILabel!
     weak var bikeReturnButton: UIButton!
+    weak var webView: UIWebView!
+    weak var closeButton: UIButton!
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -172,7 +195,7 @@ class BorrowedBikeViewController: UIViewController {
 		
 		bikeImageView.sd_setImageWithURL(bike.imageURL)
         
-//        showIssue()
+        closeButton.addTarget(self, action: "closeWebView:", forControlEvents: .TouchUpInside)
     }
     
     func formatDateLabel(date: NSDate) -> NSAttributedString! {
@@ -217,7 +240,19 @@ class BorrowedBikeViewController: UIViewController {
     }
     
 	func bikeDetail(sender: AnyObject?) {
-		let vc = BikeDetailViewController(bike: bike)
-        showViewController(vc, sender: sender)
+        if isServis {
+            closeButton.alpha = 1
+            webView.alpha = 1
+            webView.loadRequest(Router.BorrowServisBike(id: bike.id).URLRequest)
+            webView.delegate = self
+        } else {
+            let vc = BikeDetailViewController(bike: bike)
+            showViewController(vc, sender: sender)
+        }
+    }
+    
+    func closeWebView(sender: AnyObject?) {
+        webView.alpha = 0
+        closeButton.alpha = 0
     }
 }

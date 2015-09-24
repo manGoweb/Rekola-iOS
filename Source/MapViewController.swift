@@ -106,7 +106,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         descriptionLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 15)
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = .rekolaLightPinkColor()
-        descriptionLabel.adjustsFontSizeToFitWidth = true
+//        descriptionLabel.adjustsFontSizeToFitWidth = true
+//        descriptionLabel.minimumScaleFactor = 0.5
         descriptionLabel.snp_makeConstraints { make in
             make.top.equalTo(noteLabel.snp_bottom).offset(10)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)

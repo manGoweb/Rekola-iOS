@@ -17,17 +17,19 @@ import CoreLocation
 public struct LoginInfo {
     let apiKey : String
     let terms : Bool
+    let showWebviewForBikedetail : Bool?
 }
 
 extension LoginInfo : Decodable {
-    static func create(apiKey: String)(terms: Bool) -> LoginInfo {
-        return LoginInfo(apiKey: apiKey, terms: terms)
+    static func create(apiKey: String)(terms: Bool) (showWebviewForBikedetail: Bool?)-> LoginInfo {
+        return LoginInfo(apiKey: apiKey, terms: terms, showWebviewForBikedetail: showWebviewForBikedetail ?? false)
     }
     
     public static func decode(j: JSON) -> Decoded<LoginInfo> {
         return LoginInfo.create
             <^> j <| "apiKey"
             <*> j <| "terms"
+            <*> j <|? "showWebviewForBikedetail"
     }
 }
 

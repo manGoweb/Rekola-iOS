@@ -33,6 +33,7 @@
 "BORROWBIKE_code" = "KÓD ZÁMKU";
 "BORROWBIKE_return" = "Vrátit kolo";
 "BORROWBIKE_lent" = "Půjčeno ";
+"BORROWBIKE_close" = "Zavřít";
 "MAP_title" = "Mapa";
 "PROFILE_membership"= "Členství do ";
 "PROFILE_logout" = "  Odhlásit se";

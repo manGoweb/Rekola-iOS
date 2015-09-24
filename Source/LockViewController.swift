@@ -13,6 +13,16 @@ import ReactiveCocoa
 
 class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandlerType*/, CLLocationManagerDelegate {
     
+    let isServis : Bool
+    init(isServis: Bool) {
+        self.isServis = isServis
+        super.init(nibName:nil, bundle:nil)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         
         let view  = UIView()
@@ -436,7 +446,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     }
     
     func showBorrowedBikeController(bike: Bike, sender: AnyObject?) {
-        let vc = BorrowedBikeViewController(bike: bike)
+        let vc = BorrowedBikeViewController(bike: bike, isServis: isServis)
         showViewController(vc, sender: sender)
     }
 
