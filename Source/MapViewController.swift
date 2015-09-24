@@ -73,7 +73,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         warningImageView.contentMode = .ScaleAspectFit
         warningImageView.hidden = true
         warningImageView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(distanceLabel.snp_bottom).offset(8)
+            make.top.equalTo(distanceLabel.snp_bottom).offset(5)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
         }
         self.warningImageView = warningImageView
@@ -85,7 +85,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         warningLabel.textColor = .rekolaLightPinkColor()
         warningLabel.hidden = true
         warningLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(distanceLabel.snp_bottom).offset(8)
+            make.top.equalTo(distanceLabel.snp_bottom).offset(5)
             make.left.equalTo(warningImageView.snp_right).offset(5)
         }
         self.warningLabel = warningLabel
@@ -177,7 +177,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.startUpdatingLocation()
 
         
-// calling API
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
+        self.navigationController?.navigationBar.tintColor = .whiteColor()
+        deleteLineUnderNavBar()
+        
+        // calling API
         loadBoundaries()
         boundariesRequestPending.producer
             |> skipRepeats { (prev, curr) in
@@ -192,14 +202,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     SVProgressHUD.dismiss()
                 }
                 })
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
-        self.navigationController?.navigationBar.tintColor = .whiteColor()
-        deleteLineUnderNavBar()
     }
     
     override func viewWillDisappear(animated: Bool) {

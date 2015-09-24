@@ -10,7 +10,7 @@
 "ERROR_coomunication" = "Chyba komunikace";
 "LOCK_codeInfo" = "Vložte šestimístné číslo a získáte kód zámku.";
 "LOCK_codeDescription" = "Číslo najdete na kole či koloběžce.";
-"LOCK_enterCode" = "Vlož 6 místný kód";
+"LOCK_enterCode" = "Vložte šestimístný kód";
 "LOCK_borrow" = "PŮJČIT";
 "LOCK_coordinate" = "Poloha nenalezena";
 "SIGNIN_email" = "Email";

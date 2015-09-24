@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController {
         
         let nameLabel = UILabel()
         view.addSubview(nameLabel)
+        nameLabel.text = " "
         nameLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 26)
         nameLabel.textAlignment = .Center
         nameLabel.snp_makeConstraints { make in
@@ -28,6 +29,7 @@ class ProfileViewController: UIViewController {
         
         let dateLabel = UILabel()
         view.addSubview(dateLabel)
+        dateLabel.text = " "
         dateLabel.textColor = .rekolaPinkColor()
         dateLabel.textAlignment = .Center
         dateLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
@@ -77,7 +79,7 @@ class ProfileViewController: UIViewController {
         let line1 = Theme.lineView()
         view.addSubview(line1)
         line1.snp_makeConstraints { make in
-            make.top.equalTo(emailLabel.snp_bottom).offset(L.verticalSpacing)
+            make.top.equalTo(staticEmailLabel.snp_bottom).offset(L.verticalSpacing)
             make.left.equalTo(view).offset(L.horizontalSpacing)
             make.right.equalTo(view).offset(-L.horizontalSpacing)
             make.height.equalTo(1)
