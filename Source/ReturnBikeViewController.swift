@@ -37,8 +37,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
         returnButton.snp_makeConstraints { make in
             make.bottom.equalTo(view).offset(-L.verticalSpacing).priorityLow()
             make.height.equalTo(44)
-            make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
+            make.left.right.equalTo(view).inset(L.contentInsets)
         }
         self.returnButton = returnButton
         

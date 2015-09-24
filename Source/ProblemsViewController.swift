@@ -33,9 +33,8 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
         
         let tableView = UITableView()
         view.addSubview(tableView)
-        tableView.separatorColor = .whiteColor()
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.separatorStyle = .SingleLine
+        tableView.separatorStyle = .None
         tableView.backgroundColor = .rekolaPinkColor()
         tableView.snp_makeConstraints { make in
             make.top.equalTo(cancelButton.snp_bottom).offset(L.verticalSpacing)
@@ -60,7 +59,7 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.registerClass(NameProblemCell.self, forCellReuseIdentifier: cellIdentifier)
 
         cancelButton.addTarget(self, action: "cancelView", forControlEvents: .TouchUpInside)
         
@@ -88,10 +87,10 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
 //    MARK: UITabelViewDelegate + UITableViewDataSource
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.separatorInset.right = 15.0
-        cell.preservesSuperviewLayoutMargins = false
-    }
+//    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+//        cell.separatorInset.right = 15.0
+//        cell.preservesSuperviewLayoutMargins = false
+//    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let issues = problems{
@@ -102,12 +101,11 @@ class ProblemsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) as! NameProblemCell
         if let issue = problems {
             cell.selectionStyle = .None
-            cell.textLabel!.text = issue.issues[indexPath.row].title
-            cell.textLabel?.textColor = .whiteColor()
-            cell.textLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
+            cell.nameLabel!.text = issue.issues[indexPath.row].title
+            cell.nameLabel!.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
             cell.backgroundColor = .rekolaPinkColor()
         }
         return cell

@@ -26,7 +26,7 @@ class RekolaErrorHandler : ErrorHandlerType {
                 alert.message = NSLocalizedString("ERROR_coomunication", comment: "")
                 alert.show()
             }
-            return (false, false)
+            return (false, true)
 		}
 		
 		return (false, false)

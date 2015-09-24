@@ -33,7 +33,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let tableView = UITableView()
         view.addSubview(tableView)
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 800
+        tableView.estimatedRowHeight = 620
         tableView.allowsSelection = false
         tableView.separatorStyle = .None
         tableView.snp_makeConstraints { make in
@@ -182,13 +182,26 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         }
         self.problemsLabel = problemsLabel
         
+        let noProblemLabel = UILabel()
+        container.addSubview(noProblemLabel)
+        noProblemLabel.textAlignment = .Center
+        noProblemLabel.textColor = .grayColor()
+        noProblemLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 14)
+        noProblemLabel.text = NSLocalizedString("BIKEDETAIL_noProblems", comment: "")
+        noProblemLabel.hidden = true
+        noProblemLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(problemsLabel.snp_bottom).offset(15)
+            make.left.right.equalTo(container).inset(L.contentInsets)
+        }
+        self.noProblemLabel = noProblemLabel
+        
         let addProblemButton = Theme.pinkButton()
         container.addSubview(addProblemButton)
         addProblemButton.snp_makeConstraints { make in
             make.top.equalTo(problemsLabel.snp_bottom).offset(20)
-            make.left.equalTo(container).offset(L.horizontalSpacing)
-            make.right.equalTo(container).offset(-L.horizontalSpacing)
+            make.left.right.equalTo(container).inset(L.contentInsets)
             make.height.equalTo(44)
+//            make.bottom.equalTo(0).inset(L.contentInsets)
         }
         self.addProblemButton = addProblemButton
     }
@@ -209,6 +222,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     var equipmentCollectionView: UICollectionView!
     var moreInfoButton: TintingButton!
     var problemsLabel: UILabel!
+    var noProblemLabel: UILabel!
     var addProblemButton: UIButton!
     var infoEquipmentLabel: UILabel!
     var bikeIssues: [BikeIssue] = [] {
@@ -290,6 +304,16 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         moreInfoButton.setTitle(NSLocalizedString("BIKEDETAIL_moreInfo", comment: ""), forState: .Normal)
         
         problemsLabel.text = NSLocalizedString("BIKEDETAIL_problems", comment: "")
+        
+        if bike.issues.count == 0 {
+            noProblemLabel.hidden = false
+            addProblemButton.snp_remakeConstraints{ make in
+                make.top.equalTo(noProblemLabel.snp_bottom).offset(10)
+                make.left.right.equalTo(container).inset(L.contentInsets)
+                make.height.equalTo(44)
+            }
+            container.setNeedsLayout()
+        }
         
         addProblemButton.setTitle(NSLocalizedString("BIKEDETAIL_addProblem", comment: ""), forState: .Normal)
         addProblemButton.addTarget(self, action: "addProblemSegue", forControlEvents: .TouchUpInside)
@@ -414,7 +438,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             
             let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .DetailLockScroll), style: .Plain, target: self, action: "lockBike:")
             self.navigationItem.rightBarButtonItem = lockButton
-            self.navigationItem.title = bike.type.uppercaseString
+            self.navigationItem.title = bike.name.uppercaseString
             UIApplication.sharedApplication().statusBarStyle = .LightContent
         } else {
             self.navigationController?.navigationBar .lt_setBackgroundColor(color .colorWithAlphaComponent(0))
@@ -513,9 +537,9 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return 770
+            return 620
         }
-        return 70
+        return 55
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -543,7 +567,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section != 0 {
-            return 18
+            return 40
         }
         return 0
     }
@@ -562,7 +586,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
     
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: 31, height: 31)
+        return CGSize(width: 33, height: 33)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

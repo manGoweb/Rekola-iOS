@@ -218,6 +218,8 @@ class AddProblemViewController: UIViewController, UITextFieldDelegate, UITextVie
 //            TODO: Handle error
                     let alertView = UIAlertView(title: NSLocalizedString("ADDPROBLEM_problemSent", comment: ""), message: "", delegate: self, cancelButtonTitle: "OK")
                     alertView.show()
+                    
+                    self.navigationController?.popViewControllerAnimated(true)
             })
             
         } else {

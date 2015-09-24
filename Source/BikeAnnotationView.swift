@@ -30,10 +30,10 @@ class BikeAnnotationView: MKAnnotationView {
         backgroundImageView.addSubview(bikeImageView)
         bikeImageView.contentMode = .ScaleAspectFit
         bikeImageView.snp_makeConstraints { make in
-            make.top.equalTo(backgroundImageView).offset(4)
-            make.left.equalTo(backgroundImageView).offset(4)
-            make.right.equalTo(backgroundImageView).offset(-4)
-            make.bottom.equalTo(backgroundImageView).offset(-15)
+            make.top.equalTo(backgroundImageView).offset(6)
+            make.left.equalTo(backgroundImageView).offset(6)
+            make.right.equalTo(backgroundImageView).offset(-6)
+            make.bottom.equalTo(backgroundImageView).offset(-16)
         }
         self.bikeImageView = bikeImageView
         

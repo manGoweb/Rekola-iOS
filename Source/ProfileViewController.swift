@@ -143,8 +143,7 @@ class ProfileViewController: UIViewController {
         aboutAppButton.setTitle(NSLocalizedString("PROFILE_about", comment: ""), forState: .Normal)
         aboutAppButton.snp_makeConstraints { make in
             make.height.equalTo(44)
-            make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
+            make.left.right.equalTo(view).inset(L.contentInsets)
             make.bottom.equalTo(view).offset(-30)
         }
         self.aboutAppButton = aboutAppButton

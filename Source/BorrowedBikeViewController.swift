@@ -79,8 +79,7 @@ class BorrowedBikeViewController: UIViewController {
         returnButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 17)
         returnButton.snp_makeConstraints { make in
             make.bottom.equalTo(view).offset(-L.verticalSpacing)
-            make.left.equalTo(view).offset(L.horizontalSpacing)
-            make.right.equalTo(view).offset(-L.horizontalSpacing)
+            make.left.right.equalTo(view).inset(L.contentInsets)
             make.height.equalTo(45)
         }
         self.bikeReturnButton = returnButton

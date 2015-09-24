@@ -68,6 +68,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         self.bikeDistanceLabel = distanceLabel
         
+        let warningImageView = UIImageView(image: UIImage(imageIdentifier: .MapWarning))
+        detailView.addSubview(warningImageView)
+        warningImageView.contentMode = .ScaleAspectFit
+        warningImageView.hidden = true
+        warningImageView.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(distanceLabel.snp_bottom).offset(8)
+            make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+        }
+        self.warningImageView = warningImageView
+        
+        let warningLabel = UILabel()
+        detailView.addSubview(warningLabel)
+        warningLabel.text = NSLocalizedString("BIKEDETAIL_drivableWithProblems", comment: "")
+        warningLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 15)
+        warningLabel.textColor = .rekolaLightPinkColor()
+        warningLabel.hidden = true
+        warningLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(distanceLabel.snp_bottom).offset(8)
+            make.left.equalTo(warningImageView.snp_right).offset(5)
+        }
+        self.warningLabel = warningLabel
+        
         let noteLabel = Theme.whiteLabel()
         detailView.addSubview(noteLabel)
         noteLabel.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 15)
@@ -97,8 +119,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var container: UIView!
     weak var mapView: MKMapView!
     weak var bikeNameLabel: UILabel!
-    weak var bikeDescriptionLabel: UILabel!
     weak var bikeDistanceLabel: UILabel!
+    weak var warningImageView: UIImageView!
+    weak var warningLabel: UILabel!
+    weak var bikeDescriptionLabel: UILabel!
     weak var bikeNoteLabel: UILabel!
     weak var bikeImage: UIImageView!
     weak var bikeButton: UIButton!
@@ -357,6 +381,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
             }
             
+            if bikeAnnotation.operational && bikeAnnotation.numberOfIssues > 0 {
+                warningImageView.hidden = false
+                warningLabel.hidden = false
+                bikeNoteLabel.snp_remakeConstraints{ make in
+                    make.top.equalTo(warningImageView.snp_bottom).offset(10)
+                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+                    make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
+                }
+                detailView.setNeedsLayout()
+                
+            }
+            
             if bikeAnnotation.bikeLocationNote!.isEmpty {
                 bikeNoteLabel.hidden = true
                 bikeDescriptionLabel.snp_remakeConstraints{ make in
@@ -380,6 +416,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             mapPinView.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGreen)
             
             let bikeAnnotation = view.annotation as! MapPin
+            
+            if bikeAnnotation.operational && bikeAnnotation.numberOfIssues > 0 {
+                warningImageView.hidden = true
+                warningLabel.hidden = true
+                bikeNoteLabel.snp_remakeConstraints{ make in
+                    make.top.equalTo(bikeDistanceLabel.snp_bottom).offset(10)
+                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+                    make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
+                }
+                detailView.setNeedsLayout()
+            }
             
             if bikeAnnotation.bikeLocationNote!.isEmpty {
                 bikeNoteLabel.hidden = false

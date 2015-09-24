@@ -17,6 +17,8 @@ class MapPin: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     let iconUrl: String
     let distance: String
+    let operational: Bool
+    let numberOfIssues: Int
     
     init(bike: Bike) {
         self.bike = bike
@@ -27,6 +29,8 @@ class MapPin: NSObject, MKAnnotation {
         self.iconUrl = bike.iconUrl
         self.coordinate = coord
         self.distance = bike.location.distance
+        self.operational = bike.operational
+        self.numberOfIssues = bike.issues.count
         
         super.init()
     }

@@ -23,7 +23,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		iv.snp_makeConstraints { make in
 			make.top.lessThanOrEqualTo(view).offset(60)
 			make.centerX.equalTo(view.snp_centerX)
-            make.height.equalTo(self.view).multipliedBy(0.2)
+            make.height.lessThanOrEqualTo(130)
         }
 		self.bikeImageView = iv
 		
@@ -43,7 +43,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		passwdTF.textColor = .whiteColor()
 		view.addSubview(passwdTF)
 		passwdTF.snp_makeConstraints { make in
-			make.top.equalTo(emailTF.snp_bottom).offset(L.verticalSpacing)
+			make.top.equalTo(emailTF.snp_bottom).offset(8)
 			make.right.equalTo(view).offset(-L.horizontalSpacing)
 			make.left.equalTo(view).offset(L.horizontalSpacing)
 			make.height.equalTo(43)
@@ -207,7 +207,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
     }
     
     func register(sender: UIButton) {
-        let url = NSURL(string: "https://www.rekola.cz/registrace/udaje")
+        let url = NSURL(string: "https://www.rekola.cz/registrace")
         UIApplication.sharedApplication().openURL(url!)
     }
     

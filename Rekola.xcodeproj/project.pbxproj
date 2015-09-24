@@ -36,6 +36,7 @@
 		6DE50C861B4D1E28007F847A /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE50C821B4D1E20007F847A /* CocoaLumberjackSwift.framework */; };
 		6DE50C881B4D1E46007F847A /* MBSwizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE50C871B4D1E46007F847A /* MBSwizzler.swift */; };
 		9207E3861B8466C2008BC91D /* EquipmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9207E3851B8466C2008BC91D /* EquipmentCell.swift */; };
+		922A61C11BB3E0D100CD0385 /* NameProblemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 922A61C01BB3E0D100CD0385 /* NameProblemCell.swift */; };
 		923D69B31B4FBA2200FEF89A /* AddProblemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */; };
 		9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2831B43DCE60039B5EC /* ProfileViewController.swift */; };
 		9244D2861B43FA840039B5EC /* TinTingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9244D2851B43FA840039B5EC /* TinTingButton.swift */; };
@@ -158,6 +159,7 @@
 		6DE50C871B4D1E46007F847A /* MBSwizzler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MBSwizzler.swift; sourceTree = "<group>"; };
 		75F02EF16C46A63434D5FFBB /* Pods.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.adhoc.xcconfig; path = "Pods/Target Support Files/Pods/Pods.adhoc.xcconfig"; sourceTree = "<group>"; };
 		9207E3851B8466C2008BC91D /* EquipmentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EquipmentCell.swift; sourceTree = "<group>"; };
+		922A61C01BB3E0D100CD0385 /* NameProblemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameProblemCell.swift; sourceTree = "<group>"; };
 		923D69B21B4FBA2200FEF89A /* AddProblemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProblemViewController.swift; sourceTree = "<group>"; };
 		9244D2831B43DCE60039B5EC /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		9244D2851B43FA840039B5EC /* TinTingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TinTingButton.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				92D42CCF1B738ED2007E73DE /* BikeAnnotationView.swift */,
 				925B81721B7B781A00044014 /* EquipmentCollectionViewCell.swift */,
 				9207E3851B8466C2008BC91D /* EquipmentCell.swift */,
+				922A61C01BB3E0D100CD0385 /* NameProblemCell.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -799,6 +802,7 @@
 				9244D2841B43DCE60039B5EC /* ProfileViewController.swift in Sources */,
 				923D69B31B4FBA2200FEF89A /* AddProblemViewController.swift in Sources */,
 				B4EE779F1B29072800ED956B /* Model.swift in Sources */,
+				922A61C11BB3E0D100CD0385 /* NameProblemCell.swift in Sources */,
 				9254E8261B4D356300D06738 /* InsetLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
