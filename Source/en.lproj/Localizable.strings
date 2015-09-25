@@ -45,6 +45,7 @@
 "RETURNBIKE_return" = "Vrátit kolo";
 "RETURNBIKE_description" = "Přesná poloha kola";
 "RETURNBIKE_title" = "Vrácení kola";
+"RETURNBIKE_fillLocation" = "Prosím upřesněte polohu";
 "RETURN_PLACEHOLDER" = "Např.: před vstupem do kavárny";
 "BIKEDETAIL_lastReturn" = "Naposledy vráceno";
 "BIKEDETAIL_equipment" = "Vybavení";

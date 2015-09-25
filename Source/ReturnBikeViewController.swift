@@ -174,26 +174,22 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 		let info = BikeReturnInfo(lat: mapLocation.latitude, lon: mapLocation.longitude, note: textView.text, sensorLat: sensorLocation?.coordinate.latitude, sensorLon: sensorLocation?.coordinate.longitude, sensorAcc: sensorLocation?.horizontalAccuracy)
 		requestPending.value = true
 
-     /*   API.returnBike(id: bike.id, info: info).start(error: { error in
-            }, completed: {
-            
-        }, interrupted: {
-            
-        }, next: { success in
-                
-        })*/
-
-        
-        API.returnBike(id: bike.id, info: info).start(error: { error in
-			self.requestPending.value = false
-			self.handleError(error)
-            },completed: {
-				self.requestPending.value = false
-                self.showWebView()
-//				self.navigationController?.popToRootViewControllerAnimated(true)
-            }, next: {
-                self.succesUrl = $0
-        })
+        if count(textView.text) > 0 {
+            API.returnBike(id: bike.id, info: info).start(error: { error in
+                self.requestPending.value = false
+                self.handleError(error)
+                },completed: {
+                    self.requestPending.value = false
+                    self.showWebView()
+    //				self.navigationController?.popToRootViewControllerAnimated(true)
+                }, next: {
+                    self.succesUrl = $0
+            })
+        } else {
+            let alertView = UIAlertView(title: NSLocalizedString("RETURNBIKE_fillLocation", comment: ""), message: "", delegate: nil, cancelButtonTitle: "OK")
+            alertView.show()
+            returnButton.enabled = true
+        }
 	}
     
     let boundariesRequestPending = MutableProperty(false)

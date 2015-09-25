@@ -104,10 +104,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let descriptionLabel = Theme.whiteLabel()
         detailView.addSubview(descriptionLabel)
         descriptionLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 15)
-        descriptionLabel.numberOfLines = 0
+        descriptionLabel.numberOfLines = 1
         descriptionLabel.textColor = .rekolaLightPinkColor()
-//        descriptionLabel.adjustsFontSizeToFitWidth = true
-//        descriptionLabel.minimumScaleFactor = 0.5
+        descriptionLabel.adjustsFontSizeToFitWidth = true
+        descriptionLabel.minimumScaleFactor = 0.9
         descriptionLabel.snp_makeConstraints { make in
             make.top.equalTo(noteLabel.snp_bottom).offset(10)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
@@ -384,16 +384,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
             }
             
-            if bikeAnnotation.operational && bikeAnnotation.numberOfIssues > 0 {
+            let displayProblem = bikeAnnotation.operational && bikeAnnotation.numberOfIssues > 0
+            if displayProblem {
                 warningImageView.hidden = false
                 warningLabel.hidden = false
                 bikeNoteLabel.snp_remakeConstraints{ make in
-                    make.top.equalTo(warningImageView.snp_bottom).offset(10)
+                    make.top.equalTo(warningImageView.snp_bottom).offset(5)
                     make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
                     make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
                 }
-                detailView.setNeedsLayout()
                 
+//                bikeDescriptionLabel.snp_remakeConstraints { make in
+//                    make.top.equalTo(bikeNoteLabel.snp_bottom).offset(6)
+//                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
+//                    make.right.bottom.equalTo(detailView).inset(L.contentInsets)
+//                }
+
+                detailView.setNeedsLayout()
             }
             
             if bikeAnnotation.bikeLocationNote!.isEmpty {
@@ -428,6 +435,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
                     make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
                 }
+                
                 detailView.setNeedsLayout()
             }
             

@@ -97,7 +97,6 @@ public struct Bike {
     let borrowed : Bool
     let operational : Bool
     let returnedAt : NSDate?
-    let lastSeen: NSDate
     
     //    icons
     let iconUrl : String
@@ -128,10 +127,9 @@ extension Bike : Decodable  {
     //		return pure(flatMap(string) {self.dateFormatter.dateFromString($0 ?? "")})
     //	}
     
-    static func create(id : Int) (_ name: String) (_ type: String) (_ description: String) (_ equipment: [Equipment]) (_ location: Address) (_ issues: [Int]) (_ borrowed : Bool) (_ operational : Bool) (_ returnedAt: String?) (_ lastSeen: String) (_ iconUrl: String) (_ lockCode : String?)(_ imageUrlString : String) -> Bike {
+    static func create(id : Int) (_ name: String) (_ type: String) (_ description: String) (_ equipment: [Equipment]) (_ location: Address) (_ issues: [Int]) (_ borrowed : Bool) (_ operational : Bool) (_ returnedAt: String?) (_ iconUrl: String) (_ lockCode : String?)(_ imageUrlString : String) -> Bike {
         let returnedDate = dateFormatter.dateFromString(returnedAt ?? "")
-        let returnedTime = timeFormatter.dateFromString(lastSeen)
-        return Bike(id: id, name : name, type: type, description: description, equipment: equipment, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, lastSeen: returnedTime!, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
+        return Bike(id: id, name : name, type: type, description: description, equipment: equipment, location: location, issues : issues, borrowed: borrowed, operational: operational, returnedAt: returnedDate, iconUrl: iconUrl, lockCode: lockCode, imageURLString: imageUrlString)
     }
     
     public static func decode(json: JSON) -> Decoded<Bike> {
@@ -148,7 +146,6 @@ extension Bike : Decodable  {
         //            <*> json <|? ["location","returnedAt"] >>- parseDate //wont compile
         return partOfBike
             <*> json <|? ["location","returnedAt"]
-            <*> json <| "lastSeen"
             <*> json <| "iconUrl"
             <*> json <|? "lockCode"
             <*> json <| "imageUrl"
