@@ -61,6 +61,7 @@
 "ADDPROBLEM_reportProblem" = "Nahlásit problém";
 "ADDPROBLEM_problemSent" = "Problém odeslán";
 "ADDPROBLEM_fillEverything" = "Vyplň všechna pole";
+"LOGOUT_logout" = "Byl jste odhlášen";
 
 "Person" = "Person";
 "Done" = "Done";

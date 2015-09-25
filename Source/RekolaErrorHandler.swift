@@ -14,10 +14,25 @@ class RekolaErrorHandler : ErrorHandlerType {
 		if let responseData = error.userInfo?[APIErrorKeys.responseData] as? NSData {
             let alert = UIAlertView(title: NSLocalizedString("ERROR", comment: ""), message: "", delegate: nil, cancelButtonTitle: NSLocalizedString("OK", comment: ""))
             if let json = NSJSONSerialization.JSONObjectWithData(responseData, options: .AllowFragments, error: nil) as? [String : AnyObject] {
+                logD(json)
                 if let msg = json["message"] as? String {
                     println("MESSAGE: \(msg)")
-                    alert.message = msg
-                    alert.show()
+                    
+                    if msg == "Přihlašovací údaje jsou neplatné." {
+                        alert.message = NSLocalizedString("LOGOUT_logout", comment: "")
+                        alert.show()
+                        
+                        NSUserDefaults.standardUserDefaults().removeObjectForKey("apiKey")
+                        
+                        let signIn = SignInViewController()
+                        let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                        
+                        delegate.window?.rootViewController = signIn
+                        delegate.window!.makeKeyAndVisible()
+                    } else {
+                        alert.message = msg
+                        alert.show()
+                    }
                 } else {
                     alert.message = NSLocalizedString("ERROR_coomunication", comment: "")
                     alert.show()
