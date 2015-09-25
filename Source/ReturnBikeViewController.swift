@@ -171,6 +171,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
 //    API calling
 	var requestPending = MutableProperty(false)
 	func returnBike(sender: AnyObject?) {
+        println("lat: \(mapLocation.latitude), \nlng \(mapLocation.longitude)")
 		let info = BikeReturnInfo(lat: mapLocation.latitude, lon: mapLocation.longitude, note: textView.text, sensorLat: sensorLocation?.coordinate.latitude, sensorLon: sensorLocation?.coordinate.longitude, sensorAcc: sensorLocation?.horizontalAccuracy)
 		requestPending.value = true
 

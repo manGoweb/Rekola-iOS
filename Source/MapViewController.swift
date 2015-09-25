@@ -104,10 +104,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let descriptionLabel = Theme.whiteLabel()
         detailView.addSubview(descriptionLabel)
         descriptionLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 15)
-        descriptionLabel.numberOfLines = 1
+        descriptionLabel.numberOfLines = 0
         descriptionLabel.textColor = .rekolaLightPinkColor()
-        descriptionLabel.adjustsFontSizeToFitWidth = true
-        descriptionLabel.minimumScaleFactor = 0.9
+//        descriptionLabel.adjustsFontSizeToFitWidth = true
+//        descriptionLabel.minimumScaleFactor = 0.4
         descriptionLabel.snp_makeConstraints { make in
             make.top.equalTo(noteLabel.snp_bottom).offset(10)
             make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
@@ -391,14 +391,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 bikeNoteLabel.snp_remakeConstraints{ make in
                     make.top.equalTo(warningImageView.snp_bottom).offset(5)
                     make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
-                    make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
+                    make.right.equalTo(detailView).offset(-L.horizontalSpacing)
                 }
-                
-//                bikeDescriptionLabel.snp_remakeConstraints { make in
-//                    make.top.equalTo(bikeNoteLabel.snp_bottom).offset(6)
-//                    make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
-//                    make.right.bottom.equalTo(detailView).inset(L.contentInsets)
-//                }
 
                 detailView.setNeedsLayout()
             }
@@ -433,7 +427,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 bikeNoteLabel.snp_remakeConstraints{ make in
                     make.top.equalTo(bikeDistanceLabel.snp_bottom).offset(10)
                     make.left.equalTo(bikeImage.snp_right).offset(L.horizontalSpacing)
-                    make.right.bottom.equalTo(detailView).offset(-L.horizontalSpacing)
+                    make.right.equalTo(detailView).offset(-L.horizontalSpacing)
                 }
                 
                 detailView.setNeedsLayout()
