@@ -400,7 +400,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         myBikeRequestPending.value = true
         API.myBike().start(error: { error in
             self.myBikeRequestPending.value = false
-            self.handleError(error, severity: .UserAction, sender: self, userInfo: nil) //TODO: present alert with retry button?
+            self.handleError(error, severity: .UserAction, sender: self, userInfo: nil)
             
             }, completed: {
                 self.myBikeRequestPending.value = false

@@ -176,17 +176,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
 
-        
-
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
-        self.navigationController?.navigationBar.tintColor = .whiteColor()
-        deleteLineUnderNavBar()
-        
         // calling API
         loadBoundaries()
         boundariesRequestPending.producer
@@ -202,6 +191,18 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                     SVProgressHUD.dismiss()
                 }
                 })
+
+
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
+        self.navigationController?.navigationBar.tintColor = .whiteColor()
+        deleteLineUnderNavBar()
+        
+        loadBikes(usersCoordinate)
     }
     
     override func viewWillDisappear(animated: Bool) {
