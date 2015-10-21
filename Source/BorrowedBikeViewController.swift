@@ -218,22 +218,6 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
         return atribute
     }
     
-////    tmp
-//    let issueRequestPending = MutableProperty(false)
-//    func showIssue() {
-////        issueRequestPending.value = false
-//        API.myBikeIssue(id: bike.id).start(error: { error in
-////            self.issueRequestPending.value = false
-//            self.handleError(error)
-//    
-////            NSString(data: error.userInfo![APIErrorKeys.responseData]! as! NSData, encoding:4)
-//            }, completed: {
-//                self.issueRequestPending.value = false
-//            },next: {bikeIssue in
-////                println("issue: \n \(bikeIssue)()()")
-//        })
-//    }
-    
 	func returnBike(sender: AnyObject?) {
 		let vc = ReturnBikeViewController(bike: bike)
         showViewController(vc, sender: sender)

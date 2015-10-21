@@ -13,7 +13,17 @@ import ReactiveCocoa
 import CoreLocation
 
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIWebViewDelegate {
+    
+    let isServis : Bool
+    init(isServis: Bool) {
+        self.isServis = isServis
+        super.init(nibName:nil, bundle:nil)
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         let view = UIView()
@@ -114,6 +124,27 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             make.right.bottom.equalTo(detailView).inset(L.contentInsets)
         }
         self.bikeDescriptionLabel = descriptionLabel
+        
+        let webView = UIWebView()
+        view.addSubview(webView)
+        webView.alpha = 0
+        webView.snp_makeConstraints { make in
+            make.edges.equalTo(view)//.inset(L.contentInsets)
+        }
+        self.webView = webView
+        
+        let closeButton = UIButton()
+        webView.addSubview(closeButton)
+        closeButton.alpha = 0
+        closeButton.titleLabel?.font = UIFont(name: Theme.SFFont.Bold.rawValue, size: 15)
+        closeButton.setTitleColor(.rekolaBlackColor(), forState: .Normal)
+        closeButton.setTitle(NSLocalizedString("BORROWBIKE_close", comment: ""), forState: .Normal)
+        closeButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(0).offset(15)
+            make.right.equalTo(0).offset(-L.horizontalSpacing)
+            make.height.equalTo(20)
+        }
+        self.closeButton = closeButton
     }
     
     weak var detailView: UIView!
@@ -127,6 +158,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var bikeNoteLabel: UILabel!
     weak var bikeImage: UIImageView!
     weak var bikeButton: UIButton!
+    weak var webView: UIWebView!
+    weak var closeButton: UIButton!
+    
     var bikes: [Bike] = [] {
         didSet {
             var bikesMapPin: [MapPin] = []
@@ -176,6 +210,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
 
+        webView.delegate = self
+        closeButton.addTarget(self, action: "closeWebView:", forControlEvents: .TouchUpInside)
+        
         // calling API
         loadBoundaries()
         boundariesRequestPending.producer
@@ -380,8 +417,19 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             
             detailView.onTap{[weak self] (sender: AnyObject!) in
                 if let bikeDetail = self?.sendingBike {
-                    let vc = BikeDetailViewController(bike: bikeDetail)
-                    self?.showViewController(vc, sender: sender)
+                    if self!.isServis {
+                        self!.closeButton.alpha = 1
+                        self!.webView.alpha = 1
+                        self!.webView.loadRequest(Router.BorrowServisBike(id: bikeDetail.id).URLRequest)
+                    } else {
+                        let vc = BikeDetailViewController(bike: bikeDetail)
+                        self!.showViewController(vc, sender: sender)
+                    }
+//
+//                    
+//                    
+//                    let vc = BikeDetailViewController(bike: bikeDetail)
+//                    self?.showViewController(vc, sender: sender)
                 }
             }
             
@@ -458,6 +506,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
+    }
+    
+    func closeWebView(sender: AnyObject?) {
+        webView.alpha = 0
+        closeButton.alpha = 0
     }
 }
 

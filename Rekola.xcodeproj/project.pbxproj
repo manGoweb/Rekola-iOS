@@ -78,6 +78,7 @@
 		92E891EC1B4D590C00637FC4 /* ReturnBikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */; };
 		92F0DA301B4BC1BD00C42BB4 /* AboutAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F0DA2F1B4BC1BD00C42BB4 /* AboutAppViewController.swift */; };
 		92F0DA321B4BD3EC00C42BB4 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F0DA311B4BD3EC00C42BB4 /* SignInViewController.swift */; };
+		9598F8C31BD79C2C00E32329 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9598F8C21BD79C2C00E32329 /* Localizable.strings */; };
 		B4020772195199490027B407 /* BDDTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = B4ABA24F195196930069FAD4 /* BDDTestCase.m */; };
 		B433E4AE19530092006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
 		B433E4AF195300A4006BEBF1 /* environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = B433E4AA19530092006BEBF1 /* environment.plist */; };
@@ -202,6 +203,7 @@
 		92E891EB1B4D590C00637FC4 /* ReturnBikeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnBikeViewController.swift; sourceTree = "<group>"; };
 		92F0DA2F1B4BC1BD00C42BB4 /* AboutAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppViewController.swift; sourceTree = "<group>"; };
 		92F0DA311B4BD3EC00C42BB4 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		9598F8C21BD79C2C00E32329 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		ABA3E22A1E6F145A094D2DF0 /* Pods-Tests.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.development.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.development.xcconfig"; sourceTree = "<group>"; };
 		B215BAF68D134DF9BE4C6B93 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B433E4A719530092006BEBF1 /* environment-AdHoc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "environment-AdHoc.plist"; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				B4ABA23F195195F60069FAD4 /* Project-Info.plist */,
 				B4ABA240195195F60069FAD4 /* Project-Prefix.pch */,
 				B4AB848E1AE6E386004BAF1A /* Localizable.strings */,
+				9598F8C21BD79C2C00E32329 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				B4ABA247195195F60069FAD4 /* InfoPlist.strings in Resources */,
 				925B81951B7B7B7700044014 /* SanFranciscoText-Bold.otf in Resources */,
 				925B81A11B7B7B7700044014 /* SanFranciscoText-Thin.otf in Resources */,
+				9598F8C31BD79C2C00E32329 /* Localizable.strings in Resources */,
 				6D6BCD771B6A1B22005561BA /* ackee.gpx in Resources */,
 				925B819F1B7B7B7700044014 /* SanFranciscoText-Semibold.otf in Resources */,
 				925B81981B7B7B7700044014 /* SanFranciscoText-HeavyItalic.otf in Resources */,
@@ -904,11 +908,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0F2477C39DCE66EC69ACED7E /* Pods.appstore.xcconfig */;
 			buildSettings = {
-				ACK_BUNDLEID = cz.ackee.enterprise.rekola;
+				ACK_BUNDLEID = cz.clevis.rekola;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Clevis s.r.o. (35FKME99KG)";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -921,7 +925,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "78d663e1-ba80-4b12-96c0-52b83376b6de";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};

@@ -9,7 +9,7 @@
 import Foundation
 
 class RekolaErrorHandler : ErrorHandlerType {
-	func errorHandlingStep(error: NSError, severity: ErrorSeverity, sender: AnyObject?, userInfo: [NSObject : AnyObject]?, completion: ErrorHandlerCompletion?) -> (hasCompletion: Bool, stop: Bool) {
+    func errorHandlingStep(error: NSError, severity: ErrorSeverity, sender: AnyObject?, userInfo: [NSObject : AnyObject]?, completion: ErrorHandlerCompletion?) -> (hasCompletion: Bool, stop: Bool) {
 
         let response: AnyObject? = error.userInfo?[APIErrorKeys.response]
         let statusCode = response?.statusCode
@@ -19,12 +19,18 @@ class RekolaErrorHandler : ErrorHandlerType {
             if let json = NSJSONSerialization.JSONObjectWithData(responseData, options: .AllowFragments, error: nil) as? [String : AnyObject] {
                 if let msg = json["message"] as? String {
                     var isSignIn = false
-                    println("=================")
-                    println(sender)
-                    println("=================")
                     if sender is SignInViewController {
                         isSignIn = true
                     }
+                    
+                    print(msg)
+                    alert.message = msg
+                    
+                    if isSignIn {
+                        alert.show()
+                        return (false, true)
+                    }
+                    
                     if let statusCode = response?.statusCode {
                         
                         
@@ -41,9 +47,6 @@ class RekolaErrorHandler : ErrorHandlerType {
                                 alert.message = NSLocalizedString("LOGOUT_logout", comment: "")
                             }
                         }
-                    }
-                    if isSignIn {
-                        alert.message = msg
                     }
                     alert.show()
                 } else {

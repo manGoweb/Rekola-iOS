@@ -8,6 +8,7 @@
 
 import UIKit
 import ReactiveCocoa
+import HockeySDK
 
 
 
@@ -27,10 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         
         
         #if !DEBUG
-        //BITHockeyManager.sharedHockeyManager().configureWithIdentifier("", delegate: self)
-        // BITHockeyManager.sharedHockeyManager().startManager()
-        //  BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
-        //  BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = BITCrashManagerStatus.AutoSend
+        BITHockeyManager.sharedHockeyManager().configureWithIdentifier("62d752148aa8cff06e1d9de9b3674750", delegate: self)
+         BITHockeyManager.sharedHockeyManager().startManager()
+          BITHockeyManager.sharedHockeyManager().authenticator.authenticateInstallation()
+          BITHockeyManager.sharedHockeyManager().crashManager.crashManagerStatus = BITCrashManagerStatus.AutoSend
         #endif
         //   Flurry.startSession("")
         
@@ -45,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
         }
                 
         let vc = UINavigationController(rootViewController: LockViewController(isServis: servisBool!))
-        let vc2 = UINavigationController(rootViewController: MapViewController())
+        let vc2 = UINavigationController(rootViewController: MapViewController(isServis: servisBool!))
         let vc3 = UINavigationController(rootViewController: ProfileViewController())
         
         let item1 = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))

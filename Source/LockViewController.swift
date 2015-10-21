@@ -223,11 +223,34 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         borrowButton.titleLabel?.font = UIFont(name: Theme.SFFont.Medium.rawValue, size: 22)
             borrowButton.snp_makeConstraints { make in
             make.top.equalTo(textFieldButton.snp_bottom).offset(L.verticalSpacing)
-            make.left.right.bottom.equalTo(container)
+            make.left.right.equalTo(container)
             make.height.equalTo(59)
         }
         self.borrowButton = borrowButton
         
+        let phoneNumberLabel = UILabel()
+        container.addSubview(phoneNumberLabel)
+        phoneNumberLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 11)
+        phoneNumberLabel.numberOfLines = 0
+        phoneNumberLabel.textAlignment = .Center
+        phoneNumberLabel.text = NSLocalizedString("LOCK_phoneNumber", comment: "")
+        phoneNumberLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(borrowButton.snp_bottom).offset(20)
+            make.left.right.equalTo(container)
+        }
+        self.phoneNumberLabel = phoneNumberLabel
+        
+        let gladToHelpLabel = UILabel()
+        container.addSubview(gladToHelpLabel)
+        gladToHelpLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 11)
+        gladToHelpLabel.textAlignment = .Center
+        gladToHelpLabel.text = NSLocalizedString("LOCK_gladToHelp", comment: "")
+        gladToHelpLabel.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(phoneNumberLabel.snp_bottom)
+            make.left.right.equalTo(0)
+            make.bottom.equalTo(0).offset(-20)
+        }
+        self.gladToHelpLabel = gladToHelpLabel
 
     }
     
@@ -243,6 +266,8 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     weak var textField5: UITextField!
     weak var textField6: UITextField!
     weak var textFieldButton: UIButton!
+    weak var phoneNumberLabel: UILabel!
+    weak var gladToHelpLabel: UILabel!
     
     var textFields : [UITextField]!
     
@@ -423,25 +448,25 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         }
         let code = createPasscode() //textField.text
         borrowRequestPending.value = true
-        if let coords = location.value {
-            API.borrowBike(code: code, location: coords).start(
-                error: { error in
-                    self.borrowRequestPending.value = false
-                    self.handleError(error)
-                },
-                completed: {  textFields.map { $0.text = ""} } ,
-                next: { bike in
-                    self.borrowRequestPending.value = false
-                    self.showBorrowedBikeController(bike, sender: sender)
-            })
+        
+        var myCoord: CLLocation
+        if let coord = location.value {
+            myCoord = coord
         } else {
-            let alertView = UIAlertView(title: NSLocalizedString("LOCK_coordinate", comment: ""), message: "", delegate: nil, cancelButtonTitle: "OK")
-            alertView.show()
-            textFields.map { $0.text = ""}
-
+            let location = CLLocation(latitude: 0, longitude: 0)
+            myCoord = location
         }
         
-
+        API.borrowBike(code: code, location: myCoord).start(
+            error: { error in
+                self.borrowRequestPending.value = false
+                self.handleError(error)
+            },
+            completed: {  self.textFields.map { $0.text = ""} } ,
+            next: { bike in
+                self.borrowRequestPending.value = false
+                self.showBorrowedBikeController(bike, sender: sender)
+        })
         
     }
     

@@ -318,7 +318,9 @@ class RekolaAPI {
             let signal : SignalProducer<Bike,NSError> = rac_decodeByOne(data)
             return signal
                 |> on(next : { item in
-                    println(item)
+                    println(item.imageURLString)
+                    logD(item)
+//                    println(item)
                 })
                 |> collect
         }

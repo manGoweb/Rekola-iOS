@@ -29,6 +29,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 		
 		let emailTF = Theme.pinkTextField()
 		emailTF.textColor = .whiteColor()
+        emailTF.keyboardType = UIKeyboardType.EmailAddress
 		view.addSubview(emailTF)
 		emailTF.snp_makeConstraints { make in
 			make.top.equalTo(iv.snp_bottom).offset(L.verticalSpacing)//.priority(250)
@@ -102,12 +103,11 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 	weak var registerButton: UIButton!
 	weak var forgotPasswd: UIButton!
 	weak var ackeeImage: UIImageView!
-	
+    
 	override func viewDidLoad() {
 		super.viewDidLoad()
         
         UIApplication.sharedApplication().statusBarStyle = .LightContent
-
         emailTextField.text = Environment.username
         passwordTextField.text = Environment.password
 
@@ -169,7 +169,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 	
 	func signIn(sender: AnyObject?) {
 		loggingIn.value = true
-		API.login(username: emailTextField.text, password: passwordTextField.text).start(next: { (apiKey, isServis) in
+        API.login(username: emailTextField.text, password: passwordTextField.text).start(next: { (apiKey, isServis) in
 			self.loggingIn.value = false
 			UIView.performWithoutAnimation{
 				view.endEditing(true)
@@ -177,7 +177,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 			let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
 			
 			let vc = UINavigationController(rootViewController: LockViewController(isServis: isServis))
-			let vc2 = UINavigationController(rootViewController: MapViewController())
+			let vc2 = UINavigationController(rootViewController: MapViewController(isServis: isServis))
 			let vc3 = UINavigationController(rootViewController: ProfileViewController())
 			
 			let item = TabItem(controller: vc, images: UIImage.toggleImage(UIImage.ImagesForToggle.Lock))
@@ -193,6 +193,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate{
 			}, error: { error in
 				self.loggingIn.value = false
                 self.handleError(error, sender: self)
+
 		})
 	}
 	
