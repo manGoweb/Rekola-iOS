@@ -208,10 +208,12 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
         let timeString = timeFormatter.stringFromDate(date)
         
         let text = NSLocalizedString("BORROWBIKE_lent", comment: "") + dateString + " / " + timeString
-
+        let textLength = count(NSLocalizedString("BORROWBIKE_lent", comment: ""))
+        println(textLength)
+        
         let atribute = NSMutableAttributedString(string: text)
-        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 8, length: 6))
-        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: 15, length: 6))
+        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: textLength, length: 6))
+        atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: textLength + 7, length: 6))
         
         println("Text: \(atribute.string) \n pocet: \(atribute.length)")
         

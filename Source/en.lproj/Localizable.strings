@@ -6,88 +6,68 @@
   Copyright (c) 2015 Ackee s.r.o. All rights reserved.
 */
 
-"ERROR" = "Chyba";
-"ERROR_coomunication" = "Chyba komunikace";
-"LOCK_codeInfo" = "Vložte šestimístné číslo a získáte kód zámku.";
-"LOCK_codeDescription" = "Číslo najdete na kole či koloběžce.";
-"LOCK_enterCode" = "Vložte šestimístný kód";
-"LOCK_borrow" = "PŮJČIT";
-"LOCK_coordinate" = "Poloha nenalezena";
-"LOCK_phoneNumber" = "V případě problémů kontaktujte infolinku +420 778 099 878";
-"LOCK_gladToHelp" = "Rádi Vám pomůžeme";
-"SIGNIN_email" = "Email";
-"SIGNIN_passwd" = "Heslo";
-"SIGNIN_signin" = "Přihlásit se";
-"SIGNIN_register" = "Registrovat se";
-"SIGNIN_lostPasswd" = "Zapomenuté heslo";
-"SIGNIN_failedSingIn" = "Přihlášení se nezdařilo";
-"PASSWORD_RESET_TITLE" = "Reset hesla";
-"PASSWORD_RESET_SUBTITLE" = "Po zadání e-mailu Vám budou zaslány informace pro obnovu hesla.";
-"PASSWORD_RESET_BUTTON" = "Reset";
-"PASSWORD_RESET_BACK" = "Už vím, zpátky.";
-"EMAIL" = "Email";
-//<string name="reset_title">Reset Password</string>
-//<string name="reset_reset">Reset</string>
-//<string name="reset_info">Enter your email to get instructions on how to reset your password.</string>
-//<string name="reset_recall">I remembered, go back</string>
-//TODO: udelat poradek v lokalizaci, smazat stare resourcy z Tradic, domluvit se s @tomas.krabac, asi ma byt appka lokalizovana do cs a en
-"BORROWBIKE_detail" = "Detail";
-"BORROWBIKE_code" = "KÓD ZÁMKU";
-"BORROWBIKE_return" = "Vrátit kolo";
-"BORROWBIKE_lent" = "Půjčeno ";
-"BORROWBIKE_close" = "Zavřít";
-"MAP_title" = "Mapa";
-"PROFILE_membership"= "Členství do ";
-"PROFILE_logout" = "  Odhlásit se";
-"PROFILE_email" = "Email";
-"PROFILE_address" = "Adresa";
-"PROFILE_phone" = "Telefon";
-"PROFILE_about" = "O aplikaci";
-"ABOUTAPP_title" = "O aplikace";
-"RETURNBIKE_return" = "Vrátit kolo";
-"RETURNBIKE_description" = "Přesná poloha kola";
-"RETURNBIKE_title" = "Vrácení kola";
-"RETURNBIKE_fillLocation" = "Prosím upřesněte polohu";
-"RETURN_PLACEHOLDER" = "Např.: před vstupem do kavárny";
-"BIKEDETAIL_lastReturn" = "Naposledy vráceno";
-"BIKEDETAIL_equipment" = "Vybavení";
-"BIKEDETAIL_moreInfo" = "Více info";
-"BIKEDETAIL_problems" = "Problémy";
-"BIKEDETAIL_addProblem" = "Přidat problém";
-"BIKEDETAIL_drivableWithProblems" = "POJÍZDNÉ S PROBLÉMY";
-"BIKEDETAIL_undrivable" = "POZOR, NEPOJÍZDNÉ";
-"BIKEDETAIL_noProblems" = "Jsem šťastné kolo, nemám žádné problémy :)";
-"ADDPROBLEM_typeOfProblem" = "Typ problému";
-"ADDPROBLEM_chooseProblem" = "Vyberte typ";
-"ADDPROBLEM_description" = "Detailní popis závady";
-"ADDPROBLEM_unmovable" = "Kolo je nepojízdné";
-"ADDPROBLEM_reportProblem" = "Nahlásit problém";
-"ADDPROBLEM_problemSent" = "Problém odeslán";
-"ADDPROBLEM_fillEverything" = "Vyplň všechna pole";
-"LOGOUT_logout" = "Byl jste odhlášen";
+"ERROR" = "Error";
+"ERROR_coomunication" = "Connection error";
 
-"Person" = "Person";
-"Done" = "Done";
-"CameraTut" = "CameraTut";
-"MontageTut" = "MontageTut";
-"Edit" = "Edit";
-"Share" = "Share";
-"Save" = "Save";
-"Finish_1" = "This is you at ";
-"Finish_2" = ". Amazing!";
-"Image_Saved" = "Image Saved";
-"Foto_1" = "Hluboká nad Vltavou Chateau";
-"Foto_2" = "South Moravia - Pálava";
-"Foto_3" = "Telč";
-"Foto_4" = "Mariánské Lázně";
-"Foto_5" = "Bohemian Switzerland";
-"Foto_6" = "Prague – Charles Bridge";
-"Foto_7" = "Kuks";
-"Foto_8" = "Pilsen";
-"Foto_9" = "Český Krumlov";
-"Foto_10" = "Olomouc";
-"Foto_11" = "Kutná Hora";
-"Foto_12" = "Ostrava";
-"Foto_13" = "Litomyšl";
-"Foto_14" = "Prague – Old Town Square";
-"Foto_15" = "Liberec – Ještěd";
+"LOCK_codeInfo" = "Enter the 6-digit code to receive the lock passcode and start using your bike";
+"LOCK_codeDescription" = "Code can be found on a bike or scooter.";
+"LOCK_enterCode" = "Enter 6-digit code";
+"LOCK_borrow" = "BORROW";
+"LOCK_coordinate" = "Poloha nenalezena";
+"LOCK_phoneNumber" = "If there is any problem, please call us at +420 778 099 878";
+"LOCK_gladToHelp" = "We will help you.";
+
+"SIGNIN_email" = "Email";
+"SIGNIN_passwd" = "Password";
+"SIGNIN_signin" = "Sign in";
+"SIGNIN_register" = "Register";
+"SIGNIN_lostPasswd" = "Forgot Password?";
+"SIGNIN_failedSingIn" = "Unsuccesfull login";
+
+"PASSWORD_RESET_TITLE" = "Reset Password";
+"PASSWORD_RESET_SUBTITLE" = "Enter your email to get instructions on how to reset your password.";
+"PASSWORD_RESET_BUTTON" = "Reset";
+"PASSWORD_RESET_BACK" = "I remembered, go back.";
+"EMAIL" = "Email";
+
+"BORROWBIKE_detail" = "Detail";
+"BORROWBIKE_code" = "LOCK CODE";
+"BORROWBIKE_return" = "Return bike";
+"BORROWBIKE_lent" = "Borrowed ";
+"BORROWBIKE_close" = "Close";
+
+"MAP_title" = "Map";
+
+"PROFILE_membership"= "Membership will end ";
+"PROFILE_logout" = "  Log out";
+"PROFILE_email" = "Email";
+"PROFILE_address" = "Address";
+"PROFILE_phone" = "Phone";
+"PROFILE_about" = "About app";
+
+"ABOUTAPP_title" = "About app";
+
+"RETURNBIKE_return" = "Return bike";
+"RETURNBIKE_description" = "The exact position of bike";
+"RETURNBIKE_title" = "Return Bike";
+"RETURNBIKE_fillLocation" = "Please write exact position of bike";
+"RETURN_PLACEHOLDER" = "e.g. 3rd lamp from the bus stop";
+
+"BIKEDETAIL_lastReturn" = "Recently returned";
+"BIKEDETAIL_equipment" = "Equipments";
+"BIKEDETAIL_moreInfo" = "More info";
+"BIKEDETAIL_problems" = "Problems";
+"BIKEDETAIL_addProblem" = "Add Problem";
+"BIKEDETAIL_drivableWithProblems" = "DRIVABLE WITH PROBLEMS";
+"BIKEDETAIL_undrivable" = "BIKE IS INOPERATIONAL";
+"BIKEDETAIL_noProblems" = "I am happy bike, I have no issues :)";
+
+"ADDPROBLEM_typeOfProblem" = "Issue type";
+"ADDPROBLEM_chooseProblem" = "Choose a type";
+"ADDPROBLEM_description" = "Detail issue description";
+"ADDPROBLEM_unmovable" = "Bike is inoperational";
+"ADDPROBLEM_reportProblem" = "Report a problem";
+"ADDPROBLEM_problemSent" = "Problem sent";
+"ADDPROBLEM_fillEverything" = "Fill each field";
+
+"LOGOUT_logout" = "You have been logged out.";
