@@ -11,7 +11,7 @@ import ReactiveCocoa
 
 
 
-class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandlerType*/, CLLocationManagerDelegate {
+class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandlerType*/, CLLocationManagerDelegate, TTTAttributedLabelDelegate {
     
     let isServis : Bool
     init(isServis: Bool) {
@@ -228,17 +228,33 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         }
         self.borrowButton = borrowButton
         
-        let phoneNumberLabel = UILabel()
+        let phoneNumberLabel = TTTAttributedLabel(frame: CGRectZero)
         container.addSubview(phoneNumberLabel)
         phoneNumberLabel.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 11)
         phoneNumberLabel.numberOfLines = 0
         phoneNumberLabel.textAlignment = .Center
         phoneNumberLabel.text = NSLocalizedString("LOCK_phoneNumber", comment: "")
         phoneNumberLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(borrowButton.snp_bottom).offset(20)
-            make.left.right.equalTo(container)
+            make.top.equalTo(borrowButton.snp_bottom).offset(18)
+            make.left.equalTo(container).offset(6)
+            make.right.equalTo(-110)
         }
         self.phoneNumberLabel = phoneNumberLabel
+        
+        let phoneNumberButton = UIButton()
+        container.addSubview(phoneNumberButton)
+        phoneNumberButton.setTitle(NSLocalizedString("LOCK_number", comment: ""), forState: .Normal)
+        phoneNumberButton.titleLabel?.font = UIFont(name: Theme.SFFont.Regular.rawValue, size: 11)
+        phoneNumberButton.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        phoneNumberButton.titleLabel?.textAlignment = .Left
+        phoneNumberButton.addTarget(self, action: "callBikeSupport:", forControlEvents: .TouchUpInside)
+        phoneNumberButton.snp_makeConstraints { (make) -> Void in
+            make.top.equalTo(borrowButton.snp_bottom).offset(20)
+            make.left.equalTo(phoneNumberLabel.snp_right)
+            make.right.equalTo(0).offset(-10)
+            make.height.equalTo(10)
+        }
+        self.phoneNumberButton = phoneNumberButton
         
         let gladToHelpLabel = UILabel()
         container.addSubview(gladToHelpLabel)
@@ -267,6 +283,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     weak var textField6: UITextField!
     weak var textFieldButton: UIButton!
     weak var phoneNumberLabel: UILabel!
+    weak var phoneNumberButton: UIButton!
     weak var gladToHelpLabel: UILabel!
     
     var textFields : [UITextField]!
@@ -298,8 +315,7 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
         
         borrowButton!.setTitle(NSLocalizedString("LOCK_borrow", comment: ""), forState: .Normal)
         borrowButton.addTarget(self, action: "borrowBike:", forControlEvents: .TouchUpInside)
-		
-		
+        
         scrollView.scrollEnabled = false
 		myBikeRequestPending.producer
 			|> skipRepeats { (prev, curr) in
@@ -353,7 +369,6 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
     func changeTextField(sender: AnyObject?) {
         let textField = sender as! UITextField
         let nextTag = textField.tag + 1
-        println("TAG prev: \(textField.tag) \n next: \(nextTag)")
         if let nextResponder = textField.superview!.viewWithTag(nextTag) {
             nextResponder.userInteractionEnabled = true
            // nextResponder.becomeFirstResponder()
@@ -522,7 +537,9 @@ class LockViewController : UIViewController, UITextFieldDelegate/*, ErrorHandler
 //		return (false, false)
 //	}
 
-    
-
+    func callBikeSupport(sender: AnyObject?) {
+        let url = NSURL(string: "tel://+420778099878")!
+        UIApplication.sharedApplication().openURL(url)
+    }
 }
 

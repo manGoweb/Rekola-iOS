@@ -13,8 +13,11 @@
 "LOCK_enterCode" = "Vložte šestimístný kód";
 "LOCK_borrow" = "PŮJČIT";
 "LOCK_coordinate" = "Poloha nenalezena";
-"LOCK_phoneNumber" = "V případě problémů kontaktujte infolinku +420 778 099 878";
+"LOCK_phoneNumber" = "V případě problémů kontaktujte infolinku";
+"LOCK_number" = "+420 778 099 878";
 "LOCK_gladToHelp" = "Rádi Vám pomůžeme";
+"LOCK_reminder" = "Nezapomněl jste vrátit kolo?";
+
 "SIGNIN_email" = "Email";
 "SIGNIN_passwd" = "Heslo";
 "SIGNIN_signin" = "Přihlásit se";

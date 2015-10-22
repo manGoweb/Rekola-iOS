@@ -14,8 +14,10 @@
 "LOCK_enterCode" = "Enter 6-digit code";
 "LOCK_borrow" = "BORROW";
 "LOCK_coordinate" = "Poloha nenalezena";
-"LOCK_phoneNumber" = "If there is any problem, please call us at +420 778 099 878";
+"LOCK_phoneNumber" = "If there is any problem, please call us at";
+"LOCK_number" = "+420 778 099 878";
 "LOCK_gladToHelp" = "We will help you.";
+"LOCK_reminder" = "Haven't you forget to return a bike?";
 
 "SIGNIN_email" = "Email";
 "SIGNIN_passwd" = "Password";

@@ -365,8 +365,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         var sortedIssues = bikeIssues
         sortedIssues.sort({$0.type < $1.type})
         
-        println("Sorted: \(sortedIssues)")
-        
 //        creating sortedBikeIssues
         let unrealBike = BikeIssue(id: 0, title: "", status: "", type: -1, updates: [])
         var prevElem = unrealBike //unrealBike nemuze nastat (type -1)
@@ -377,7 +375,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
             } else if sortedIssues[index].type > prevElem.type {
                 prevElem = sortedIssues[index]
                 sortedBikeIssues.append([])
-                println("Pocet: \(sortedBikeIssues.count)")
                 indexOuterArray++ //posun do dalsiho pole
                 sortedBikeIssues[indexOuterArray].append(sortedIssues[index])
             } else {
@@ -463,9 +460,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         
 //        settings fot collectionView layout
         let padding = equipmentCollectionView.bounds.size.width - CGFloat(bike.equipment.count * (EquipmentCollectionViewCell.imageWidth) + (bike.equipment.count - 1)*collectionViewSpacing)
-        
-        println(equipmentCollectionView)
-        
+                
         if let layout = equipmentCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             layout.sectionInset = UIEdgeInsetsMake(0, padding/2, 0, 0)
         }

@@ -182,6 +182,7 @@ class ReturnBikeViewController: UIViewController, MKMapViewDelegate, UITextViewD
                 },completed: {
                     self.requestPending.value = false
                     self.showWebView()
+                    UIApplication.sharedApplication().cancelAllLocalNotifications()
     //				self.navigationController?.popToRootViewControllerAnimated(true)
                 }, next: {
                     self.succesUrl = $0

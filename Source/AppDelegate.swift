@@ -24,8 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 		
         UIResponder.globalErrorHandlers.insert(RekolaErrorHandler(), atIndex: 0)
 		window = UIWindow(frame: UIScreen.mainScreen().bounds)
-		
         
+        let notificationSettings = UIUserNotificationSettings(forTypes: .Alert | .Sound, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
         
         #if !DEBUG
         BITHockeyManager.sharedHockeyManager().configureWithIdentifier("62d752148aa8cff06e1d9de9b3674750", delegate: self)
@@ -107,6 +108,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate , BITHockeyManagerDelegate
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        UIApplication.sharedApplication().cancelLocalNotification(notification)
+        
+        var myBike: Bike?
+        let myBikeRequestPending = MutableProperty(false)
+        myBikeRequestPending.value = true
+        API.myBike().start(error: { error in
+            myBikeRequestPending.value = false
+            self.handleError(error, severity: .UserAction, sender: self, userInfo: nil)
+            
+            }, completed: {
+                myBikeRequestPending.value = false
+            }, next: { bike in
+               myBike = bike
+        })
+
+        if let bike = myBike {
+            let vc = BorrowedBikeViewController(bike: bike, isServis: false)
+            let root = self.window?.rootViewController
+            root?.showViewController(vc, sender: nil)
+        }
     }
 
 

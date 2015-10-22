@@ -167,6 +167,7 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
     weak var bikeReturnButton: UIButton!
     weak var webView: UIWebView!
     weak var closeButton: UIButton!
+    let localNotification = UILocalNotification()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -196,6 +197,8 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
 		bikeImageView.sd_setImageWithURL(bike.imageURL)
         
         closeButton.addTarget(self, action: "closeWebView:", forControlEvents: .TouchUpInside)
+        
+        remindeToReturnBike()
     }
     
     func formatDateLabel(date: NSDate) -> NSAttributedString! {
@@ -209,13 +212,11 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
         
         let text = NSLocalizedString("BORROWBIKE_lent", comment: "") + dateString + " / " + timeString
         let textLength = count(NSLocalizedString("BORROWBIKE_lent", comment: ""))
-        println(textLength)
         
         let atribute = NSMutableAttributedString(string: text)
         atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: textLength, length: 6))
         atribute.addAttribute(NSForegroundColorAttributeName, value: UIColor.rekolaPinkColor(), range: NSRange(location: textLength + 7, length: 6))
         
-        println("Text: \(atribute.string) \n pocet: \(atribute.length)")
         
         return atribute
     }
@@ -227,6 +228,7 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
     
 	func bikeDetail(sender: AnyObject?) {
         if isServis {
+            println(bike)
             closeButton.alpha = 1
             webView.alpha = 1
             webView.loadRequest(Router.BorrowServisBike(id: bike.id).URLRequest)
@@ -240,5 +242,34 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
     func closeWebView(sender: AnyObject?) {
         webView.alpha = 0
         closeButton.alpha = 0
+    }
+    
+    func remindeToReturnBike() {
+        let threeHours = NSDate(timeIntervalSinceNow: 300)
+        
+        localNotification.fireDate = threeHours
+        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        localNotification.alertBody = NSLocalizedString("LOCK_reminder", comment: "")
+        localNotification.soundName = UILocalNotificationDefaultSoundName
+        
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        startTimer()
+    }
+    
+    func startTimer() {
+        let almostThreeHours = NSDate(timeIntervalSinceNow: 298)
+        
+        var timer = NSTimer()
+        timer = NSTimer.scheduledTimerWithTimeInterval(28, target: self, selector: "handleNotification:", userInfo: nil, repeats: true)
+    }
+    
+    func handleNotification(timer: NSTimer) {
+        let myBikeRequestPending = MutableProperty(false)
+        myBikeRequestPending.value = true
+        API.myBike().start(error: { error in
+            myBikeRequestPending.value = false
+            self.handleError(error, severity: .UserAction, sender: self, userInfo: nil)
+                UIApplication.sharedApplication().cancelAllLocalNotifications()
+            })
     }
 }

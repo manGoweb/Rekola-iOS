@@ -545,6 +545,7 @@
 				2E600C0607B3427BAB1CA8DE /* Copy Pods Resources */,
 				B4ECD6281AD4820D0099D516 /* CopyFiles */,
 				B4A800961B2869F700453A28 /* ShellScript */,
+				64CD1A386E262DC9C825925A /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -676,6 +677,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		64CD1A386E262DC9C825925A /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AA29B81FC8F44906ACC0141A /* Check Pods Manifest.lock */ = {
@@ -1068,7 +1084,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = Rekola;
-				PROVISIONING_PROFILE = "e063cd5f-b19b-4245-a3a2-a05002b04559";
+				PROVISIONING_PROFILE = "d7bded85-721e-4f64-9647-97b9d5ed5f63";
 				SWIFT_OBJC_BRIDGING_HEADER = "Source/Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
