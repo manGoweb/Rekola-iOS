@@ -5,6 +5,6 @@
 	<key>appName</key>
 	<string>Rekola β</string>
 	<key>baseURL</key>
-	<string>https://www.rekola.cz/api</string>
+	<string>http://beta.rekola.cz/api</string>
 </dict>
 </plist>

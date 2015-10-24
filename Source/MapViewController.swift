@@ -178,6 +178,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var boundaries = Boundaries(regions: [], zones: [])
     var coordForBoundaries: [[CLLocationCoordinate2D]] = []
     var sendingBike = Bike?()
+    var timer = NSTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -229,7 +230,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
                 })
 
-
+        
+        timer = NSTimer(timeInterval: 60, target: self, selector: "updateMap:", userInfo: nil, repeats: true)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -240,6 +243,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         deleteLineUnderNavBar()
         
         loadBikes(usersCoordinate)
+        
+        timer = NSTimer(timeInterval: 60, target: self, selector: "updateMap:", userInfo: nil, repeats: true)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -249,6 +254,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.navigationController?.navigationBar.tintColor = .rekolaPinkColor()
         
         UIApplication.sharedApplication().statusBarStyle = .Default
+        timer.invalidate()
     }
     
     func deleteLineUnderNavBar() {
@@ -321,6 +327,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         
         self.drawPolygon(self.coordForBoundaries)
+    }
+    
+    func updateMap(sender: NSTimer) {
+        loadBikes(usersCoordinate)
     }
     
 //    MARK: CLlocationManagerDelegate

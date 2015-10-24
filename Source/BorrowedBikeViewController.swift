@@ -245,7 +245,7 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
     }
     
     func remindeToReturnBike() {
-        let threeHours = NSDate(timeIntervalSinceNow: 300)
+        let threeHours = NSDate(timeIntervalSinceNow: 30)
         
         localNotification.fireDate = threeHours
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
@@ -271,5 +271,7 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
             self.handleError(error, severity: .UserAction, sender: self, userInfo: nil)
                 UIApplication.sharedApplication().cancelAllLocalNotifications()
             })
+        
+        timer.invalidate()
     }
 }
