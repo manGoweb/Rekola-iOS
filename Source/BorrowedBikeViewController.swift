@@ -245,7 +245,7 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
     }
     
     func remindeToReturnBike() {
-        let threeHours = NSDate(timeIntervalSinceNow: 30)
+        let threeHours = NSDate(timeIntervalSinceNow: 300)
         
         localNotification.fireDate = threeHours
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
@@ -260,7 +260,7 @@ class BorrowedBikeViewController: UIViewController, UIWebViewDelegate  {
         let almostThreeHours = NSDate(timeIntervalSinceNow: 298)
         
         var timer = NSTimer()
-        timer = NSTimer.scheduledTimerWithTimeInterval(28, target: self, selector: "handleNotification:", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(298, target: self, selector: "handleNotification:", userInfo: nil, repeats: true)
     }
     
     func handleNotification(timer: NSTimer) {

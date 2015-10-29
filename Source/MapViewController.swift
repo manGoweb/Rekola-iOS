@@ -161,13 +161,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var webView: UIWebView!
     weak var closeButton: UIButton!
     
+    var bikesMapPin: [MapPin] = []
     var bikes: [Bike] = [] {
         didSet {
-            var bikesMapPin: [MapPin] = []
+            println("POCET: \(bikes.count)")
+            bikesMapPin.removeAll()
             for bike in bikes {
                 let bikeMapPin = MapPin(bike: bike)
                 bikesMapPin.append(bikeMapPin)
             }
+            println("SPendliky: \(bikesMapPin.count)")
+            mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotations(bikesMapPin)
         }
     }
@@ -217,22 +221,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // calling API
         loadBoundaries()
         boundariesRequestPending.producer
-            |> skipRepeats { (prev, curr) in
-                return 	prev == curr
-            }
-            |> start(next: { [weak self] in
-                if $0{
-                    self?.view.userInteractionEnabled = false
-                    SVProgressHUD.show()
-                } else {
-                    self?.view.userInteractionEnabled = true
-                    SVProgressHUD.dismiss()
-                }
-                })
-
-        
-        timer = NSTimer(timeInterval: 60, target: self, selector: "updateMap:", userInfo: nil, repeats: true)
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -241,10 +229,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         self.navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
         self.navigationController?.navigationBar.tintColor = .whiteColor()
         deleteLineUnderNavBar()
-        
         loadBikes(usersCoordinate)
         
-        timer = NSTimer(timeInterval: 60, target: self, selector: "updateMap:", userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(60, target: self, selector: "updateMap:", userInfo: nil, repeats: true)
+
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -265,11 +253,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 //    API calling
     let bikesRequestPending = MutableProperty(false)
     func loadBikes(coordinate: CLLocationCoordinate2D) {
+        SVProgressHUD.show()
         bikesRequestPending.value = false
         API.bikes(latitude: coordinate.latitude, longitude: coordinate.longitude).start(error: { error in
             self.handleError(error)
             },next: {
+                self.bikes.removeAll()
                 self.bikes = $0
+                SVProgressHUD.dismiss()
         })
     }
     
@@ -330,6 +321,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func updateMap(sender: NSTimer) {
+        mapView.removeAnnotations(bikesMapPin)
         loadBikes(usersCoordinate)
     }
     
@@ -435,11 +427,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                         let vc = BikeDetailViewController(bike: bikeDetail)
                         self!.showViewController(vc, sender: sender)
                     }
-//
-//                    
-//                    
-//                    let vc = BikeDetailViewController(bike: bikeDetail)
-//                    self?.showViewController(vc, sender: sender)
                 }
             }
             

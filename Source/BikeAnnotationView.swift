@@ -25,7 +25,6 @@ class BikeAnnotationView: MKAnnotationView {
         }
         self.backgroundImageView = backgroundImageView
         
-        
         let bikeImageView = UIImageView()
         backgroundImageView.addSubview(bikeImageView)
         bikeImageView.contentMode = .ScaleAspectFit
