@@ -21,7 +21,10 @@ class BikeAnnotationView: MKAnnotationView {
         let backgroundImageView = UIImageView(/*image: UIImage(imageIdentifier: .MapPinGreen)*/)
         addSubview(backgroundImageView)
         backgroundImageView.snp_makeConstraints { make in
-            make.edges.equalTo(self)
+            make.top.equalTo(self).offset(-20)
+            make.left.right.equalTo(self)
+            make.bottom.equalTo(self).offset(-20)
+            //            make.edges.equalTo(self)
         }
         self.backgroundImageView = backgroundImageView
         
