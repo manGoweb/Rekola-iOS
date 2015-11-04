@@ -194,8 +194,8 @@ class ProfileViewController: UIViewController {
         API.logout().start(error: { error in
             self.logoutRequestPending.value = false
             self.handleError(error)
-            }, completed: {
-                self.logoutRequestPending.value = false
+            }, completed: { [weak self] in
+                self?.logoutRequestPending.value = false
                 
                 NSUserDefaults.standardUserDefaults().removeObjectForKey("apiKey")
                 
@@ -220,8 +220,8 @@ class ProfileViewController: UIViewController {
     func showUser() {
         API.myAccount().start(error: {error in
             self.handleError(error)
-            }, completed: {
-                self.issueRequestPending.value = false
+            }, completed: { [weak self] in
+                self?.issueRequestPending.value = false
             }, next: {myAccount in
                 self.updateLabels(myAccount)
         })

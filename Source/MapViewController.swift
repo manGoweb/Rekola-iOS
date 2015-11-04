@@ -254,8 +254,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         bikesRequestPending.value = false
         API.bikes(latitude: coordinate.latitude, longitude: coordinate.longitude).start(error: { error in
             self.handleError(error)
-            },next: {
-                self.bikes = $0
+            },next: { [weak self] in
+                self?.bikes = $0
                 SVProgressHUD.dismiss()
         })
     }
@@ -265,9 +265,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         boundariesRequestPending.value = false
         API.getBoundaries().start(error: { error in
             self.handleError(error)
-            }, next: {
-                self.boundaries = $0
-                self.parseBoundaries(self.boundaries)
+            }, next: { [weak self] in
+                self?.boundaries = $0
+                self?.parseBoundaries(self!.boundaries)
         })
     }
     
