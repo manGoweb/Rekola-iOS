@@ -464,7 +464,13 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             navigationItem.leftBarButtonItem = nil
             
             let mapPinView = view as! BikeAnnotationView
-            mapPinView.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGreen)
+            let mapAnnotation = view.annotation as! MapPin
+            
+            if !mapAnnotation.operational {
+               mapPinView.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGrey)
+            } else {
+                mapPinView.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGreen)
+            }
             
             let bikeAnnotation = view.annotation as! MapPin
             

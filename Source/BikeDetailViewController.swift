@@ -140,7 +140,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let equipmentCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layoutForCollectionView)
         container.addSubview(equipmentCollectionView)
         equipmentCollectionView.backgroundColor = .whiteColor()
-        equipmentCollectionView.indicatorStyle = UIScrollViewIndicatorStyle.White
+        equipmentCollectionView.showsHorizontalScrollIndicator = false
         equipmentCollectionView.snp_makeConstraints { make in
             make.top.equalTo(equipmentLabel.snp_bottom).offset(15)
             make.left.right.equalTo(0)
