@@ -164,13 +164,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     var bikesMapPin: [MapPin] = []
     var bikes: [Bike] = [] {
         didSet {
-            println("POCET: \(bikes.count)")
             bikesMapPin.removeAll()
             for bike in bikes {
                 let bikeMapPin = MapPin(bike: bike)
                 bikesMapPin.append(bikeMapPin)
             }
-            println("SPendliky: \(bikesMapPin.count)")
             mapView.removeAnnotations(mapView.annotations)
             mapView.addAnnotations(bikesMapPin)
         }
@@ -195,7 +193,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         navigationItem.title = NSLocalizedString("MAP_title", comment: "")
         let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         navigationController!.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
-//        navigationController?.navigationBar.barTintColor = .rekolaPinkColor()
         navigationController?.navigationBar.barStyle = .Black
         navigationController?.navigationBar.translucent = false
         
@@ -258,7 +255,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         API.bikes(latitude: coordinate.latitude, longitude: coordinate.longitude).start(error: { error in
             self.handleError(error)
             },next: {
-                self.bikes.removeAll()
                 self.bikes = $0
                 SVProgressHUD.dismiss()
         })
@@ -376,7 +372,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 view = BikeAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             }
             
-            view?.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGreen)
+            if !annotation.bike.operational {
+                view?.backgroundImageView.image = UIImage(imageIdentifier: .MapPinGrey)
+            } else {
+                view?.backgroundImageView.image = UIImage(imageIdentifier:.MapPinGreen)
+            }
+            
             view?.bikeImageView.sd_setImageWithURL(url)
             return view
         }

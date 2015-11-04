@@ -140,6 +140,7 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         let equipmentCollectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layoutForCollectionView)
         container.addSubview(equipmentCollectionView)
         equipmentCollectionView.backgroundColor = .whiteColor()
+        equipmentCollectionView.indicatorStyle = UIScrollViewIndicatorStyle.White
         equipmentCollectionView.snp_makeConstraints { make in
             make.top.equalTo(equipmentLabel.snp_bottom).offset(15)
             make.left.right.equalTo(0)
@@ -265,20 +266,6 @@ class BikeDetailViewController: BaseViewController, UITableViewDelegate, UITable
         equipmentCollectionView.registerClass(EquipmentCollectionViewCell.self, forCellWithReuseIdentifier: collectionIdentifier)
         
         deleteLineUnderNavBar()
-        
-//        problemRequestPending.producer
-//            |> skipRepeats { (prev, curr) in
-//                return 	prev == curr
-//            }
-//            |> start(next: { [weak self] in
-//                if $0{
-//                    self?.view.userInteractionEnabled = false
-//                    SVProgressHUD.show()
-//                } else {
-//                    self?.view.userInteractionEnabled = true
-//                    SVProgressHUD.dismiss()
-//                }
-//                })
         
         let lockButton = UIBarButtonItem(image: UIImage(imageIdentifier: .detailLock), style: .Plain, target: self, action: "lockBike:")
         self.navigationItem.rightBarButtonItem = lockButton
