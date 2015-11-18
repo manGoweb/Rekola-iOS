@@ -3,14 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>appName</key>
-	<string>Rekola Δ</string>
+	<string>Rekola β</string>
 	<key>baseURL</key>
-	<string>http://beta.rekola.cz/api</string>
-	<key>password</key>
-	<string>dominik.ackee</string>
+	<string>https://www.rekola.cz/api</string>
 	<key>scheme</key>
-	<string>Development</string>
-	<key>username</key>
-	<string>osklivka@ackee.cz</string>
+	<string>AdHoc</string>
 </dict>
 </plist>

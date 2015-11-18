@@ -161,16 +161,28 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     weak var webView: UIWebView!
     weak var closeButton: UIButton!
     
-    var bikesMapPin: [MapPin] = []
+    var mapPinsChanged = false
+    var bikesMapPin: [MapPin] = [] {
+        didSet {
+            if oldValue == bikesMapPin {
+                mapPinsChanged = false
+            } else {
+                mapPinsChanged = true
+            }
+        }
+    }
     var bikes: [Bike] = [] {
         didSet {
-            bikesMapPin.removeAll()
+            var newPins: [MapPin] = []
             for bike in bikes {
                 let bikeMapPin = MapPin(bike: bike)
-                bikesMapPin.append(bikeMapPin)
+                newPins.append(bikeMapPin)
             }
-            mapView.removeAnnotations(mapView.annotations)
-            mapView.addAnnotations(bikesMapPin)
+            bikesMapPin = newPins
+            if mapPinsChanged {
+                mapView.removeAnnotations(mapView.annotations)
+                mapView.addAnnotations(bikesMapPin)
+            }
         }
     }
     let locationManager = CLLocationManager()
@@ -250,13 +262,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 //    API calling
     let bikesRequestPending = MutableProperty(false)
     func loadBikes(coordinate: CLLocationCoordinate2D) {
-        SVProgressHUD.show()
         bikesRequestPending.value = false
         API.bikes(latitude: coordinate.latitude, longitude: coordinate.longitude).start(error: { error in
             self.handleError(error)
             },next: { [weak self] in
                 self?.bikes = $0
-                SVProgressHUD.dismiss()
         })
     }
     
@@ -317,7 +327,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     func updateMap(sender: NSTimer) {
-        mapView.removeAnnotations(bikesMapPin)
         loadBikes(usersCoordinate)
     }
     
